@@ -1,0 +1,68 @@
+{% extends "Candidate/layout/layout.html" %}
+
+{% block content %}
+
+    <!-- End Sidebar-->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Application Form</span></i>
+                </a>
+            </li><!-- End Forms Nav -->
+        </ul>
+    </aside>
+
+
+    <!-- MAIN -->
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Application Form</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
+                    <li class="breadcrumb-item">Pages</li>
+                    <li class="breadcrumb-item">Preview</li>
+                    <li class="breadcrumb-item active">App Form</li>
+                    
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="card col-md-6 m-auto">
+            <div class="card-header text-center">
+                <img src="/static/assets/img/accepted.gif" width="80px" alt="">
+            </div>
+            <div class="card-body py-3 bg-light text-center">
+                {% if records %}
+                <section class="section contact">
+                    {% if records %}
+                        {% if records['first_name'] and records['last_name'] %}
+                            <p> Hello, {{ records['first_name'] + " " + records['last_name'] }} </p>
+                        {% else %}
+                            <p> Hello, User </p>
+                        {% endif %}
+                    <p><strong>The Application form is Successfully submitted & You won't be able to edit it now.
+                        </strong> </p>
+                    <p> <strong>Your Applicant ID -</strong> {{ records['applicant_id'] }}
+                    </p>
+
+                    <form method="GET" action="/generate_pdf" target="_blank">
+                        <button type="submit" class="btn btn-theme">Generate PDF</button>
+                    </form>
+                    {% endif %}
+                </section>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+
+    </main>
+    <!----------------================== END MAIN FORM =====================------------------>
+
+{% endblock %}
+

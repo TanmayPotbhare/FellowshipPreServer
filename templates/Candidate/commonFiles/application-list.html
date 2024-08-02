@@ -1,0 +1,74 @@
+{% extends "Candidate/layout/layout.html" %}
+
+{% block content %}
+
+  <main id="main" class="main">
+
+
+
+    <section class="section contact">
+      <div class="row">
+        <div class="col-md-12 card p-3">
+          <div class="card-header">
+            <div class="pagetitle">
+              <h1>My Applications</h1>
+              <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                  <li class="breadcrumb-item">Pages</li>
+                  <li class="breadcrumb-item active">My Applications</li>
+                </ol>
+              </nav>
+            </div><!-- End Page Title -->
+          </div>
+          <div class="card-body py-3 px-0">
+
+            <!-- Table with stripped rows -->
+            <table class="table table-bordered datatable">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col"> Applicant ID</th>
+                  <th scope="col"> First Name</th>
+                  <th scope="col"> Middle Name</th>
+                  <th scope="col"> Last Name</th>
+                  <th scope="col"> Email</th>
+                  <th scope="col"> PHD Registration Date</th>
+                  <th scope="col">Adhaar Card Number</th>
+                  <th scope="col">Applied For</th>
+                  <th scope="col">Application Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for record in records %}
+                <tr>
+                  <td>{{ record['id'] }}</td>
+                  <td>TRTI/{{ record['phd_registration_year'] }}/{{ record['id'] }}</td>
+                  <td>{{ record['first_name'] }}</td>
+                  <td>{{ record['middle_name'] }}</td>
+                  <td>{{ record['last_name'] }}</td>
+                  <td>{{ record['email'] }}</td>
+                  <td>{{ record['phd_registration_date'] }}</td>
+                  <td>{{ record['adhaar_number'] }}</td>
+                  <td>Basic</td>
+                  <td>{{ record['application_date'] }}</td>
+                  <td>
+                    <a href="/viewform/{{record['id']}}" class="btn btn-theme btn-sm tooltip-trigger"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="View Form"><i
+                        class="ri-eye-fill"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock %}
