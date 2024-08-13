@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Application Details | Fellowship</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='admin_assets/img/favicon.png')}}" rel="icon">
+  <link href="{{ url_for('static', filename='admin_assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='admin_assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin_assets/vendor/bootstrap-icons/bootstrap-icons.css')}}"
+    rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin_assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin_assets/vendor/quill/quill.snow.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin_assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin_assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin_assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static', filename='admin_assets/css/style.css')}}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+
+  {% include 'Candidate/layout/header.html' %}
+  {% include 'Candidate/layout/sidebar.html' %}
+
+  <!-- End Header -->
+
+
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Application Details</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">Details</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+
+      <div class="row ">
+        <div class="col-xl-12">
+
+          <div class="card mb-4">
+            <div class="card-body"><br>
+                <h4 class="text-primary text-center fw-bold">Member Details</h4>
+                <div class="row">
+                    {% for row in result %}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">First Name</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['first_name'] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Middle Name</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['middle_name'] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Last Name</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['last_name'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Student ID</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['applicant_id'] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Mobile Number</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['mobile_number'] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Email ID</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['email'] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Gender</label>
+                                <p class="form-control-plaintext text-secondary">{{ row['gender'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div><br>
+
+                <h4 class="text-primary text-center fw-bold">Fee List</h4>
+                <div class="row">
+                    {% for row in result %}
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Final Pay Fees</label>
+                                <p class="form-control-plaintext text-primary fw-bold">93000.00</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Fees Paid</label>
+                                <p class="form-control-plaintext text-success fw-bold">00</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label text-dark fw-bold">Pending Fees</label>
+                                <p class="form-control-plaintext text-danger fw-bold">-93000.00</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+<!--                <div class="row">-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="mb-3">-->
+<!--                            <label class="form-label">Deposit Amount</label>-->
+<!--                            <input type="text" class="form-control">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="mb-3">-->
+<!--                            <label class="form-label">Installment No.</label>-->
+<!--                            <input type="text" class="form-control">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="mb-3">-->
+<!--                            <label class="form-label">Balance</label>-->
+<!--                            <input type="text" class="form-control">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="mb-3">-->
+<!--                            <label class="form-label">Deposit Date</label>-->
+<!--                            <input type="date" class="form-control" value="2024-08-12">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="mb-3">-->
+<!--                            <label class="form-label">Paymode</label>-->
+<!--                            <select class="form-select">-->
+<!--                                <option>Select</option>-->
+<!--                                <option>Cash</option>-->
+<!--                                <option>Cheque</option>-->
+<!--                                <option>Online</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="mb-3">-->
+<!--                            <label class="form-label">Remarks</label>-->
+<!--                            <input type="text" class="form-control">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3 align-self-end">-->
+<!--                        <button class="btn btn-primary">Submit</button>-->
+<!--                        <button class="btn btn-warning">Reset</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div><br>
+
+
+            <div class="p-3">
+                <h4 class="text-primary text-center fw-bold">Fees installment list</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                          <th scope="col">Sr No</th>
+                          <th scope="col">Period</th>
+                          <th scope="col">Start Period</th>
+                          <th scope="col">End Period</th>
+                          <th scope="col">Balance</th>
+                          <th scope="col">Installment Number</th>
+                          <th scope="col">Paid or Not</th>
+                          <th scope="col">Due Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in table_data %}
+                          <tr class="text-center">
+                            <td>{{ loop.index }}</td>
+                            <td>{{ row['period'] }} Months</td>
+                            <td>{{ row['start_period'] }}</td>
+                            <td>{{ row['end_period'] }}</td>
+                            <td>{{ row['balance'] }}</td>
+                            <td>{{ row['installment_number'] }}</td>
+                            <td>
+                              {% if row['paid'] is none %}
+                                  <span class="text-danger fw-bold">Not Paid</span>
+                              {% else %}
+                                  <span class="text-success fw-bold">{{ row['paid'] }}</span>
+                              {% endif %}
+                            </td>
+                            <td>{{ row['due_date'] }}</td>
+<!--                                <td>-->
+<!--                                  <button type="submit" name="accept" value="{{ approve_pay }}"-->
+<!--                                  class="btn btn-sm btn-success tooltip-trigger" data-bs-toggle="tooltip" data-bs-placement="top"-->
+<!--                                  data-bs-original-title="Approve Payment"><i class="bx bxs-check-circle"></i></button>-->
+<!--                                </td>-->
+                          </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" class="text-end fw-bold">Total</td>
+                            <td class="fw-bold text-center">93000</td>
+                            <td colspan="4"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><br>
+
+            <div class="p-3">
+                <h4 class="text-primary text-center fw-bold">Payment Records</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Faculty</th>
+                            <th scope="col">Starting Duration Date</th>
+                            <th scope="col">Ending Duration Date</th>
+                            <th scope="col">Total Months</th>
+                            <th scope="col">Fellowship</th>
+                            <th scope="col">Total Fellowship</th>
+                            <th scope="col">Rate</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Fellowship</th>
+                            <th scope="col">Months</th>
+                            <th scope="col">Total House Rent Allowance</th>
+                            <th scope="col">Count</th>
+                            <th scope="col">PWD</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">City</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in record %}
+                          <tr>
+                            <td>{{ row['full_name'] }}</td>
+                            <td>{{ row['email'] }}</td>
+                            <td>{{ row['faculty'] }}</td>
+                            <td>{{ row['duration_date_from'] }}</td>
+                            <td>{{ row['duration_date_to'] }}</td>
+                            <td>{{ row['total_months'] }}</td>
+                            <td>{{ row['fellowship'] }}</td>
+                            <td>{{ row['to_fellowship'] }}</td>
+                            <td>{{ row['rate'] }}</td>
+                            <td>{{ row['amount'] }}</td>
+                            <td>{{ row['fellowship'] }}</td>
+                            <td>{{ row['months'] }}</td>
+                            <td>{{ row['total_hra'] }}</td>
+                            <td>{{ row['count'] }}</td>
+                            <td>{{ row['pwd'] }}</td>
+                            <td>{{ row['total'] }}</td>
+                            <td>{{ row['city'] }}</td>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+          </div>
+        </div>
+
+
+       </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  {% include 'Candidate/layout/footer.html' %}
+
+  <!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='admin_assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/chart.js/chart.umd.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/echarts/echarts.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/quill/quill.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/tinymce/tinymce.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='admin_assets/vendor/php-email-form/validate.js')}}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='admin_assets/js/main.js')}}"></script>
+
+</body>
+
+</html>

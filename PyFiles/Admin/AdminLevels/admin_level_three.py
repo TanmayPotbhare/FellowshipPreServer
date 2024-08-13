@@ -194,7 +194,7 @@ def adminlevelthree_auth(app, mail):
         '''
 
         # Email content in HTML format
-        msg = Message('Application Status Changed', sender='helpdesk@trti-maha.in', recipients=[email])
+        msg = Message('Application Status Changed', sender='noreply_fellowship@trti-maha.in', recipients=[email])
         msg.html = msg_body
         mail.send(msg)
 
@@ -303,7 +303,7 @@ def adminlevelthree_auth(app, mail):
 
     </html> 
     '''
-        msg = Message('Application Status Changed', sender='helpdesk@trti-maha.in', recipients=[email])
+        msg = Message('Application Status Changed', sender='noreply_fellowship@trti-maha.in', recipients=[email])
         msg.html = msg_body
         mail.send(msg)
 

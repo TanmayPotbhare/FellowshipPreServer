@@ -293,9 +293,9 @@ def old_user_auth(app):
                 cnx.commit()
                 print('I have updated status and allt threee to accepted')
                 cursor.execute("SELECT email FROM award_letter where email = %s", (email,))
-                results = cursor.fetchall()
-                print('Result of Award Letter', results)
-                if email not in results:  # Check if the email is not already in the existing emails
+                output = cursor.fetchall()
+                print('Result of Award Letter', output)
+                if email not in output:  # Check if the email is not already in the existing emails
                     cursor.execute("INSERT INTO award_letter (email) VALUES (%s) ", (email,))
                     cnx.commit()
                 phd_registration_year = record['phd_registration_year']

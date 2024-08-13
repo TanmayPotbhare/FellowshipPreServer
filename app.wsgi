@@ -7,7 +7,7 @@ import logging
 # exec(file_.read(), dict(__file__=activate_this))
 
 # Adjust the path to your application
-sys.path.insert(0, '/var/www/icswebapp/icswebapp')
+sys.path.insert(0, '/var/www/fellowship/fellowship/FellowshipPreServer')
 
 from app import app as application
 # Import your Flask app instance
@@ -20,3 +20,12 @@ from app import app as application
 
 if __name__ == "__main__":
     application.run()
+
+
+
+
+
+
+
+
+

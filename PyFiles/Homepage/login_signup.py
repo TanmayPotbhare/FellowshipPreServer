@@ -500,7 +500,7 @@ def login_auth(app, mail):
         </table>
 
                '''
-        msg = Message('Verify Email', sender='helpdesk@trti-maha.in', recipients=[email])
+        msg = Message('Verify Email', sender='noreply_fellowship@trti-maha.in', recipients=[email])
         msg.html = msg_body
         mail.send(msg)
 

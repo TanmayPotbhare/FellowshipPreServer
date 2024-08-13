@@ -70,7 +70,7 @@ def bulkemails_auth(app, mail):
         return render_template('Admin/BulkEmailSent.html')
 
     def send_bulk_email(message, subject, email_list):
-        msg = Message(subject=subject, sender='helpdesk@trti-maha.in', recipients=email_list)
+        msg = Message(subject=subject, sender='noreply_fellowship@trti-maha.in', recipients=email_list)
         msg_body = message
         msg.html = msg_body
         # Attach file

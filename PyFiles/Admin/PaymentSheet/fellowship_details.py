@@ -6,10 +6,10 @@ from flask_mail import Mail, Message
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 from authentication.middleware import auth
 
-payment_tracking_blueprint = Blueprint('payment_tracking', __name__)
+fellowshipdetails_blueprint = Blueprint('fellowshipdetails', __name__)
 
 
-def payment_tracking_auth(app):
+def fellowshipdetails_auth(app):
     # ------ HOST Configs are in classes/connection.py
     host = HostConfig.host
     app_paths = ConfigPaths.paths.get(host)
@@ -17,64 +17,28 @@ def payment_tracking_auth(app):
         for key, value in app_paths.items():
             app.config[key] = value
 
-    @payment_tracking_blueprint.route('/payment_tracking', methods=['GET', 'POST'])
-    def payment_tracking():
-        host = HostConfig.host
-        connect_param = ConnectParam(host)
-        cnx, cursor = connect_param.connect(use_dict=True)
+    @fellowshipdetails_blueprint.route('/fellowship_details/<string:email>', methods=['GET', 'POST'])
+    def fellowship_details(email):
 
-        print('Connected')
-        records_display = []
-        print('Post method')
-        if request.method == 'POST':
-            start_date = request.form.get('start_date')
-            end_date = request.form.get('end_date')
-
-            if not start_date or not end_date:
-                flash('Please provide both start and end dates', 'error')
-                return redirect('/payment_tracking')  # Redirect back to the form
-
-            # Query to fetch payment information for accepted students within the date range
-            sql = """
-                    SELECT ap.*, ps.*
-                    FROM application_page ap
-                    JOIN payment_sheet ps ON ap.email = ps.email
-                    WHERE ap.final_approval = 'accepted'
-                    AND ap.joining_report IS NOT NULL 
-                    AND ap.application_date BETWEEN %s AND %s;
-                """
-
-            cursor.execute(sql, (start_date, end_date))
-            records_display = cursor.fetchall()
-
-            flash('Payment information retrieved successfully', 'success')
-        # No else block is needed in this case
-        print(records_display)
-        return render_template('Admin/payment_tracking.html', records_display=records_display)
-
-    @payment_tracking_blueprint.route('/budget_report/<string:email>', methods=['GET', 'POST'])
-    def budget_report(email):
         host = HostConfig.host
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
 
         cursor.execute("SELECT * FROM application_page where email=%s ", (email,))
         result = cursor.fetchall()
-        print("result" + str(result))
+        startDate = result[0]['final_approved_date']
 
-        cursor.execute("SELECT * FROM payment_sheet where email=%s ", (email,))
+
+        cursor.execute("SELECT * FROM payment_sheet WHERE email=%s", (email,))
         record = cursor.fetchall()
-        print("record" + str(record))
         table_data = []
 
         for row in record:
             total_months = int(row['total_months'])
-            print("Total Months" + str(total_months))
-            start_date = datetime.strptime(row['duration_date_from'], '%Y-%m-%d')
-            print("Start Date" + str(start_date))
+            start_date = startDate
             end_date = datetime.strptime(row['duration_date_to'], '%Y-%m-%d')
-            print("End Date" + str(end_date))
 
+            # First installment
             table_data.append({
                 'sr_no': 1,
                 'period': total_months,
@@ -108,10 +72,6 @@ def payment_tracking_auth(app):
 
         # approve_pay = approve_payment(email)
 
-        cursor.execute("SELECT * FROM award_letter where email=%s ", (email,))
-        solution = cursor.fetchall()
-        print("record" + str(solution))
-
         cursor.execute("SELECT fellowship_withdrawn FROM signup where email=%s ", (email,))
         output = cursor.fetchall()
         print("record" + str(output))
@@ -119,5 +79,5 @@ def payment_tracking_auth(app):
         cnx.commit()
         cursor.close()
         cnx.close()
-        return render_template('Admin/budget_report.html', result=result, record=record, output=output, solution=solution,
-                               table_data=table_data, total_period=total_period, total_balance=total_balance)
+        return render_template('Admin/PaymentSheet/fellowship_details.html', result=result, record=record,
+                               output=output, table_data=table_data)

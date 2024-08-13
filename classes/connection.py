@@ -37,6 +37,7 @@ class ConfigPaths:
             'UPLOAD_THESIS': '/var/www/icswebapp/icswebapp/static/uploads/upload_thesis/',
             'EMAIL_DOCS': '/var/www/icswebapp/icswebapp/static/uploads/sendbulkemails/',
             'ASSESSMENT_REPORT': '/var/www/icswebapp/icswebapp/static/uploads/assessment_report/',
+            'UNDERTAKING_REPORT': '/var/www/icswebapp/icswebapp/static/uploads/undertaking_doc/',
             # Add other paths here
         },
         HostConfig.hostserver: {
@@ -52,6 +53,7 @@ class ConfigPaths:
             'UPLOAD_THESIS': 'static/uploads/upload_thesis/',
             'EMAIL_DOCS': 'static/uploads/sendbulkemails/',
             'ASSESSMENT_REPORT': 'static/uploads/assessment_report/',
+            'UNDERTAKING_REPORT': 'static/uploads/undertaking_doc/',
             # Add other paths here
         }
     }

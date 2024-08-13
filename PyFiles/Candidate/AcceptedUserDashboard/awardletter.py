@@ -206,6 +206,14 @@ def awardletter_auth(app):
                     self.dashed_line(10, self.get_y(), 200, self.get_y(), dash_length=3, space_length=1)
 
                     self.ln(5)  # Adjust this value to control the space after the line
+                    self.set_font("Arial", size=10)
+                    self.cell(0, 10, "No.: Research-2024/Case.No 9/Desk-4/1832",
+                              ln=False)  # Add the number on the left without a line break
+
+                    # Move to the right for the date
+                    self.cell(0, 10, "Date: 2024-07-04", align="R",
+                              ln=True)  # Add the date on the right with a line break
+
                     self.set_font("Arial", "B", size=10)
                     self.cell(0, 10,
                               " Fellowship Award Letter",

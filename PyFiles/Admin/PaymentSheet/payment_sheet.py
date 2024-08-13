@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import mysql.connector
 from classes.connection import HostConfig, ConfigPaths, ConnectParam
 import os
@@ -28,7 +28,6 @@ def payment_sheet_auth(app):
             host = HostConfig.host
             connect_param = ConnectParam(host)
             cnx, cursor = connect_param.connect(use_dict=True)
-            print('I have made connection')
 
             # Fetch user data based on the email
             cursor.execute(
@@ -39,15 +38,15 @@ def payment_sheet_auth(app):
                 # Calculate values based on user data
                 applicant_id = row['applicant_id']
                 faculty = row["faculty"]
-                print('faculty', faculty)
+
                 joining_date = row["phd_registration_date"]
                 city = row['city']
-                print(joining_date)
+
 
                 # Calculate Count Yearly
                 if faculty == "Arts":
                     count_yearly = 20500
-                elif faculty == "Law":
+                elif faculty == "Other":
                     count_yearly = 20500
                 elif faculty == "Commerce":
                     count_yearly = 20500
@@ -81,16 +80,22 @@ def payment_sheet_auth(app):
                 else:
                     rate = '8%'
 
-                print("Rate:", rate)
 
                 # Initialize the "from" and "to" date to empty strings
                 duration_date_from = ""
                 duration_date_to = ""
 
                 if joining_date:  # Check if joining_date is not None
-                    # Calculate Duration Date (adding 3 months to joining date)
-                    duration_date_from = joining_date.strftime('%Y-%m-%d')  # "from" date is the joining date
-                    duration_date_to = (joining_date + timedelta(days=90)).strftime('%Y-%m-%d')  # 90 days = 3 months
+                    # The "from" date is the final approved date as a datetime object
+                    duration_from = row['final_approved_date']  # Ensure this is used correctly
+
+
+                    # Calculate Duration Date (adding 3 months to the final approved date)
+                    duration_to = duration_from + timedelta(days=90)
+
+                    # Format both dates as strings if needed
+                    duration_date_from = duration_from.strftime('%Y-%m-%d')
+                    duration_date_to = duration_to.strftime('%Y-%m-%d')
 
                 # Calculate Total Months
                 total_months = 3
@@ -111,17 +116,21 @@ def payment_sheet_auth(app):
 
                 total = total_fellowship + total_hra
 
+                period_installment_1 = '3 Months'
+                period_installment_2 = '3 Months'
+                period_installment_3 = '3 Months'
+
                 # Create a record dictionary for the user
                 record = {
                     "applicant_id": row['applicant_id'],
-                    "full_name": str(row['first_name']) + '' + str(row['last_name']),
+                    "full_name": str(row['first_name']) + ' ' + str(row['last_name']),
                     "first_name": row['first_name'],
                     "last_name": row['last_name'],
                     "email": row["email"],
                     "faculty": row['faculty'],
                     "joining_date": row['phd_registration_date'],
                     "city": row['city'],
-                    "duration": duration_date_from + '' + duration_date_to,
+                    "duration": duration_date_from + ' ' + duration_date_to,
                     "rate": rate,
                     "count": count_yearly,
                     "amount": hra_amount,
@@ -134,7 +143,13 @@ def payment_sheet_auth(app):
                     "fellowship": fellowship,
                     "to_fellowship": total_fellowship,
                     "phd_registration_year": row['phd_registration_year'],
-                    "id": row['id']
+                    "id": row['id'],
+                    'period_installment_1': period_installment_1,
+                    'period_installment_2': period_installment_2,
+                    'period_installment_3': period_installment_3,
+                    'balance_installment_1': 31000,
+                    'balance_installment_2': 31000,
+                    'balance_installment_3': 31000
                 }
 
                 user_records.append(record)
@@ -149,27 +164,29 @@ def payment_sheet_auth(app):
                 result = cursor.fetchone()
 
                 if result:
-                    print("Existing Record:", email)
+                    pass
                     # Record already exists, do not insert again
                 else:
-                    print("Record not found, proceeding with the INSERT query")
                     # Insert values into the payment_sheet table
-                    host = HostConfig.host
-                    connect_param = ConnectParam(host)
-                    cnx, cursor = connect_param.connect(use_dict=True)
-
                     insert_query = """
                         INSERT INTO payment_sheet (
                             full_name, faculty, city, duration_date_from, duration_date_to,
                             rate, count, amount, months, total_hra, total,
                             total_months, fellowship,
-                            to_fellowship, email
+                            to_fellowship, email, 
+                            period_installment_1, period_installment_2, period_installment_3, 
+                            balance_installment_1, balance_installment_2, balance_installment_3
                         )
-                        VALUES (%(full_name)s, %(faculty)s, %(city)s, %(duration_date_from)s, %(duration_date_to)s,
-                                %(rate)s, %(count)s, %(amount)s, %(months)s, %(total_hra)s, %(total)s, 
-                                %(total_months)s, %(fellowship)s, %(to_fellowship)s, %(email)s)         
+                        VALUES (
+                            %(full_name)s, %(faculty)s, %(city)s, %(duration_date_from)s, %(duration_date_to)s,
+                            %(rate)s, %(count)s, %(amount)s, %(months)s, %(total_hra)s, %(total)s, 
+                            %(total_months)s, %(fellowship)s, %(to_fellowship)s, %(email)s, 
+                            %(period_installment_1)s, %(period_installment_2)s, %(period_installment_3)s,
+                            %(balance_installment_1)s, %(balance_installment_2)s, %(balance_installment_3)s
+                        )       
                     """
                     # Execute the INSERT query
+
                     cursor.execute(insert_query, record)
 
                     # Commit the changes to the database
@@ -182,4 +199,4 @@ def payment_sheet_auth(app):
             cursor.close()
             cnx.close()
 
-        return render_template('Admin/payment_sheet.html', user_records=user_records)
+        return render_template('Admin/PaymentSheet/payment_sheet.html', user_records=user_records)

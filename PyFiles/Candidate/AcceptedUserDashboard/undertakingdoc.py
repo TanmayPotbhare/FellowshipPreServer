@@ -50,18 +50,25 @@ def undertakingdoc_auth(app):
             existing_report = result['undertaking_doc']
             undertaking_doc = save_file_undertaking_report(request.files['undertaking_doc'], first_name, last_name)
             undertaking_doc_date = date.today()
-            print(undertaking_doc)
+            print('undertaking_doc', undertaking_doc)
             print(existing_report)
 
             update_query = "UPDATE application_page SET undertaking_doc=%s, undertaking_doc_date=%s WHERE email = %s"
             cursor.execute(update_query, (undertaking_doc, undertaking_doc_date, email))
             cnx.commit()
+            flash('Undertaking Document Report Uploaded Successfully', 'success')
 
+        cursor.execute(
+            "SELECT undertaking_doc FROM application_page WHERE email = %s",
+            (email,))
+        output = cursor.fetchone()
+        doc = output['undertaking_doc']
+        print(doc)
         cursor.close()
         cnx.close()
         return render_template('Candidate/AcceptedUserDashboard/undertakingDoc.html', records=records,
                                undertaking_doc_date=undertaking_doc_date, undertaking_doc=undertaking_doc,
-                               esult=result, existing_report=existing_report)
+                               esult=result, existing_report=existing_report, doc=doc)
     # --------------------  Function End ----------------------------
 
     def save_file_undertaking_report(file, firstname, lastname):

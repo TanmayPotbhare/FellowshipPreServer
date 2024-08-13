@@ -29,6 +29,10 @@ multilingual_content = {
         'vijay_waghmare_desgn': "Hon'ble Additional Chief Secretary, Tribal Development Department",
         'rajendra_bharud': "Dr. Rajendra Bharud I.A.S.",
         'rajendra_bharud_desgn': "Hon'ble Commissioner, Tribal Research and Training Institute, Pune",
+        'chanchala_patil': 'Smt. Chanchal Patil',
+        'chanchala_patil_design': 'Joint Director, Tribal Research and Training Institute, Pune',
+        'hansdhwaj_sonawane': 'Shri. Hansdhwaj Sonawane',
+        'hansdhwaj_sonawane_design': 'Deputy Director, Tribal Research and Training Institute, Pune',
 
         # --------------- Menubar -----------------
         'home': 'Home',
@@ -139,6 +143,10 @@ multilingual_content = {
         'vijay_waghmare_desgn': "माननीय अतिरिक्त मुख्य सचिव, आदिवासी विकास विभाग",
         'rajendra_bharud': "डॉ. राजेंद्र भारूड भा.प्र.से.",
         'rajendra_bharud_desgn': "माननीय आयुक्त्त, आदिवासी संशोधन आणि प्रशिक्षण संस्था, पुणे",
+        'chanchala_patil': 'श्रीमती. चंचल पाटील',
+        'chanchala_patil_design': 'सहसंचालक, आदिवासी संशोधन आणि प्रशिक्षण संस्था, पुणे',
+        'hansdhwaj_sonawane': 'श्री. हंसध्वज सोनवणे',
+        'hansdhwaj_sonawane_design': 'उपसंचालक, आदिवासी संशोधन आणि प्रशिक्षण संस्था, पुणे',
 
         # --------------- Menubar -----------------
         'home': 'मुख्यपृष्ठ',

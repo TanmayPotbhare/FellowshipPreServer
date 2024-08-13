@@ -1,4 +1,3 @@
-from collections import defaultdict
 from flask import Flask, render_template, make_response, request, redirect, session, url_for, jsonify, \
     flash
 from openpyxl import Workbook
@@ -48,13 +47,22 @@ cursor = cnx.cursor()
 
 
 # ------------ MAIL CONFIGURATION -------------------
-app.config['MAIL_SERVER'] = 'us2.smtp.mailhostbox.com'
+# app.config['MAIL_SERVER'] = 'us2.smtp.mailhostbox.com'
+# app.config['MAIL_PORT'] = 587
+# app.config['MAIL_USERNAME'] = 'helpdesk@trti-maha.in'                     # --------  E-MAIL CONNECTION
+# app.config['MAIL_PASSWORD'] = 'FOtIEzp9'
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_DEBUG'] = True  # Enable debugging
+# mail = Mail(app)
+app.config['MAIL_SERVER'] = 'smtp.zeptomail.in'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'helpdesk@trti-maha.in'                     # --------  E-MAIL CONNECTION
-app.config['MAIL_PASSWORD'] = 'FOtIEzp9'
+app.config['MAIL_USERNAME'] = 'noreply_fellowship@trti-maha.in'
+app.config['MAIL_PASSWORD'] = 'PHtE6r1YFuzp2TJ69BkFsfewQ8+iPI8v/7hvKABA5IxGCKRVGU0G/t4jkWS/rUsvAPNAFPaYz948tb6c4r2HIGa4N2pIWmqyqK3sx/VYSPOZsbq6x00Vt1gackbeVI/udNVt0S3Vud/fNA=='
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_DEBUG'] = True  # Enable debugging
+app.config['MAIL_DEFAULT_SENDER'] = ('Your Name', 'noreply_fellowship@trti-maha.in')
 mail = Mail(app)
 # ---------------------xxx-------------------------------
 
@@ -148,6 +156,7 @@ from PyFiles.Candidate.AcceptedUserDashboard.change_guide import changeguide_blu
 from PyFiles.Candidate.AcceptedUserDashboard.change_research import changeres_blueprint, changeres_auth
 from PyFiles.Candidate.AcceptedUserDashboard.phdaward import phdaward_blueprint, phdaward_auth
 from PyFiles.Candidate.AcceptedUserDashboard.thesis import thesis_blueprint, thesis_auth
+from PyFiles.Candidate.AcceptedUserDashboard.Installments.installments import installments_blueprint, installments_auth
 
 # ---------------------------------------- APP MAIL CONFIG ---------------------------------
 adhaarseed_auth(app)
@@ -164,6 +173,7 @@ changeguide_auth(app)
 changeres_auth(app)
 phdaward_auth(app)
 thesis_auth(app)
+installments_auth(app)
 
 # ---------------------------------------- REGISTER BLUEPRINTS -----------------------------
 app.register_blueprint(adhaarseed_blueprint)
@@ -180,6 +190,7 @@ app.register_blueprint(changeguide_blueprint)
 app.register_blueprint(changeres_blueprint)
 app.register_blueprint(phdaward_blueprint)
 app.register_blueprint(thesis_blueprint)
+app.register_blueprint(installments_blueprint)
 
 # ------------------------------- END Dashboard for Accepted USER PY FILES AND ROUTES -------------------------------------
 
@@ -198,7 +209,8 @@ from PyFiles.Admin.AdminLevels.admin_level_one import adminlevelone_blueprint, a
 from PyFiles.Admin.AdminLevels.admin_level_two import adminleveltwo_blueprint, adminleveltwo_auth
 from PyFiles.Admin.AdminLevels.admin_level_three import adminlevelthree_blueprint, adminlevelthree_auth
 
-from PyFiles.Admin.payment_sheet import payment_sheet_blueprint, payment_sheet_auth
+from PyFiles.Admin.PaymentSheet.payment_sheet import payment_sheet_blueprint, payment_sheet_auth
+from PyFiles.Admin.PaymentSheet.fellowship_details import fellowshipdetails_blueprint, fellowshipdetails_auth
 from PyFiles.Admin.budget import budget_blueprint, budget_auth
 from PyFiles.Admin.payment_tracking import payment_tracking_blueprint, payment_tracking_auth
 from PyFiles.Admin.fellowship_awarded import fellowship_awarded_blueprint, fellowship_awarded_auth
@@ -223,6 +235,7 @@ adminleveltwo_auth(app, mail)
 adminlevelthree_auth(app, mail)
 
 payment_sheet_auth(app)
+fellowshipdetails_auth(app)
 budget_auth(app)
 payment_tracking_auth(app)
 fellowship_awarded_auth(app)
@@ -247,6 +260,7 @@ app.register_blueprint(adminleveltwo_blueprint)
 app.register_blueprint(adminlevelthree_blueprint)
 
 app.register_blueprint(payment_sheet_blueprint)
+app.register_blueprint(fellowshipdetails_blueprint)
 app.register_blueprint(budget_blueprint)
 app.register_blueprint(payment_tracking_blueprint)
 app.register_blueprint(fellowship_awarded_blueprint)
@@ -525,116 +539,13 @@ def export_payment_tracking_sheet():
     return response
 
 
-@app.route('/installment_userpage', methods=['GET', 'POST'])
-def installment_userpage():
-    email = session['email']
-    cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
-                                  host=host,
-                                  database='ICSApplication')
-    cursor = cnx.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM application_page where email=%s", (email,))
-    result = cursor.fetchall()
-    print("result" + str(result))
-
-    cursor.execute("SELECT * FROM payment_sheet where email=%s", (email,))
-    record = cursor.fetchall()
-    print("record" + str(record))
-    table_data = []
-
-    for row in record:
-        total_months = int(row['total_months'])
-        print("Total Months" + str(total_months))
-        start_date = datetime.strptime(row['duration_date_from'], '%Y-%m-%d')
-        print("Start Date" + str(start_date))
-        end_date = datetime.strptime(row['duration_date_to'], '%Y-%m-%d')
-        print("End Date" + str(end_date))
-
-        # First installment
-        table_data.append({
-            'sr_no': 1,
-            'period': total_months,
-            'start_period': start_date.strftime('%Y-%m-%d'),
-            'end_period': end_date.strftime('%Y-%m-%d'),
-            'due_date': (end_date + timedelta(days=60)).strftime('%Y-%m-%d'),
-            'balance': 31000,
-            'installment_number': 1,
-            'paid': 'Not Paid'  # Adjust this based on your payment status logic
-        })
-
-        # Generate next two installments
-        for i in range(2, 4):
-            next_start_date = end_date + timedelta(days=30 * (i - 1))
-            next_end_date = next_start_date + timedelta(days=90)
-            table_data.append({
-                'sr_no': i,
-                'period': total_months,
-                'start_period': next_start_date.strftime('%Y-%m-%d'),
-                'end_period': next_end_date.strftime('%Y-%m-%d'),
-                'due_date': (next_end_date + timedelta(days=60)).strftime('%Y-%m-%d'),
-                'balance': 31000,
-                'installment_number': i,
-                'paid': row['paid_or_not_installment_1']  # Adjust this based on your payment status logic
-            })
-
-        print(table_data)
-        total_period = sum(int(row['period']) for row in table_data)
-        total_balance = sum(int(row['balance']) for row in table_data)
-        print("Total Period" + str(total_period))
-
-    approve_pay = approve_payment(email)
-
-    cursor.execute("SELECT * FROM award_letter where email=%s ", (email,))
-    solution = cursor.fetchall()
-    print("record" + str(solution))
-
-    cursor.execute("SELECT fellowship_withdrawn FROM signup where email=%s ", (email,))
-    output = cursor.fetchall()
-    print("record" + str(output))
-
-    cnx.commit()
-    cursor.close()
-    cnx.close()
-    return render_template('installment_userpage.html', result=result, record=record, output=output, solution=solution,
-                           table_data=table_data, total_period=total_period, total_balance=total_balance,
-                           approve_pay=approve_pay)
 
 
-def approve_payment(email):
-    cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
-                                  host=host,
-                                  database='ICSApplication')
-    cursor = cnx.cursor(dictionary=True)
-    # Update the 'paid' column for the specified email
-    cursor.execute("UPDATE payment_sheet SET paid_or_not_installment_1='Paid' WHERE email=%s", (email,))
-    cnx.commit()
-    cursor.close()
-    cnx.close()
 
 
-@app.route('/fellowship_details/<string:email>', methods=['GET', 'POST'])
-def fellowship_details(email):
 
-    cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
-                                  host=host,
-                                  database='ICSApplication')
-    cursor = cnx.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM application_page where email=%s ", (email,))
-    result = cursor.fetchall()
-    print("result" + str(result))
 
-    cursor.execute("SELECT * FROM payment_sheet where email=%s ", (email,))
-    record = cursor.fetchall()
-    print("record" + str(record))
 
-    cursor.execute("SELECT fellowship_withdrawn FROM signup where email=%s ", (email,))
-    output = cursor.fetchall()
-    print("record" + str(output))
-
-    cnx.commit()
-    cursor.close()
-    cnx.close()
-    return render_template('fellowship_details.html', result=result, record=record, output=output)
 
 
 @app.route('/get_year_count', methods=['GET', 'POST'])
@@ -2429,7 +2340,7 @@ def insert_into_old_users(email, applicant_id, phd_registration_date, date_of_bi
 @app.errorhandler(404)
 def page_not_found(error):
     requested_url = request.url
-    flash(f'The page you are looking for ("{requested_url}") is under Development, Please try again later.', 'warning')
+    flash(f'The page you are  for ("{requested_url}") is under Development, Please try again later.', 'warning')
     return redirect(request.referrer)
 
 
