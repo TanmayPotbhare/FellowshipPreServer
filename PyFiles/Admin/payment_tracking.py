@@ -29,7 +29,8 @@ def payment_tracking_auth(app):
         if request.method == 'POST':
             start_date = request.form.get('start_date')
             end_date = request.form.get('end_date')
-
+            print('start_date', start_date)
+            print(end_date)
             if not start_date or not end_date:
                 flash('Please provide both start and end dates', 'error')
                 return redirect('/payment_tracking')  # Redirect back to the form
@@ -41,7 +42,7 @@ def payment_tracking_auth(app):
                     JOIN payment_sheet ps ON ap.email = ps.email
                     WHERE ap.final_approval = 'accepted'
                     AND ap.joining_report IS NOT NULL 
-                    AND ap.application_date BETWEEN %s AND %s;
+                    AND ap.phd_registration_date BETWEEN %s AND %s;
                 """
 
             cursor.execute(sql, (start_date, end_date))
@@ -49,7 +50,6 @@ def payment_tracking_auth(app):
 
             flash('Payment information retrieved successfully', 'success')
         # No else block is needed in this case
-        print(records_display)
         return render_template('Admin/payment_tracking.html', records_display=records_display)
 
     @payment_tracking_blueprint.route('/budget_report/<string:email>', methods=['GET', 'POST'])

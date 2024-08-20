@@ -77,17 +77,24 @@ def viewform_auth(app):
         cursor.execute(sql, (email,))
         # Fetch all records matching the query
         records = cursor.fetchall()
+        print('FirstName', records)
         # Close the cursor and database connection
         sql = """SELECT year FROM signup WHERE email = %s"""
         cursor.execute(sql, (email,))
         # Fetch all records matching the query
         result = cursor.fetchall()
+        year = result[0]['year']
         cursor.close()
         cnx.close()
         # Process each record
+        if records:
+            user = records[0]['first_name']
+        else:
+            user = 'Admin'
         for record in records:
             if not record['applicant_photo']:
                 session['applicant_photo'] = '/static/assets/img/default_user.png'
             else:
                 session['applicant_photo'] = record['applicant_photo']
-        return render_template('Candidate/commonFiles/application-list.html', records=records, result=result)
+        return render_template('Candidate/commonFiles/application-list.html', records=records, result=result,
+                               user=user, year=year)

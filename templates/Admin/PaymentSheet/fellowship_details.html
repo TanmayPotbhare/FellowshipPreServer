@@ -1123,42 +1123,198 @@
                                                   <th scope="col">End Period</th>
                                                   <th scope="col">Balance</th>
                                                   <th scope="col">Installment Number</th>
-                                                  <th scope="col">Paid or Not</th>
+                                                  <th scope="col">Payment Status</th>
                                                   <th scope="col">Due Date</th>
+                                                  <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for res in table_data %}
-                                                  <tr class="text-center">
-                                                    <td>{{ loop.index }}</td>
-                                                    <td>{{ res['period'] }} Months</td>
-                                                    <td>{{ res['start_period'] }}</td>
-                                                    <td>{{ res['end_period'] }}</td>
-                                                    <td>{{ res['balance'] }}</td>
-                                                    <td>{{ res['installment_number'] }}</td>
-                                                    <td>
-                                                      {% if res['paid'] is none %}
-                                                          <span class="text-danger fw-bold">Not Paid</span>
-                                                      {% else %}
-                                                          <span class="text-success fw-bold">{{ res['paid'] }}</span>
-                                                      {% endif %}
-                                                    </td>
-                                                    <td>{{ res['due_date'] }}</td>
-                        <!--                                <td>-->
-                        <!--                                  <button type="submit" name="accept" value="{{ approve_pay }}"-->
-                        <!--                                  class="btn btn-sm btn-success tooltip-trigger" data-bs-toggle="tooltip" data-bs-placement="top"-->
-                        <!--                                  data-bs-original-title="Approve Payment"><i class="bx bxs-check-circle"></i></button>-->
-                        <!--                                </td>-->
-                                                  </tr>
-                                                {% endfor %}
+                                                <tr class="text-center">
+                                                    <form action="{{ url_for('fellowshipdetails.submit_installments_admin') }}" method="POST">
+                                                        <td>1</td>
+                                                        <td>{{ installment_1['period'] }} Months</td>
+                                                        <td>{{ installment_1['start_period'] }}</td>
+                                                        <td>{{ installment_1['end_period'] }}</td>
+                                                        <td>{{ installment_1['balance'] }}</td>
+                                                        <td>{{ installment_1['installment_number'] }}</td>
+                                                        <td>
+                                                            {% if installment_1['paid'] == 'None' %}
+                                                                {% if installments %}
+                                                                    {% if installments[0]['status_paid'] %}
+                                                                        <span class="text-success fw-bold">{{ installments[0]['status_paid'] }}</span>
+                                                                    {% else %}
+                                                                        <span class="text-danger fw-bold">Not Paid</span>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <span class="text-danger fw-bold">Not Paid</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ installment_1['due_date'] }}</td>
+                                                        <td>
+                                                            {% if installment_1['paid'] == 'None' %}
+                                                                {% if installments and installments[0]['status_paid'] == 'Paid' %}
+                                                                    <span class="text-success fw-bold">
+                                                                        <i class="ri-checkbox-line"></i>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <input type="hidden" name="period" value="{{ installment_1['period'] }}">
+                                                                    <input type="hidden" name="start_period" value="{{ installment_1['start_period'] }}">
+                                                                    <input type="hidden" name="end_period" value="{{ installment_1['end_period'] }}">
+                                                                    <input type="hidden" name="recieved_pay" value="{{ installment_1['balance'] }}">
+                                                                    <input type="hidden" name="inst_num" value="{{ installment_1['installment_number'] }}">
+                                                                    <input type="hidden" name="recieved_date" value="{{ today }}">
+
+                                                                    <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip"
+                                                                            data-bs-placement="right" data-bs-original-title="Pay Installment">
+                                                                        <i class="ri-check-double-fill"></i>
+                                                                    </button>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <!-- If installment_3['paid'] is not None, render the same button and inputs -->
+                                                                <input type="hidden" name="period" value="{{ installment_1['period'] }}">
+                                                                <input type="hidden" name="start_period" value="{{ installment_1['start_period'] }}">
+                                                                <input type="hidden" name="end_period" value="{{ installment_1['end_period'] }}">
+                                                                <input type="hidden" name="recieved_pay" value="{{ installment_1['balance'] }}">
+                                                                <input type="hidden" name="inst_num" value="{{ installment_1['installment_number'] }}">
+                                                                <input type="hidden" name="recieved_date" value="{{ today }}">
+
+                                                                <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip"
+                                                                        data-bs-placement="right" data-bs-original-title="Pay Installment">
+                                                                    <i class="ri-check-double-fill"></i>
+                                                                </button>
+                                                            {% endif %}
+                                                        </td>
+                                                    </form>
+                                                </tr>
+                                                <!-- Installment 2 -->
+                                                <tr class="text-center">
+                                                    <form action="{{ url_for('fellowshipdetails.submit_installments_admin') }}" method="POST">
+                                                        <td>2</td>
+                                                        <td>{{ installment_2['period'] }} Months</td>
+                                                        <td>{{ installment_2['start_period'] }}</td>
+                                                        <td>{{ installment_2['end_period'] }}</td>
+                                                        <td>{{ installment_2['balance'] }}</td>
+                                                        <td>{{ installment_2['installment_number'] }}</td>
+                                                        <td>
+                                                            {% if installment_2['paid'] == 'None' %}
+                                                               {% if installments %}
+                                                                    {% if installments[0]['status_paid_2'] %}
+                                                                        <span class="text-success fw-bold">{{ installments[0]['status_paid_2'] }}</span>
+                                                                    {% else %}
+                                                                        <span class="text-danger fw-bold">Not Paid</span>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <span class="text-danger fw-bold">Not Paid</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ installment_2['due_date'] }}</td>
+                                                        <td>
+                                                            {% if installment_2['paid'] == 'None' %}
+                                                                {% if installments and installments[0]['status_paid_2'] == 'Paid' %}
+                                                                    <span class="text-success fw-bold">
+                                                                        <i class="ri-checkbox-line"></i>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <input type="hidden" name="period" value="{{ installment_2['period'] }}">
+                                                                    <input type="hidden" name="start_period" value="{{ installment_2['start_period'] }}">
+                                                                    <input type="hidden" name="end_period" value="{{ installment_2['end_period'] }}">
+                                                                    <input type="hidden" name="recieved_pay" value="{{ installment_2['balance'] }}">
+                                                                    <input type="hidden" name="inst_num" value="{{ installment_2['installment_number'] }}">
+                                                                    <input type="hidden" name="recieved_date" value="{{ today }}">
+
+                                                                    <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip"
+                                                                            data-bs-placement="right" data-bs-original-title="Pay Installment">
+                                                                        <i class="ri-check-double-fill"></i>
+                                                                    </button>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <!-- If installment_3['paid'] is not None, render the same button and inputs -->
+                                                                <input type="hidden" name="period" value="{{ installment_2['period'] }}">
+                                                                <input type="hidden" name="start_period" value="{{ installment_2['start_period'] }}">
+                                                                <input type="hidden" name="end_period" value="{{ installment_2['end_period'] }}">
+                                                                <input type="hidden" name="recieved_pay" value="{{ installment_2['balance'] }}">
+                                                                <input type="hidden" name="inst_num" value="{{ installment_2['installment_number'] }}">
+                                                                <input type="hidden" name="recieved_date" value="{{ today }}">
+
+                                                                <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip"
+                                                                        data-bs-placement="right" data-bs-original-title="Pay Installment">
+                                                                    <i class="ri-check-double-fill"></i>
+                                                                </button>
+                                                            {% endif %}
+                                                        </td>
+                                                    </form>
+                                                </tr>
+                                                <!-- Installment 3 -->
+                                                <tr class="text-center">
+                                                    <form action="{{ url_for('fellowshipdetails.submit_installments_admin') }}" method="POST">
+                                                        <td>3</td>
+                                                        <td>{{ installment_3['period'] }} Months</td>
+                                                        <td>{{ installment_3['start_period'] }}</td>
+                                                        <td>{{ installment_3['end_period'] }}</td>
+                                                        <td>{{ installment_3['balance'] }}</td>
+                                                        <td>{{ installment_3['installment_number'] }}</td>
+                                                        <td>
+                                                            {% if installment_3['paid'] == 'None' %}
+                                                               {% if installments %}
+                                                                    {% if installments[0]['status_paid_3'] %}
+                                                                        <span class="text-success fw-bold">{{ installments[0]['status_paid_3'] }}</span>
+                                                                    {% else %}
+                                                                        <span class="text-danger fw-bold">Not Paid</span>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <span class="text-danger fw-bold">Not Paid</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ installment_3['due_date'] }}</td>
+                                                        <td>
+                                                            {% if installment_3['paid'] == 'None' %}
+                                                                {% if installments and installments[0]['status_paid_3'] == 'Paid' %}
+                                                                    <span class="text-success fw-bold">
+                                                                        <i class="ri-checkbox-line"></i>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <input type="hidden" name="period" value="{{ installment_3['period'] }}">
+                                                                    <input type="hidden" name="start_period" value="{{ installment_3['start_period'] }}">
+                                                                    <input type="hidden" name="end_period" value="{{ installment_3['end_period'] }}">
+                                                                    <input type="hidden" name="recieved_pay" value="{{ installment_3['balance'] }}">
+                                                                    <input type="hidden" name="inst_num" value="{{ installment_3['installment_number'] }}">
+                                                                    <input type="hidden" name="recieved_date" value="{{ today }}">
+
+                                                                    <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip"
+                                                                            data-bs-placement="right" data-bs-original-title="Pay Installment">
+                                                                        <i class="ri-check-double-fill"></i>
+                                                                    </button>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <!-- If installment_3['paid'] is not None, render the same button and inputs -->
+                                                                <input type="hidden" name="period" value="{{ installment_3['period'] }}">
+                                                                <input type="hidden" name="start_period" value="{{ installment_3['start_period'] }}">
+                                                                <input type="hidden" name="end_period" value="{{ installment_3['end_period'] }}">
+                                                                <input type="hidden" name="recieved_pay" value="{{ installment_3['balance'] }}">
+                                                                <input type="hidden" name="inst_num" value="{{ installment_3['installment_number'] }}">
+                                                                <input type="hidden" name="recieved_date" value="{{ today }}">
+
+                                                                <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="tooltip"
+                                                                        data-bs-placement="right" data-bs-original-title="Pay Installment">
+                                                                    <i class="ri-check-double-fill"></i>
+                                                                </button>
+                                                            {% endif %}
+                                                        </td>
+                                                    </form>
+                                                </tr>
+                                                <!-- Total Balance Row -->
                                                 <tr>
                                                     <td colspan="4" class="text-end fw-bold">Total</td>
-                                                    <td class="fw-bold text-center">93000</td>
+                                                    <td class="fw-bold text-center">{{ total_balance }}</td>
                                                     <td colspan="4"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div><br>
+                                    </div>
+
                                     <div class="row table-responsive">
                                         <table class="table table-bordered">
                                             <thead>

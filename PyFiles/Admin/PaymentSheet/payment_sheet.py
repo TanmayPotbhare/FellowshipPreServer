@@ -29,6 +29,7 @@ def payment_sheet_auth(app):
             connect_param = ConnectParam(host)
             cnx, cursor = connect_param.connect(use_dict=True)
 
+
             # Fetch user data based on the email
             cursor.execute(
                 "SELECT * FROM application_page where final_approval='accepted' and phd_registration_year>='2023' ")
@@ -41,7 +42,6 @@ def payment_sheet_auth(app):
 
                 joining_date = row["phd_registration_date"]
                 city = row['city']
-
 
                 # Calculate Count Yearly
                 if faculty == "Arts":

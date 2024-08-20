@@ -116,136 +116,197 @@
         <div class="col-lg-8">
           <div class="row">
 
+            <!-- District Wise Charts -->
+               <div class="col-12">
+                    <div class="card recent-sales overflow-auto">
+
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+                                <li><a class="dropdown-item" href="/all_news">Today</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h5 class="card-title text-center"><strong>District Wise Students (Male vs Female)</strong> <span>| All</span></h5>
+                            <!-- Chart container with explicit height -->
+                            <div id="comboChart" style="height: 400px; width: 100%;"></div>
+
+                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                            <script type="text/javascript">
+                                google.charts.load('current', {'packages': ['corechart', 'bar']});
+                                google.charts.setOnLoadCallback(drawComboChart);
+
+                                function drawComboChart() {
+                                    var data = google.visualization.arrayToDataTable([
+                                        ['District', 'Male Students', 'Female Students'],
+                                        ['Mumbai', 600, 400],
+                                        ['Pune', 800, 700],
+                                        ['Nagpur', 500, 700],
+                                        ['Nashik', 400, 700],
+                                        ['Aurangabad', 300, 500],
+                                        // Add more districts as needed
+                                    ]);
+
+                                    var options = {
+                                        title: 'District Wise Students (Male vs Female)',
+                                        chartArea: {width: '50%'},
+                                        hAxis: {
+                                            title: 'Number of Students',
+                                            minValue: 0
+                                        },
+                                        vAxis: {
+                                            title: 'District'
+                                        },
+                                        seriesType: 'bars', // Default chart type
+                                        series: {
+                                            1: {type: 'line'} // Line chart for Female Students
+                                        },
+                                        colors: ['#1b9e77', '#d95f02'] // Optional: Customize bar and line colors
+                                    };
+
+                                    var chart = new google.visualization.ComboChart(document.getElementById('comboChart'));
+                                    chart.draw(data, options);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            <!-- End District Wise Charts -->
+
 
             <!-- YEAR WISE TOTAL APPLICATIONS BY GENDER -->
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
+<!--            <div class="col-12">-->
+<!--              <div class="card recent-sales overflow-auto">-->
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
+<!--                <div class="filter">-->
+<!--                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>-->
+<!--                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
+<!--                    <li class="dropdown-header text-start">-->
+<!--                      <h6>Filter</h6>-->
+<!--                    </li>-->
 
-                    <li><a class="dropdown-item" href="/all_news">Today</a></li>
-                  </ul>
-                </div>
+<!--                    <li><a class="dropdown-item" href="/all_news">Today</a></li>-->
+<!--                  </ul>-->
+<!--                </div>-->
 
-                <div class="card">
-                  <h5 class="card-title text-center"><strong>Year Wise Total Applications by Gender </strong> <span>| All</span></h5>
+<!--                <div class="card">-->
+<!--                  <h5 class="card-title text-center"><strong>Year Wise Total Applications by Gender </strong> <span>| All</span></h5>-->
 
-                    <div id="columnChart" style="min-height: 400px;" class="echart form-control col-md-4">
+<!--                    <div id="columnChart" style="min-height: 400px;" class="echart form-control col-md-4">-->
 
-                    </div>
-                  <!-- Table with stripped rows -->
-                  <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            const yearSelector = document.getElementById('yearSelector');
-                            const maleDataByYear = {
-                                2021: [{{ maleDataByYear[2021][0] }}, {{ maleDataByYear[2021][1] }}, {{ maleDataByYear[2021][2] }}, {{ maleDataByYear[2021][3] }}, {{ maleDataByYear[2021][4] }}, {{ maleDataByYear[2021][5] }}, {{ maleDataByYear[2021][6] }}, {{ maleDataByYear[2021][7] }}, {{ maleDataByYear[2021][8] }}, {{ maleDataByYear[2021][9] }}, {{ maleDataByYear[2021][10] }}, {{ maleDataByYear[2021][11] }}],
-                                2022: [{{ maleDataByYear[2022][0] }}, {{ maleDataByYear[2022][1] }}, {{ maleDataByYear[2022][2] }}, {{ maleDataByYear[2022][3] }}, {{ maleDataByYear[2022][4] }}, {{ maleDataByYear[2022][5] }}, {{ maleDataByYear[2022][6] }}, {{ maleDataByYear[2022][7] }}, {{ maleDataByYear[2022][8] }}, {{ maleDataByYear[2022][9] }}, {{ maleDataByYear[2022][10] }}, {{ maleDataByYear[2022][11] }}],
-                                2023: [{{ maleDataByYear[2023][0] }}, {{ maleDataByYear[2023][1] }}, {{ maleDataByYear[2023][2] }}, {{ maleDataByYear[2023][3] }}, {{ maleDataByYear[2023][4] }}, {{ maleDataByYear[2023][5] }}, {{ maleDataByYear[2023][6] }}, {{ maleDataByYear[2023][7] }}, {{ maleDataByYear[2023][8] }}, {{ maleDataByYear[2023][9] }}, {{ maleDataByYear[2023][10] }}, {{ maleDataByYear[2023][11] }}],
-                                2024: [{{ maleDataByYear[2024][0] }}, {{ maleDataByYear[2024][1] }}, {{ maleDataByYear[2024][2] }}, {{ maleDataByYear[2024][3] }}, {{ maleDataByYear[2024][4] }}, {{ maleDataByYear[2024][5] }}, {{ maleDataByYear[2024][6] }}, {{ maleDataByYear[2024][7] }}, {{ maleDataByYear[2024][8] }}, {{ maleDataByYear[2024][9] }}, {{ maleDataByYear[2024][10] }}, {{ maleDataByYear[2024][11] }}]
-                            };
+<!--                    </div>-->
+<!--                  &lt;!&ndash; Table with stripped rows &ndash;&gt;-->
+<!--                  <script>-->
+<!--                        document.addEventListener("DOMContentLoaded", () => {-->
+<!--                            const yearSelector = document.getElementById('yearSelector');-->
+<!--                            const maleDataByYear = {-->
+<!--                                2021: [{{ maleDataByYear[2021][0] }}, {{ maleDataByYear[2021][1] }}, {{ maleDataByYear[2021][2] }}, {{ maleDataByYear[2021][3] }}, {{ maleDataByYear[2021][4] }}, {{ maleDataByYear[2021][5] }}, {{ maleDataByYear[2021][6] }}, {{ maleDataByYear[2021][7] }}, {{ maleDataByYear[2021][8] }}, {{ maleDataByYear[2021][9] }}, {{ maleDataByYear[2021][10] }}, {{ maleDataByYear[2021][11] }}],-->
+<!--                                2022: [{{ maleDataByYear[2022][0] }}, {{ maleDataByYear[2022][1] }}, {{ maleDataByYear[2022][2] }}, {{ maleDataByYear[2022][3] }}, {{ maleDataByYear[2022][4] }}, {{ maleDataByYear[2022][5] }}, {{ maleDataByYear[2022][6] }}, {{ maleDataByYear[2022][7] }}, {{ maleDataByYear[2022][8] }}, {{ maleDataByYear[2022][9] }}, {{ maleDataByYear[2022][10] }}, {{ maleDataByYear[2022][11] }}],-->
+<!--                                2023: [{{ maleDataByYear[2023][0] }}, {{ maleDataByYear[2023][1] }}, {{ maleDataByYear[2023][2] }}, {{ maleDataByYear[2023][3] }}, {{ maleDataByYear[2023][4] }}, {{ maleDataByYear[2023][5] }}, {{ maleDataByYear[2023][6] }}, {{ maleDataByYear[2023][7] }}, {{ maleDataByYear[2023][8] }}, {{ maleDataByYear[2023][9] }}, {{ maleDataByYear[2023][10] }}, {{ maleDataByYear[2023][11] }}],-->
+<!--                                2024: [{{ maleDataByYear[2024][0] }}, {{ maleDataByYear[2024][1] }}, {{ maleDataByYear[2024][2] }}, {{ maleDataByYear[2024][3] }}, {{ maleDataByYear[2024][4] }}, {{ maleDataByYear[2024][5] }}, {{ maleDataByYear[2024][6] }}, {{ maleDataByYear[2024][7] }}, {{ maleDataByYear[2024][8] }}, {{ maleDataByYear[2024][9] }}, {{ maleDataByYear[2024][10] }}, {{ maleDataByYear[2024][11] }}]-->
+<!--                            };-->
 
-                            const femaleDataByYear = {
-                                2021: [{{ femaleDataByYear[2021][0] }}, {{ femaleDataByYear[2021][1] }}, {{ femaleDataByYear[2021][2] }}, {{ femaleDataByYear[2021][3] }}, {{ femaleDataByYear[2021][4] }}, {{ femaleDataByYear[2021][5] }}, {{ femaleDataByYear[2021][6] }}, {{ femaleDataByYear[2021][7] }}, {{ femaleDataByYear[2021][8] }}, {{ femaleDataByYear[2021][9] }}, {{ femaleDataByYear[2021][10] }}, {{ femaleDataByYear[2021][11] }}],
-                                2022: [{{ femaleDataByYear[2022][0] }}, {{ femaleDataByYear[2022][1] }}, {{ femaleDataByYear[2022][2] }}, {{ femaleDataByYear[2022][3] }}, {{ femaleDataByYear[2022][4] }}, {{ femaleDataByYear[2022][5] }}, {{ femaleDataByYear[2022][6] }}, {{ femaleDataByYear[2022][7] }}, {{ femaleDataByYear[2022][8] }}, {{ femaleDataByYear[2022][9] }}, {{ femaleDataByYear[2022][10] }}, {{ femaleDataByYear[2022][11] }}],
-                                2023: [{{ femaleDataByYear[2023][0] }}, {{ femaleDataByYear[2023][1] }}, {{ femaleDataByYear[2023][2] }}, {{ femaleDataByYear[2023][3] }}, {{ femaleDataByYear[2023][4] }}, {{ femaleDataByYear[2023][5] }}, {{ femaleDataByYear[2023][6] }}, {{ femaleDataByYear[2023][7] }}, {{ femaleDataByYear[2023][8] }}, {{ femaleDataByYear[2023][9] }}, {{ femaleDataByYear[2023][10] }}, {{ femaleDataByYear[2023][11] }}],
-                                2024: [{{ femaleDataByYear[2024][0] }}, {{ femaleDataByYear[2024][1] }}, {{ femaleDataByYear[2024][2] }}, {{ femaleDataByYear[2024][3] }}, {{ femaleDataByYear[2024][4] }}, {{ femaleDataByYear[2024][5] }}, {{ femaleDataByYear[2024][6] }}, {{ femaleDataByYear[2024][7] }}, {{ femaleDataByYear[2024][8] }}, {{ femaleDataByYear[2024][9] }}, {{ femaleDataByYear[2024][10] }}, {{ femaleDataByYear[2024][11] }}]
-                            };
+<!--                            const femaleDataByYear = {-->
+<!--                                2021: [{{ femaleDataByYear[2021][0] }}, {{ femaleDataByYear[2021][1] }}, {{ femaleDataByYear[2021][2] }}, {{ femaleDataByYear[2021][3] }}, {{ femaleDataByYear[2021][4] }}, {{ femaleDataByYear[2021][5] }}, {{ femaleDataByYear[2021][6] }}, {{ femaleDataByYear[2021][7] }}, {{ femaleDataByYear[2021][8] }}, {{ femaleDataByYear[2021][9] }}, {{ femaleDataByYear[2021][10] }}, {{ femaleDataByYear[2021][11] }}],-->
+<!--                                2022: [{{ femaleDataByYear[2022][0] }}, {{ femaleDataByYear[2022][1] }}, {{ femaleDataByYear[2022][2] }}, {{ femaleDataByYear[2022][3] }}, {{ femaleDataByYear[2022][4] }}, {{ femaleDataByYear[2022][5] }}, {{ femaleDataByYear[2022][6] }}, {{ femaleDataByYear[2022][7] }}, {{ femaleDataByYear[2022][8] }}, {{ femaleDataByYear[2022][9] }}, {{ femaleDataByYear[2022][10] }}, {{ femaleDataByYear[2022][11] }}],-->
+<!--                                2023: [{{ femaleDataByYear[2023][0] }}, {{ femaleDataByYear[2023][1] }}, {{ femaleDataByYear[2023][2] }}, {{ femaleDataByYear[2023][3] }}, {{ femaleDataByYear[2023][4] }}, {{ femaleDataByYear[2023][5] }}, {{ femaleDataByYear[2023][6] }}, {{ femaleDataByYear[2023][7] }}, {{ femaleDataByYear[2023][8] }}, {{ femaleDataByYear[2023][9] }}, {{ femaleDataByYear[2023][10] }}, {{ femaleDataByYear[2023][11] }}],-->
+<!--                                2024: [{{ femaleDataByYear[2024][0] }}, {{ femaleDataByYear[2024][1] }}, {{ femaleDataByYear[2024][2] }}, {{ femaleDataByYear[2024][3] }}, {{ femaleDataByYear[2024][4] }}, {{ femaleDataByYear[2024][5] }}, {{ femaleDataByYear[2024][6] }}, {{ femaleDataByYear[2024][7] }}, {{ femaleDataByYear[2024][8] }}, {{ femaleDataByYear[2024][9] }}, {{ femaleDataByYear[2024][10] }}, {{ femaleDataByYear[2024][11] }}]-->
+<!--                            };-->
 
-                            // Function to update chart data based on selected year
-                            function updateChartData(data_year) {
-                                document.getElementById("columnChart").focus()
-                                var select_year = data_year
-                                var maleData = maleDataByYear[data_year];
-                                var femaleData = femaleDataByYear[data_year];
+<!--                            // Function to update chart data based on selected year-->
+<!--                            function updateChartData(data_year) {-->
+<!--                                document.getElementById("columnChart").focus()-->
+<!--                                var select_year = data_year-->
+<!--                                var maleData = maleDataByYear[data_year];-->
+<!--                                var femaleData = femaleDataByYear[data_year];-->
 
-                                var chart = new ApexCharts(document.querySelector("#columnChart"), {
-                                    series: [{
-                                        name: 'Male (' + select_year + ')',
-                                        data: maleData,
-                                        color: '#686de0'
-                                    }, {
-                                        name: 'Female (' + select_year + ')',
-                                        data: femaleData,
-                                        color: '#badc58'
-                                    }],
-                                    chart: {
-                                        type: 'bar',
-                                        height: 350,
-                                        stacked: true,
-                                    },
-                                    plotOptions: {
-                                        bar: {
-                                            horizontal: false,
-                                            columnWidth: '55%',
-                                            endingShape: 'rounded'
-                                        },
-                                    },
-                                    dataLabels: {
-                                        enabled: false
-                                    },
-                                    stroke: {
-                                        show: true,
-                                        width: 2,
-                                        colors: ['transparent'] // 'transparent' instead of 'Transperent'
-                                    },
-                                    xaxis: {
-                                        categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                                    },
-                                    yaxis: {
-                                        title: {
-                                            text: ' (Students)'
-                                        }
-                                    },
-                                    fill: {
-                                        opacity: 1,
-                                        colors: ['#0C359E', '#F72798']
-                                    },
-                                    tooltip: {
-                                        y: {
-                                            formatter: function (val) {
-                                                return val + " Students"
-                                            }
-                                        }
-                                    }
-                                });
-                                 chart.render();
-                                chart.updateOptions([{
-                                 series: [{
-                                      name: 'Male (' + select_year + ')',
-                                      data: maleData,
-                                      color: '#686de0'
-                                  }, {
-                                      name: 'Female (' + select_year + ')',
-                                      data: femaleData,
-                                      color: '#badc58'
-                                  }],
-                                }])
+<!--                                var chart = new ApexCharts(document.querySelector("#columnChart"), {-->
+<!--                                    series: [{-->
+<!--                                        name: 'Male (' + select_year + ')',-->
+<!--                                        data: maleData,-->
+<!--                                        color: '#686de0'-->
+<!--                                    }, {-->
+<!--                                        name: 'Female (' + select_year + ')',-->
+<!--                                        data: femaleData,-->
+<!--                                        color: '#badc58'-->
+<!--                                    }],-->
+<!--                                    chart: {-->
+<!--                                        type: 'bar',-->
+<!--                                        height: 350,-->
+<!--                                        stacked: true,-->
+<!--                                    },-->
+<!--                                    plotOptions: {-->
+<!--                                        bar: {-->
+<!--                                            horizontal: false,-->
+<!--                                            columnWidth: '55%',-->
+<!--                                            endingShape: 'rounded'-->
+<!--                                        },-->
+<!--                                    },-->
+<!--                                    dataLabels: {-->
+<!--                                        enabled: false-->
+<!--                                    },-->
+<!--                                    stroke: {-->
+<!--                                        show: true,-->
+<!--                                        width: 2,-->
+<!--                                        colors: ['transparent'] // 'transparent' instead of 'Transperent'-->
+<!--                                    },-->
+<!--                                    xaxis: {-->
+<!--                                        categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],-->
+<!--                                    },-->
+<!--                                    yaxis: {-->
+<!--                                        title: {-->
+<!--                                            text: ' (Students)'-->
+<!--                                        }-->
+<!--                                    },-->
+<!--                                    fill: {-->
+<!--                                        opacity: 1,-->
+<!--                                        colors: ['#0C359E', '#F72798']-->
+<!--                                    },-->
+<!--                                    tooltip: {-->
+<!--                                        y: {-->
+<!--                                            formatter: function (val) {-->
+<!--                                                return val + " Students"-->
+<!--                                            }-->
+<!--                                        }-->
+<!--                                    }-->
+<!--                                });-->
+<!--                                 chart.render();-->
+<!--                                chart.updateOptions([{-->
+<!--                                 series: [{-->
+<!--                                      name: 'Male (' + select_year + ')',-->
+<!--                                      data: maleData,-->
+<!--                                      color: '#686de0'-->
+<!--                                  }, {-->
+<!--                                      name: 'Female (' + select_year + ')',-->
+<!--                                      data: femaleData,-->
+<!--                                      color: '#badc58'-->
+<!--                                  }],-->
+<!--                                }])-->
 
-                            }
+<!--                            }-->
 
-                            // Event listener for year selector change
-                            yearSelector.addEventListener('change', function () {
-                                const selectedYear = this.value;
-                                updateChartData(selectedYear);
-                            });
+<!--                            // Event listener for year selector change-->
+<!--                            yearSelector.addEventListener('change', function () {-->
+<!--                                const selectedYear = this.value;-->
+<!--                                updateChartData(selectedYear);-->
+<!--                            });-->
 
-                            // Initial rendering of the chart with default year
-                            const defaultYear = 2023;
-                            updateChartData(defaultYear);
-                        });
-                    </script>
+<!--                            // Initial rendering of the chart with default year-->
+<!--                            const defaultYear = 2023;-->
+<!--                            updateChartData(defaultYear);-->
+<!--                        });-->
+<!--                    </script>-->
 
 
 
-              </div>
+<!--              </div>-->
 
-              </div>
-            </div>
+<!--              </div>-->
+<!--            </div>-->
             <!-- END YEAR WISE TOTAL APPLICATIONS BY GENDER -->
 
             <!-- APPLICATIONS 2023 - 2024 -->
@@ -578,78 +639,90 @@
         <!-- Right side columns -->
         <div class="col-lg-4">
 
-          <!-- GENDER RATIO -->
+          <!-- GENDER RATIO Chart -->
           <div class="card">
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-                <li><a class="dropdown-item" href="/male_record_report">Male Report</a></li>
-                <li><a class="dropdown-item" href="/female_record_report">Female Report</a></li>
-              </ul>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                    </li>
+                    <li><a class="dropdown-item" href="/male_record_report">Male Report</a></li>
+                    <li><a class="dropdown-item" href="/female_record_report">Female Report</a></li>
+                </ul>
             </div>
 
             <div class="card-body pb-0">
-              <h5 class="card-title">Gender Ratio <span>| Today</span></h5>
+                <h5 class="card-title">Gender Ratio <span>| Today</span></h5>
 
-              <div id="pieChart" style="min-height: 400px;" class="echart"></div>
+                <div id="pieChart" style="min-height: 400px;"></div>
 
-              <script>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script>
                     document.addEventListener("DOMContentLoaded", () => {
                         const yearSelector = document.getElementById('yearSelector');
+
                         const maleDataByYear = {
-                            2021: [{{ male_count21  }}],
-                            2022: [{{ male_count22 }}],
-                            2023: [{{ male_count23 }}],
-                            2024: [{{ male_count23 }}]
+                            2021: {{ male_count21 }},
+                            2022: {{ male_count22 }},
+                            2023: {{ male_count23 }},
+                            2024: {{ male_count23 }}
                         };
                         const femaleDataByYear = {
-                            2021: [{{ female_count21 }}],
-                            2022: [{{ female_count22 }}],
-                            2023: [{{ female_count23 }}],
-                            2024: [{{ female_count23 }}]
+                            2021: {{ female_count21 }},
+                            2022: {{ female_count22 }},
+                            2023: {{ female_count23 }},
+                            2024: {{ female_count23 }}
                         };
 
                         // Function to update pie chart data based on selected year
                         function updatePieChartData(data_year) {
+                            const maleData = maleDataByYear[data_year];
+                            const femaleData = femaleDataByYear[data_year];
 
-                            const maleData = maleDataByYear[data_year][0];
-                            const femaleData = femaleDataByYear[data_year][0];
-                            document.getElementById("pieChart").innerHTML = ""
-                            const chart = new ApexCharts(document.querySelector("#pieChart"), {
-                                series: [maleData, femaleData,0],
-                                chart: {
-                                    height: 350,
-                                    type: 'pie',
-                                    toolbar: {
-                                        show: true
-                                    }
-                                },
-                                labels: ['Male Students', 'Female Students', 'Transgender Students'],
-                                colors: ['#535C91', '#B784B7', '#FFC300']
-                            }).render();
+                            const data = google.visualization.arrayToDataTable([
+                                ['Gender', 'Count'],
+                                ['Male Students', maleData],
+                                ['Female Students', femaleData],
+                                ['Transgender Students', 0]
+                            ]);
 
-                            //chart;
+                            const options = {
+                                title: 'Gender Ratio',
+                                is3D: true,
+                                slices: {
+                                    0: { color: '#535C91' }, // Male color
+                                    1: { color: '#B784B7' }, // Female color
+                                    2: { color: '#FFC300' }  // Transgender color
+                                }
+                            };
+
+                            const chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+                            chart.draw(data, options);
                         }
 
-                        // Event listener for year selector change
-                        yearSelector.addEventListener('change', function () {
-                            const selectedYear = this.value;
-                            updatePieChartData(selectedYear);
+                        // Load the Google Visualization API and the corechart package.
+                        google.charts.load('current', { packages: ['corechart'] });
+
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        google.charts.setOnLoadCallback(function () {
+                            // Initial rendering of the pie chart with default year
+                            const defaultYear = 2023;
+                            updatePieChartData(defaultYear);
                         });
 
-                        // Initial rendering of the pie chart with default year
-                        const defaultYear = 2023;
-                        updatePieChartData(defaultYear);
+                        // Event listener for year selector change
+                        if (yearSelector) {
+                            yearSelector.addEventListener('change', function () {
+                                const selectedYear = this.value;
+                                updatePieChartData(selectedYear);
+                            });
+                        }
                     });
                 </script>
-
             </div>
-          </div>
-          <!-- END GENDER RATIO -->
-
+        </div>
+          <!-- END GENDER RATIO Chart -->
 
           <!-- COUNT GENDER RATIO -->
           <div class="card">
@@ -736,84 +809,86 @@
 
           <!-- PVTG RATIO -->
           <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-                <li><a class="dropdown-item" href="#">Katkari Report</a></li>
-                <li><a class="dropdown-item" href="#">Kolam Report</a></li>
-                <li><a class="dropdown-item" href="#">Madia Report</a></li>
-              </ul>
-            </div>
+    <div class="filter">
+        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+            <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+            </li>
+            <li><a class="dropdown-item" href="#">Katkari Report</a></li>
+            <li><a class="dropdown-item" href="#">Kolam Report</a></li>
+            <li><a class="dropdown-item" href="#">Madia Report</a></li>
+        </ul>
+    </div>
 
-            <div class="card-body pb-0">
-              <h5 class="card-title">PVTG Ratio <span>| Today</span></h5>
+    <div class="card-body pb-0">
+        <h5 class="card-title">PVTG Ratio <span>| Today</span></h5>
 
-              <div id="PVTG" style="min-height: 400px;" class="echart"></div>
+        <div id="PVTG" style="min-height: 400px;"></div>
 
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                        const yearSelector = document.getElementById('yearSelector');
-                        const katkariData = {
-                            2021: [{{ katkari21  }}],
-                            2022: [{{ katkari22 }}],
-                            2023: [{{ katkari23 }}],
-                            2024: [{{ katkari23 }}]
-                        };
-                        const kolamData = {
-                            2021: [{{ kolam21 }}],
-                            2022: [{{ kolam22 }}],
-                            2023: [{{ kolam23 }}],
-                            2024: [{{ kolam23 }}]
-                        };
-                        const madiaData = {
-                            2021: [{{ madia21 }}],
-                            2022: [{{ madia22 }}],
-                            2023: [{{ madia23 }}],
-                            2024: [{{ madia23 }}]
-                        };
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const yearSelector = document.getElementById('yearSelector');
 
-                        // Function to update pie chart data based on selected year
-                        function updatePieChartData(data_year) {
+                const katkariData = {
+                    2021: {{ katkari21 }},
+                    2022: {{ katkari22 }},
+                    2023: {{ katkari23 }},
+                    2024: {{ katkari23 }}
+                };
+                const kolamData = {
+                    2021: {{ kolam21 }},
+                    2022: {{ kolam22 }},
+                    2023: {{ kolam23 }},
+                    2024: {{ kolam23 }}
+                };
+                const madiaData = {
+                    2021: {{ madia21 }},
+                    2022: {{ madia22 }},
+                    2023: {{ madia23 }},
+                    2024: {{ madia23 }}
+                };
 
-                            const katkari = katkariData[data_year][0];
-                            const kolam = kolamData[data_year][0];
-                            const madia = madiaData[data_year][0];
-                            document.getElementById("PVTG").innerHTML = ""
-                            new ApexCharts(document.querySelector("#PVTG"), {
-                                    series: [ katkari, kolam, madia ],
-                                  chart: {
-                                  height: 350,
-                                  type: 'pie',
-                                  toolbar: {
-                                    show: true
-                                  }
-                                },
-                                labels: ['Katkari Students', 'Kolam Students', 'Madia Students'],
-                                colors: ['#03AED2', '#153448', '#874CCC']
-                            }).render();
+                function updatePieChartData(data_year) {
+                    const data = google.visualization.arrayToDataTable([
+                        ['PVTG', 'Count'],
+                        ['Katkari Students', katkariData[data_year]],
+                        ['Kolam Students', kolamData[data_year]],
+                        ['Madia Students', madiaData[data_year]]
+                    ]);
 
-                            //chart;
+                    const options = {
+                        title: 'PVTG Ratio',
+                        is3D: true,
+                        slices: {
+                            0: { color: '#03AED2' }, // Katkari color
+                            1: { color: '#153448' }, // Kolam color
+                            2: { color: '#874CCC' }  // Madia color
                         }
+                    };
 
-                        // Event listener for year selector change
-                        yearSelector.addEventListener('change', function () {
-                            const selectedYear = this.value;
-                            updatePieChartData(selectedYear);
-                        });
+                    const chart = new google.visualization.PieChart(document.getElementById('PVTG'));
+                    chart.draw(data, options);
+                }
 
-                        // Initial rendering of the pie chart with default year
-                        const defaultYear = 2023;
-                        updatePieChartData(defaultYear);
+                google.charts.load('current', { packages: ['corechart'] });
+
+                google.charts.setOnLoadCallback(function () {
+                    const defaultYear = 2023;
+                    updatePieChartData(defaultYear);
+                });
+
+                if (yearSelector) {
+                    yearSelector.addEventListener('change', function () {
+                        const selectedYear = this.value;
+                        updatePieChartData(selectedYear);
                     });
-
-
-              </script>
-
-            </div>
-          </div>
+                }
+            });
+        </script>
+    </div>
+</div>
           <!-- END PVTG RATIO -->
 
 
@@ -888,44 +963,50 @@
 
           <!-- DISABILITY CHART -->
           <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-arrow-down-square-fill"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-                <li><a class="dropdown-item" href="/disability_report_no">Not Disabled People</a></li>
-                <li><a class="dropdown-item" href="/disability_report_yes">Disabled People</a></li>
-              </ul>
-            </div>
-            <div class="card-body p-0">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Disabled vs Not Disabled</h5>
+    <div class="filter">
+        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-square-fill"></i></a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+            <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+            </li>
+            <li><a class="dropdown-item" href="/disability_report_no">Not Disabled People</a></li>
+            <li><a class="dropdown-item" href="/disability_report_yes">Disabled People</a></li>
+        </ul>
+    </div>
+    <div class="card-body p-0">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Disabled vs Not Disabled</h5>
 
-              <!-- Donut Chart -->
-              <div id="donutChart"></div>
+                <div id="donutChart"></div>
 
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new ApexCharts(document.querySelector("#donutChart"), {
-                    series: [{{disability_yes}}, {{disability_no}}],
-                    chart: {
-                      height: 350,
-                      type: 'donut',
-                      toolbar: {
-                        show: true
-                      }
-                    },
-                    labels: ['Disabled', 'Not Disabled'],
-                  }).render();
-                });
-              </script>
-              <!-- End Donut Chart -->
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        google.charts.load('current', { packages: ['corechart'] });
+
+                        google.charts.setOnLoadCallback(function () {
+                            const data = google.visualization.arrayToDataTable([
+                                ['Disability', 'Count'],
+                                ['Disabled', {{disability_yes}}],
+                                ['Not Disabled', {{disability_no}}]
+                            ]);
+
+                            const options = {
+                                title: 'Disabled vs Not Disabled',
+                                pieHole: 0.4,
+                                colors: ['#FF6347', '#4682B4'] // Customize colors
+                            };
+
+                            const chart = new google.visualization.PieChart(document.getElementById('donutChart'));
+                            chart.draw(data, options);
+                        });
+                    });
+                </script>
             </div>
-          </div>
         </div>
-          </div>
+    </div>
+</div>
            <!-- END DISABILITY CHART -->
 
 

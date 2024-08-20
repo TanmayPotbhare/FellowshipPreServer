@@ -61,132 +61,189 @@
 
       <div class="row ">
         <div class="col-xl-12">
-
-          <div class="card mb-4">
+          {% if year >= 2023 %}
+                <div class="card mb-4">
             <div class="card-body"><br>
                 <h4 class="text-primary text-center fw-bold">Member Details</h4>
                 <div class="row">
                     {% for row in result %}
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">First Name</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['first_name'] }}</p>
+                      <div class="col-md-2 border-end">
+                          <div class="card-body profile-card pt-4 d-flex flex-column align-items-left">
+                            {% if row['applicant_photo'] %}
+                              <img src="{{ row['applicant_photo'] }}" style="width: 100%; height: 100%;">
+                            {% elif row['applicant_photo'] is none  %}
+                              <img src="/static/assets/img/default_user.png" alt="Profile" class="rounded-circle">
+                            {% endif %}
+                            <div class="mt-3">
+                                <h5>{{ row['first_name'] }} {{ row['middle_name'] }} {{ row['last_name'] }}</h5>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Middle Name</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['middle_name'] }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Last Name</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['last_name'] }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Student ID</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['applicant_id'] }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Mobile Number</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['mobile_number'] }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Email ID</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['email'] }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Gender</label>
-                                <p class="form-control-plaintext text-secondary">{{ row['gender'] }}</p>
-                            </div>
-                        </div>
+                          </div>
+                      </div>
+                      <div class="col-md-10 ps-5">
+                          <div class="row">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Student ID</label>
+                                        <p class="form-control-plaintext text-secondary">{{ row['applicant_id'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Mobile Number</label>
+                                        <p class="form-control-plaintext text-secondary">{{ row['mobile_number'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Email ID</label>
+                                        <p class="form-control-plaintext text-secondary">{{ row['email'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Gender</label>
+                                        <p class="form-control-plaintext text-secondary">{{ row['gender'] }}</p>
+                                    </div>
+                                </div>
+                          </div>
+                          <div class="row">
+                                <h5 class="card-title text-primary fw-bold">Application Status</h5>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Pre Scrutiny Status</label>
+                                        <p class="form-control-plaintext text-secondary">
+                                              {% if(row['status'] == 'accepted') %}
+                                              <span class="text-success fw-bold text-capitalize"> {{ row['status'] }}</span>
+                                              {% elif(row['status'] =='pending') %}
+                                              <span class="text-warning fw-bold text-capitalize"> {{ row['status'] }}</span>
+                                              {% else %}
+                                              <span class="text-danger fw-bold text-capitalize"> {{ row['status'] }}</span>
+                                              {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Scrutiny Status</label>
+                                        <p class="form-control-plaintext text-secondary">
+                                              {% if(row['scrutiny_status'] == 'accepted') %}
+                                              <span class="text-success fw-bold text-capitalize"> {{ row['scrutiny_status'] }}</span>
+                                              {% elif(row['scrutiny_status'] =='pending') %}
+                                              <span class="text-warning fw-bold text-capitalize"> {{ row['scrutiny_status'] }}</span>
+                                              {% else %}
+                                              <span class="text-danger fw-bold text-capitalize"> {{ row['scrutiny_status'] }}</span>
+                                              {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Final Approval</label>
+                                        <p class="form-control-plaintext text-secondary">
+                                            {% if(row['final_approval'] == 'accepted') %}
+                                            <span class="text-success fw-bold text-capitalize"> {{ row['final_approval'] }}</span>
+                                            {% elif(row['final_approval'] =='pending') %}
+                                            <span class="text-warning fw-bold text-capitalize"> {{ row['final_approval'] }}</span>
+                                            {% else %}
+                                            <span class="text-danger fw-bold text-capitalize"> {{ row['final_approval'] }}</span>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                          </div>
+                      </div>
                     </div>
                     {% endfor %}
                 </div><br>
 
                 <h4 class="text-primary text-center fw-bold">Fee List</h4>
-                <div class="row">
-                    {% for row in result %}
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Final Pay Fees</label>
-                                <p class="form-control-plaintext text-primary fw-bold">93000.00</p>
-                            </div>
+                <div class="row text-center">
+                            {% for row in result %}
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Intallment 1</label>
+                                        <p class="form-control-plaintext text-primary fw-bold">
+                                            {% if installments is none %}
+                                                <span class="text-danger fw-bold">NOT PAID</span>
+                                            {% else %}
+                                                {% if installments['recieved_pay'] is none %}
+                                                    <span class="text-danger fw-bold">NOT PAID</span>
+                                                {% else %}
+                                                    <span class="text-success fw-bold">PAID - INR {{ installments['recieved_pay'] }}</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Intallment 2</label>
+                                        <p class="form-control-plaintext text-primary fw-bold">
+                                            {% if installments is none %}
+                                                <span class="text-danger fw-bold">NOT PAID</span>
+                                            {% else %}
+                                                {% if installments['recieved_pay_2'] %}
+                                                    <span class="text-success fw-bold">PAID - INR {{ installments['recieved_pay_2'] }}</span>
+                                                {% else %}
+                                                    <span class="text-danger fw-bold">NOT PAID</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Intallment 3</label>
+                                        <p class="form-control-plaintext text-primary fw-bold">
+                                            {% if installments is none %}
+                                                <span class="text-danger fw-bold">NOT PAID</span>
+                                            {% else %}
+                                                {% if installments['recieved_pay_3'] %}
+                                                    <span class="text-success fw-bold">PAID - INR {{ installments['recieved_pay_3'] }}</span>
+                                                {% else %}
+                                                    <span class="text-danger fw-bold">NOT PAID</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Fees Paid</label>
+                                        <p class="form-control-plaintext text-success fw-bold">
+                                            {% if installments is none %}
+                                                --
+                                            {% else %}
+                                                {% set total_sum = 0 %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_2']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_3']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_4']|default('0')|float) %}
+                                                {{ total_sum }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Pending Fees</label>
+                                        <p class="form-control-plaintext text-danger fw-bold">
+                                            {% if installments is none %}
+                                                --
+                                            {% else %}
+                                                {% set total_sum = 0 %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_2']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_3']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_4']|default('0')|float) %}
+                                                {{ total_sum | int - 93000 }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Fees Paid</label>
-                                <p class="form-control-plaintext text-success fw-bold">00</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label text-dark fw-bold">Pending Fees</label>
-                                <p class="form-control-plaintext text-danger fw-bold">-93000.00</p>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
-<!--                <div class="row">-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="mb-3">-->
-<!--                            <label class="form-label">Deposit Amount</label>-->
-<!--                            <input type="text" class="form-control">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="mb-3">-->
-<!--                            <label class="form-label">Installment No.</label>-->
-<!--                            <input type="text" class="form-control">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="mb-3">-->
-<!--                            <label class="form-label">Balance</label>-->
-<!--                            <input type="text" class="form-control">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="mb-3">-->
-<!--                            <label class="form-label">Deposit Date</label>-->
-<!--                            <input type="date" class="form-control" value="2024-08-12">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="mb-3">-->
-<!--                            <label class="form-label">Paymode</label>-->
-<!--                            <select class="form-select">-->
-<!--                                <option>Select</option>-->
-<!--                                <option>Cash</option>-->
-<!--                                <option>Cheque</option>-->
-<!--                                <option>Online</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="mb-3">-->
-<!--                            <label class="form-label">Remarks</label>-->
-<!--                            <input type="text" class="form-control">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3 align-self-end">-->
-<!--                        <button class="btn btn-primary">Submit</button>-->
-<!--                        <button class="btn btn-warning">Reset</button>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div><br>
 
 
@@ -201,34 +258,59 @@
                           <th scope="col">End Period</th>
                           <th scope="col">Balance</th>
                           <th scope="col">Installment Number</th>
-                          <th scope="col">Paid or Not</th>
+                          <th scope="col">Payment Status</th>
                           <th scope="col">Due Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in table_data %}
                           <tr class="text-center">
-                            <td>{{ loop.index }}</td>
-                            <td>{{ row['period'] }} Months</td>
-                            <td>{{ row['start_period'] }}</td>
-                            <td>{{ row['end_period'] }}</td>
-                            <td>{{ row['balance'] }}</td>
-                            <td>{{ row['installment_number'] }}</td>
-                            <td>
-                              {% if row['paid'] is none %}
-                                  <span class="text-danger fw-bold">Not Paid</span>
-                              {% else %}
-                                  <span class="text-success fw-bold">{{ row['paid'] }}</span>
-                              {% endif %}
-                            </td>
-                            <td>{{ row['due_date'] }}</td>
-<!--                                <td>-->
-<!--                                  <button type="submit" name="accept" value="{{ approve_pay }}"-->
-<!--                                  class="btn btn-sm btn-success tooltip-trigger" data-bs-toggle="tooltip" data-bs-placement="top"-->
-<!--                                  data-bs-original-title="Approve Payment"><i class="bx bxs-check-circle"></i></button>-->
-<!--                                </td>-->
+                                <td>1</td>
+                                <td>{{ installment_1['period'] }} Months</td>
+                                <td>{{ installment_1['start_period'] }}</td>
+                                <td>{{ installment_1['end_period'] }}</td>
+                                <td>{{ installment_1['balance'] }}</td>
+                                <td>{{ installment_1['installment_number'] }}</td>
+                                <td>
+                                    {% if installments['status_paid'] is none %}
+                                        <span class="text-danger fw-bold">Not Paid</span>
+                                    {% else %}
+                                        <span class="text-success fw-bold">{{ installments['status_paid'] }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ installment_1['due_date'] }}</td>
                           </tr>
-                        {% endfor %}
+                          <tr class="text-center">
+                                <td>1</td>
+                                <td>{{ installment_2['period'] }} Months</td>
+                                <td>{{ installment_2['start_period'] }}</td>
+                                <td>{{ installment_2['end_period'] }}</td>
+                                <td>{{ installment_2['balance'] }}</td>
+                                <td>{{ installment_2['installment_number'] }}</td>
+                                <td>
+                                    {% if installments['status_paid_2'] is none %}
+                                        <span class="text-danger fw-bold">Not Paid</span>
+                                    {% else %}
+                                        <span class="text-success fw-bold">{{ installments['status_paid'] }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ installment_2['due_date'] }}</td>
+                          </tr>
+                          <tr class="text-center">
+                                <td>1</td>
+                                <td>{{ installment_3['period'] }} Months</td>
+                                <td>{{ installment_3['start_period'] }}</td>
+                                <td>{{ installment_3['end_period'] }}</td>
+                                <td>{{ installment_3['balance'] }}</td>
+                                <td>{{ installment_3['installment_number'] }}</td>
+                                <td>
+                                    {% if installments['status_paid_3'] is none %}
+                                        <span class="text-danger fw-bold">Not Paid</span>
+                                    {% else %}
+                                        <span class="text-success fw-bold">{{ installments['status_paid_3'] }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ installment_3['due_date'] }}</td>
+                          </tr>
                         <tr>
                             <td colspan="4" class="text-end fw-bold">Total</td>
                             <td class="fw-bold text-center">93000</td>
@@ -290,6 +372,338 @@
 
 
           </div>
+          {% else %}
+                <div class="card mb-4">
+                    <!-- Member Details-->
+                    <div class="card-body"><br>
+                        <h4 class="text-primary text-center fw-bold">Member Details</h4>
+                        <div class="row">
+                            {% for row in result %}
+                            <div class="row">
+                              <div class="col-md-2 border-end">
+                                  <div class="card-body profile-card pt-4 d-flex flex-column align-items-left">
+                                    {% if row['applicant_photo'] %}
+                                      <img src="{{ row['applicant_photo'] }}" style="width: 100%; height: 100%;">
+                                    {% elif row['applicant_photo'] is none  %}
+                                      <img src="/static/assets/img/default_user.png" alt="Profile" class="rounded-circle">
+                                    {% endif %}
+                                    <div class="mt-3">
+                                        <h5>{{ row['first_name'] }} {{ row['middle_name'] }} {{ row['last_name'] }}</h5>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-10 ps-5">
+                                  <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Student ID</label>
+                                                <p class="form-control-plaintext text-secondary">{{ row['applicant_id'] }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Mobile Number</label>
+                                                <p class="form-control-plaintext text-secondary">{{ row['mobile_number'] }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Email ID</label>
+                                                <p class="form-control-plaintext text-secondary">{{ row['email'] }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Gender</label>
+                                                <p class="form-control-plaintext text-secondary">{{ row['gender'] }}</p>
+                                            </div>
+                                        </div>
+                                  </div>
+                                  <div class="row">
+                                        <h5 class="card-title text-primary fw-bold">Application Status</h5>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Pre Scrutiny Status</label>
+                                                <p class="form-control-plaintext text-secondary">
+                                                      {% if(row['status'] == 'accepted') %}
+                                                      <span class="text-success fw-bold text-capitalize"> {{ row['status'] }}</span>
+                                                      {% elif(row['status'] =='pending') %}
+                                                      <span class="text-warning fw-bold text-capitalize"> {{ row['status'] }}</span>
+                                                      {% else %}
+                                                      <span class="text-danger fw-bold text-capitalize"> {{ row['status'] }}</span>
+                                                      {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Scrutiny Status</label>
+                                                <p class="form-control-plaintext text-secondary">
+                                                      {% if(row['scrutiny_status'] == 'accepted') %}
+                                                      <span class="text-success fw-bold text-capitalize"> {{ row['scrutiny_status'] }}</span>
+                                                      {% elif(row['scrutiny_status'] =='pending') %}
+                                                      <span class="text-warning fw-bold text-capitalize"> {{ row['scrutiny_status'] }}</span>
+                                                      {% else %}
+                                                      <span class="text-danger fw-bold text-capitalize"> {{ row['scrutiny_status'] }}</span>
+                                                      {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label text-dark fw-bold">Final Approval</label>
+                                                <p class="form-control-plaintext text-secondary">
+                                                    {% if(row['final_approval'] == 'accepted') %}
+                                                    <span class="text-success fw-bold text-capitalize"> {{ row['final_approval'] }}</span>
+                                                    {% elif(row['final_approval'] =='pending') %}
+                                                    <span class="text-warning fw-bold text-capitalize"> {{ row['final_approval'] }}</span>
+                                                    {% else %}
+                                                    <span class="text-danger fw-bold text-capitalize"> {{ row['final_approval'] }}</span>
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                  </div>
+                              </div>
+                            </div>
+                            {% endfor %}
+                        </div><br><hr>
+
+                        <h4 class="text-primary text-center fw-bold">Fee List</h4>
+                        <div class="row text-center">
+                            {% for row in result %}
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Intallment 1</label>
+                                        <p class="form-control-plaintext text-primary fw-bold">
+                                            {% if installments is none %}
+                                                <span class="text-danger fw-bold">NOT PAID</span>
+                                            {% else %}
+                                                {% if installments['recieved_pay'] is none %}
+                                                    <span class="text-danger fw-bold">NOT PAID</span>
+                                                {% else %}
+                                                    <span class="text-success fw-bold">PAID - INR {{ installments['recieved_pay'] }}</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Intallment 2</label>
+                                        <p class="form-control-plaintext text-primary fw-bold">
+                                            {% if installments is none %}
+                                                <span class="text-danger fw-bold">NOT PAID</span>
+                                            {% else %}
+                                                {% if installments['recieved_pay_2'] %}
+                                                    <span class="text-success fw-bold">PAID - INR {{ installments['recieved_pay_2'] }}</span>
+                                                {% else %}
+                                                    <span class="text-danger fw-bold">NOT PAID</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Intallment 3</label>
+                                        <p class="form-control-plaintext text-primary fw-bold">
+                                            {% if installments is none %}
+                                                <span class="text-danger fw-bold">NOT PAID</span>
+                                            {% else %}
+                                                {% if installments['recieved_pay_3'] %}
+                                                    <span class="text-success fw-bold">PAID - INR {{ installments['recieved_pay_3'] }}</span>
+                                                {% else %}
+                                                    <span class="text-danger fw-bold">NOT PAID</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Fees Paid</label>
+                                        <p class="form-control-plaintext text-success fw-bold">
+                                            {% if installments is none %}
+                                                --
+                                            {% else %}
+                                                {% set total_sum = 0 %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_2']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_3']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_4']|default('0')|float) %}
+                                                {{ total_sum }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold">Pending Fees</label>
+                                        <p class="form-control-plaintext text-danger fw-bold">
+                                            {% if installments is none %}
+                                                --
+                                            {% else %}
+                                                {% set total_sum = 0 %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_2']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_3']|default('0')|float) %}
+                                                {% set total_sum = total_sum + (installments['recieved_pay_4']|default('0')|float) %}
+                                                {{ total_sum | int - 93000 }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div><br>
+                    <!-- End Member Details-->
+
+                    <!-- Fee Installment List-->
+                    {% if installments %}
+                    <div class="p-3">
+                        <h4 class="text-primary text-center fw-bold">Fees installment list</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                  <th scope="col">Email</th>
+                                  <th scope="col">Installment Number</th>
+                                  <th scope="col">Start Period</th>
+                                  <th scope="col">End Period</th>
+                                  <th scope="col">Recieved Pay</th>
+                                  <th scope="col">Recieved Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if installments %}
+                                  <tr class="text-center">
+                                    <td>{{ installments['email'] }}</td>
+                                    <td>{{ installments['inst_num'] }}</td>
+                                    <td>{{ installments['start_period'] }}</td>
+                                    <td>{{ installments['end_period'] }}</td>
+                                    <td>{{ installments['recieved_pay'] }}</td>
+                                    <td>{{ installments['recieved_date'] }}</td>
+                                  </tr>
+
+                                  {% if installments['inst_num_2'] is none %}
+                                  {% else %}
+                                  <tr class="text-center">
+                                    <td colspan="1"></td>
+                                    <td>{{ installments['inst_num_2'] }}</td>
+                                    <td>{{ installments['start_period_2'] }}</td>
+                                    <td>{{ installments['end_period_2'] }}</td>
+                                    <td>{{ installments['recieved_pay_2'] }}</td>
+                                    <td>{{ installments['recieved_date_2'] }}</td>
+                                  </tr>
+                                  {% endif %}
+
+                                  {% if installments['inst_num_3'] is none %}
+                                  {% else %}
+                                  <tr class="text-center">
+                                    <td colspan="1"></td>
+                                    <td>{{ installments['inst_num_3'] }}</td>
+                                    <td>{{ installments['start_period_3'] }}</td>
+                                    <td>{{ installments['end_period_3'] }}</td>
+                                    <td>{{ installments['recieved_pay_3'] }}</td>
+                                    <td>{{ installments['recieved_date_3'] }}</td>
+                                  </tr>
+                                  {% endif %}
+
+                                  {% if installments['inst_num_4'] is none %}
+                                  {% else %}
+                                  <tr class="text-center">
+                                    <td colspan="1"></td>
+                                    <td>{{ installments['inst_num_4'] }}</td>
+                                    <td>{{ installments['start_period_4'] }}</td>
+                                    <td>{{ installments['end_period_4'] }}</td>
+                                    <td>{{ installments['recieved_pay_4'] }}</td>
+                                    <td>{{ installments['recieved_date_4'] }}</td>
+                                  </tr>
+                                  {% endif %}
+                                  <tr class="text-center">
+                                      <td colspan="4" class="fw-bold">Total</td>
+                                      {% set total_sum = 0 %}
+                                      {% set total_sum = total_sum + (installments['recieved_pay']|default('0')|float) %}
+                                      {% set total_sum = total_sum + (installments['recieved_pay_2']|default('0')|float) %}
+                                      {% set total_sum = total_sum + (installments['recieved_pay_3']|default('0')|float) %}
+                                      {% set total_sum = total_sum + (installments['recieved_pay_4']|default('0')|float) %}
+                                      <td class="fw-bold">{{ total_sum }}</td>
+                                  </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div><br><hr>
+                    {% else %}
+                    {% endif %}
+                    <!-- End Fee Installment List-->
+
+                    <!-- Form for Submitting Installments Details-->
+                    <h4 class="text-center text-primary">Enter Details for Installments</h4>
+                    <form action="/submit_installments" method="POST" class="mb-5">
+                        {% for row in result %}
+                            <div class="col-md-12 ms-4">
+                                <!-- Static Row -->
+                                <div id="static-row" class="row">
+                                    <div class="col-md-2">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" value="{{ row['email'] }}" readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Instal. No.</label>
+                                        <select name="inst_num" id="inst_num" class="form-select">
+                                            {% if installments['recieved_pay'] is none %}
+                                            <option value="">Default</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            {% elif installments['recieved_pay_2'] is none %}
+                                            <option value="">Default</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            {% elif installments['recieved_pay_3'] is none %}
+                                            <option value="">Default</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            {% elif installments['recieved_pay_4'] is none %}
+                                            <option value="">Default</option>
+                                            <option value="4">4</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Start Period</label>
+                                        <input type="date" class="form-control" name="start_period">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">End Period</label>
+                                        <input type="date" class="form-control" name="end_period">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="form-label">Rec. Amount</label>
+                                        <input type="text" class="form-control" name="recieved_pay" maxlength="6" placeholder="INR 31000">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Received Date</label>
+                                        <input type="date" class="form-control" name="recieved_date">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="mt-4 row text-center">
+                                <a href="#">
+                                    <button class="btn btn-primary btn-sm">Submit Details</button>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </form>
+                    <!-- End Form for Submitting Installments Details-->
+                </div>
+          {% endif %}
         </div>
 
 
@@ -316,7 +730,9 @@
   <script src="{{ url_for('static', filename='admin_assets/vendor/php-email-form/validate.js')}}"></script>
 
   <!-- Template Main JS File -->
+  <script src="static/admin_assets/js/admin/bulkEmail.js"></script>
   <script src="{{ url_for('static', filename='admin_assets/js/main.js')}}"></script>
+
 
 </body>
 

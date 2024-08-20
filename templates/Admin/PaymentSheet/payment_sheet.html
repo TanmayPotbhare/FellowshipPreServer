@@ -73,11 +73,11 @@
           <th style="width: 15%">Student Name</th>
           <th style="width: 5%">Faculty</th>
           <th style="width: 5%">Date of PHD Registration</th>
-          <th style="width: 10%">Duration Date From</th>
-          <th style="width: 10%">Duration Date To</th>
-          <th style="width: 5%">Total Months</th>
-          <th style="width: 5%">Fellowship</th>
-          <th style="width: 5%">Total Fellowship</th>
+<!--          <th style="width: 10%">Duration Date From</th>-->
+<!--          <th style="width: 10%">Duration Date To</th>-->
+<!--          <th style="width: 5%">Total Months</th>-->
+<!--          <th style="width: 5%">Fellowship</th>-->
+<!--          <th style="width: 5%">Total Fellowship</th>-->
 <!--          <th style="width: 5%">H.R.A Rate</th>-->
 <!--          <th style="width: 5%">H.R.A Amount</th>-->
 <!--          <th style="width: 5%">Months</th>-->
@@ -90,7 +90,6 @@
       </thead>
       <tbody>
         {% for record in user_records %}
-
         <tr>
           <td>
             <a href="/fellowship_details/{{ record['email'] }}">TRTI / {{ record['phd_registration_year'] }} / {{ record['id'] }}</a>
@@ -105,11 +104,11 @@
           </td>
           <td>{{ record['faculty'] }}</td>
           <td>{{ record['joining_date'] }}</td>
-          <td>{{ record['duration_date_from']}} </td>
-          <td>{{record['duration_date_to']  }}</td>
-          <td>{{ record['total_months'] }}</td>
-          <td>{{ record['fellowship'] }}</td>
-          <td>{{ record['to_fellowship'] }}</td>
+<!--          <td>{{ record['duration_date_from']}} </td>-->
+<!--          <td>{{record['duration_date_to']  }}</td>-->
+<!--          <td>{{ record['total_months'] }}</td>-->
+<!--          <td>{{ record['fellowship'] }}</td>-->
+<!--          <td>{{ record['to_fellowship'] }}</td>-->
 <!--          <td>{{ record['rate'] }}</td>-->
 <!--          <td>{{ record['amount'] }}</td>-->
 <!--          <td>{{ record['months'] }}</td>-->
