@@ -4,7 +4,7 @@ import mysql.connector
 class HostConfig:
     hostserver = '43.240.64.151'
     localserver = '127.0.0.1'
-    host = hostserver
+    host = localserver
 
 
 class ConnectParam:
@@ -25,19 +25,19 @@ class ConnectParam:
 class ConfigPaths:
     paths = {
         HostConfig.localserver: {
-            'USER_DOC_SEC_FIVE': '/var/www/icswebapp/icswebapp/static/uploads/user_doc_secfive/',
-            'RENT_AGREEMENT_REPORT': '/var/www/icswebapp/icswebapp/static/uploads/rent_agreement/',
-            'HALF_YEARLY_REPORTS': '/var/www/icswebapp/icswebapp/static/uploads/half_yearly/',
-            'PRESENTY_REPORTS': '/var/www/icswebapp/icswebapp/static/uploads/presenty_reports/',
-            'UPLOAD_PHOTO_SECTION1': '/var/www/icswebapp/icswebapp/static/uploads/image_retrive/',
-            'PDF_STORAGE_PATH': '/var/www/icswebapp/icswebapp/static/pdf_application_form/pdfform.pdf',
-            'AWARD_LETTER': '/var/www/icswebapp/icswebapp/static/pdf_application_form/award_letter.pdf',
-            'JOINING_REPORT': '/var/www/icswebapp/icswebapp/static/uploads/joining_reports/',
-            'PDF_CERTIFICATE': '/var/www/icswebapp/icswebapp/static/uploads/phd_certificate/',
-            'UPLOAD_THESIS': '/var/www/icswebapp/icswebapp/static/uploads/upload_thesis/',
-            'EMAIL_DOCS': '/var/www/icswebapp/icswebapp/static/uploads/sendbulkemails/',
-            'ASSESSMENT_REPORT': '/var/www/icswebapp/icswebapp/static/uploads/assessment_report/',
-            'UNDERTAKING_REPORT': '/var/www/icswebapp/icswebapp/static/uploads/undertaking_doc/',
+            'USER_DOC_SEC_FIVE': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/user_doc_secfive/',
+            'RENT_AGREEMENT_REPORT': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/rent_agreement/',
+            'HALF_YEARLY_REPORTS': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/half_yearly/',
+            'PRESENTY_REPORTS': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/presenty_reports/',
+            'UPLOAD_PHOTO_SECTION1': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/image_retrive/',
+            'PDF_STORAGE_PATH': '/var/www/fellowship/fellowship/FellowshipPreServer/static/pdf_application_form/pdfform.pdf',
+            'AWARD_LETTER': '/var/www/fellowship/fellowship/FellowshipPreServer/static/pdf_application_form/award_letter.pdf',
+            'JOINING_REPORT': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/joining_reports/',
+            'PDF_CERTIFICATE': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/phd_certificate/',
+            'UPLOAD_THESIS': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/upload_thesis/',
+            'EMAIL_DOCS': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/sendbulkemails/',
+            'ASSESSMENT_REPORT': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/assessment_report/',
+            'UNDERTAKING_REPORT': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/undertaking_doc/',
             # Add other paths here
         },
         HostConfig.hostserver: {
