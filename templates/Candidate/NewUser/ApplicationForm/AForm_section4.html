@@ -257,7 +257,7 @@
                                         data-bs-toggle="tooltip" data-bs-title="Previous">Previous</button>
                                 </a>
                                 {% if not view_mode == 'view' %}
-                                <form action="/section4" method="POST">
+                                <form action="{{ url_for('section4.section4') }}" method="POST">
                                     <button type="submit" class="btn btn-success" data-bs-toggle="tooltip"
                                         data-bs-title="Save">Save & Next</button>
                                 </form>

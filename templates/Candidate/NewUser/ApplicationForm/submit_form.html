@@ -49,7 +49,7 @@
                     <p> <strong>Your Applicant ID -</strong> {{ records['applicant_id'] }}
                     </p>
 
-                    <form method="GET" action="/generate_pdf" target="_blank">
+                    <form method="GET" action="{{ url_for('generate_pdf.generate_pdf') }}" target="_blank">
                         <button type="submit" class="btn btn-theme">Generate PDF</button>
                     </form>
                     {% endif %}

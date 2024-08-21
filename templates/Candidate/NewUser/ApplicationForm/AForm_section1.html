@@ -601,7 +601,7 @@
 
                         <div class="card-footer text-center">
                             {% if not record %}
-                            <form action="/section1" method="POST">
+                            <form action="{{ url_for('section1.section1') }}" method="POST">
                                 <button type="submit" id="save_section1" class="btn btn-success" data-bs-toggle="tooltip"
                                     data-bs-title="Save">Save & Next</button>
                             </form>
