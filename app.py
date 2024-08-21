@@ -2453,9 +2453,7 @@ def send_mail_incomplete(message, subject, email_list, filename=None, file_data=
     mail.send(msg)
 
 
-@app.route('/app_form_info')
-def app_form_info():
-    return render_template('app_form_info.html')
+
 
 
 @app.route('/delete_field/<int:id>/<field_value>', methods=['POST'])

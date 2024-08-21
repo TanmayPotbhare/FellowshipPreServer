@@ -19,6 +19,10 @@ def section1_auth(app):
         for key, value in app_paths.items():
             app.config[key] = value
 
+    @section1_blueprint.route('/app_form_info')
+    def app_form_info():
+        return render_template('Candidate/NewUser/app_form_info.html')
+
     @section1_blueprint.route('/section1', methods=['GET', 'POST'])
     @auth
     def section1():
