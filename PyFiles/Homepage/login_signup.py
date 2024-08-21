@@ -90,7 +90,7 @@ def login_auth(app, mail):
                             return redirect(url_for('old_user_preview'))
                         elif new_applicant_incomplete_form(email):
                             # print("New applicant form incomplete", email)
-                            return redirect(url_for('app_form_info'))
+                            return redirect(url_for('section1.app_form_info'))
                             # return redirect(url_for('login_closed_2023'))
                         elif check_final_approval(email):
                             session['final_approval'] = "accepted"
@@ -102,7 +102,7 @@ def login_auth(app, mail):
                             id = get_id_by_email(email)
                             return redirect(url_for('viewform.viewform', id=id))
                         else:
-                            return redirect(url_for('app_form_info'))
+                            return redirect(url_for('section1.app_form_info'))
                             # return redirect(url_for('login_closed_2023'))
                     else:
 
@@ -128,7 +128,7 @@ def login_auth(app, mail):
                             session['logged_in_from_login'] = True
                             return redirect(url_for('old_user_preview'))
                         elif new_applicant_incomplete_form(email):
-                            return redirect(url_for('app_form_info'))
+                            return redirect(url_for('section1.app_form_info'))
                             # return redirect(url_for('login_closed_2023'))
                         elif check_final_approval(email):
                             session['final_approval'] = "accepted"
@@ -140,7 +140,7 @@ def login_auth(app, mail):
                             id = get_id_by_email(email)
                             return redirect(url_for('viewform.viewform', id=id))
                         else:
-                            return redirect(url_for('app_form_info'))
+                            return redirect(url_for('section1.app_form_info'))
                             # return redirect(url_for('login_closed_2023'))
                     else:
 
