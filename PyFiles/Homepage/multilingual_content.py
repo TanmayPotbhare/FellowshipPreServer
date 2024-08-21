@@ -61,6 +61,7 @@ multilingual_content = {
         'about_the_institute': 'About The Institution',
         'about_title': 'Tribal Research and Training Institute, Maharashtra State, Pune',
         'read_more': "Read More",
+        'read_more_news': "View All News",
         'criteria': "Criteria",
         'scheme_benefits': 'Scheme Benefits',
         'eligibility_criteria': 'Eligibility Criteria',
@@ -174,6 +175,7 @@ multilingual_content = {
         'about_the_institute': 'संस्थेबद्दल',
         'about_title': 'आदिवासी संशोधन व प्रशिक्षण संस्था, महाराष्ट्र राज्य, पुणे',
         'read_more': "पुढे वाचा",
+        'read_more_news': "सर्व बातम्या पहा",
 
         # ---------------------------
         'criteria': "निकष",

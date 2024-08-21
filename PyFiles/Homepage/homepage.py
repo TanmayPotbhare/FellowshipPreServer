@@ -1,6 +1,6 @@
 import folium
 import mysql.connector
-from classes.connection import HostConfig, ConfigPaths
+from classes.connection import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for
 from PyFiles.Homepage.multilingual_content import multilingual_content
 
@@ -84,9 +84,19 @@ def init_auth(app):
                                       host=host,
                                       database='ICSApplication')
         cursor = cnx.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM news_and_updates")
+        cursor.execute(" SELECT * FROM news_and_updates ORDER BY id DESC LIMIT 5 ")
         result = cursor.fetchall()
         return result
+
+    @homepage_blueprint.route('/viewallnews', methods=['GET', 'POST'])
+    def viewallnews():
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
+
+        cursor.execute(" SELECT * FROM news_and_updates ")
+        result = cursor.fetchall()
+        return render_template('Homepage/viewallnews.html', result=result)
 
     # -------------------- End of Definitions of Counts in Homepage ---------------------------------
     #           END HOMEPAGE

@@ -342,7 +342,9 @@
                 {% endif %}
               </ul>
               <div class="text-center">
-                <a class="scheme_btn">{{ multilingual_content[language]['read_more'] }} &#62;</a>
+                <a class="scheme_btn" href="{{ url_for('homepage.viewallnews') }}">
+                  {{ multilingual_content[language]['read_more_news'] }} &#62;
+                </a>
               </div>
               </p>
             </div>
