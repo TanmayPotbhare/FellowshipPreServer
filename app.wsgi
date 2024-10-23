@@ -7,7 +7,9 @@ import logging
 # exec(file_.read(), dict(__file__=activate_this))
 
 # Adjust the path to your application
-sys.path.insert(0, '/var/www/fellowship/fellowship/FellowshipPreServer')
+# sys.path.insert(0, '/var/www/fellowship/fellowship/FellowshipPreServer')
+sys.path.insert(0, '/var/www/fellowship/fellowship/cdac/pythonConnector.py')
+
 
 from app import app as application
 # Import your Flask app instance
