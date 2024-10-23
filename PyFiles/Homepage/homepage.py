@@ -37,38 +37,45 @@ def init_auth(app):
     #                            total_appl_22=total_appl_22, total_appl_23=total_appl_23,
     #                            languagmepage_blueprint.route('/', methods=['GET', 'POST'])
 
-    @homepage_blueprint.route('/', methods=['GET', 'POST'])
-    def home_page():
-        import array as arr
-        from subprocess import Popen, PIPE, STDOUT
+    @homepage_blueprint.route('/pythonConnector', methods=['GET', 'POST'])
+    def pythonConnector():
+        import subprocess
+        import time
 
-        number = "958310524247";
-        RefNum = "991303584635977728";
-        setAc = "A100001";
-        setSA = "A100001";
-        setLK = "ddb81abd-23d7-4cf6-ab5e-29d01bcc2950";
-        opr = "struid";
-        keyType = "aes";
-        tokenType = "soft";
-        url = "http://10.210.9.67:8080/vault/";
+        # Variables defined in PHP
+        number = "882284367228"
+        RefNum = "1291304087928938496"
+        setAc = "A100098"
+        setSA = "A100098"
+        setLK = "260288bb-f12c-4955-a2b6-94b77f98236b"
+        # opr = "getrefnum"
+        opr = "getuid"
+        keyType = "aes"
+        tokenType = "soft"
+        url = "https://sp.epramaan.in:8038/vault/"
+        idType = "uid"
 
-        keyIdentifier = "";
-        p = Popen(
-            ['java', '-jar', '/var/www/fellowship/fellowship/cdac/wrapper.jar', number, RefNum, setAc, setSA, setLK,
-             opr, keyType, tokenType, url, keyIdentifier], stdout=PIPE, stderr=STDOUT)
-        i = 0
-        List = []
-        for line in p.stdout:
-            List.append(line)
+        # Generate the current Unix timestamp in seconds
+        timestamp = int(time.time())
 
-        a = List[0].decode()
-        # b=List[1].decode()
-        # c=List[2].decode()
-        # d=List[3].decode()
-        print(a)
-        # print(b)
-        # print(c)
-        # print(d)
+        # Prepare the arguments array for the Java command
+        args = [
+            "java", "-jar", "wrapper.jar",
+            number, RefNum, setAc, setSA, setLK,
+            opr, keyType, tokenType, url, idType, str(timestamp)
+        ]
+
+        # Run the Java command using subprocess
+        process = subprocess.run(args, capture_output=True, text=True)
+
+        # Output the results
+        print("OUTPUT: ")
+        print(process.stdout)
+
+        # If there are errors, print them too
+        if process.stderr:
+            print("ERROR: ")
+            print(process.stderr)
 
         return render_template('Homepage/home-page.html')
 
