@@ -77,7 +77,7 @@ def init_auth(app):
             print("ERROR: ")
             print(process.stderr)
 
-        return render_template('Homepage/home-page.html')
+        return render_template('Homepage/home-page.html', process=process)
 
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
