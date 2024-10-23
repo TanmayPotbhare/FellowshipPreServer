@@ -18,24 +18,59 @@ def init_auth(app):
     # ---------------------------------
     #           HOMEPAGE
     # ---------------------------------
+    # @homepage_blueprint.route('/', methods=['GET', 'POST'])
+    # def home_page():
+    #     if 'language' in session:
+    #         language = session['language']
+    #     else:
+    #         language = 'marathi'
+    #
+    #     # --------------------------  HOME PAGE
+    #     total_count = applications_today()
+    #     fellow_awarded = fellow_awarded_count()
+    #     total_appl_22 = total_appl_22_count()
+    #     total_appl_23 = total_appl_23_count()
+    #
+    #     # print("old user 2022",old_user_22)
+    #     news_record = news_fetch()
+    #     return render_template('Homepage/home-page.html', total_count=total_count, fellow_awarded=fellow_awarded,
+    #                            total_appl_22=total_appl_22, total_appl_23=total_appl_23,
+    #                            languagmepage_blueprint.route('/', methods=['GET', 'POST'])
+
     @homepage_blueprint.route('/', methods=['GET', 'POST'])
     def home_page():
-        if 'language' in session:
-            language = session['language']
-        else:
-            language = 'marathi'
+        import array as arr
+        from subprocess import Popen, PIPE, STDOUT
 
-        # --------------------------  HOME PAGE
-        total_count = applications_today()
-        fellow_awarded = fellow_awarded_count()
-        total_appl_22 = total_appl_22_count()
-        total_appl_23 = total_appl_23_count()
+        number = "958310524247";
+        RefNum = "991303584635977728";
+        setAc = "A100001";
+        setSA = "A100001";
+        setLK = "ddb81abd-23d7-4cf6-ab5e-29d01bcc2950";
+        opr = "struid";
+        keyType = "aes";
+        tokenType = "soft";
+        url = "http://10.210.9.67:8080/vault/";
 
-        # print("old user 2022",old_user_22)
-        news_record = news_fetch()
-        return render_template('Homepage/home-page.html', total_count=total_count, fellow_awarded=fellow_awarded,
-                               total_appl_22=total_appl_22, total_appl_23=total_appl_23,
-                               language=language, multilingual_content=multilingual_content, news_record=news_record)
+        keyIdentifier = "";
+        p = Popen(
+            ['java', '-jar', '/var/www/fellowship/fellowship/cdac/wrapper.jar', number, RefNum, setAc, setSA, setLK,
+             opr, keyType, tokenType, url, keyIdentifier], stdout=PIPE, stderr=STDOUT)
+        i = 0
+        List = []
+        for line in p.stdout:
+            List.append(line)
+
+        a = List[0].decode()
+        # b=List[1].decode()
+        # c=List[2].decode()
+        # d=List[3].decode()
+        print(a)
+        # print(b)
+        # print(c)
+        # print(d)
+
+        return render_template('Homepage/home-page.html')
 
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
