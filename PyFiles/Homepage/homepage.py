@@ -65,20 +65,24 @@ def init_auth(app):
             opr, keyType, tokenType, url, idType, str(timestamp)
         ]
 
-        # Run the Java command using subprocess
-        process = subprocess.run(args, capture_output=True, text=True)
+        try:
+            # Run the Java command using subprocess
+            process = subprocess.run(args, capture_output=True, text=True, check=True)
 
-        # Output the results
-        print("OUTPUT: ")
-        print(process.stdout)
+            # Capture standard output and errors
+            output = process.stdout
+            errors = process.stderr
 
-        # If there are errors, print them too
-        if process.stderr:
-            print("ERROR: ")
-            print(process.stderr)
+            if errors:
+                # If there are errors, pass them to the template
+                return render_template('Homepage/pythonConnector.html', output=None, error=errors)
 
-        return render_template('Homepage/pythonConnector.html', jsonify(process))
+            # Pass the output to the template
+            return render_template('Homepage/pythonConnector.html', output=output, error=None)
 
+        except subprocess.CalledProcessError as e:
+            # Handle any subprocess errors and pass them to the template
+            return render_template('Homepage/pythonConnector.html', output=None, error=str(e))
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
         cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
