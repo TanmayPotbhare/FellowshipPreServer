@@ -77,7 +77,7 @@ def init_auth(app):
             print("ERROR: ")
             print(process.stderr)
 
-        return render_template('pythonConnector.html', jsonify(process))
+        return render_template('Homepage/pythonConnector.html', jsonify(process))
 
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
