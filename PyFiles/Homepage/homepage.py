@@ -37,47 +37,47 @@ def init_auth(app):
                                total_appl_22=total_appl_22, total_appl_23=total_appl_23,
                                language=language, multilingual_content=multilingual_content)
 
-    # @homepage_blueprint.route('/pythonConnector', methods=['GET', 'POST'])
-    # def pythonConnector():
-    #     import subprocess
-    #     import time
-    #
-    #     # Variables defined in PHP
-    #     number = "882284367228"
-    #     RefNum = "1291304087928938496"
-    #     setAc = "A100098"
-    #     setSA = "A100098"
-    #     setLK = "260288bb-f12c-4955-a2b6-94b77f98236b"
-    #     # opr = "getrefnum"
-    #     opr = "getuid"
-    #     keyType = "aes"
-    #     tokenType = "soft"
-    #     url = "https://sp.epramaan.in:8038/vault/"
-    #     idType = "uid"
-    #
-    #     # Generate the current Unix timestamp in seconds
-    #     timestamp = int(time.time())
-    #
-    #     # Prepare the arguments array for the Java command
-    #     args = [
-    #         "java", "-jar", "wrapper.jar",
-    #         number, RefNum, setAc, setSA, setLK,
-    #         opr, keyType, tokenType, url, idType, str(timestamp)
-    #     ]
-    #
-    #     # Run the Java command using subprocess
-    #     process = subprocess.run(args, capture_output=True, text=True)
-    #
-    #     # Output the results
-    #     print("OUTPUT: ")
-    #     print(process.stdout)
-    #
-    #     # If there are errors, print them too
-    #     if process.stderr:
-    #         print("ERROR: ")
-    #         print(process.stderr)
-    #
-    #     return render_template('Homepage/home-page.html', process=process)
+    @homepage_blueprint.route('/pythonConnector', methods=['GET', 'POST'])
+    def pythonConnector():
+        import subprocess
+        import time
+
+        # Variables defined in PHP
+        number = "882284367228"
+        RefNum = "1291304087928938496"
+        setAc = "A100098"
+        setSA = "A100098"
+        setLK = "260288bb-f12c-4955-a2b6-94b77f98236b"
+        # opr = "getrefnum"
+        opr = "getuid"
+        keyType = "aes"
+        tokenType = "soft"
+        url = "https://sp.epramaan.in:8038/vault/"
+        idType = "uid"
+
+        # Generate the current Unix timestamp in seconds
+        timestamp = int(time.time())
+
+        # Prepare the arguments array for the Java command
+        args = [
+            "java", "-jar", "wrapper.jar",
+            number, RefNum, setAc, setSA, setLK,
+            opr, keyType, tokenType, url, idType, str(timestamp)
+        ]
+
+        # Run the Java command using subprocess
+        process = subprocess.run(args, capture_output=True, text=True)
+
+        # Output the results
+        print("OUTPUT: ")
+        print(process.stdout)
+
+        # If there are errors, print them too
+        if process.stderr:
+            print("ERROR: ")
+            print(process.stderr)
+
+        return process
 
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
