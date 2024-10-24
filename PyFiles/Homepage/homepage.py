@@ -60,7 +60,7 @@ def init_auth(app):
 
         # Prepare the arguments array for the Java command
         args = [
-            "java", "-jar", "wrapper.jar",
+            "java", "-jar", "/var/www/fellowship/fellowship/cdac/wrapper.jar",
             number, RefNum, setAc, setSA, setLK,
             opr, keyType, tokenType, url, idType, str(timestamp)
         ]
