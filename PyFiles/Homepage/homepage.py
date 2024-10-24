@@ -1,7 +1,7 @@
 import folium
 import mysql.connector
 from classes.connection import HostConfig, ConfigPaths, ConnectParam
-from flask import Blueprint, render_template, session, request, redirect, url_for
+from flask import Blueprint, render_template, session, request, redirect, url_for, jsonify
 from PyFiles.Homepage.multilingual_content import multilingual_content
 
 homepage_blueprint = Blueprint('homepage', __name__)
@@ -77,7 +77,7 @@ def init_auth(app):
             print("ERROR: ")
             print(process.stderr)
 
-        return process
+        return jsonify(process)
 
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
