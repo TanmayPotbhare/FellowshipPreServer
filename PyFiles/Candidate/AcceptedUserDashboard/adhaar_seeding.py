@@ -35,6 +35,11 @@ def adhaarseed_auth(app):
         result = cursor.fetchone()
 
         if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
+
+        if result:
             joining_date = result['application_date']
             existing_report = result['adhaar_seeding_doc']
         if request.method == 'POST':
@@ -53,7 +58,7 @@ def adhaarseed_auth(app):
         cnx.close()
         return render_template('Candidate/AcceptedUserDashboard/old_user_adhaar_seed.html', records=records,
                                joining_date=joining_date, adhaar_seeding_doc=adhaar_seeding_doc,
-                               result=result, existing_report=existing_report)
+                               result=result, existing_report=existing_report, user=user)
 
     def save_file_joining_report(file, firstname, lastname):
         if file:

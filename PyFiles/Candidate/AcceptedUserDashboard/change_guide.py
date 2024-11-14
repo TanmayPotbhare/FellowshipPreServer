@@ -44,20 +44,24 @@ def changeguide_auth(app):
             cursor.close()
             return redirect(url_for('changeguide.change_guide_AA'))
 
-        cursor = cnx.cursor()
+        cursor = cnx.cursor(dictionary=True)
 
         # SQL query to fetch the present guide name from database
         # cursor.execute("SELECT name_of_guide FROM application_page")
         email = session['email']
-        cursor.execute("SELECT name_of_guide FROM application_page WHERE email = %s", (email,))
+        cursor.execute("SELECT name_of_guide, first_name FROM application_page WHERE email = %s", (email,))
         result = cursor.fetchone()
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
 
         if result is not None:
-            guide_name = result[0]
+            guide_name = result['name_of_guide']
         else:
             guide_name = "No Guide Found"
 
         # cursor.close()
         cnx.close()
 
-        return render_template('Candidate/AcceptedUserDashboard/change_guide_AA.html', guide_name=guide_name)
+        return render_template('Candidate/AcceptedUserDashboard/change_guide_AA.html', guide_name=guide_name, user=user)

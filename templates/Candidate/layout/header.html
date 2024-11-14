@@ -26,12 +26,12 @@
                     {% elif session['applicant_photo'] is none %}
                         <img src="/static/assets/img/default_user.png" alt="Profile" class="rounded-circle">
                     {% endif %}
-                    <span class="d-none d-md-block dropdown-toggle ps-2">{{ user }}</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2 text-capitalize">{{ user }}</span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>{{ user }}</h6>
+                        <h6 class="text-capitalize">{{ user }}</h6>
                         <span>Student</span>
                     </li>
                     <li>

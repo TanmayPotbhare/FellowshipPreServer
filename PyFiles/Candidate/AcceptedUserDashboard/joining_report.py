@@ -34,7 +34,12 @@ def joiningreport_auth(app):
             "SELECT first_name, last_name, phd_registration_date, joining_date, joining_report FROM application_page WHERE email = %s",
             (email,))
         result = cursor.fetchone()
-        print(result)
+
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
+
         if result:
             joining_date = result['phd_registration_date']
             existing_report = result['joining_report']
@@ -54,7 +59,7 @@ def joiningreport_auth(app):
         cnx.close()
 
         return render_template('Candidate/AcceptedUserDashboard/joining_report_AA.html', records=records, joining_date=joining_date,
-                               joining_report=joining_report,
+                               joining_report=joining_report, user=user,
                                result=result, existing_report=existing_report)
 
     def save_file_joining_report(file, firstname, lastname):

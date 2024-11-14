@@ -38,8 +38,11 @@ def manageprofile_auth(app, mail):
 
         cursor.close()
         cnx.close()
-
-        return render_template('Candidate/commonFiles/users-profile.html', records=records)
+        if records:
+            user = records[0]['first_name']
+        else:
+            user = 'Admin'
+        return render_template('Candidate/commonFiles/users-profile.html', records=records, user=user)
 
     def submit_edit_profile():  # ------------- SUBMIT EDIT PROFILE FOR MY PROFILE
         if request.method == 'POST':

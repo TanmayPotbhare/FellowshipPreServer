@@ -65,8 +65,12 @@ def halfyearly_auth(app):
                 submitted_documents.append(f'half_yearly_report{i}')
 
         # Fetch the joining date for the user
-        cursor.execute("SELECT phd_registration_date FROM application_page WHERE email = %s", (email,))
+        cursor.execute("SELECT phd_registration_date, first_name FROM application_page WHERE email = %s", (email,))
         result = cursor.fetchone()
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
 
         if result:
             joining_date = result['phd_registration_date']
@@ -81,7 +85,7 @@ def halfyearly_auth(app):
         cnx.close()
         return render_template('Candidate/AcceptedUserDashboard/half_yearly_rep_AA.html', reports=reports, joining_date=joining_date,
                                start_dates=start_dates, end_dates=end_dates, submitted_count=submitted_count,
-                               submitted_documents=submitted_documents)
+                               submitted_documents=submitted_documents, user=user)
 
     def save_file_half_yearly(file, firstname, lastname):
         if file:

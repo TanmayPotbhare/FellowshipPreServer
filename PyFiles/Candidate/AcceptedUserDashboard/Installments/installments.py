@@ -29,6 +29,10 @@ def installments_auth(app):
         result = cursor.fetchall()
         year = result[0]['phd_registration_year']
         startDate = result[0]['final_approved_date']
+        if result:
+            user = result[0]['first_name']
+        else:
+            user = 'Admin'
 
         cursor.execute("SELECT * FROM installments WHERE email=%s", (email,))
         installments = cursor.fetchone()
@@ -104,7 +108,7 @@ def installments_auth(app):
                                installment_1=installment_1,
                                installment_2=installment_2,
                                installment_3=installment_3, total_period=total_period, total_balance=total_balance,
-                               year=year, installments=installments)
+                               year=year, installments=installments, user=user)
 
     def approve_payment(email):
         cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',

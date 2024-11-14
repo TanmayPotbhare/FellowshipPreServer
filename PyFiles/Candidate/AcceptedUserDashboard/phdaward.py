@@ -56,8 +56,9 @@ def phdaward_auth(app):
 
         email = session['email']
         cursor = cnx.cursor()
-        cursor.execute("SELECT phd_award FROM application_page WHERE email = %s", (email,))
+        cursor.execute("SELECT phd_award, first_name FROM application_page WHERE email = %s", (email,))
         result = cursor.fetchone()
+
 
         if result is not None:
             phd_award = result[0]

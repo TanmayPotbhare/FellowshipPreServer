@@ -41,7 +41,7 @@ def viewform_auth(app):
         # Fetch all records matching the query
         records = cursor.fetchall()
         if records:
-            user = 'User'
+            user = records[0]['first_name']
         else:
             user = 'Admin'
         topic_of_phd_utf8_list = []

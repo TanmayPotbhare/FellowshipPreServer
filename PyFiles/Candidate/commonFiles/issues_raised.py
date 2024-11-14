@@ -37,11 +37,11 @@ def issue_raised_auth(app, mail):
             issue_subject = request.form['issue_subject']
             description = request.form['description']
             document = request.files['document']
-            sql = """SELECT email FROM application_page where email=%s"""
+            sql = """SELECT email, first_name FROM application_page where email=%s"""
             cursor.execute(sql, (email,))
             result = cursor.fetchall()
             if result:
-                user = 'User'
+                user = result[0]['first_name']
             else:
                 user = 'Admin'
             if document.filename != '':
@@ -67,11 +67,11 @@ def issue_raised_auth(app, mail):
             cursor.close()
             cnx.close()
             return render_template('Candidate/commonFiles/submitted_issue_raised.html', records=records, user=user)
-        sql = """SELECT email FROM application_page where email=%s"""
+        sql = """SELECT email, first_name FROM application_page where email=%s"""
         cursor.execute(sql, (email,))
         result = cursor.fetchall()
         if result:
-            user = 'User'
+            user = result[0]['first_name']
         else:
             user = 'Admin'
         cursor.close()

@@ -75,8 +75,12 @@ def presenty_auth(app):
         print("Submitted Count:", submitted_count)
         print("Submitted Documents:", submitted_documents)
         # Fetch the joining date for the user
-        cursor.execute("SELECT phd_registration_date FROM application_page WHERE email = %s", (email,))
+        cursor.execute("SELECT phd_registration_date, first_name FROM application_page WHERE email = %s", (email,))
         result = cursor.fetchone()
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
 
         i = submitted_count + 1
 
@@ -123,7 +127,7 @@ def presenty_auth(app):
         return render_template('Candidate/AcceptedUserDashboard/presenty_AA.html', zipped_dates=zipped_dates,
                                reports=reports, start_dates=start_dates, end_dates=end_dates, joining_date=joining_date,
                                submitted_count=submitted_count, submitted_date=submitted_date,
-                               submitted_day=submitted_day,
+                               submitted_day=submitted_day, user=user,
                                submitted_documents=submitted_documents, index=index)
 
     def save_file_presenty_report(file, firstname, lastname):

@@ -33,7 +33,7 @@
 <body>
 
   <!-- ======= Header ======= -->
-  {% if(user == 'User' ) %}
+  {% if(user != 'Admin' ) %}
   {% include 'Candidate/layout/header.html' %}
   {% else %}
   {% include 'Admin/layout/header.html' %}
@@ -41,7 +41,7 @@
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  {% if(user == 'User' ) %}
+  {% if(user != 'Admin' ) %}
   {% include 'Candidate/layout/sidebar.html' %}
   {% else %}
   {% include 'Admin/layout/sidebar.html' %}
@@ -121,7 +121,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  {% if(user == 'User' ) %}
+  {% if(user != 'Admin' ) %}
   {% include 'Candidate/layout/footer.html' %}
   {% else %}
   {% include 'Admin/layout/footer.html' %}

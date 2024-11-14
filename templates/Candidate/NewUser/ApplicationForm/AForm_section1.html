@@ -55,7 +55,7 @@
                                             <i class="ri-information-fill">Instructions</i></label><br>
                                         </label>
                                         {% if record['applicant_photo'] %}
-                                            <img src="{{ record['applicant_photo'] }}" alt="Photo">
+                                            <img src="{{ record['applicant_photo'] }}" alt="Photo" style="height:150px; width:250px">
                                         {% else %}
                                         <img src="" class="preview-img mb-3 shadow" id="candidate_preview" alt="">
                                         <input type="file" class="form-control upload-img accept_img"
@@ -79,8 +79,10 @@
                                         <input type="text" class="form-control" name="adhaar_number" id="aadhaar"
                                             accept="image/*" required placeholder="Enter Adhaar Card number"
                                             onkeyup="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 12)"
-                                            maxlength="14" {% if record %}disabled{% endif %}
-                                            value="{{ record.adhaar_number }}" title="candidate_photo">
+                                            maxlength="14" title="candidate_photo"><br>
+                                        <button type="button" class="btn btn-primary" id="verifyAadhaarBtn" onclick="verifyAadhaar()">
+                                            Verify Aadhaar
+                                        </button>
                                         <span id="aadhaarError" class="error"></span><br>
                                         <div class="valid-feedback">
                                             Looks Good!

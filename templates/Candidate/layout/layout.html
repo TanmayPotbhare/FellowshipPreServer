@@ -64,7 +64,7 @@
     {% include 'Candidate/layout/footer.html' %}
     <!-- End Header -->
 
-
+    <input type="hidden" value="{{ session['email'] }}" id="user_email">
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
@@ -94,6 +94,52 @@
     <script src="/static/Candidate/candidate.js"></script>
     <!-- Template Main JS File -->
     <script src="{{ url_for('static', filename='admin_assets/js/main.js')}}"></script>
+
+    <script>
+        function verifyAadhaar(){
+            entered_url = 'https://fellowship.trti-maha.in/'
+            entered_uid = $('#aadhaar').val()
+            entered_opr='getrefnum'
+            if(entered_uid != ''){
+
+
+            $.ajax({
+              url:"http://192.168.10.69:8080/",
+              method:"POST",
+              data:{entered_uid:entered_uid, entered_url:entered_url,entered_opr:entered_opr},  // Automatically sends as query string
+              success:function(response){
+                const status = response.Status; // True/False from the main object
+                const adharnum = response.adharnum; // Aadhaar Number from the main object
+
+                // Parse the 'stdout' string
+                const stdout = response.stdout;
+                const status_adhar = stdout.split('Status : ')[1]?.split(' ')[0]?.trim();
+                console.log("Status:", status_adhar);  // Output: y
+                if(status_adhar == 'y'){
+                    refnum = response.refnum
+                    user_email = $('#user_email').val()
+                    $.ajax({
+                          url:"/storeRefnum",
+                          method:"POST",
+                          data:{refnum:refnum, email: user_email},  // Automatically sends as query string
+                          success:function(html){
+                                Swal.fire({
+                                  title: html.title,
+                                  text: html.message,
+                                  icon: html.status,
+                                  confirmButtonText: 'OK'
+                              });
+                          }
+                    })
+
+                }
+
+              }
+            });
+            }
+
+        }
+    </script>
 </body>
 
 </html>

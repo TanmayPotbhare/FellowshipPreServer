@@ -1,4 +1,5 @@
 import random
+import random
 import bcrypt
 import mysql.connector
 import requests

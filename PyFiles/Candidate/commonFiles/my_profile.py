@@ -40,9 +40,13 @@ def my_profile_auth(app, mail):
         records = cursor.fetchall()
         cursor.close()
         cnx.close()
+        if records:
+            user = records[0]['first_name']
+        else:
+            user = 'Admin'
 
         return render_template('Candidate/commonFiles/users-profile.html', records=records, flash_msg=flash_msg,
-                               flash_msg_profile=flash_msg_profile)
+                               flash_msg_profile=flash_msg_profile, user=user)
 
     def submit_edit_profile():  # ------------- SUBMIT EDIT PROFILE FOR MY PROFILE
         if request.method == 'POST':

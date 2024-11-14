@@ -64,8 +64,12 @@ def hracert_auth(app):
             if reports.get(f'rent_agreement{i}'):
                 submitted_documents.append(f'rent_agreement{i}')
         # Fetch the joining date for the user
-        cursor.execute("SELECT phd_registration_date FROM application_page WHERE email = %s", (email,))
+        cursor.execute("SELECT phd_registration_date, first_name FROM application_page WHERE email = %s", (email,))
         result = cursor.fetchone()
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
 
         if result:
             joining_date = result['phd_registration_date']
@@ -81,7 +85,7 @@ def hracert_auth(app):
 
         return render_template('Candidate/AcceptedUserDashboard/rent_agreement_AA.html', reports=reports, joining_date=joining_date,
                                start_dates=start_dates, end_dates=end_dates, submitted_count=submitted_count,
-                               submitted_documents=submitted_documents)
+                               submitted_documents=submitted_documents, user=user)
 
     def save_file_rent_agreement(file, firstname, lastname):
         if file:

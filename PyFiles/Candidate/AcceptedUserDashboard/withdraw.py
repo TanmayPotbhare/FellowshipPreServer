@@ -41,6 +41,14 @@ def withdraw_auth(app):
         cursor.execute(select_query, (email,))
         result = cursor.fetchone()
 
+        cursor.execute(
+            "SELECT first_name FROM application_page WHERE email = %s",
+            (email,))
+        res = cursor.fetchone()
+        if res:
+            user = res['first_name']
+        else:
+            user = 'Admin'
         cursor.close()
         cnx.close()
-        return render_template('Candidate/AcceptedUserDashboard/with_from_fellowship_AA.html', result=result)
+        return render_template('Candidate/AcceptedUserDashboard/with_from_fellowship_AA.html', result=result, user=user)

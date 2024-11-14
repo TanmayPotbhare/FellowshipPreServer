@@ -40,7 +40,12 @@ def undertakingdoc_auth(app):
             "SELECT first_name, last_name, phd_registration_date, undertaking_doc_date, undertaking_doc FROM application_page WHERE email = %s",
             (email,))
         result = cursor.fetchone()
-        print(result)
+
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
+
         if result:
             undertaking_doc_date = result['undertaking_doc_date']
             existing_report = result['undertaking_doc']
@@ -68,7 +73,7 @@ def undertakingdoc_auth(app):
         cnx.close()
         return render_template('Candidate/AcceptedUserDashboard/undertakingDoc.html', records=records,
                                undertaking_doc_date=undertaking_doc_date, undertaking_doc=undertaking_doc,
-                               esult=result, existing_report=existing_report, doc=doc)
+                               esult=result, existing_report=existing_report, doc=doc, user=user)
     # --------------------  Function End ----------------------------
 
     def save_file_undertaking_report(file, firstname, lastname):

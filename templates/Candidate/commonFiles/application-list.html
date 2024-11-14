@@ -35,7 +35,6 @@
                   <th scope="col"> Email</th>
                   <th scope="col"> PHD Registration Date</th>
                   <th scope="col">Adhaar Card Number</th>
-                  <th scope="col">Applied For</th>
                   <th scope="col">Application Date</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -45,13 +44,12 @@
                 <tr>
                   <td>{{ record['id'] }}</td>
                   <td>TRTI/{{ record['phd_registration_year'] }}/{{ record['id'] }}</td>
-                  <td>{{ record['first_name'] }}</td>
-                  <td>{{ record['middle_name'] }}</td>
-                  <td>{{ record['last_name'] }}</td>
+                  <td class="text-capitalize">{{ record['first_name'] }}</td>
+                  <td class="text-capitalize">{{ record['middle_name'] }}</td>
+                  <td class="text-capitalize">{{ record['last_name'] }}</td>
                   <td>{{ record['email'] }}</td>
                   <td>{{ record['phd_registration_date'] }}</td>
                   <td>{{ record['adhaar_number'] }}</td>
-                  <td>Basic</td>
                   <td>{{ record['application_date'] }}</td>
                   <td>
                     <a href="/viewform/{{record['id']}}" class="btn btn-theme btn-sm tooltip-trigger"

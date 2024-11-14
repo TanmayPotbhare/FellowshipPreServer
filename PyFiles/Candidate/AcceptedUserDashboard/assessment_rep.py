@@ -35,6 +35,10 @@ def assessment_auth(app):
             "SELECT first_name, last_name, phd_registration_date, assessment_report FROM application_page WHERE email = %s",
             (email,))
         result = cursor.fetchone()
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
 
         if result:
             joining_date = result['phd_registration_date']
@@ -56,7 +60,7 @@ def assessment_auth(app):
         cursor.close()
         cnx.close()
         return render_template('Candidate/AcceptedUserDashboard/assessment_report_AA.html', records=records, joining_date=joining_date,
-                               joining_report=joining_report,
+                               joining_report=joining_report, user=user,
                                result=result, existing_report=existing_report)
 
     def save_file_assessment_report(file, firstname, lastname):

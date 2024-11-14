@@ -40,18 +40,22 @@ def changeres_auth(app):
             cnx.commit()
             cursor.close()
             return redirect(url_for('changeres.change_center_AA'))
-        cursor = cnx.cursor()
+        cursor = cnx.cursor(dictionary=True)
 
         # SQL query to fetch the present center name from database
         email = session['email']
-        cursor.execute("SELECT name_of_college FROM application_page WHERE email = %s", (email,))
+        cursor.execute("SELECT name_of_college, first_name FROM application_page WHERE email = %s", (email,))
         result = cursor.fetchone()
+        if result:
+            user = result['first_name']
+        else:
+            user = 'Admin'
 
         if result is not None:
-            center_name = result[0]
+            center_name = result['name_of_college']
         else:
             center_name = "No Center Found"
 
-        # cursor.close()
+        cursor.close()
         cnx.close()
-        return render_template('Candidate/AcceptedUserDashboard/change_center_AA.html', center_name=center_name)
+        return render_template('Candidate/AcceptedUserDashboard/change_center_AA.html', center_name=center_name, user=user)

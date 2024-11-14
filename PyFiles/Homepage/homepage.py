@@ -83,6 +83,7 @@ def init_auth(app):
         except subprocess.CalledProcessError as e:
             # Handle any subprocess errors and pass them to the template
             return render_template('Homepage/pythonConnector.html', output=None, error=str(e))
+
     # --------------------------- Definitions of Counts in Homepage -------------------------------------
     def applications_today():
         cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
