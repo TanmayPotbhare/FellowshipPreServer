@@ -1,0 +1,202 @@
+{% extends 'AdminPages/layout/layout.html' %}
+{% block content %}
+
+
+<div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+          </span> Final Approval of Fellowship
+        </h3>
+        <nav aria-label="breadcrumb">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+              <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="row justify-content-end">
+          <div class="col-md-6">
+            {% if session['user'] == 'Auditor' %}
+                 <div class="text-end">
+                    <a href ="#" class="btn btn-theme export-excel" data-bs-toggle="tooltip"
+                       data-bs-placement="top" data-bs-original-title="Export as Excel">Export to Excel<a>
+                  </div>
+              {% else %}
+                  <div class="col-md-12 d-flex justify-content-end">
+                    <a href ="/export_level_three_admin" class="btn btn-outline-info btn-fw btn-rounded"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       data-bs-original-title="Export as Excel">Export to Excel<a>
+                  </div>
+              {% endif %}
+        </div>
+        <div class="text-center mb-4">
+            <h4>LEVEL 3 - FINAL APPROVAL</h4>
+        </div><br>
+      </div>
+      <div class="text-center">
+             {% if session['user'] == 'Auditor' %}
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-outline-primary btn-fw">Accepted Students</button>
+                      </a>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-outline-primary btn-fw">Pending Students</button>
+                      </a>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-outline-primary btn-fw">Rejected Students</button>
+                      </a>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-outline-primary btn-fw">PVTG Students(Katkari, Kolam, Madia)</button>
+                      </a>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-outline-primary btn-fw">Disabled Students</button>
+                      </a>
+              {% else %}
+                      <a href="/accepted_students_level3" class="mx-3">
+                        <button class="btn btn-outline-primary btn-fw">Accepted Students</button>
+                      </a>
+                      <a href="/pending_students_level3" class="mx-3">
+                        <button class="btn btn-outline-primary btn-fw">Pending Students</button>
+                      </a>
+                      <a href="/rejected_students_level3" class="mx-3">
+                        <button class="btn btn-outline-primary btn-fw">Rejected Students</button>
+                      </a>
+                      <a href="/pvtg_students_level3" class="mx-3">
+                        <button class="btn btn-outline-primary btn-fw">PVTG Students(Katkari, Kolam, Madia)</button>
+                      </a>
+                      <a href="/disabled_students_level3" class="mx-3">
+                        <button class="btn btn-outline-primary btn-fw">Disabled Students</button>
+                      </a>
+              {% endif %}
+      </div><br>
+
+  <div class="card-body">
+      <!-- Table to display student applications -->
+  <table class="table table-bordered datatable">
+    <thead>
+      <tr>
+
+        <th>Unique Applicant ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Status</th>
+        <th>Scrutiny Status</th>
+        <th>Final Approval Status</th>
+        <th>Final Approval Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Replace this with your backend code to iterate over rows -->
+      {% for record in data %}
+      <tr>
+
+        <td>TRTI/{{ record['phd_registration_year'] }}/{{ record['id'] }}</td>
+        <td>{{ record['first_name'] }}</td>
+        <td>{{ record['last_name'] }}</td>
+        <td>
+            {% if record['status'] == 'accepted' %}
+              <span class="badge bg-success text-capitalize">{{ record['status'] }}</span>
+            {% elif record['status'] == 'pending' %}
+              <span class="badge bg-warning text-capitalize">{{ record['status'] }}</span>
+            {% else %}
+              <span class="badge bg-danger text-capitalize">{{ record['status'] }}</span>
+            {% endif %}
+        </td>
+        <td>
+            {% if record['scrutiny_status'] == 'accepted' %}
+                 <span class="badge bg-success text-capitalize">{{ record['scrutiny_status'] }}</span>
+            {% elif record['scrutiny_status'] == 'pending' %}
+                <span class="badge bg-warning text-capitalize">{{ record['scrutiny_status'] }}</span>
+            {% else %}
+                <span class="badge bg-danger text-capitalize">{{ record['scrutiny_status'] }}</span>
+            {% endif %}
+        </td>
+        <td>
+            {% if record['final_approval'] == 'accepted' %}
+                 <span class="badge bg-success text-capitalize">{{ record['final_approval'] }}</span>
+            {% elif record['final_approval'] == 'pending' %}
+                <span class="badge bg-warning text-capitalize">{{ record['final_approval'] }}</span>
+            {% else %}
+                <span class="badge bg-danger text-capitalize">{{ record['final_approval'] }}</span>
+            {% endif %}
+        </td>
+        {% if session['user'] == 'Auditor' %}
+          <td>
+            <a href="/viewform/{{ record['id']}}" class="btn btn-info btn-sm btn-rounded tooltip-trigger" data-bs-parent="table"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="View Form"><i
+                class="ri-eye-fill"></i></a>
+          </td>
+        {% else %}
+          <td>
+            <form method="POST" action="/level_three_admin">
+              <input type="hidden" name="applicant_id" value="{{ record['applicant_id'] }}">
+              {% if record['final_approval'] == 'pending' %}
+
+              <button type="submit" name="accept" value="{{ record['applicant_id'] }}"
+                class="btn btn-sm btn-success tooltip-trigger" data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-original-title="Accept Applicant"><i class="mdi mdi-check-all"></i></button>
+              <button type="submit" name="reject" value="{{ record['applicant_id'] }}"
+                class="btn btn-sm btn-danger tooltip-trigger reject_button" data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-original-title="Reject Applicant"><i class="mdi mdi-close-octagon"></i></button>
+              {% endif %}
+              <a href="/viewform/{{ record['id']}}" class="btn btn-info btn-sm btn-rounded tooltip-trigger" data-bs-parent="table"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="View Form"><i
+                  class="mdi mdi-eye-circle"></i></a>
+            </form>
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+      <div class="text-center">
+                      {% if session['user'] == 'Auditor' %}
+                              <a href="#" class="mx-3 export-excel">
+                                <button class="btn btn-success btn-sm">Accepted Students</button>
+                              </a>
+                              <a href="#" class="mx-3 export-excel">
+                                <button class="btn btn-warning btn-sm">Pending Students</button>
+                              </a>
+                              <a href="#" class="mx-3 export-excel">
+                                <button class="btn btn-danger btn-sm">Rejected Students</button>
+                              </a>
+                              <a href="#" class="mx-3 export-excel">
+                                <button class="btn btn-dark btn-sm">Accepted Students at Level 2</button>
+                              </a>
+                              <a href="#" class="mx-3 export-excel">
+                                <button class="btn btn-dark btn-sm">Pending Students at Level 2</button>
+                              </a>
+                              <a href="#" class="mx-3 export-excel">
+                                <button class="btn btn-dark btn-sm">Rejected Students at Level 2</button>
+                              </a>
+                      {% else %}
+                              <a href="/accepted_students_level1" class="mx-2">
+                                <button class="btn btn-dark btn-sm">Accepted Students at Level 1</button>
+                              </a>
+                              <a href="/pending_students_level1" class="mx-2">
+                                <button class="btn btn-dark btn-sm">Pending Students at Level 1</button>
+                              </a>
+                              <a href="/rejected_students_level1" class="mx-2">
+                                <button class="btn btn-dark btn-sm">Rejected Students at Level 1</button>
+                              </a>
+                              <a href="/accepted_students_level2" class="mx-2">
+                                <button class="btn btn-dark btn-sm">Accepted Students at Level 2</button>
+                              </a>
+                              <a href="/pending_students_level2" class="mx-2">
+                                <button class="btn btn-dark btn-sm">Pending Students at Level 2</button>
+                              </a>
+                              <a href="/rejected_students_level2" class="mx-2">
+                                <button class="btn btn-dark btn-sm">Rejected Students at Level 2</button>
+                              </a>
+                      {% endif %}
+              </div><br>
+  </div>
+
+
+
+
+{% endblock %}
