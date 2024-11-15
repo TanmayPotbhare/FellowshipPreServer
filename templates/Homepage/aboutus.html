@@ -1,0 +1,134 @@
+{% extends "Homepage/layout/layout.html" %}
+
+{% block content %}
+
+    <!-- main Content is here -->
+    <main id="aboutus">
+        <!-- ======= Breadcrumbs ======= -->
+        <section class="breadcrumbs">
+            <div class="container">
+
+                <ol>
+                    <li><a href="/">{{multilingual_content[language]['home']}}</a></li>
+                    <li class="text-white">{{multilingual_content[language]['about']}}</li>
+                </ol>
+                <h2>{{multilingual_content[language]['about_the_institute']}}</h2>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+        <div class="content mt-3">
+            <div class="container about-us-container">
+                <!-- <h2 class="text-center text-theme mb-5 fw-bold">ABOUT THE INSTITUTION</h2> -->
+                <div class="row">
+                    {% if(language == 'english') %}
+                    <div class="col-md-6">
+
+                        <h3 class="tri-heading ">Tribal Research and Training Institute, Maharashtra State,
+                            Pune</h3>
+                        <p class="first-part font-14">
+                            Tribal Research and Training Institute, Maharashtra State, Pune is an autonomous
+                            organization of
+                            the Government of Maharashtra, which was established under the centrally sponsored scheme in
+                            1962.
+                            Tribal research and training institutions are working in the tribal-dominated states of the
+                            country to conduct research on various aspects of tribal subjects.
+                            The following objectives of the organization were set up during the establishment of this
+                            institution
+                        </p>
+                        <h3 class="font-20 text-theme fw-bold">Organization's Objectives and Functions</h3>
+                        <p class="points font-14">
+                        <ol>
+                            <li class="font-14 text-justify">Evaluate the impact of various schemes implemented by the
+                                Central and State Government for the
+                                financial, educational and social development of tribal communities on tribal life.</li>
+                            <li class="font-14 text-justify">Do research on issues related to tribal life and
+                                development.</li>
+                            <li class="font-14 text-justify">Providing pre-employment training for the officers /
+                                employees working in Tribal Development
+                                Department and for tribal students.</li>
+                            <li class="font-14 text-justify">Organizing different training sessions for the tribal</li>
+                            <li class="font-14 text-justify">Adivasi cultural museum to organize tribal arts and
+                                culture, organize handicraft exhibition in
+                                different urban areas, and create a short film on tribal life.</li>
+                            <li class="font-14 text-justify">Administrative control over the functioning of Scheduled
+                                Tribes Certificate Examination
+                                Committees working in the State level in Maharashtra State</li>
+                        </ol>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/static/assets/img/trti_building.jpg" class="building w-100 rounded"
+                            alt="trti_building">
+                    </div>
+                    <p class="balboa font-14">
+                        Tribal Research and Training Institute has been the only government organization in the state to
+                        conduct various training programs in the context of Tribal subjects for the last 50 years and
+                        tribal subjects.
+                        The Central Government has appointed this organization as the nodal agency for all tribal
+                        research and training institutes in the country by taking note of the work of this organization.
+                    </p>
+                    <p class="balboa font-14">
+                        The golden festival was celebrated by tribal research and training organization in 2013 and the
+                        golden festival was inaugurated at the hands of the then President of India Mr. Pranab
+                        Mukherjee.
+                        On this occasion, this institution has been given the status of an autonomous institution by
+                        fixing the following objectives by increasing the scope of the original objectives of the
+                        organization to advise and guide the Tribal for the overall development of tribal people as well
+                        as for the overall development of tribal.
+                    </p>
+                    {% else %}
+                    <div class="col-md-6">
+
+                        <h3 class="tri-heading ">आदिवासी संशोधन व प्रशिक्षण संस्था, महाराष्ट्र राज्य, पुणे</h3>
+                        <p class="first-part font-14 lh-base">
+                            आदिवासी संशोधन व प्रशिक्षण संस्था, महाराष्ट्र राज्य, पुणे ही एक महाराष्ट्र शासनाची स्वायत्त
+                            संस्था असून या संस्थेची स्थापना सन १९६२ मध्ये केंद्र पुरस्कृत योजनेअंतर्गत करण्यात आली.
+                            आदिवासी विषयावरील विविध बाबींवर संशोधन करण्यासाठी देशातील काही आदिवासी बहुल राज्यात आदिवासी
+                            संशोधन व प्रशिक्षण संस्था कार्यरत आहेत.
+
+                            या संस्थेची स्थापना करताना संस्थेचे खालील उदिष्टये निश्चित करुन देण्यात आली होती.
+                        </p>
+                        <h3 class="font-20 text-theme fw-bold">संस्थेची उदिष्टये व कार्य</h3>
+                        <p class="points font-14 ">
+                        <ol class="lh-25">
+                            <li class="font-14 text-justify">केंद्र व राज्य शासनामार्फत आदिवासी समाजाच्या आर्थिक,
+                                शैक्षणिक व सामाजिक विकासाकरिता राबविण्यात येणाऱ्या विविध योजनांचा आदिवासी जीवनावर
+                                झालेल्या परिणामांचे मूल्यमापन करणे</li>
+                            <li class="font-14 text-justify">आदिवासी जीवन व विकास यांचेशी संबधित विषयावर संशोधन करणे.
+                            </li>
+                            <li class="font-14 text-justify">आदिवासी विकास विभागात कार्यरत अधिकारी/कर्मचारीवृंदाकरिता
+                                सेवांतर्गत प्रशिक्षण तसेच आदिवासी विद्यार्थ्याकरिता सेवापूर्व प्रशिक्षण राबविणे.</li>
+                            <li class="font-14 text-justify">आदिवासीकरिता विविध प्रशिक्षण सत्रांचे आयोजन करणे</li>
+                            <li class="font-14 text-justify">आदिवसी कला व संस्कृती जतन करण्याकरिता आदिवासी सांस्कृतिक
+                                संग्रहालय चालविणे, हस्तकला प्रदर्शनाचे विविध शहरी भागात आयोजित करणे तसेच आदिवासी जीवनावर
+                                लघुपटाची निर्मिती करणे.</li>
+                            <li class="font-14 text-justify">महाराष्ट्र राज्यात क्षेत्रीय स्तरावर कार्यरत असलेल्या
+                                अनुसूचित जमाती प्रमाणपत्र तपासणी समित्यांच्या कामकाजावर प्रशासकीय नियंत्रण ठेवणे</li>
+                        </ol>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/static/assets/img/trti_building.jpg" class="building w-100 rounded"
+                            alt="trti_building">
+                    </div>
+                    <p class="balboa font-14 mt-3">
+                        आदिवासी संशोधन व प्रशिक्षण संस्था ही गेली ५० वर्षे आदिवासी विषयाबाबत अभ्यास करणारी तसेच आदिवासी
+                        या विषयाच्या अनुषंगाने विविध प्रशिक्षण कार्यक्रम राबविणारी राज्यातील एकमेव शासकीय संस्था आहे. या
+                        संस्थेच्या कामाची नोंद घेऊन केंद्र शासनाने या संस्थेला देशातील सर्व आदिवासी संशोधन व प्रशिक्षण
+                        संस्थेकरिता नोडल एजन्सी म्हणून नियुक्ती केलेली आहे.
+                    </p>
+                    <p class="balboa font-14">
+                        आदिवासी संशोधन व प्रशिक्षण संस्थेचा २०१३ मध्ये सुवर्ण महोत्सव साजरा करण्यात आला व या सुवर्ण
+                        महोत्सवाचे उदघाटन तत्कालीन राष्ट्रपती मा.श्री.प्रणब मुखर्जी यांच्या शुभहस्ते झाले. या प्रसंगी या
+                        आदिवासी सशोधन तसेच आदिवासींच्या सर्वांगीण विकासाकरिता शासनास सल्ला व मार्गदर्शन करण्याच्या
+                        अनुषगांगने संस्थेच्या मूळ उदिष्टयांची व्याप्ती वाढवून शासन निर्णय २४ डिसेंबर २०१३ नुसार उदिष्टये
+                        निश्चित करुन या संस्थेला स्वायत्त संस्थेचा दर्जा देण्यात आला.
+                    </p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
