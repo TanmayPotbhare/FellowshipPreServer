@@ -1,0 +1,77 @@
+{% extends 'AdminPages/layout/layout.html' %}
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white me-2">
+        <i class="mdi mdi-home"></i>
+      </span> Track Payments
+    </h3>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="card">
+      <div class="card-body">
+        <h3 class="form-label text-center mb-4">Fellowships Awarded</h3>
+        <div class="table-responsive table">
+    <table class="table datatable shadow table-bordered">
+      <thead>
+        <tr>
+          <th style="width: 25%">Applicant ID </th>
+          <th style="width: 25%">Email</th>
+          <th style="width: 15%">Student Name</th>
+          <th style="width: 5%">Faculty</th>
+          <th style="width: 5%">Date of PHD Registration</th>
+          <th style="width: 5%">View Application PDF</th>
+          <th style="width: 5%">View Award Letter</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in result %}
+        <tr>
+          <td>
+            TRTI/{{ row['phd_registration_year'] }}/{{ row['id'] }}</a>
+          </td>
+          <td>{{ row['email'] }}</td>
+          <td>{% if row['first_name'] is not none and row['last_name'] is not none %}
+                  {{ row['first_name'] }} {{ row['middle_name'] }} {{ row['last_name'] }}
+              {% else %}
+                  N/A
+              {% endif %}
+          </td>
+          <td>{{ row['faculty'] }}</td>
+          <td>{{ row['phd_registration_date'] }}</td>
+          <td>
+              <a href="/generate_pdf_application/{{ row['email'] }}" target="_blank">
+                  <button class="btn btn-primary btn-sm">View</button>
+              </a>
+          </td>
+          <td>
+              <a href="/generate_award_letter_AA/{{ row['email'] }}" target="_blank">
+                  <button class="btn btn-primary btn-sm">View</button>
+              </a>
+          </td>
+<!--          <td>-->
+<!--              <div class="wrapper">-->
+<!--                  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 40"> &lt;!&ndash; Adjust the viewBox &ndash;&gt;-->
+<!--                      <circle class="checkmark__circle" cx="26" cy="20" r="19" fill="none"/> &lt;!&ndash; Adjust cy and r &ndash;&gt;-->
+<!--                      <path class="checkmark__check" fill="none" d="M14.1 17.2l7.1 7.2 16.7-16.8"/>-->
+<!--                  </svg>-->
+<!--              </div>-->
+<!--          </td>-->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+      </div>
+  </div>
+
+
+{% endblock %}

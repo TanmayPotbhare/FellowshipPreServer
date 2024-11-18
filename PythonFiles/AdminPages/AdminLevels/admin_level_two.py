@@ -182,14 +182,18 @@ def adminleveltwo_auth(app, mail):
 
     @adminleveltwo_blueprint.route('/accepted_students_level2', methods=['GET', 'POST'])
     def accepted_students_level2():
+        if not session.get('logged_in'):
+            # Redirect to the admin login page if the user is not logged in
+            return redirect(url_for('adminlogin.admin_login'))
         host = HostConfig.host
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
+
         cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year>='2023' and "
                        "scrutiny_status='accepted' and status='accepted' ")
         result = cursor.fetchall()
 
-        return render_template('Admin/AdminLevels/AdminTwo/accepted_students_level2.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelTwo/accepted_students_level2.html', result=result)
 
     @adminleveltwo_blueprint.route('/pending_students_level2', methods=['GET', 'POST'])
     def pending_students_level2():
@@ -201,7 +205,7 @@ def adminleveltwo_auth(app, mail):
             "and status='accepted' ")
         result = cursor.fetchall()
         print('Pending', result)
-        return render_template('Admin/AdminLevels/AdminTwo/pending_students_level2.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelTwo/pending_students_level2.html', result=result)
 
     @adminleveltwo_blueprint.route('/rejected_students_level2')
     def rejected_students_level2():
@@ -212,7 +216,7 @@ def adminleveltwo_auth(app, mail):
                        "and scrutiny_status='rejected' and status='accepted' ")
         result = cursor.fetchall()
 
-        return render_template('Admin/AdminLevels/AdminTwo/rejected_students_level2.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelTwo/rejected_students_level2.html', result=result)
 
     @adminleveltwo_blueprint.route('/pvtg_students_level2')
     def pvtg_students_level2():
@@ -224,7 +228,7 @@ def adminleveltwo_auth(app, mail):
             " your_caste IN ('katkari', 'kolam', 'madia') "
         )
         result = cursor.fetchall()
-        return render_template('Admin/AdminLevels/AdminTwo/pvtg_students_level2.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelTwo/pvtg_students_level2.html', result=result)
 
     @adminleveltwo_blueprint.route('/disabled_students_level2')
     def disabled_students_level2():
@@ -235,4 +239,4 @@ def adminleveltwo_auth(app, mail):
             " SELECT * FROM application_page WHERE phd_registration_year>='2023' and disability='Yes' "
         )
         result = cursor.fetchall()
-        return render_template('Admin/AdminLevels/AdminTwo/disabled_students_level2.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelTwo/disabled_students_level2.html', result=result)

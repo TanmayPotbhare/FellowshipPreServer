@@ -316,7 +316,7 @@ def adminlevelthree_auth(app, mail):
                        "final_approval='accepted' and scrutiny_status='accepted' ")
         result = cursor.fetchall()
 
-        return render_template('Admin/AdminLevels/AdminThree/accepted_students_level3.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelThree/accepted_students_level3.html', result=result)
 
     @adminlevelthree_blueprint.route('/pending_students_level3', methods=['GET', 'POST'])
     def pending_students_level3():
@@ -327,7 +327,7 @@ def adminlevelthree_auth(app, mail):
                        "and final_approval='pending' and scrutiny_status='accepted' ")
         result = cursor.fetchall()
         print('Pending', result)
-        return render_template('Admin/AdminLevels/AdminThree/pending_students_level3.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelThree/pending_students_level3.html', result=result)
 
     @adminlevelthree_blueprint.route('/rejected_students_level3')
     def rejected_students_level3():
@@ -338,7 +338,7 @@ def adminlevelthree_auth(app, mail):
                        "and final_approval='rejected' and scrutiny_status='accepted' ")
         result = cursor.fetchall()
 
-        return render_template('Admin/AdminLevels/AdminThree/rejected_students_level3.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelThree/rejected_students_level3.html', result=result)
 
     @adminlevelthree_blueprint.route('/pvtg_students_level3')
     def pvtg_students_level3():
@@ -350,7 +350,7 @@ def adminlevelthree_auth(app, mail):
             " your_caste IN ('katkari', 'kolam', 'madia') "
         )
         result = cursor.fetchall()
-        return render_template('Admin/AdminLevels/AdminThree/pvtg_students_level3.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelThree/pvtg_students_level3.html', result=result)
 
     @adminlevelthree_blueprint.route('/disabled_students_level3')
     def disabled_students_level3():
@@ -361,4 +361,4 @@ def adminlevelthree_auth(app, mail):
             " SELECT * FROM application_page WHERE phd_registration_year>='2023' and disability='Yes' "
         )
         result = cursor.fetchall()
-        return render_template('Admin/AdminLevels/AdminThree/disabled_students_level3.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelThree/disabled_students_level3.html', result=result)

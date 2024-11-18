@@ -7,7 +7,7 @@
         <h3 class="page-title">
           <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-home"></i>
-          </span> Final Approval of Fellowship
+          </span> Final Approval
         </h3>
         <nav aria-label="breadcrumb">
           <ul class="breadcrumb">
@@ -20,63 +20,94 @@
       <div class="card">
         <div class="card-header">
           <div class="row justify-content-end">
-          <div class="col-md-6">
-            {% if session['user'] == 'Auditor' %}
+            <div class="col-md-6 text-end">
+             {% if session['user'] == 'Auditor' %}
                  <div class="text-end">
-                    <a href ="#" class="btn btn-theme export-excel" data-bs-toggle="tooltip"
-                       data-bs-placement="top" data-bs-original-title="Export as Excel">Export to Excel<a>
+                    <a href ="#" class="btn btn-theme export-excel" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Export as Excel">Export to Excel<a>
                   </div>
               {% else %}
                   <div class="col-md-12 d-flex justify-content-end">
-                    <a href ="/export_level_three_admin" class="btn btn-outline-info btn-fw btn-rounded"
-                       data-bs-toggle="tooltip" data-bs-placement="top"
-                       data-bs-original-title="Export as Excel">Export to Excel<a>
-                  </div>
+                      <a href="/export_level_three_applications"
+                         class="btn btn-outline-primary btn-fw btn-rounded"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         title="Export as Excel">Export to Excel</a>
+                    </div>
               {% endif %}
-        </div>
-        <div class="text-center mb-4">
+            </div>
+            <div class="text-center mb-4">
             <h4>LEVEL 3 - FINAL APPROVAL</h4>
         </div><br>
       </div>
       <div class="text-center">
-             {% if session['user'] == 'Auditor' %}
-                      <a href="#" class="mx-3 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Accepted Students</button>
-                      </a>
-                      <a href="#" class="mx-3 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Pending Students</button>
-                      </a>
-                      <a href="#" class="mx-3 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Rejected Students</button>
-                      </a>
-                      <a href="#" class="mx-3 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">PVTG Students(Katkari, Kolam, Madia)</button>
-                      </a>
-                      <a href="#" class="mx-3 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Disabled Students</button>
-                      </a>
-              {% else %}
-                      <a href="/accepted_students_level3" class="mx-3">
-                        <button class="btn btn-outline-primary btn-fw">Accepted Students</button>
-                      </a>
-                      <a href="/pending_students_level3" class="mx-3">
-                        <button class="btn btn-outline-primary btn-fw">Pending Students</button>
-                      </a>
-                      <a href="/rejected_students_level3" class="mx-3">
-                        <button class="btn btn-outline-primary btn-fw">Rejected Students</button>
-                      </a>
-                      <a href="/pvtg_students_level3" class="mx-3">
-                        <button class="btn btn-outline-primary btn-fw">PVTG Students(Katkari, Kolam, Madia)</button>
-                      </a>
-                      <a href="/disabled_students_level3" class="mx-3">
-                        <button class="btn btn-outline-primary btn-fw">Disabled Students</button>
-                      </a>
-              {% endif %}
+          {% if session['user'] == 'Auditor' %}
+                  <a href="#" class="mx-3 export-excel">
+                    <button class="btn btn-outline-primary btn-fw">Accepted Students</button>
+                  </a>
+                  <a href="#" class="mx-3 export-excel">
+                    <button class="btn btn-outline-primary btn-fw">Pending Students</button>
+                  </a>
+                  <a href="#" class="mx-3 export-excel">
+                    <button class="btn btn-outline-primary btn-fw">Rejected Students</button>
+                  </a>
+                  <a href="#" class="mx-3 export-excel">
+                    <button class="btn btn-outline-primary btn-fw">PVTG Students(Katkari, Kolam, Madia)</button>
+                  </a>
+                  <a href="#" class="mx-3 export-excel">
+                    <button class="btn btn-outline-primary btn-fw">Disabled Students</button>
+                  </a>
+          {% else %}
+                  <div class="container mt-3 d-flex justify-content-left">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-fw dropdown-toggle px-4 py-3 fw-bold"
+                                type="button" id="studentOptions" data-bs-toggle="dropdown" aria-expanded="false">
+                          Student Options for Level 3
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark border-0 rounded" aria-labelledby="studentOptions">
+                          <!-- Accepted Students -->
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="/accepted_students_level3">
+                              <i class="bi bi-check-circle text-success me-2"></i>
+                              Accepted Students
+                            </a>
+                          </li>
+                          <!-- Pending Students -->
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="/pending_students_level3">
+                              <i class="bi bi-hourglass-split text-warning me-2"></i>
+                              Pending Students
+                            </a>
+                          </li>
+                          <!-- Rejected Students -->
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="/rejected_students_level3">
+                              <i class="bi bi-x-circle text-danger me-2"></i>
+                              Rejected Students
+                            </a>
+                          </li>
+                          <!-- PVTG Students -->
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="/pvtg_students_level3">
+                              <i class="bi bi-people-fill text-info me-2"></i>
+                              PVTG Students
+                            </a>
+                          </li>
+                          <!-- Disabled Students -->
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="/disabled_students_level3">
+                              <i class="bi bi-person-fill-slash text-secondary me-2"></i>
+                              Disabled Students
+                            </a>
+                          </li>
+
+                        </ul>
+                      </div>
+                </div>
+          {% endif %}
       </div><br>
 
-  <div class="card-body">
       <!-- Table to display student applications -->
-  <table class="table table-bordered datatable">
+      <table class="table table-bordered datatable">
     <thead>
       <tr>
 
@@ -153,50 +184,10 @@
       {% endfor %}
     </tbody>
   </table>
-      <div class="text-center">
-                      {% if session['user'] == 'Auditor' %}
-                              <a href="#" class="mx-3 export-excel">
-                                <button class="btn btn-success btn-sm">Accepted Students</button>
-                              </a>
-                              <a href="#" class="mx-3 export-excel">
-                                <button class="btn btn-warning btn-sm">Pending Students</button>
-                              </a>
-                              <a href="#" class="mx-3 export-excel">
-                                <button class="btn btn-danger btn-sm">Rejected Students</button>
-                              </a>
-                              <a href="#" class="mx-3 export-excel">
-                                <button class="btn btn-dark btn-sm">Accepted Students at Level 2</button>
-                              </a>
-                              <a href="#" class="mx-3 export-excel">
-                                <button class="btn btn-dark btn-sm">Pending Students at Level 2</button>
-                              </a>
-                              <a href="#" class="mx-3 export-excel">
-                                <button class="btn btn-dark btn-sm">Rejected Students at Level 2</button>
-                              </a>
-                      {% else %}
-                              <a href="/accepted_students_level1" class="mx-2">
-                                <button class="btn btn-dark btn-sm">Accepted Students at Level 1</button>
-                              </a>
-                              <a href="/pending_students_level1" class="mx-2">
-                                <button class="btn btn-dark btn-sm">Pending Students at Level 1</button>
-                              </a>
-                              <a href="/rejected_students_level1" class="mx-2">
-                                <button class="btn btn-dark btn-sm">Rejected Students at Level 1</button>
-                              </a>
-                              <a href="/accepted_students_level2" class="mx-2">
-                                <button class="btn btn-dark btn-sm">Accepted Students at Level 2</button>
-                              </a>
-                              <a href="/pending_students_level2" class="mx-2">
-                                <button class="btn btn-dark btn-sm">Pending Students at Level 2</button>
-                              </a>
-                              <a href="/rejected_students_level2" class="mx-2">
-                                <button class="btn btn-dark btn-sm">Rejected Students at Level 2</button>
-                              </a>
-                      {% endif %}
-              </div><br>
+
+   </div>
   </div>
+</div>
 
-
-
-
+<!-- ======= Footer ======= -->
 {% endblock %}

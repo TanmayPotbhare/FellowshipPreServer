@@ -9,9 +9,18 @@
       </span> Dashboard
     </h3>
     <nav aria-label="breadcrumb">
-      <ul class="breadcrumb">
+      <ul class="breadcrumb d-flex align-items-center">
         <li class="breadcrumb-item active" aria-current="page">
-          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            <div class="btn-group">
+              <select id="yearSelector" name="year" class="btn btn-outline-danger btn-fw" style="width: auto;">
+                <option selected disabled>Select Year</option>
+                <option value="2020">2020 - 2021</option>
+                <option value="2021">2021 - 2022</option>
+                <option value="2022">2022 - 2023</option>
+                <option value="2023">2023 - 2024</option>
+                <option value="2024">2024 - 2025</option>
+              </select>
+            </div>
         </li>
       </ul>
     </nav>
@@ -21,7 +30,7 @@
       <div class="card bg-gradient-primary card-img-holder text-white">
         <div class="card-body">
           <img src="static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal text-dark fw-bold mb-3">Total Applications Count</h4>
+          <h4 class="font-weight-normal text-dark fw-bold mb-3">Total Applications</h4>
           <h2 class="mb-5">15,0000</h2>
           <h6 class="card-text">Increased by 60%</h6>
         </div>

@@ -7,7 +7,7 @@
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white me-2">
         <i class="mdi mdi-home"></i>
-      </span> PRELIMINARY REVIEW
+      </span> Rejected Students
     </h3>
     <nav aria-label="breadcrumb">
       <ul class="breadcrumb">
@@ -29,7 +29,7 @@
               </div>
           {% else %}
               <div class="col-md-12 d-flex justify-content-end">
-                  <a href="/export_level_one_applications"
+                  <a href="/export_rejected_students_level1"
                      class="btn btn-outline-primary btn-fw btn-rounded"
                      data-bs-toggle="tooltip"
                      data-bs-placement="top"
@@ -39,28 +39,28 @@
 
         </div>
         <div class="text-center mb-4">
-            <h4>LEVEL 1 - NEW APPLICATIONS</h4>
+            <h3>Rejected Students at Preliminary Review (Level 1)</h3>
         </div><br>
       </div>
       <div class="text-center">
               {% if session['user'] == 'Auditor' %}
-                      <a href="#" class="mx-2 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Accepted Students</button>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-primary">Accepted Students</button>
                       </a>
-                      <a href="#" class="mx-2 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Pending Students</button>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-primary">Pending Students</button>
                       </a>
-                      <a href="#" class="mx-2 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Rejected Students</button>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-primary">Rejected Students</button>
                       </a>
-                      <a href="#" class="mx-2 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">PVTG Students(Katkari, Kolam, Madia)</button>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-primary">PVTG Students(Katkari, Kolam, Madia)</button>
                       </a>
-                      <a href="#" class="mx-2 export-excel">
-                        <button class="btn btn-outline-primary btn-fw">Disabled Students</button>
+                      <a href="#" class="mx-3 export-excel">
+                        <button class="btn btn-primary">Disabled Students</button>
                       </a>
               {% else %}
-                    <div class="container mt-3 d-flex justify-content-left">
+                      <div class="container mt-3 d-flex justify-content-left">
                         <div class="dropdown">
                             <button class="btn btn-outline-primary btn-fw dropdown-toggle px-4 py-3 fw-bold"
                                     type="button" id="studentOptions" data-bs-toggle="dropdown" aria-expanded="false">
@@ -108,7 +108,8 @@
                     </div>
               {% endif %}
       </div><br>
-      <div class="card-body">
+
+        <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered datatable">
             <thead>
@@ -120,66 +121,42 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>PhD Registration Date</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>View All Details</th>
               </tr>
             </thead>
             <tbody>
-
-              <!-- Replace this with your backend code to iterate over rows -->
-              {% for row in data %}
-              <tr>
-                <td>{{loop.index}}</td>
-                <td>{{ row['applicant_id'] }}</td>
-                <td>{{ row['first_name'] }}</td>
-                <td>{{ row['last_name'] }}</td>
-                <td>{{ row['email'] }}</td>
-                <td>{{ row['mobile_number'] }}</td>
-                <td>{{ row['phd_registration_date'].strftime('%d-%b-%Y') }}</td>
-                <td>
-                  {% if row['status'] == 'accepted' %}
-                  <span class="badge badge-success bg-success text-capitalize">{{ row['status'] }}</span>
-                  {% elif row['status'] == 'pending' %}
-                  <span class="badge badge-warning bg-warning text-dark text-capitalize">{{ row['status'] }}</span>
-                  {% else %}
-                  <span class="badge badge-danger bg-danger text-capitalize">{{ row['status'] }}</span>
-                  {% endif %}
-                </td>
-                {% if session['user'] == 'Auditor' %}
-                 <td>
-                   <a href="/viewform/{{row['id']}}" class="btn btn-theme btn-sm tooltip-trigger"
-                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="View Form"><i
-                        class="ri-eye-fill"></i></a>
-                 </td>
+                {% if result %}
+                    {% for row in result %}
+                          <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{ row['applicant_id'] }}</td>
+                            <td>{{ row['first_name'] }}</td>
+                            <td>{{ row['last_name'] }}</td>
+                            <td>{{ row['email'] }}</td>
+                            <td>{{ row['mobile_number'] }}</td>
+                            <td>{{ row['phd_registration_date'] }}</td>
+                            <td>
+                               <a href="/viewform/{{row['id']}}" class="btn btn-theme btn-sm tooltip-trigger"
+                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="View Form"><i
+                                    class="ri-eye-fill"></i></a>
+                            </td>
+                          </tr>
+                      {% endfor %}
                 {% else %}
-                <td>
-                  <form method="POST">
-                    <input type="hidden" name="applicant_id" value="{{ row['applicant_id'] }}">
-                    {% if row['status'] == 'pending' %}
-                    <button class="btn btn-success btn-sm tooltip-trigger" name="accept"
-                      value="{{ row['applicant_id'] }}" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
-                      data-bs-original-title="Accept Applicant"><i class="mdi mdi-check-all"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm tooltip-trigger" name="reject"
-                      value="{{ row['applicant_id'] }}" type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
-                      data-bs-original-title="Reject Applicant"><i class="mdi mdi-close-octagon"></i>
-                    </button>
-                    {% endif %}
-                    <a href="/viewform/{{row['id']}}" class="btn btn-info btn-sm btn-rounded tooltip-trigger"
-                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="View Form"><i
-                        class="mdi mdi-eye-circle"></i></a>
-                  </form>
-                </td>
+                    <div class="text-danger fw-bold" style="font-size:25px">No Records Found</div>
                 {% endif %}
-              </tr>
-              {% endfor %}
+              <!-- Replace this with your backend code to iterate over rows -->
+
             </tbody>
           </table>
         </div>
       </div>
-    </div>
-  </div>
 
+   </div>
+  </div>
+    <div class="mt-3">
+        <a href="/adminPage" class="btn btn-info fw-bold">Back to Main Page</a>
+    </div>
 </div>
 
 {% endblock %}

@@ -189,7 +189,7 @@ def adminlevelone_auth(app, mail):
             " SELECT * FROM application_page WHERE phd_registration_year>='2023' and disability='Yes' "
         )
         result = cursor.fetchall()
-        return render_template('Admin/AdminLevels/AdminOne/disabled_students_level1.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelOne/disabled_students_level1.html', result=result)
 
     @adminlevelone_blueprint.route('/rejected_students_level1')
     def rejected_students_level1():
@@ -199,7 +199,7 @@ def adminlevelone_auth(app, mail):
         cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year>='2023' and status='rejected' ")
         result = cursor.fetchall()
 
-        return render_template('Admin/AdminLevels/AdminOne/rejected_students_level1.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelOne/rejected_students_level1.html', result=result)
 
     @adminlevelone_blueprint.route('/pvtg_students_level1')
     def pvtg_students_level1():
@@ -211,17 +211,18 @@ def adminlevelone_auth(app, mail):
             " your_caste IN ('katkari', 'kolam', 'madia') "
         )
         result = cursor.fetchall()
-        return render_template('Admin/AdminLevels/AdminOne/pvtg_students_level1.html', result=result)
+        return render_template('AdminPages/AdminLevels/LevelOne/pvtg_students_level1.html', result=result)
 
     @adminlevelone_blueprint.route('/accepted_students_level1', methods=['GET', 'POST'])
     def accepted_students_level1():
         host = HostConfig.host
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
+
         cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year>='2023' and status='accepted' ")
         result = cursor.fetchall()
-
-        return render_template('Admin/AdminLevels/AdminOne/admin_level_one.html', result=result)
+        # print(result)
+        return render_template('AdminPages/AdminLevels/LevelOne/accepted_students_level1.html', result=result)
 
     @adminlevelone_blueprint.route('/pending_students_level1', methods=['GET', 'POST'])
     def pending_students_level1():
@@ -230,5 +231,5 @@ def adminlevelone_auth(app, mail):
         cnx, cursor = connect_param.connect(use_dict=True)
         cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year>='2023' and status='pending' ")
         result = cursor.fetchall()
-        print('Pending', result)
-        return render_template('Admin/AdminLevels/AdminOne/pending_students_level1.html', result=result)
+        # print('Pending', result)
+        return render_template('AdminPages/AdminLevels/LevelOne/pending_students_level1.html', result=result)
