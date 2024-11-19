@@ -1,10 +1,11 @@
 from datetime import date, timedelta, datetime
 import mysql.connector
-from classes.connection import HostConfig, ConfigPaths, ConnectParam
+from Classes.database import HostConfig, ConfigPaths, ConnectParam
 import os
 from flask_mail import Mail, Message
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
-from authentication.middleware import auth
+from Authentication.middleware import auth
+
 
 fellowshipdetails_blueprint = Blueprint('fellowshipdetails', __name__)
 
@@ -36,78 +37,168 @@ def fellowshipdetails_auth(app):
         cursor.execute("SELECT * FROM payment_sheet WHERE email=%s", (email,))
         record = cursor.fetchall()
 
-
         # Assuming only one row in record
         for row in record:
             total_months = int(row['total_months'])
             start_date = startDate
-            end_date = datetime.strptime(row['duration_date_to'], '%Y-%m-%d')
+            installment_list = []
 
-            # First Installment
-            installment_1 = {
-                'sr_no': 1,
-                'period': total_months,
-                'start_period': start_date.strftime('%Y-%m-%d'),
-                'end_period': end_date.strftime('%Y-%m-%d'),
-                'due_date': (end_date + timedelta(days=60)).strftime('%Y-%m-%d'),
-                'balance': 31000,
-                'installment_number': 1,
-                'paid': row['paid_or_not_installment_1']
-            }
-            print('Installment 1', installment_1)
-            # Second Installment
-            next_start_date_2 = end_date + timedelta(days=30)
-            next_end_date_2 = next_start_date_2 + timedelta(days=90)
-            installment_2 = {
-                'sr_no': 2,
-                'period': total_months,
-                'start_period': next_start_date_2.strftime('%Y-%m-%d'),
-                'end_period': next_end_date_2.strftime('%Y-%m-%d'),
-                'due_date': (next_end_date_2 + timedelta(days=60)).strftime('%Y-%m-%d'),
-                'balance': 31000,
-                'installment_number': 2,
-                'paid': row['paid_or_not_installment_1']
-            }
+            # Loop to create 15 installments (5 years * 3 installments per year)
+            for i in range(1, 16):
+                # Set start and end dates for each installment
+                if i == 1:
+                    current_start_date = start_date
+                else:
+                    current_start_date = previous_end_date + timedelta(days=30)
 
-            # Third Installment
-            next_start_date_3 = next_end_date_2 + timedelta(days=30)
-            next_end_date_3 = next_start_date_3 + timedelta(days=90)
-            installment_3 = {
-                'sr_no': 3,
-                'period': total_months,
-                'start_period': next_start_date_3.strftime('%Y-%m-%d'),
-                'end_period': next_end_date_3.strftime('%Y-%m-%d'),
-                'due_date': (next_end_date_3 + timedelta(days=60)).strftime('%Y-%m-%d'),
-                'balance': 31000,
-                'installment_number': 3,
-                'paid': row['paid_or_not_installment_1']
-            }
+                current_end_date = current_start_date + timedelta(days=90)
 
-            # Calculate total period and total balance
-            total_period = installment_1['period'] + installment_2['period'] + installment_3['period']
-            total_balance = installment_1['balance'] + installment_2['balance'] + installment_3['balance']
+                # Create installment dictionary
+                installment = {
+                    'sr_no': i,
+                    'period': total_months,
+                    'start_period': current_start_date.strftime('%Y-%m-%d'),
+                    'end_period': current_end_date.strftime('%Y-%m-%d'),
+                    'due_date': (current_end_date + timedelta(days=60)).strftime('%Y-%m-%d'),
+                    'balance': 42000,  # Adjust balance if necessary
+                    'installment_number': i,
+                    'paid': row.get(f'paid_or_not_installment_{i}', 'Not Available')
+                    # Assuming the field changes per installment
+                }
+
+                # Append to installment list
+                installment_list.append(installment)
+                # print(installments)
+                # Update previous_end_date for the next iteration
+                previous_end_date = current_end_date
+
+            # Calculate total period and total balance for all installments
+            total_period = sum(inst['period'] for inst in installment_list)
+            total_balance = sum(inst['balance'] for inst in installment_list)
+
+            for installment in installment_list:
+                # Convert and format the dates
+                start_period = datetime.strptime(installment['start_period'], '%Y-%m-%d').strftime('%d %B %Y')
+                end_period = datetime.strptime(installment['end_period'], '%Y-%m-%d').strftime('%d %B %Y')
+                installment['formatted_start_period'] = start_period
+                installment['formatted_end_period'] = end_period
 
         cursor.execute("SELECT fellowship_withdrawn FROM signup where email=%s", (email,))
         output = cursor.fetchall()
 
+        installment_button_status = []
+        previously_paid = False  # Track if the previous installment was paid
+
+        # Loop through 15 installments directly
+        for current_installment_number in range(1, 16):
+            status_paid = None
+
+            # Check the status of the current installment
+            for installment in installments:
+                if installment.get(f'inst_num_{current_installment_number}') == current_installment_number:
+                    status_paid = installment.get(f'status_paid_{current_installment_number}')
+
+            # Ensure the first installment can be paid if not already paid
+            if current_installment_number == 1:
+                if status_paid == 'Paid':
+                    installment_button_status.append('paid')
+                    previously_paid = True
+                else:
+                    installment_button_status.append('pay_enabled')  # First installment always enabled
+                    previously_paid = False
+            else:
+                # Handle installments after the first
+                if status_paid == 'Paid':
+                    installment_button_status.append('paid')
+                    previously_paid = True
+                elif previously_paid:
+                    installment_button_status.append('pay_enabled')  # Enable pay if previous is paid
+                else:
+                    installment_button_status.append('disabled')  # Disable if previous is unpaid
+
+        # Example to print out installment statuses
+        for i, button_status in enumerate(installment_button_status):
+            print(f"Installment {i + 1}: {button_status}")
 
         cnx.commit()
         cursor.close()
         cnx.close()
 
         return render_template(
-            'Admin/PaymentSheet/fellowship_details.html',
+            'AdminPages/PaymentSheet/fellowship_details.html',
             result=result,
             record=record,
             output=output,
-            installment_1=installment_1,
-            installment_2=installment_2,
-            installment_3=installment_3,
+            installment_list=installment_list,
             total_period=total_period,
             total_balance=total_balance,
             today=today,
-            installments=installments
+            installments=installments,
+            installment_button_status=installment_button_status
         )
+
+    @fellowshipdetails_blueprint.route('/pay_installment/<int:inst_no>', methods=['POST'])
+    def pay_installment(inst_no):
+        """
+        This function is used on the fellowship_details.html Page.
+        The function pays installments to the students by Installment Number.
+        """
+        cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
+                                      host=host,
+                                      database='ICSApplication')
+        cursor = cnx.cursor(dictionary=True)
+
+        if request.method == 'POST':
+            email = session.get('email')
+            start_period = request.form.get('start_period')
+            end_period = request.form.get('end_period')
+            received_pay = request.form.get('received_pay')
+            installment_number = request.form.get('installment_number')
+            # Get the current date and format it
+            current_date = datetime.now().date()  # Current date
+            received_day = current_date.strftime('%A')  # Current day name (e.g., 'Monday')
+
+            print(
+                f"Email: {email}, Start: {start_period}, End: {end_period}, Received Pay: {received_pay}, Received Date: {current_date}")
+
+            # Check if the email already exists
+            cursor.execute("SELECT * FROM installments WHERE email = %s", (email,))
+            user_record = cursor.fetchone()
+
+            if user_record:  # Email exists
+                # Check if the installment already exists
+                for i in range(1, 5):  # Check inst_num to inst_num_4
+                    if user_record[f'inst_num_{i}'] == inst_no:
+                        # Installment already exists, exit or handle accordingly
+                        return "Installment details already exist.", 400
+
+                # If not found, find the first available installment column to insert
+                for i in range(1, 16):
+                    if user_record[f'inst_num_{i}'] is None:  # Check for None
+                        cursor.execute(f"""
+                                UPDATE installments
+                                SET inst_num_{i} = %s, start_period_{i} = %s, end_period_{i} = %s,
+                                recieved_pay_{i} = %s, recieved_date_{i} = %s, received_day_{i} = %s, status_paid_{i} = 'Paid'
+                                WHERE email = %s
+                            """, (inst_no, start_period, end_period, received_pay, current_date, received_day, email))
+                        print(
+                            f"Updated: inst_num_{i} with {inst_no}, start_period_{i} with {start_period}")  # Debugging output
+                        break
+            else:  # Email does not exist, insert a new record
+
+                cursor.execute("""
+                        INSERT INTO installments (email, inst_num_1, start_period_1, end_period_1, 
+                        recieved_pay_1, recieved_date_1, received_day_1, status_paid_1) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, 'Paid')
+                    """, (email, inst_no, start_period, end_period, received_pay, current_date, received_day))
+
+                print(f"Inserted new record for {email} with inst_num: {inst_no}")  # Debugging output
+
+            cnx.commit()  # Commit the changes
+            cursor.close()  # Close the cursor
+            cnx.close()  # Close the connection
+
+            return "Installment paid successfully.", 200
 
     @fellowshipdetails_blueprint.route('/submit_installments_admin', methods=['GET', 'POST'])
     def submit_installments_admin():
