@@ -85,7 +85,7 @@ def fellowship_awarded_auth(app):
     def generate_award_letter_AA(email):
         try:
             # email = session['email']
-            output_filename = '/static/pdf_application_form/award_letter.pdf'
+            output_filename = '/var/www/fellowship/fellowship/FellowshipPreServer/static/pdf_application_form/award_letter.pdf'
             # output_filename = '/static/pdf_application_form/award_letter.pdf'
 
             host = HostConfig.host
