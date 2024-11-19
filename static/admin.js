@@ -85,3 +85,21 @@ $(document).ready(function() {
 });
 // ----------------------------------------------
 // ------ END code is for Student Manage Dashboard Page -----
+
+
+// ------ This code is for Student Manage Dashboard Page Old User Insertion by Admin -----
+// Function to update Ph.D. Registration Year field based on selected year
+    function updateRegistrationYear() {
+        // Get the selected year value
+        var selectedYear = document.getElementById("year").value;
+
+        // Extract the start year from the selected option (e.g., "2020 - 2021" -> "2020")
+        var startYear = selectedYear.split(" - ")[0];
+
+        // Update the Ph.D. Registration Year field value
+        document.getElementById("phd_registration_year").value = startYear;
+    }
+
+    // Add event listener to the Year dropdown to trigger the update
+    document.getElementById("year").addEventListener("change", updateRegistrationYear);
+// ------ END code is for Student Manage Dashboard Page Old User Insertion by Admin -----

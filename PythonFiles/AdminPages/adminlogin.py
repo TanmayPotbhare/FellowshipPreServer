@@ -36,7 +36,7 @@ def adminlogin_auth(app):
             sql = "SELECT * FROM admin WHERE username=%s AND password=%s"
             cursor.execute(sql, (username, password))
             user = cursor.fetchone()
-            print(user)
+            # print(user)
             cnx.commit()
 
             if not user:
@@ -63,6 +63,19 @@ def adminlogin_auth(app):
                 return render_template('AdminPages/adminlogin.html', error=error)
         return render_template('AdminPages/adminlogin.html')
 
+    @adminlogin_blueprint.route('/admin_logout', methods=['GET'])
+    def admin_logout():  # ------------------ ADMIN LOGOUT
+        # Clear the session
+        session.clear()
+
+        # Provide feedback and redirect to the login page
+        flash('You have been logged out successfully.', 'success')
+        return redirect(url_for('adminlogin.admin_login'))
+
     @adminlogin_blueprint.route('/index')
     def index():
+        if not session.get('logged_in'):
+            # Redirect to the admin login page if the user is not logged in
+            flash('Please enter Email ID and Password', 'error')
+            return redirect(url_for('adminlogin.admin_login'))
         return render_template('AdminPages/admin_dashboard.html')

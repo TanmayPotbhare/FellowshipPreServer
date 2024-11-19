@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, render_template
 from flask_mail import Mail
 import mysql.connector
 from Blueprints.blueprints_homepage import homepage_blueprints

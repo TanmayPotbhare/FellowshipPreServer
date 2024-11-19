@@ -143,10 +143,9 @@ def fellowshipdetails_auth(app):
         This function is used on the fellowship_details.html Page.
         The function pays installments to the students by Installment Number.
         """
-        cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',
-                                      host=host,
-                                      database='ICSApplication')
-        cursor = cnx.cursor(dictionary=True)
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
 
         if request.method == 'POST':
             email = session.get('email')
