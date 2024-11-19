@@ -54,7 +54,7 @@ def fellowship_awarded_auth(app):
     def generate_pdf_application(email):
         # email = session['email']
         output_filename = app.config['PDF_STORAGE_PATH']
-        # output_filename = 'static/pdf_application_form/pdfform.pdf'
+        # output_filename = '/static/pdf_application_form/pdfform.pdf'
 
         host = HostConfig.host
         connect_param = ConnectParam(host)
@@ -96,12 +96,12 @@ def fellowship_awarded_auth(app):
                     self.cell(0, 10, "Fellowship ", align="C",
                               ln=True)  # Add space by changing the second parameter (e.g., 20)
                     # Insert an image (symbol) at the center of the header
-                    self.image('static/Images/trti.jpeg', 10, 10,
+                    self.image('/static/Images/trti.jpeg', 10, 10,
                                20)  # Replace with the path to your symbol image
                     # Insert an image (symbol) at the right of the header
-                    self.image('static/Images/satya.png', 155, 10,
+                    self.image('/static/Images/satya.png', 155, 10,
                                20)  # Replace with the path to your small image
-                    self.image('static/Images/maharashtra_shasn.png', 175, 10,
+                    self.image('/static/Images/maharashtra_shasn.png', 175, 10,
                                20)  # Replace with the path to your symbol image
                     self.cell(0, 10, "Tribal Research & Training Institute, Pune ", align="C", ln=True)
                     self.cell(0, 1, "Government of Maharashtra ", align="C", ln=True)
@@ -134,7 +134,7 @@ def fellowship_awarded_auth(app):
                     self.cell(50, 10, "Submitted Time: " + str(data['application_time']), ln=True)
 
                 if 'applicant_photo' in data:
-                    # photo = 'static/Images/trti.jpeg'
+                    # photo = '/static/Images/trti.jpeg'
                     photo = data['applicant_photo']
                     print(photo)
                     # Insert the applicant photo (adjust the coordinates and size as needed)
@@ -454,8 +454,8 @@ def fellowship_awarded_auth(app):
     def generate_award_letter_AA(email):
         try:
             # email = session['email']
-            output_filename = 'static/pdf_application_form/award_letter.pdf'
-            # output_filename = 'static/pdf_application_form/award_letter.pdf'
+            output_filename = '/static/pdf_application_form/award_letter.pdf'
+            # output_filename = '/static/pdf_application_form/award_letter.pdf'
 
             host = HostConfig.host
             connect_param = ConnectParam(host)
@@ -512,8 +512,8 @@ def fellowship_awarded_auth(app):
                     print(var)
                     # Add a header
                     self.set_font("Arial", "B", 12)
-                    # self.image('static/Images/satya.png', 94, 10, 20)  # Replace with the path to your small imag
-                    self.image('static/Images/satya.png', 94, 10,
+                    # self.image('/static/Images/satya.png', 94, 10, 20)  # Replace with the path to your small imag
+                    self.image('/static/Images/satya.png', 94, 10,
                                20)  # Replace with the path to your small imag
                     # Calculate the width of the image
                     image_width = 100  # Assuming the width of the image is 100 (adjust if different)
@@ -522,11 +522,11 @@ def fellowship_awarded_auth(app):
                     text_y_position = self.get_y() + 20  # Set Y position below the image
                     # Set cursor position
                     self.set_xy(text_x_position, text_y_position)
-                    # self.image('static/Images/newtrtiImage.png', 10, 10, 45)  # Replace with the path to your symbol image
-                    self.image('static/Images/newtrtiImage.png', 10, 10,
+                    # self.image('/static/Images/newtrtiImage.png', 10, 10, 45)  # Replace with the path to your symbol image
+                    self.image('/static/Images/newtrtiImage.png', 10, 10,
                                45)  # Replace with the path to your symbol image
-                    # self.image('static/Images/mahashasn_new.png', 155, 10, 45)  # Replace with the path to your symbol image
-                    self.image('static/Images/mahashasn_new.png', 155, 10,
+                    # self.image('/static/Images/mahashasn_new.png', 155, 10, 45)  # Replace with the path to your symbol image
+                    self.image('/static/Images/mahashasn_new.png', 155, 10,
                                45)  # Replace with the path to your symbol image
                     self.ln(5)
                     self.ln(0)  # Reduce the space below the address
@@ -603,9 +603,9 @@ def fellowship_awarded_auth(app):
                                 )
                 self.multi_cell(0, 20, "Wish you all the best. ")
                 self.set_x(150)  # Adjust the x-coordinate as needed
-                # self.image('static/Images/signature_awardletter.png', 20, 230, 30)
-                # self.image('static/Images/chanchalamam_signature.png', 125, 210, 50)
-                self.image('static/Images/chanchalamam_signature.png', 125, 210, 50)
+                # self.image('/static/Images/signature_awardletter.png', 20, 230, 30)
+                # self.image('/static/Images/chanchalamam_signature.png', 125, 210, 50)
+                self.image('/static/Images/chanchalamam_signature.png', 125, 210, 50)
                 self.ln(5)  # Adjust this value to control the space after static data
 
             def footer(self):
@@ -636,7 +636,7 @@ def fellowship_awarded_auth(app):
                     print(var)
                     # Add a header
                     self.set_font("Arial", "B", 12)
-                    self.image('static/Images/satya.png', 94, 10,
+                    self.image('/static/Images/satya.png', 94, 10,
                                20)  # Replace with the path to your small imag
                     # Calculate the width of the image
                     image_width = 100  # Assuming the width of the image is 100 (adjust if different)
@@ -645,9 +645,9 @@ def fellowship_awarded_auth(app):
                     text_y_position = self.get_y() + 20  # Set Y position below the image
                     # Set cursor position
                     self.set_xy(text_x_position, text_y_position)
-                    self.image('static/Images/newtrtiImage.png', 10, 10,
+                    self.image('/static/Images/newtrtiImage.png', 10, 10,
                                45)  # Replace with the path to your symbol image
-                    self.image('static/Images/mahashasn_new.png', 155, 10,
+                    self.image('/static/Images/mahashasn_new.png', 155, 10,
                                45)  # Replace with the path to your symbol image
                     self.ln(5)
                     self.ln(0)  # Reduce the space below the address
@@ -716,8 +716,8 @@ def fellowship_awarded_auth(app):
                                 )
                 self.multi_cell(0, 20, "Wish you all the best. ")
                 self.set_x(150)  # Adjust the x-coordinate as needed
-                # self.image('static/Images/signature_awardletter.png', 20, 230, 30)
-                self.image('static/Images/sonanwanesir_signature.png', 125, 210, 50)
+                # self.image('/static/Images/signature_awardletter.png', 20, 230, 30)
+                self.image('/static/Images/sonanwanesir_signature.png', 125, 210, 50)
                 self.ln(5)  # Adjust this value to control the space after static data
 
             def footer(self):
