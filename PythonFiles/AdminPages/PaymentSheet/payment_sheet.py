@@ -54,6 +54,8 @@ def payment_sheet_auth(app):
                 applicant_id = row['applicant_id']
                 faculty = row["faculty"]
                 # print('faculty', faculty)
+                fellowship_awarded_year = row['fellowship_awarded_year']
+                fellowship_awarded_date = row['fellowship_awarded_date']
                 joining_date = row["phd_registration_date"]
                 city = row['city']
                 bank_name = row['bank_name']
@@ -116,8 +118,8 @@ def payment_sheet_auth(app):
 
                 if joining_date:  # Check if joining_date is not None
                     # Calculate Duration Date (adding 3 months to joining date)
-                    duration_date_from = joining_date  # Assuming this is a datetime object
-                    duration_date_to = joining_date + timedelta(days=90)  # Adding 90 days to joining date
+                    duration_date_from = fellowship_awarded_date  # Assuming this is a datetime object
+                    duration_date_to = fellowship_awarded_date + timedelta(days=90)  # Adding 90 days to joining date
                     # Extract day, month, and year
                     day = duration_date_to.day
                     month = duration_date_to.month
@@ -151,13 +153,16 @@ def payment_sheet_auth(app):
                 # Calculate the date 2 years after duration_date_from
                 two_years_later = duration_date_from + timedelta(days=730)  # 2 years = 730 days
 
-                joiningDate = row['phd_registration_date'].strftime('%d/%m/%Y')
+                # Assuming 'phd_registration_date' is already a datetime object
+                if 'phd_registration_date' in row and row['phd_registration_date']:
+                    joiningDate = row['phd_registration_date'].strftime('%Y-%m-%d')
 
                 # Get the current date
                 current_date = datetime.now().date()
+                current_year = current_date.year
 
                 # Check the category based on 2 years difference
-                if current_date >= two_years_later:
+                if current_year == fellowship_awarded_year + 2:
                     category = "SRF"  # Senior Research Fellowship
                 else:
                     category = "JRF"  # Junior Research Fellowship
@@ -171,6 +176,7 @@ def payment_sheet_auth(app):
                     "middle_name": row['middle_name'],
                     "email": row["email"],
                     "faculty": row['faculty'],
+                    "fellowship_awarded_date": fellowship_awarded_date,
                     "joining_date": joiningDate,
                     "city": row['city'],
                     "duration": f"{duration_date_from_str} <span class='fw-bold'>to</span> {duration_date_to_str}",
@@ -221,12 +227,12 @@ def payment_sheet_auth(app):
 
                     insert_query = """
                         INSERT INTO payment_sheet (
-                            full_name, faculty, city, date, jrf_srf, duration_date_from, duration_date_to, duration_day, duration_month, duration_year, 
+                            full_name, faculty, fellowship_awarded_date, city, date, jrf_srf, duration_date_from, duration_date_to, duration_day, duration_month, duration_year, 
                             rate, count, amount, months, total_hra, total,
                             total_months, fellowship,
                             to_fellowship, bank_name, ifsc_code, account_number, fellowship_awarded_year, email
                         )
-                        VALUES (%(full_name)s, %(faculty)s, %(city)s, %(joining_date)s, %(jrf_srf)s, %(duration_date_from)s, %(duration_date_to)s,
+                        VALUES (%(full_name)s, %(faculty)s, %(fellowship_awarded_date)s, %(city)s, %(joining_date)s, %(jrf_srf)s, %(duration_date_from)s, %(duration_date_to)s,
                                 %(duration_day)s, %(duration_month)s, %(duration_year)s,
                                 %(rate)s, %(count)s, %(amount)s, %(months)s, %(total_hra)s, %(total)s, 
                                 %(total_months)s, %(fellowship)s, %(to_fellowship)s, %(bank_name)s, %(ifsc)s,
@@ -334,7 +340,7 @@ def payment_sheet_auth(app):
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
 
-        cursor.execute("SELECT number, full_name, email, faculty, date, duration_date_from, duration_date_to, "
+        cursor.execute("SELECT number, full_name, email, faculty, fellowship_awarded_date, date, duration_date_from, duration_date_to, "
                        "total_months, fellowship, to_fellowship, rate, amount, months, total_hra, count, pwd, total,"
                        "city, bank_name, ifsc_code, account_number FROM payment_sheet")
 
@@ -358,7 +364,7 @@ def payment_sheet_auth(app):
 
         # Define fixed column widths
         column_widths = [15, 60, 30, 45, 40, 40, 30, 30]  # Set fixed widths for each column
-        headers = ['Sr. No.', 'Name of Student', 'Date of PHD Reg.', 'Duration', 'Bank Name',
+        headers = ['Sr. No.', 'Name of Student', 'Date of PHD Reg.', 'Fellowship Awarded Date', 'Duration', 'Bank Name',
                    'Account Number', 'IFSC', 'Amount']
 
         # Add header row with multi-cell for text wrapping
@@ -417,7 +423,7 @@ def payment_sheet_auth(app):
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
 
-        cursor.execute("SELECT number, full_name, email, faculty, date, duration_date_from, duration_date_to, "
+        cursor.execute("SELECT number, full_name, email, faculty, fellowship_awarded_date, date, duration_date_from, duration_date_to, "
                        "total_months, fellowship, to_fellowship, rate, amount, months, total_hra, count, pwd, total,"
                        "city, bank_name, ifsc_code, account_number FROM payment_sheet")
 
@@ -445,7 +451,7 @@ def payment_sheet_auth(app):
             cell.font = Font(bold=True)  # Make the text bold
 
         # Add header row
-        ws.append(['Sr. No.', 'Name of Student', 'Date of PHD Registration',
+        ws.append(['Sr. No.', 'Name of Student', 'Date of PHD Registration', 'Fellowship Awarded Date',
                    'Duration', 'Bank Name', 'Account Number', 'IFSC', 'Fellowship Amount'])
 
         # Add data to the worksheet with formatting
@@ -454,7 +460,7 @@ def payment_sheet_auth(app):
 
             # Joining date
             joining_date = row['date']
-
+            fellowship_awarded_date = row['fellowship_awarded_date']
             # Duration dates
             duration_date_from = row['duration_date_from']
             duration_date_to = row['duration_date_to']
@@ -486,7 +492,7 @@ def payment_sheet_auth(app):
             fellowship_amount = row['total']
 
             # Append the formatted data
-            ws.append([index, full_name, joining_date, duration,
+            ws.append([index, full_name, joining_date, fellowship_awarded_date, duration,
                        bank_name, account_number, ifsc, fellowship_amount])
 
         # Save the workbook in memory as bytes

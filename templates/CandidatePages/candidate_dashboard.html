@@ -1,0 +1,111 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+        <!-- Table Product -->
+        <div class="row">
+                      <div class="col-12">
+                        <div class="card card-default">
+                          <div class="col-auto mt-3">
+                             <a href="#" class="btn btn-primary btn-sm text-white">Generate PDF Form</a>
+                          </div>
+                          <div class="card-header justify-content-center">
+                                <!-- Center Content -->
+                                <div class="text-center">
+                                    <div class="profile-avata">
+                                        <img class="rounded-circle" src="/static/candidate_assets/images/user/user-md-01.jpg" alt="Avatar Image">
+                                        <span class="h5 d-block mt-3 mb-2">Albrecht Straub</span>
+                                        <span class="d-block">Albrecht.straub@gmail.com</span>
+                                    </div>
+                                </div>
+                          </div>
+
+
+                          <div class="card-footer card-profile-footer">
+                            <ul class="nav nav-border-top justify-content-center">
+                              <li class="nav-item">
+                                <a class="nav-link active" href="/candidate_dashboard">My Profile</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="user-profile-settings.html">Aadhaar Seeding</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="user-profile-settings.html">Manage Profile</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="card-body">
+                                <div class="applicant-cards">
+                                    <h6 class="mb-3">Application Submitted Date: <span class="text-muted">12th January 2024</span></h6>
+                                    <div class="card mb-3">
+                                        <div class="card-body d-flex flex-column align-items-start">
+
+                                            <div class="mt-5">
+                                                <ul class="nav nav-tabs nav-tabs-bordered">
+                                                    <li class="nav-item border-start">
+                                                        <button class="nav-link active text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                                    </li>
+                                                    <li class="nav-item border-start">
+                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#profile-qual">Qualification</button>
+                                                    </li>
+                                                    <li class="nav-item border-start">
+                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#phd-details">P.H.D Details</button>
+                                                    </li>
+                                                    <li class="nav-item border-start">
+                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#certificate-details">Certificate Details</button>
+                                                    </li>
+                                                    <li class="nav-item border-start">
+                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#bank-details">Bank Details</button>
+                                                    </li>
+                                                    <li class="nav-item border-start">
+                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#documents-uploaded">Documents Uploaded</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content pt-2">
+                                                <!-- Overview Tab -->
+                                                <div class="tab-pane fade profile-overview" id="profile-overview">
+
+                                                    <!-- Overview Content Here -->
+                                                </div>
+                                                <!-- Qualification Tab -->
+                                                <div class="tab-pane fade" id="profile-qual">
+                                                    <h5>HEKKO</h5>
+                                                    <!-- Qualification Content Here -->
+                                                </div>
+                                                <!-- P.H.D Details Tab -->
+                                                <div class="tab-pane fade" id="phd-details">
+                                                    <h5>HI</h5>
+                                                    <!-- P.H.D Details Content Here -->
+                                                </div>
+                                                <!-- Certificate Details Tab -->
+                                                <div class="tab-pane fade" id="certificate-details">
+                                                    <h5>HI</h5>
+                                                    <!-- Certificate Details Content Here -->
+                                                </div>
+                                                <!-- Bank Details Tab -->
+                                                <div class="tab-pane fade" id="bank-details">
+                                                    <h5>HI</h5>
+                                                    <!-- Bank Details Content Here -->
+                                                </div>
+                                                <!-- Documents Uploaded Tab -->
+                                                <div class="tab-pane fade" id="documents-uploaded">
+                                                    <h5>HI</h5>
+                                                    <!-- Documents Uploaded Content Here -->
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Repeat for more applicants -->
+                                </div>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+{% endblock %}

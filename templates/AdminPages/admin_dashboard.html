@@ -5,14 +5,14 @@
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white me-2">
-        <i class="mdi mdi-home"></i>
+        <i class="mdi mdi-chart-bar menu-icon"></i>
       </span> Dashboard
     </h3>
     <nav aria-label="breadcrumb">
       <ul class="breadcrumb d-flex align-items-center">
         <li class="breadcrumb-item active" aria-current="page">
             <div class="btn-group">
-              <select id="yearSelector" name="year" class="btn btn-outline-danger btn-fw" style="width: auto;">
+              <select id="yearSelector" name="selected_year" class="btn btn-danger btn-fw text-dark" style="width: auto;">
                 <option selected disabled>Select Year</option>
                 <option value="2020">2020 - 2021</option>
                 <option value="2021">2021 - 2022</option>
@@ -27,54 +27,65 @@
   </div>
   <div class="row">
     <div class="col-md-2 stretch-card grid-margin">
-      <div class="card bg-gradient-primary card-img-holder text-white">
-        <div class="card-body">
-          <img src="static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal text-dark fw-bold mb-3">Total Applications</h4>
-          <h2 class="mb-5">15,0000</h2>
-          <h6 class="card-text">Increased by 60%</h6>
-        </div>
-      </div>
+      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+          <div class="card bg-gradient-primary card-img-holder text-white">
+            <div class="card-body">
+                <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal text-dark fw-bold mb-3">Total Applications <span class="yearChange">(2023 - 2024)</span></h4>
+                <!-- Admin Dashboard .py file contains this count name defined-->
+                <h2 class="mb-3" id="total_appl_count">{{ data['total_appl_count'] }}</h2>
+                <h6 class="text-white fw-bold">View Applications</h6>
+            </div>
+          </div>
+      </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <div class="card bg-gradient-danger card-img-holder text-white">
-        <div class="card-body">
-          <img src="static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal text-dark fw-bold mb-3">Completed Applications</h4>
-          <h2 class="mb-5">15,0000</h2>
-          <h6 class="card-text">Increased by 60%</h6>
-        </div>
-      </div>
+      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+          <div class="card bg-gradient-danger card-img-holder text-white">
+            <div class="card-body">
+              <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+              <h4 class="font-weight-normal text-dark fw-bold mb-3">Completed Forms <span class="yearChange">(2023 - 2024)</span></h4>
+              <h2 class="mb-3" id="completed_form_count">{{ data['completed_form_count'] }}</h2>
+              <h6 class="text-white fw-bold">View Applications</h6>
+            </div>
+          </div>
+      </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <div class="card bg-gradient-info card-img-holder text-white">
-        <div class="card-body">
-          <img src="static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal text-dark fw-bold mb-3">Incomplete Applications</h4>
-          <h2 class="mb-5">15,0000</h2>
-          <h6 class="card-text">Increased by 60%</h6>
-        </div>
-      </div>
+      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+          <div class="card bg-gradient-info card-img-holder text-white">
+            <div class="card-body">
+              <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+              <h4 class="font-weight-normal text-dark fw-bold mb-3">Incompleted Forms <span class="yearChange">(2023 - 2024)</span></h4>
+              <h2 class="mb-3" id="incomplete_form_count">{{ data['incomplete_form_count'] }}</h2>
+              <h6 class="text-white fw-bold">View Applications</h6>
+            </div>
+          </div>
+      </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <div class="card bg-gradient-success card-img-holder text-white">
-        <div class="card-body">
-          <img src="static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal text-dark fw-bold mb-3">Accepted Applications</h4>
-          <h2 class="mb-5">45,6334</h2>
-          <h6 class="card-text">Decreased by 10%</h6>
-        </div>
-      </div>
+      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+          <div class="card bg-gradient-success card-img-holder text-white">
+            <div class="card-body">
+              <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+              <h4 class="font-weight-normal text-dark fw-bold mb-3">Accepted Applications <span class="yearChange">(2023 - 2024)</span></h4>
+              <h2 class="mb-3" id="accepted_appl_count">{{ data['accepted_appl_count'] }}</h2>
+              <h6 class="text-white fw-bold">View Applications</h6>
+            </div>
+          </div>
+      </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <div class="card bg-gradient-warning card-img-holder text-white">
-        <div class="card-body">
-          <img src="static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal text-dark fw-bold mb-3">Rejected Applications</h4>
-          <h2 class="mb-5">95,5741</h2>
-          <h6 class="card-text">Increased by 5%</h6>
-        </div>
-      </div>
+      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+          <div class="card bg-gradient-warning card-img-holder text-white">
+            <div class="card-body">
+              <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+              <h4 class="font-weight-normal text-dark fw-bold mb-3">Rejected Applications <span class="yearChange">(2023 - 2024)</span></h4>
+              <h2 class="mb-3" id="rejected_appl_count">{{ data['rejected_appl_count'] }}</h2>
+              <h6 class="text-white fw-bold">View Applications</h6>
+            </div>
+          </div>
+      </a>
     </div>
   </div>
   <div class="row">
@@ -82,21 +93,246 @@
       <div class="card">
         <div class="card-body">
           <div class="clearfix">
-            <h4 class="card-title float-start">Visit And Sales Statistics</h4>
+            <h4 class="card-title float-start">District-wise Student Count: <span class="yearChange">2023 - 2024</span></h4>
             <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-end"></div>
           </div>
-          <canvas id="visit-sale-chart" class="mt-4"></canvas>
+          <div class="card">
+              <div id="map" class="form-control col-md-12" style="height: 500px;"></div> <!-- Added height for the map -->
+          </div>
+          <script>
+                    // Function to initialize the map
+                    function initializeMap() {
+                        map = L.map('map').setView([20.5937, 78.9629], 7); // Centering on Maharashtra
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '© OpenStreetMap'
+                        }).addTo(map);
+                    }
+
+                   function addDistrictMarkers(districtData) {
+
+                       // Clear existing markers
+                        // markers.forEach(marker => map.removeLayer(marker));
+                        markers = []; // Reset markers array
+
+
+                        const districtCoordinates = {
+                            "Ahmednagar": [19.0952, 74.7496],
+                            "Akola": [20.7096, 76.9987],
+                            "Amravati": [20.9374, 77.7796],
+                            "Aurangabad": [19.8762, 75.3433],
+                            "Beed": [18.9927, 75.7600],
+                            "Bhandara": [21.1702, 79.6552],
+                            "Buldhana": [20.5333, 76.1833],
+                            "Chandrapur": [19.9507, 79.2952],
+                            "Dhule": [20.9042, 74.7749],
+                            "Gadchiroli": [20.1011, 80.2319],
+                            "Gondia": [21.4545, 80.1925],
+                            "Hingoli": [19.7148, 77.1040],
+                            "Jalgaon": [21.0077, 75.5626],
+                            "Jalna": [19.8410, 75.8800],
+                            "Kolhapur": [16.7050, 74.2433],
+                            "Latur": [18.4088, 76.5604],
+                            "Mumbai City": [18.9388, 72.8354],
+                            "Mumbai Suburban": [19.1754, 72.8740],
+                            "Nagpur": [21.1458, 79.0882],
+                            "Nanded": [19.1383, 77.3205],
+                            "Nandurbar": [21.3783, 74.2406],
+                            "Nashik": [19.9975, 73.7898],
+                            "Osmanabad": [18.1862, 76.0411],
+                            "Palghar": [19.6966, 72.7655],
+                            "Parbhani": [19.2620, 76.7767],
+                            "Pune": [18.5204, 73.8567],
+                            "Raigad": [18.6364, 73.8645],
+                            "Ratnagiri": [16.9915, 73.3104],
+                            "Sangli": [16.8524, 74.5815],
+                            "Satara": [17.6927, 73.9933],
+                            "Sindhudurg": [16.1002, 73.6607],
+                            "Solapur": [17.6599, 75.9064],
+                            "Thane": [19.2183, 72.9781],
+                            "Wardha": [20.7453, 78.6022],
+                            "Washim": [20.1117, 77.1338],
+                            "Yavatmal": [20.3964, 78.1300]
+                        };
+
+
+                        for (const [district, count] of Object.entries(districtData)) {
+                            const coords = districtCoordinates[district];
+                            if (coords) {
+                                console.log(`Adding marker for ${district} with count: ${count}`); // Debugging line
+                                const marker = L.marker(coords).addTo(map);
+                                marker.bindTooltip(`<strong>${district}</strong><br>Students: ${count}`, {
+                                    permanent: true,
+                                    direction: 'top',
+                                    className: 'tooltip-custom'
+                                }).openTooltip();
+                                markers.push(marker); // Add marker to the array for later removal
+                            } else {
+                                console.warn(`No coordinates found for district: ${district}`);
+                            }
+                        }
+                    }
+
+                    // Document ready function
+                    document.addEventListener("DOMContentLoaded", () => {
+                        initializeMap(); // Initialize the map
+                        // Set default year to 2023 in the year selector
+                        $('#yearSelector').val('2023');
+                        // Fetch district data from the server
+                        $('#yearSelector').on('change', function () {
+                            let year = $(this).val();
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get_district_data',
+                                data: { selected_year: year },
+                                success: function (data) {
+                                    addDistrictMarkers(data.district_data); // Add markers based on the fetched data
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        });
+
+                        // Optional: Initial call to add markers for the default year
+                        let initialYear = $('#yearSelector').val();
+                        if (initialYear) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get_district_data',
+                                data: { selected_year: initialYear },
+                                success: function (data) {
+                                    addDistrictMarkers(data.district_data);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        }
+                    });
+                </script>
         </div>
       </div>
     </div>
     <div class="col-md-5 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Traffic Sources</h4>
+          <h4 class="card-title">Gender Counts: <span class="yearChange">2023 - 2024</span></h4>
           <div class="doughnutjs-wrapper d-flex justify-content-center">
-            <canvas id="traffic-chart"></canvas>
+              <div id="gender"></div>
           </div>
+
+          <!-- <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>-->
           <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+
+          <!-- To display the count cards-->
+          <div class="row mt-4 justify-content-center">
+              <div class="col-md-4 stretch-card grid-margin">
+                  <a href="#" class="text-decoration-none" target="_blank">
+                      <div class="card bg-gradient-info card-img-holder text-white">
+                        <div class="card-body">
+                          <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                          <h4 class="font-weight-normal text-dark fw-bold mb-3">Male</h4>
+                          <h2 class="mb-3" id="maleCount">{{ data['male_count'] }}</h2>
+                          <h6 class="text-white fw-bold">View Applications</h6>
+                        </div>
+                      </div>
+                  </a>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                  <a href="#" class="text-decoration-none" target="_blank">
+                      <div class="card bg-gradient-danger card-img-holder text-white">
+                        <div class="card-body">
+                          <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                          <h4 class="font-weight-normal text-dark fw-bold mb-3">Female</h4>
+                          <h2 class="mb-3" id="femaleCount">{{ data['female_count'] }}</h2>
+                          <h6 class="text-white fw-bold">View Applications</h6>
+                        </div>
+                      </div>
+                  </a>
+              </div>
+              {% if data['trans_count'] %}
+                <div class="col-md-4 stretch-card grid-margin">
+                  <a href="#" class="text-decoration-none">
+                      <div class="card bg-gradient-dark card-img-holder text-white">
+                        <div class="card-body">
+                          <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                          <h4 class="font-weight-normal text-white fw-bold mb-3">Other Count <span class="yearChange">(2023 - 2024)</span></h4>
+                          <h2 class="mb-3" id="transCount">
+                            {% if data['trans_count'] %}
+                              {{ data['trans_count'] }}
+                            {% else %}
+                              0
+                            {% endif %}
+                          </h2>
+                          <h6 class="text-white fw-bold">View Applications</h6>
+                        </div>
+                      </div>
+                  </a>
+              </div>
+              {% else %}
+              {% endif %}
+            </div>
+          <!-- END the count cards-->
+
+          <script>
+                   document.addEventListener("DOMContentLoaded", () => {
+                      const yearSelector = document.getElementById('yearSelector');
+                      let chart = null; // To store the current chart instance
+
+                      // Function to update the pie chart data based on the selected year
+                      function updatePieChartData(data, dataYear) {
+                          const maleData = data.male_count[dataYear] || 0; // Default to 0 if undefined
+                          const femaleData = data.female_count[dataYear] || 0;
+
+                          // Clean up the existing chart instance
+                          if (chart) {
+                              chart.destroy();
+                          }
+
+                          // Render the new chart
+                          chart = new ApexCharts(document.querySelector("#gender"), {
+                              series: [maleData, femaleData, 0],
+                              chart: {
+                                  type: 'pie',
+                                  height: '280px'
+                              },
+                              labels: ['Male Students', 'Female Students', 'Transgender Students'],
+                              colors: ['#77CDFF', '#FF8C9E', '#FFD700'], // Update with Purple theme colors
+                              legend: {
+                                  position: 'bottom',
+                                  horizontalAlign: 'center',
+                                  markers: {
+                                      radius: 12
+                                  }
+                              }
+                          });
+
+                          chart.render();
+                      }
+
+                      // Fetch application data from the server
+                      fetch('/get_gender_data')
+                          .then(response => response.json())
+                          .then(data => {
+                              // Set default year
+                              const defaultYear = '2023';
+                              yearSelector.value = defaultYear;
+
+                              // Initial rendering of the pie chart
+                              updatePieChartData(data, defaultYear);
+
+                              // Event listener for year selector change
+                              yearSelector.addEventListener('change', function () {
+                                  const selectedYear = this.value;
+                                  updatePieChartData(data, selectedYear);
+                              });
+                          })
+                          .catch(error => {
+                              console.error('Error fetching data:', error);
+                          });
+                  });
+              </script>
         </div>
       </div>
     </div>
@@ -120,9 +356,9 @@
               <tbody>
                 <tr>
                   <td>
-                    <img src="static/admin_assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
+                    <img src="/static/admin_assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
                   </td>
-                  <td> Fund is not recieved </td>
+                  <td> {{ data['male_count'] }} </td>
                   <td>
                     <label class="badge badge-gradient-success">DONE</label>
                   </td>
@@ -131,7 +367,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <img src="static/admin_assets/images/faces/face2.jpg" class="me-2" alt="image"> Stella Johnson
+                    <img src="/static/admin_assets/images/faces/face2.jpg" class="me-2" alt="image"> Stella Johnson
                   </td>
                   <td> High loading time </td>
                   <td>
@@ -142,7 +378,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <img src="static/admin_assets/images/faces/face3.jpg" class="me-2" alt="image"> Marina Michel
+                    <img src="/static/admin_assets/images/faces/face3.jpg" class="me-2" alt="image"> Marina Michel
                   </td>
                   <td> Website down for one week </td>
                   <td>
@@ -153,7 +389,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <img src="static/admin_assets/images/faces/face4.jpg" class="me-2" alt="image"> John Doe
+                    <img src="/static/admin_assets/images/faces/face4.jpg" class="me-2" alt="image"> John Doe
                   </td>
                   <td> Loosing control on server </td>
                   <td>
@@ -193,16 +429,16 @@
           </div>
           <div class="row mt-3">
             <div class="col-6 pe-1">
-              <img src="static/admin_assets/images/dashboard/img_1.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
-              <img src="static/admin_assets/images/dashboard/img_4.jpg" class="mw-100 w-100 rounded" alt="image">
+              <img src="/static/admin_assets/images/dashboard/img_1.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
+              <img src="/static/admin_assets/images/dashboard/img_4.jpg" class="mw-100 w-100 rounded" alt="image">
             </div>
             <div class="col-6 ps-1">
-              <img src="static/admin_assets/images/dashboard/img_2.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
-              <img src="static/admin_assets/images/dashboard/img_3.jpg" class="mw-100 w-100 rounded" alt="image">
+              <img src="/static/admin_assets/images/dashboard/img_2.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
+              <img src="/static/admin_assets/images/dashboard/img_3.jpg" class="mw-100 w-100 rounded" alt="image">
             </div>
           </div>
           <div class="d-flex mt-5 align-items-top">
-            <img src="static/admin_assets/images/faces/face3.jpg" class="img-sm rounded-circle me-3" alt="image">
+            <img src="/static/admin_assets/images/faces/face3.jpg" class="img-sm rounded-circle me-3" alt="image">
             <div class="mb-0 flex-grow">
               <h5 class="me-2 mb-2">School Website - Authentication Module.</h5>
               <p class="mb-0 font-weight-light">It is a long established fact that a reader will be distracted by the readable content of a page.</p>

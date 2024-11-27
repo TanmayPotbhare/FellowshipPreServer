@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-md-12">
                   <div class="text-end">
-                      <a href ="#" class="btn btn-outline-primary btn-fw btn-rounded" data-bs-toggle="tooltip"
+                      <a href ="/export_track_payments" class="btn btn-outline-primary btn-fw btn-rounded" data-bs-toggle="tooltip"
                          data-bs-placement="top" data-bs-original-title="Export as Excel">Export to Excel<a>
                   </div>
                 </div>
@@ -185,6 +185,7 @@
                                 <th scope="col">Faculty</th>
                                 <th scope="col">JRF/SRF</th>
                                 <th scope="col">Date of PhD Registration</th>
+                                <th scope="col">Fellowship Awarded Date</th>
                                 <th scope="col">Duration</th>
                                 <th scope="col">Total Months</th>
                                 <th scope="col">Fellowship</th>
@@ -205,24 +206,25 @@
                             <tr>
                                 <td>{{ loop.index }}</td>
                                 <td>
-                                    <a href="/fellowship_details/{{ record[0]['email'] }}">{{ record[0]['full_name'] }}</a>
+                                    <a href="/fellowship_details/{{ record['email'] }}">{{ record['full_name'] }}</a>
                                 </td>
-                                <td>{{ record[0]['faculty'] }}</td>
-                                <td>{{ record[0]['jrf_srf'] }}</td>
-                                <td>{{ record[0]['duration_date_from'] }}</td>
-                                <td>{{ record[0]['duration_date_from'] }} <strong>to</strong> {{ record[0]['duration_date_to'] }}</td>
-                                <td>{{ record[0]['total_months'] }}</td>
-                                <td>{{ record[0]['fellowship'] }}</td>
-                                <td>{{ record[0]['to_fellowship'] }}</td>
-                                <td>{{ record[0]['rate'] }}</td>
-                                <td>{{ record[0]['amount'] }}</td>
-                                <td>{{ record[0]['months'] }}</td>
-                                <td>{{ record[0]['total_hra'] }}</td>
-                                <td>{{ record[0]['count'] }}</td>
+                                <td>{{ record['faculty'] }}</td>
+                                <td>{{ record['jrf_srf'] }}</td>
+                                <td>{{ record['date'] }}</td>
+                                <td>{{ record['duration_date_from'] }}</td>
+                                <td>{{ record['duration_date_from'] }} <strong>to</strong> {{ record['duration_date_to'] }}</td>
+                                <td>{{ record['total_months'] }}</td>
+                                <td>{{ record['fellowship'] }}</td>
+                                <td>{{ record['to_fellowship'] }}</td>
+                                <td>{{ record['rate'] }}</td>
+                                <td>{{ record['amount'] }}</td>
+                                <td>{{ record['months'] }}</td>
+                                <td>{{ record['total_hra'] }}</td>
+                                <td>{{ record['count'] }}</td>
                                 <td>N/A</td>
-                                <td>{{ record[0]['pwd'] }}</td>
-                                <td>{{ record[0]['total'] }}</td>
-                                <td>{{ record[0]['city'] }}</td>
+                                <td>{{ record['pwd'] }}</td>
+                                <td>{{ record['total'] }}</td>
+                                <td>{{ record['city'] }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

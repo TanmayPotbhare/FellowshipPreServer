@@ -1,5 +1,6 @@
 # Login Blueprint
 from PythonFiles.AdminPages.adminlogin import adminlogin_blueprint, adminlogin_auth
+from PythonFiles.AdminPages.Dashboard.admin_dashboard import admin_dashboard_blueprint, admin_dashboard_auth
 
 # Dashboard Sidebar Routes Blueprints
 from PythonFiles.AdminPages.AdminLevels.admin_level_one import adminlevelone_blueprint, adminlevelone_auth
@@ -26,6 +27,10 @@ def admin_blueprints(app, mail):
     # Admin Login
     adminlogin_auth(app)
     app.register_blueprint(adminlogin_blueprint)
+
+    # Admin Dashboard Page
+    admin_dashboard_auth(app)
+    app.register_blueprint(admin_dashboard_blueprint)
 
     # Admin Level One
     adminlevelone_auth(app, mail)

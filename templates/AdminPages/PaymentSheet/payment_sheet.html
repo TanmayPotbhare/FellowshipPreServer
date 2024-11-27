@@ -42,6 +42,7 @@
           <th>Applicant ID</th>
           <th>Name of Student</th>
           <th>Date of PHD Registration</th>
+          <th>Fellowship Awarded Date</th>
           <th>Duration</th>
           <th>Bank Name</th>
           <th>Account Number</th>
@@ -65,6 +66,7 @@
                 {% endif %}
               </td>
               <td class="text-center" style="font-size:15px">{{ record['joining_date'] }}</td>
+              <td class="text-center" style="font-size:15px">{{ record['fellowship_awarded_date'] }}</td>
               <td class="text-center" style="font-size:15px">{{ record['duration']|safe }}</td>
               <td class="text-center" style="font-size:15px">{{ record['bank_name'] }} </td>
               <td class="text-center" style="font-size:15px">{{ record['account_number'] }}</td>

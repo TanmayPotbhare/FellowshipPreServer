@@ -1,9 +1,12 @@
 from datetime import date, timedelta, datetime
+from io import BytesIO
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment, PatternFill
 import mysql.connector
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 import os
 from flask_mail import Mail, Message
-from flask import Blueprint, render_template, session, request, redirect, url_for, flash
+from flask import Blueprint, render_template, session, request, redirect, url_for, flash, make_response
 from Authentication.middleware import auth
 
 payment_tracking_blueprint = Blueprint('payment_tracking', __name__)
@@ -115,11 +118,114 @@ def payment_tracking_auth(app):
             records_display = cursor.fetchall()
             print(sql)
             flash('Payment information retrieved successfully', 'success')
-
+        flattened_records = [record for sublist in payment_records for record in sublist]
         # No else block is needed in this case
         # print(records_display)
         return render_template('AdminPages/payment_tracking.html', records_display=records_display, records=records,
-                               payment_records=payment_records)
+                               payment_records=flattened_records)
+
+    @payment_tracking_blueprint.route('/export_track_payments')
+    def export_track_payments():
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
+
+        cursor.execute(
+            "SELECT number, full_name, email, faculty, jrf_srf, fellowship_awarded_date, date, duration_date_from, duration_date_to, "
+            "total_months, fellowship, to_fellowship, rate, amount, months, total_hra, count, pwd, total,"
+            "city, bank_name, ifsc_code, account_number FROM payment_sheet")
+
+        data = cursor.fetchall()
+        print(data)
+
+        # Create a workbook and add a worksheet
+        wb = Workbook()
+        ws = wb.active
+
+        header = 4
+        date_column_index = 1
+        date_column_index_date = 8
+        current_date = datetime.now().strftime('%B %Y')
+        # Add the bold row before the header
+        ws.cell(row=1, column=header, value='Appendix')  # Place "Date:" in column B
+        ws.cell(row=2, column=date_column_index, value='Number:')  # Place "Date:" in column B
+        ws.cell(row=2, column=date_column_index_date, value=f'Date:{current_date}')  # Place "Date:" in column B
+        # ws.cell(row=1, column=date_column_index_date + 1, value=current_date)  # Place the date in column C
+        # Add the bold row before the header
+        # ws.append(['Date:', current_date])  # Format as "Date: September 2024"
+        bold_row = ws[1]  # Get the last added row (the one we just added)
+        bold_row_2 = ws[2]  # Get the last added row (the one we just added)
+        for cell in bold_row and bold_row_2:
+            cell.font = Font(bold=True)  # Make the text bold
+
+        # Add header row
+        ws.append(['Sr. No.', 'Name of Student', 'Faculty', 'JRF/SRF', 'Date of PHD Registration',
+                   'Fellowship Awarded Date', 'Duration', 'Total Months', 'Fellowship', 'Total Fellowship',
+                   'H.R.A Rate',
+                   'H.R.A Amount', 'Months', 'Total H.R.A', 'Contingency Yearly', 'PWD', 'Total Amount', 'City'])
+
+        # Add data to the worksheet with formatting
+        for index, row in enumerate(data, start=1):
+            full_name = row['full_name']
+
+            # Joining date
+            joining_date = row['date']
+            fellowship_awarded_date = row['fellowship_awarded_date']
+            # Duration dates
+            duration_date_from = row['duration_date_from']
+            duration_date_to = row['duration_date_to']
+
+            # Convert string dates to datetime objects if they are not already
+            if isinstance(duration_date_from, str):
+                try:
+                    duration_date_from = datetime.strptime(duration_date_from, '%Y-%m-%d')  # Adjust format as needed
+                except ValueError:
+                    duration_date_from = None
+
+            if isinstance(duration_date_to, str):
+                try:
+                    duration_date_to = datetime.strptime(duration_date_to, '%Y-%m-%d')  # Adjust format as needed
+                except ValueError:
+                    duration_date_to = None
+
+            if isinstance(duration_date_from, datetime) and isinstance(duration_date_to, datetime):
+                duration_date_from_str = duration_date_from.strftime('%d %b %Y')  # Format as "17 Aug 2023"
+                duration_date_to_str = duration_date_to.strftime('%d %b %Y')  # Format as "15 Nov 2023"
+                duration = f"{duration_date_from_str} to {duration_date_to_str}"
+            else:
+                duration = "N/A"
+
+            # Other fields
+            faculty = row['faculty']
+            jrf_srf = row['jrf_srf']
+            total_months = row['total_months']
+            fellowship = row['fellowship']
+            total_felowship = row['to_fellowship']
+            hra_rate = row['rate']
+            hra_amount = row['amount']
+            months = row['months']
+            total_hra = row['total_hra']
+            count_yearly = row['count']
+            pwd = row['pwd']
+            total = row['total']
+            city = row['city']
+
+            # Append the formatted data
+            ws.append([index, full_name, faculty, jrf_srf, joining_date, fellowship_awarded_date, duration,
+                       total_months, fellowship, total_felowship, hra_rate, hra_amount, months, total_hra,
+                       count_yearly, pwd, total, city])
+
+        # Save the workbook in memory as bytes
+        data = BytesIO()
+        wb.save(data)
+        data.seek(0)
+
+        # Create a response object and attach the workbook as a file
+        response = make_response(data.getvalue())
+        response.headers['Content-Disposition'] = 'attachment; filename=Track Payment Sheet 2023-2024.xlsx'
+        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+
+        return response
 
     @payment_tracking_blueprint.route('/budget_report/<string:email>', methods=['GET', 'POST'])
     def budget_report(email):

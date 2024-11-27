@@ -24,7 +24,14 @@
     <!-- Bootstrap Datatable Integration -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
+    <!-- Optional: For map tiles (OpenStreetMap) -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Include ApexCharts from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body>
     <div class="container-scroller">
@@ -75,6 +82,9 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <!-- Manually created JS for Admin Pages -->
     <script src="/static/admin.js"></script>
+    <script src="/static/admin_assets/vendors/chart.js"></script> <!-- Purple theme chart script -->
+
+
     <script>
       new DataTable('.datatable');
     </script>

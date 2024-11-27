@@ -21770,6 +21770,11 @@ code {
   display: block;
 }
 
+#gender {
+    width: 100%;
+    height: 400px;
+}
+
 .doughnutjs-wrapper {
   height: 250px !important;
 }

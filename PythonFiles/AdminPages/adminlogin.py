@@ -53,7 +53,7 @@ def adminlogin_auth(app):
                 # Close the connection and cursor
                 cursor.close()
                 cnx.close()
-                return redirect(url_for('adminlogin.index'))
+                return redirect(url_for('admin_dashboard.admin_dashboard'))
             else:
                 error = 'Invalid username or password'
                 # Close the connection and cursor
@@ -71,11 +71,3 @@ def adminlogin_auth(app):
         # Provide feedback and redirect to the login page
         flash('You have been logged out successfully.', 'success')
         return redirect(url_for('adminlogin.admin_login'))
-
-    @adminlogin_blueprint.route('/index')
-    def index():
-        if not session.get('logged_in'):
-            # Redirect to the admin login page if the user is not logged in
-            flash('Please enter Email ID and Password', 'error')
-            return redirect(url_for('adminlogin.admin_login'))
-        return render_template('AdminPages/admin_dashboard.html')

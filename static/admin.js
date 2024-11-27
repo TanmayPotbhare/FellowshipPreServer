@@ -59,6 +59,40 @@ $(document).ready(function() {
 // ------ End Code for Send Bulk Emails -----
 
 
+// ---------------------- Start Selected Year on Admin Dashboard --------------
+// Event listener to update the dashboard data based on selected year
+document.getElementById("yearSelector").addEventListener("change", function() {
+    const selectedYear = this.value;
+
+    // Make an AJAX request to get the data for the selected year
+    fetch(`/get_year_count?year=${selectedYear}`)
+        .then(response => response.json())
+        .then(data => {
+            // Update the dashboard with the new data
+            document.getElementById("total_appl_count").textContent = data.total_appl_count;
+            document.getElementById("completed_form_count").textContent = data.completed_form_count;
+            document.getElementById("incomplete_form_count").textContent = data.incomplete_form_count;
+            document.getElementById("accepted_appl_count").textContent = data.accepted_appl_count;
+            document.getElementById("rejected_appl_count").textContent = data.rejected_appl_count;
+            document.getElementById("maleCount").textContent = data.male_count;
+            document.getElementById("femaleCount").textContent = data.female_count;
+
+            // Update the year in multiple places
+            const yearChange = this.options[this.selectedIndex].innerHTML;
+            // Update all elements with the class 'yearChange'
+            const yearChangeElements = document.querySelectorAll('.yearChange');
+            yearChangeElements.forEach(element => {
+                element.innerHTML = yearChange;
+            });
+        })
+        .catch(error => {
+                            console.error('Error fetching data:', error);
+                            alert('Failed to load the data for the selected year.');
+                        });
+});
+
+// ---------------------- END Selected Year on Admin Dashboard --------------
+
 
 // ----------------------------------------------
 // ------ This code is for Student Manage Dashboard Page -----
@@ -87,19 +121,6 @@ $(document).ready(function() {
 // ------ END code is for Student Manage Dashboard Page -----
 
 
-// ------ This code is for Student Manage Dashboard Page Old User Insertion by Admin -----
-// Function to update Ph.D. Registration Year field based on selected year
-    function updateRegistrationYear() {
-        // Get the selected year value
-        var selectedYear = document.getElementById("year").value;
 
-        // Extract the start year from the selected option (e.g., "2020 - 2021" -> "2020")
-        var startYear = selectedYear.split(" - ")[0];
 
-        // Update the Ph.D. Registration Year field value
-        document.getElementById("phd_registration_year").value = startYear;
-    }
 
-    // Add event listener to the Year dropdown to trigger the update
-    document.getElementById("year").addEventListener("change", updateRegistrationYear);
-// ------ END code is for Student Manage Dashboard Page Old User Insertion by Admin -----

@@ -3,6 +3,7 @@ from flask_mail import Mail
 import mysql.connector
 from Blueprints.blueprints_homepage import homepage_blueprints
 from Blueprints.blueprints_admin import admin_blueprints
+from Blueprints.blueprints_candidate import candidate_blueprints
 
 
 # ----------- Flask Instance --------------
@@ -62,6 +63,7 @@ def set_session(value):
 # ------------ Blueprint Registration --------------
 homepage_blueprints(app, mail)    # These blueprints are in the file - (blueprints_homepage.py)
 admin_blueprints(app, mail)     # These blueprints are in the file - (blueprints_admin.py)
+candidate_blueprints(app, mail)     # These blueprints are in the file - (blueprints_admin.py)
 
 
 if __name__ == '__main__':
