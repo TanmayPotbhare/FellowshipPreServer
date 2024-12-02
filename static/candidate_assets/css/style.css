@@ -17448,3 +17448,85 @@ html[dir=rtl] .sidebar li > a .caret:before {
   font-weight: 500;
 }
 /*# sourceMappingURL=style.css.map */
+
+
+/* Progress Bar CSS for Application Form */
+/* ------------------------------------- */
+.progress-form {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Progress bar container */
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Style for each step */
+.progress-step {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #555;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    width: 150px;
+}
+
+.progress-step:hover {
+    background-color: #5e0f48;
+    color: white;
+}
+
+/* Progress bar between steps */
+.progress-bar {
+    flex-grow: 1;
+    height: 2px;
+    background-color: #ddd;
+    margin: 0 10px;
+}
+
+/* Active step styling */
+.progress-step.active {
+    background-color: #9242a1;
+    color: white;
+}
+
+/* Tooltip positioning */
+[data-bs-toggle="tooltip"] {
+    position: relative;
+}
+
+/* Step text inside the circle/rectangle */
+.step-text {
+    display: block;
+    font-size: 12px;
+}
+
+/* Active progress steps */
+.progress-step.active .step-text {
+    font-weight: bold;
+}
+
+/* Optional: Make the progress steps more visually distinct */
+.progress-step.active {
+    background-color: #9242a1;
+    color: white;
+}
+
+/* ----------------------------------------- */
+/* END Progress Bar CSS for Application Form */
+
+
+.fw-bold{
+    color: black;
+}
+

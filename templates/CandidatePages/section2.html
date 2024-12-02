@@ -1,0 +1,264 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+{% include 'CandidatePages/layout/steps.html' %}
+
+<div class="container mt-5">
+    <!-- Section 1: Personal Details Form -->
+    <div class="card">
+        <div class="card-body">
+
+             <form action="/test_form" method="POST" enctype="multipart/form-data" class="personal-details-form">
+
+                <h4 class="mb-4 text-center">Qualification Details</h4>
+
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Basic Qualification Details</h6>
+                     </div>
+                     <div class="table-responsive">
+                          <table class="table table-bordered">
+                            <tr>
+                                <th class="text-center">Qualification</th>
+                                <th class="text-center">Passing Year</th>
+                                <th class="text-center">Stream</th>
+                                <th class="text-center">School / University Name</th>
+                                <th class="text-center">Attempts</th>
+                                <th class="text-center">Total Marks (Out of)</th>
+                                <th class="text-center">Percentage/CGPA (For Grade add respective
+                                    percentage value)</th>
+                            </tr>
+                            <!-- SSC Details Data -->
+                            <tr>
+                                <td>Secondary School Certificate (10th)
+                                    <span class="text-danger">*</span>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="ssc_passing_year" id="ssc_passing_year">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="stream" id="stream" value="General" disabled>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="ssc_school_name" id="ssc_school_name">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="ssc_attempts" id="ssc_attempts">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="ssc_total" id="ssc_total">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="ssc_percentage" id="ssc_percentage">
+                                </td>
+                            </tr>
+                             <!-- END SSC Details Data -->
+
+                             <!-- HSC Details Data -->
+                            <tr>
+                                <td>Higher Secondary Certificate (12th)
+                                    <span class="text-danger">*</span>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="hsc_passing_year" id="hsc_passing_year">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="stream" id="hsc_stream">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="hsc_school_name" id="hsc_school_name">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="hsc_attempts" id="hsc_attempts">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="hsc_total" id="hsc_total">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="hsc_percentage" id="hsc_percentage">
+                                </td>
+                            </tr>
+                            <!-- END HSC Details Data -->
+
+                            <!-- Graduation Details Data -->
+                            <tr>
+                                <td>Graduation
+                                    <span class="text-danger">*</span>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="graduation_passing_year" id="graduation_passing_year">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="grad_stream" id="grad_stream">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="graduation_school_name" id="graduation_school_name">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="grad_attempts" id="grad_attempts">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="grad_total" id="grad_total">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="graduation_percentage" id="graduation_percentage">
+                                </td>
+                            </tr>
+                            <!-- END Graduation Details Data -->
+
+                            <!-- Post Graduation Details Data -->
+                            <tr>
+                                <td>Post Graduation
+                                    <span class="text-danger">*</span>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="phd_passing_year" id="phd_passing_year">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="pg_stream" id="pg_stream">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="phd_school_name" id="phd_school_name">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="pg_attempts" id="pg_attempts">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="pg_total" id="pg_total">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="phd_percentage" id="phd_percentage">
+                                </td>
+                            </tr>
+
+                          </table>
+                     </div>
+                 </div>
+
+                 <div class="card shadow-sm mb-4">
+                   <div class="btn btn-dark btn-lg text-center">
+                      <h6 class="text-white fw-bold">Advanced Qualification Details</h6>
+                   </div>
+                   <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="have_you_qualified">Select Qualification Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="have_you_qualified" id="have_you_qualified">
+                                    <option value="">-- Select Exam --</option>
+                                    <option value="M.Phil">M.Phil</option>
+                                    <option value="PET">PET</option>
+                                    <option value="SET">SET</option>
+                                    <option value="NET">NET</option>
+                                    <option value="GATE">GATE</option>
+                                    <option value="OTHER">OTHER</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_date">Ph.D Registration Date
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="date" name="phd_registration_date" id="phd_registration_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_year">Ph.D Registration Year
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="phd_registration_year" id="phd_registration_year"
+                                       placeholder="Enter Ph.D Registration Date" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_age">Age at time of Ph.D Registration
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="phd_registration_age" id="phd_registration_age"
+                                       placeholder="Enter Ph.D Registration Date" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="concerned_university">Name of University
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="concerned_university" id="concerned_university"
+                                       placeholder="Enter your Name of University" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="name_of_college">Name of College
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="name_of_college" id="name_of_college"
+                                       placeholder="Enter your Name of College" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="department_name">Name of Department
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="department_name" id="department_name"
+                                       placeholder="Enter your Name of Department" class="form-control">
+                            </div>
+                        </div>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="topic_of_phd">Topic of Ph.D
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="topic_of_phd" id="topic_of_phd"
+                                       placeholder="Enter your Topic of Ph.D in 'ENGLISH'" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="name_of_guide">Name of Guide
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="name_of_guide" id="name_of_guide"
+                                       placeholder="Enter your Name of Guide" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="faculty">Faculty/Stream
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="faculty" id="faculty"
+                                       placeholder="Enter your faculty" class="form-control">
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+
+                  <div class="m-0 text-center">
+                    <a href="/section1" class="btn btn-primary btn-sm ms-2">Previous</a>
+                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
+                    <a href="/section3" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
+                  </div>
+
+
+             </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

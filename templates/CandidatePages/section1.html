@@ -1,0 +1,343 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+{% include 'CandidatePages/layout/steps.html' %}
+
+<div class="container mt-5">
+    <!-- Section 1: Personal Details Form -->
+    <div class="card">
+        <div class="card-body">
+
+             <form action="#" method="POST" enctype="multipart/form-data" class="personal-details-form">
+
+                <h4 class="mb-4 text-center">Personal Details</h4>
+
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Important Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="applicant_photo">Applicant Photo
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" name="applicant_photo" id="applicant_photo" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="adhaar_number">Verify Aadhaar Number
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="adhaar_number" id="adhaar_number" class="form-control mb-2">
+                                <a href="#" class="btn btn-primary btn-sm">Verify Aadhaar</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="adhaar_seeding_bank">Upload Adhaar Seeding Doc
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" name="adhaar_seeding_bank" id="adhaar_seeding_bank" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">General Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="first_name">First Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="first_name" id="first_name"
+                                       placeholder="Enter your First Name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="middle_name">Middle Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="middle_name" id="middle_name"
+                                       placeholder="Enter your Middle Name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="last_name">Surname
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="last_name" id="last_name"
+                                       placeholder="Enter your Surname" class="form-control">
+                            </div>
+                        </div>
+                         <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="mobile_number">Mobile Number
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="mobile_number" id="mobile_number"
+                                       placeholder="XXXXXXXXXX" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <label for="email">Email ID
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" aria-label="Text input with dropdown button"
+                                    name="email" id="email" value="" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="date_of_birth">Date of Birth
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="gender">Gender
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="" selected>-- Select Gender --</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Transgender</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="age">Age
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="age" id="age" class="form-control" value=""
+                                       placeholder="Enter your Date of Birth" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="category">Category
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="category" id="category" class="form-control"
+                                        value="Scheduled Tribes" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="pvtg">Belong to PVTG?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="pvtg" id="pvtg" class="form-control">
+                                    <option value="" selected>-- Select Option --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row m-0">
+                    <div class="col-md-4 mt-2">
+                        <div class="form-group">
+                            <label for="caste">Caste/Tribe
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <select name="caste" id="caste" class="form-control">
+                                <option value="" selected>-- Select Option --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <div class="form-group">
+                            <label for="subcaste">Sub Caste/Tribe
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <select name="subcaste" id="subcaste" class="form-control">
+                                <option value="" selected>-- Select Option --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <div class="form-group">
+                            <label for="marital_status">Marital Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <select name="marital_status" id="marital_status" class="form-control">
+                                <option value="" selected>-- Select Option --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                 </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Address Details</h6>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-9 mt-2">
+                            <div class="form-group">
+                                <label for="add_1">Permanant Address
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea name="add_1" id="add_1" class="form-control"
+                                  placeholder="Enter your Permanent Address over here."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="pincode">Pincode
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="pincode" id="pincode" class="form-control"
+                                        placeholder="Enter your Pincode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="village">Select Village
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="village" id="village" class="form-control">
+                                    <option value="" selected>-- Select Option --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="taluka">Taluka
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="taluka" id="taluka" class="form-control"
+                                       placeholder="Select Village" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="district">District
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="district" id="district" class="form-control"
+                                        placeholder="Select Village" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="state">State
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="state" id="state" class="form-control"
+                                        placeholder="Select Village" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check ms-2" style="padding:2rem;">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                      <label class="form-check-label" for="flexCheckIndeterminate">
+                          Tick if Communication Address is same as Permanent Address.
+                      </label>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-9 mt-2">
+                            <div class="form-group">
+                                <label for="comm_add_1">Communication Address
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea name="comm_add_1" id="comm_add_1" class="form-control"
+                        placeholder="Enter your Communication address (Where your University is located)."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="comm_pincode">Pincode
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="comm_pincode" id="comm_pincode"
+                                       placeholder="Enter your pincode" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="comm_village">Select Village
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <select name="comm_village" id="comm_village" class="form-control">
+                                <option value="" selected>-- Select Option --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="comm_taluka">Taluka
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <input type="text" name="comm_taluka" id="comm_taluka" class="form-control"
+                                    placeholder="Select Village" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="comm_district">District
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <input type="text" name="comm_district" id="comm_district" class="form-control"
+                                    placeholder="Select Village" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="comm_state">State
+                                    <span class="text-danger">*</span>
+                                </label>
+                            <input type="text" name="comm_state" id="comm_state" class="form-control"
+                                    placeholder="Select Village" disabled>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="m-0 text-center">
+                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
+                    <a href="/section2" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
+                </div>
+
+
+             </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

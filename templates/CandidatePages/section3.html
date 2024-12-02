@@ -1,0 +1,248 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+{% include 'CandidatePages/layout/steps.html' %}
+
+<div class="container mt-5">
+    <!-- Section 1: Personal Details Form -->
+    <div class="card">
+        <div class="card-body">
+
+             <form action="#" method="POST" enctype="multipart/form-data" class="personal-details-form">
+
+                <h4 class="mb-4 text-center">Certificate Details</h4>
+
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Income Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="family_annual_income">Family Annual Income
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="family_annual_income" id="family_annual_income"
+                                       placeholder="Enter your Family Income (Per year)" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="income_certificate_number">Income Certificate Number
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="income_certificate_number" id="income_certificate_number"
+                                       placeholder="Enter your Income Certificate Number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="issuing_authority">Issuing Authority
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="issuing_authority" id="issuing_authority"
+                                       class="form-control" value="Tehsildar" disabled>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="income_issuing_district">Issuing District
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="income_issuing_district" id="income_issuing_district">
+                                        <option value="">-- Select District --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="income_issuing_taluka">Issuing Taluka
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="income_issuing_taluka" id="income_issuing_taluka">
+                                        <option value="">-- Select Taluka --</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Domicile Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="domicile">Domicile of Maharashtra
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="domicile" id="domicile">
+                                        <option value="">-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="domicile_number">Domicile Certificate Number (Barcode)
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="domicile_number" id="domicile_number"
+                                       placeholder="Enter Domicile Barcode Number" class="form-control">
+                            </div>
+                        </div>
+                         <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="domicile_issuing_taluka">Issuing District
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="domicile_issuing_taluka" id="domicile_issuing_taluka">
+                                        <option value="">-- Select District --</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Caste/Tribe Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="caste_certf">Caste/Tribe Certificate
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="caste_certf" id="caste_certf">
+                                        <option value="">-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="caste_certf_number">Caste Certificate Number (Barcode)
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="caste_certf_number" id="caste_certf_number"
+                                       placeholder="Enter Caste Barcode Number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="caste_issuing_authority">Issuing Authority
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="caste_issuing_authority" id="caste_issuing_authority">
+                                        <option value="">-- Select Option --</option>
+                                        <option value="Sub-Divisional Officer (SDO)">Sub-Divisional Officer (SDO)</option>
+                                        <option value="Deputy Collector">Deputy Collector</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="issuing_district">Issuing District
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="issuing_district" id="issuing_district">
+                                        <option value="">-- Select District --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="caste_issuing_taluka">Issuing Taluka
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="caste_issuing_taluka" id="caste_issuing_taluka">
+                                        <option value="">-- Select Taluka --</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Validity Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="validity_certificate">Validity Certificate
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="validity_certificate" id="validity_certificate">
+                                        <option value="">-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="validity_cert_number">Validity Certificate Number (Barcode)
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="validity_cert_number" id="validity_cert_number"
+                                       placeholder="Enter Validity Barcode Number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="validity_issuing_authority">Issuing Authority
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="validity_issuing_authority" id="validity_issuing_authority"
+                                       placeholder="Enter Validity Issuing Authority" class="form-control">
+                            </div>
+                        </div>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="validity_issuing_district">Issuing District
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="validity_issuing_district" id="validity_issuing_district">
+                                        <option value="">-- Select District --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="validity_issuing_taluka">Issuing Taluka
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="validity_issuing_taluka" id="validity_issuing_taluka">
+                                        <option value="">-- Select Taluka --</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+
+                  <div class="m-0 text-center">
+                    <a href="/section2" class="btn btn-primary btn-sm ms-2">Previous</a>
+                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
+                    <a href="/section4" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
+                  </div>
+
+
+             </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

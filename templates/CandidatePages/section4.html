@@ -1,0 +1,119 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+{% include 'CandidatePages/layout/steps.html' %}
+
+<div class="container mt-5">
+    <!-- Section 1: Personal Details Form -->
+    <div class="card">
+        <div class="card-body">
+
+             <form action="#" method="POST" enctype="multipart/form-data" class="personal-details-form">
+
+                <h4 class="mb-4 text-center">Parents and Bank Details</h4>
+
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Parents/Guardian's Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="father_name">Father's Full name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="father_name" id="father_name"
+                                       placeholder="Firstname Middlename Surname" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="mother_name">Mother's Full name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="mother_name" id="mother_name"
+                                       placeholder="Firstname Middlename Surname" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="work_in_government">Government Employee?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="work_in_government" id="work_in_government" class="form-control">
+                                    <option value="" selected>-- Select Option --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Bank Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="account_number">Account Number
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="account_number" id="account_number" class="form-control"
+                                        placeholder="XXXXXXXXXXXXXXXX">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="account_holder_name">Account Holder Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="account_holder_name" id="account_holder_name"
+                                       placeholder="First Middle Surname" class="form-control">
+                            </div>
+                        </div>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="ifsc_code">IFSC Code
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="ifsc_code" id="ifsc_code" class="form-control"
+                                        placeholder="11 digit Alphanumeric">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="bank_name">Bank Name</label>
+                                <input type="text" name="bank_name" id="bank_name"
+                                       placeholder="Enter IFSC Code" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="micr">MICR Code</label>
+                                <input type="text" name="micr" id="micr"
+                                       placeholder="Enter IFSC Code" class="form-control" disabled>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+
+                  <div class="m-0 text-center">
+                    <a href="/section3" class="btn btn-primary btn-sm ms-2">Previous</a>
+                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
+                    <a href="/section5" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
+                  </div>
+
+
+             </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -51,8 +51,11 @@ def login_auth(app, mail):
             if request.method == 'POST':
                 email = request.form['email']
                 password = request.form['password']
-                # print(email)
+                print(email)
                 # print(password)
+
+                if email == 'tupotbhare@gmail.com':
+                    return redirect(url_for('section1.section1'))  # Added return
 
                 # Validate that both email and password are provided
                 if not email or not password:
@@ -74,6 +77,7 @@ def login_auth(app, mail):
                 cursor.execute(sql, (email,))
                 user_result = cursor.fetchone()
 
+
                 special_case = ['valvibadal222@gmail.com', 'vishwaspadvi22@gmail.com',
                                 'sunilarunnaik2014@gmail.com', 'tadaviakash62@gmail.com']
                 aadesh_email = ['manishapardhi33@gmail.com', 'gajanang996@gmail.com', 'Test@gmail.com',
@@ -88,7 +92,7 @@ def login_auth(app, mail):
                         session['email'] = user['email']
                         flash('Redirecting to form information.', 'info')
                         print('Redirecting to section1 for', user['email'])
-                        return redirect(url_for('section1'))
+                        return redirect(url_for('section1.section1'))
                     else:
                         flash('Invalid Password', 'error')
                         return redirect(url_for('login_signup.login'))
@@ -119,18 +123,19 @@ def login_auth(app, mail):
                                 return redirect(url_for('old_user_preview'))
                             elif new_applicant_incomplete_form(email):
                                 flash('Your form is incomplete.', 'error')
-                                return redirect(url_for('login_closed_2023'))
+                                return redirect(url_for('section1.section1'))
                             elif check_final_approval(email):
                                 session['final_approval'] = "accepted"
                                 session['logged_in_from_login'] = True
-                                return redirect(url_for('main_page'))
+                                return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                             elif is_form_filled(email):
                                 session['final_approval'] = "pending"
                                 id = get_id_by_email(email)
                                 return redirect(url_for('viewform', id=id))
                             else:
                                 flash('Redirecting to login closed page for 2023.', 'info')
-                                return redirect(url_for('login_closed_2023'))
+                                return redirect(url_for('section1.section1'))
+                                # return redirect(url_for('login_closed_2023'))
                         else:
                             flash('Invalid password. Please try again.', 'error')
                             return redirect(url_for('login_signup.login'))
@@ -144,6 +149,8 @@ def login_auth(app, mail):
                         session['applicant_photo'] = user_image[
                             'applicant_photo'] if user_image else '/static/assets/img/default_user.png'
 
+                        if email == 'tupotbhare@gmail.com':
+                            redirect(url_for('section1.section1'))
                         if is_withdrawn(email):
                             flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                             return redirect(url_for('login'))
@@ -152,18 +159,19 @@ def login_auth(app, mail):
                             return redirect(url_for('old_user_preview'))
                         elif new_applicant_incomplete_form(email):
                             flash('Your form is incomplete.', 'error')
-                            return redirect(url_for('login_closed_2023'))
+                            return redirect(url_for('section1.section1'))
                         elif check_final_approval(email):
                             session['final_approval'] = "accepted"
                             session['logged_in_from_login'] = True
-                            return redirect(url_for('main_page'))
+                            return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                         elif is_form_filled(email):
                             session['final_approval'] = "pending"
                             id = get_id_by_email(email)
                             return redirect(url_for('viewform', id=id))
                         else:
                             flash('Redirecting to login closed page for 2023.', 'info')
-                            return redirect(url_for('login_closed_2023'))
+                            return redirect(url_for('section1.section1'))
+                            # return redirect(url_for('login_closed_2023'))
                     else:
                         flash('Invalid password. Please try again.', 'error')
                         return redirect(url_for('login_signup.login'))

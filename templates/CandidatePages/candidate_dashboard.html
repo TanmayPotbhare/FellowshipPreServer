@@ -3,21 +3,28 @@
 
         <!-- Table Product -->
         <div class="row">
-                      <div class="col-12">
-                        <div class="card card-default">
-                          <div class="col-auto mt-3">
-                             <a href="#" class="btn btn-primary btn-sm text-white">Generate PDF Form</a>
-                          </div>
-                          <div class="card-header justify-content-center">
-                                <!-- Center Content -->
-                                <div class="text-center">
-                                    <div class="profile-avata">
-                                        <img class="rounded-circle" src="/static/candidate_assets/images/user/user-md-01.jpg" alt="Avatar Image">
-                                        <span class="h5 d-block mt-3 mb-2">Albrecht Straub</span>
-                                        <span class="d-block">Albrecht.straub@gmail.com</span>
-                                    </div>
-                                </div>
-                          </div>
+              <div class="col-12">
+                <div class="card card-default">
+                  <div class="col-auto mt-3">
+                     <a href="#" class="btn btn-primary btn-sm text-white">Generate PDF Form</a>
+                  </div>
+                  <div class="card-header justify-content-center">
+                        <!-- Center Content -->
+                        <div class="text-center">
+                            <div class="profile-avata">
+                                {% for row in records %}
+                                {% set fullname = row['first_name'] + ' ' + row['middle_name'] + ' ' + row['last_name'] %}
+                                    {% if row['applicant_photo'] %}
+                                        <img class="rounded-circle" src="{{ row['applicant_photo'] }}" alt="Avatar Image" style="height: 120px;width: 120px;">
+                                    {% else %}
+                                        <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
+                                    {% endif %}
+                                    <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
+                                    <span class="d-block">{{ row['email'] }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                  </div>
 
 
                           <div class="card-footer card-profile-footer">
@@ -26,7 +33,7 @@
                                 <a class="nav-link active" href="/candidate_dashboard">My Profile</a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="user-profile-settings.html">Aadhaar Seeding</a>
+                                <a class="nav-link" href="/adhaar_seeding">Aadhaar Seeding</a>
                               </li>
                               <li class="nav-item">
                                 <a class="nav-link" href="user-profile-settings.html">Manage Profile</a>

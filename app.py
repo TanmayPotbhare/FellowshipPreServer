@@ -60,6 +60,31 @@ def set_session(value):
     return redirect(request.referrer)
 
 
+@app.route('/section1')
+def test_form():
+    return render_template('CandidatePages/section1.html', title='Application Form (Personal Details)')
+
+
+@app.route('/section2')
+def section2():
+    return render_template('CandidatePages/section2.html', title='Application Form (Qualification Details)')
+
+
+@app.route('/section3')
+def section3():
+    return render_template('CandidatePages/section3.html', title='Application Form (Certificate Details)')
+
+
+@app.route('/section4')
+def section4():
+    return render_template('CandidatePages/section4.html', title='Application Form (Parents and Bank Details)')
+
+
+@app.route('/section5')
+def section5():
+    return render_template('CandidatePages/section5.html', title='Application Form (Documents)')
+
+
 # ------------ Blueprint Registration --------------
 homepage_blueprints(app, mail)    # These blueprints are in the file - (blueprints_homepage.py)
 admin_blueprints(app, mail)     # These blueprints are in the file - (blueprints_admin.py)
