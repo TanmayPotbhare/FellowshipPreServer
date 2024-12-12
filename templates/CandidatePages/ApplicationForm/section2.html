@@ -1,0 +1,406 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+{% include 'CandidatePages/layout/steps.html' %}
+
+<div class="container mt-5">
+    <!-- Section 1: Personal Details Form -->
+    <div class="card">
+        <div class="card-body">
+
+             <form action="/test_form" method="POST" enctype="multipart/form-data" class="personal-details-form">
+
+                <h4 class="mb-4 text-center">Qualification Details</h4>
+
+
+                <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="bg-dark text-white text-center">
+                                        <tr>
+                                            <th class="text-center text-white">Qualification</th>
+                                            <th class="text-center text-white">Inputs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- SSC Details -->
+                                        <tr>
+                                            <td class="text-dark text-center align-middle">
+                                                <strong>Secondary School Certificate (10th)<span class="text-danger">*</span></strong>
+                                            </td>
+                                            <td>
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label for="ssc_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="ssc_passing_year"
+                                                               name="ssc_passing_year" maxlength="4" minlength="4"
+                                                               oninput="validateYear(this)" required>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="stream" class="form-label">Stream</label>
+                                                        <input type="text" class="form-control" id="stream"
+                                                               name="stream" value="General" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="ssc_school_name" class="form-label">School Name</label>
+                                                        <input type="text" class="form-control" id="ssc_school_name"
+                                                               name="ssc_school_name" oninput="validateName(this)">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 mt-3">
+                                                    <div class="col-md-4">
+                                                        <label for="ssc_attempts" class="form-label">Attempts</label>
+                                                        <input type="number" class="form-control" id="ssc_attempts"
+                                                               name="ssc_attempts" maxlength="2">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="ssc_total" class="form-label">Total Marks</label>
+                                                        <input type="number" class="form-control" id="ssc_total"
+                                                               name="ssc_total" maxlength="4" placeholder="Ex. 500">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="ssc_percentage" class="form-label">Percentage</label>
+                                                        <input type="text" class="form-control" id="ssc_percentage"
+                                                               name="ssc_percentage">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- HSC Details -->
+                                        <tr>
+                                            <td class="text-dark text-center align-middle">
+                                                <strong>Higher Secondary Certificate (12th) <br>OR<br> ITI Course <br>OR<br> Technical Diploma<span class="text-danger">*</span></strong>
+                                            </td>
+                                            <td>
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label for="hsc_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="hsc_passing_year"
+                                                               name="hsc_passing_year" maxlength="4" minlength="4"
+                                                               oninput="validateYear(this)" required>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="hsc_stream" class="form-label">Stream<span class="text-danger">*</span></label>
+                                                        <select id="hsc_stream" name="hsc_stream" class="form-control" required>
+                                                            <option value="" selected disabled>-- Select Stream --</option>
+                                                            <option value="Science">Science</option>
+                                                            <option value="Commerce">Commerce</option>
+                                                            <option value="Arts">Arts</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="hsc_school_name" class="form-label">School Name</label>
+                                                        <input type="text" class="form-control" id="hsc_school_name"
+                                                               name="hsc_school_name" oninput="validateName(this)">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 mt-3">
+                                                    <div class="col-md-4">
+                                                        <label for="hsc_attempts" class="form-label">Attempts</label>
+                                                        <input type="text" class="form-control" id="hsc_attempts"
+                                                               name="hsc_attempts" maxlength="2">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="hsc_total" class="form-label">Total Marks</label>
+                                                        <input type="text" class="form-control" id="hsc_total"
+                                                               name="hsc_total" maxlength="4" placeholder="Ex. 500">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="hsc_percentage" class="form-label">Percentage</label>
+                                                        <input type="text" class="form-control" id="hsc_percentage"
+                                                               name="hsc_percentage">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Graduation Details -->
+                                        <tr>
+                                            <td class="text-dark text-center align-middle">
+                                                <strong>Graduation (Bachelor's Degree)<span class="text-danger">*</span></strong>
+                                            </td>
+                                            <td>
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label for="graduation_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="graduation_passing_year" name="graduation_passing_year" maxlength="4" minlength="4" oninput="validateYear(this)" required>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="grad_stream" class="form-label">Stream<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="grad_stream" name="grad_stream" oninput="validateName(this)" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="graduation_school_name" class="form-label">College / University Name<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="graduation_school_name" name="graduation_school_name" oninput="validateName(this)" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 mt-3">
+                                                    <div class="col-md-4">
+                                                        <label for="grad_attempts" class="form-label">Attempts</label>
+                                                        <input type="text" class="form-control" id="grad_attempts" name="grad_attempts" maxlength="2">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="grad_total" class="form-label">Total Marks</label>
+                                                        <input type="text" class="form-control" id="grad_total" name="grad_total" maxlength="4" placeholder="Ex. 500">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="graduation_percentage" class="form-label">Percentage / CGPA</label>
+                                                        <input type="text" class="form-control" id="graduation_percentage" name="graduation_percentage">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Post Graduation Details -->
+                                        <tr>
+                                            <td class="text-dark text-center align-middle">
+                                                <strong>Post Graduation (Master's Degree)<span class="text-danger">*</span></strong>
+                                            </td>
+                                            <td>
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label for="phd_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="phd_passing_year" name="phd_passing_year" maxlength="4" minlength="4" oninput="validateYear(this)" required>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="pg_stream" class="form-label">Stream<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="pg_stream" name="pg_stream" oninput="validateName(this)" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="phd_school_name" class="form-label">University Name<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="phd_school_name" name="phd_school_name" oninput="validateName(this)" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 mt-3">
+                                                    <div class="col-md-4">
+                                                        <label for="pg_attempts" class="form-label">Attempts</label>
+                                                        <input type="text" class="form-control" id="pg_attempts" name="pg_attempts" maxlength="2">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="pg_total" class="form-label">Total Marks</label>
+                                                        <input type="text" class="form-control" id="pg_total" name="pg_total" maxlength="4" placeholder="Ex. 500">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="phd_percentage" class="form-label">Percentage / CGPA</label>
+                                                        <input type="text" class="form-control" id="phd_percentage" name="phd_percentage">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                 <div class="card shadow-sm mb-4">
+                   <div class="btn btn-dark btn-lg text-center">
+                      <h6 class="text-white fw-bold">Advanced Qualification Details</h6>
+                   </div>
+                   <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="have_you_qualified">Select Qualification Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="have_you_qualified" id="have_you_qualified">
+                                    <option value="" selected disabled>-- Select Exam --</option>
+                                    <option value="M.Phil">M.Phil</option>
+                                    <option value="PET">PET</option>
+                                    <option value="SET">SET</option>
+                                    <option value="NET">NET</option>
+                                    <option value="GATE">GATE</option>
+                                    <option value="OTHER">OTHER</option>
+                                </select>
+                            </div>
+                        </div>
+                       <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <input type="hidden" id="dob_year" value="{{ dob_year }}">
+                                <label for="phd_registration_date">Ph.D Registration Date
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="date" name="phd_registration_date" id="phd_registration_date"
+                                       class="form-control" onchange="calculateAge()">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_year">Fellowship Applying Year
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="fellowship_applying_year"
+                                        id="fellowship_applying_year" required>
+                                    <option value="" selected disabled>-- Select Year --</option>
+                                    <option value="2024">2024-2025</option>
+                                    <option value="2025">2025-2026</option>
+                                    <option value="2026">2026-2027</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_date">Ph.D Registration Day
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="phd_registration_day" id="phd_registration_day"
+                                       class="form-control"  placeholder="Enter Ph.D. Registration Date"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_year">Ph.D Registration Month
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="phd_registration_month" id="phd_registration_month"
+                                       class="form-control"  placeholder="Enter Ph.D. Registration Date"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_year">Ph.D Registration Year
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="phd_registration_year" id="phd_registration_year"
+                                       class="form-control"  placeholder="Enter Ph.D. Registration Date"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <div class="form-group">
+                                <label for="phd_registration_age">Age at Ph.D Registration
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="phd_registration_age" id="phd_registration_age"
+                                       class="form-control" placeholder="Enter Ph.D. Registration Date"
+                                       disabled>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row m-0">
+                        <div class="col-md-6 mt-2">
+                            <div class="form-group">
+                                <label for="concerned_university">Name of University
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="concerned_university" id="concerned_university" required
+                                        class="form-control">
+                                    <option value="">-- Select University --</option>
+                                    {% for uni in university_data %}
+                                        <option value="{{ uni['affiliated_universities'] }}"
+                                            data-hidden="{{ uni['u_id'] }}">{{ uni['affiliated_universities'] }}
+                                        </option>
+                                    {% endfor %}
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class="form-group">
+                                <label for="name_of_college">Name of College
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="name_of_college" id="name_of_college" class="form-control select2"
+                                        onchange="toggleCollegeField(this)" required>
+                                    <option value="" selected disabled> -- Select College --</option>
+                                </select>
+                            </div>
+                        </div>
+                         <div class="col-md-6 mt-2 d-none" id="collegeField">
+                            <div class="form-group">
+                                <label for="name_of_college">Enter College Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="other_college_name"
+                                        id="other_college_name" oninput="validateName(this)"
+                                        placeholder="Enter College Name">
+                            </div>
+                        </div>
+                     </div>
+                     <div class="row m-0">
+                         <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="department_name">Name of Department
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="department_name" id="department_name"
+                                       placeholder="Enter your Name of Department" class="form-control"
+                                       oninput="validateName(this)" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="topic_of_phd">Topic of Ph.D
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="topic_of_phd" id="topic_of_phd"
+                                       placeholder="Enter your Topic of Ph.D in 'ENGLISH'" class="form-control"
+                                       oninput="validateName(this)" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="name_of_guide">Name of Guide
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="name_of_guide" id="name_of_guide"
+                                       placeholder="Enter your Name of Guide" class="form-control"
+                                       oninput="validateName(this)" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="faculty">Faculty/Stream
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="faculty" id="faculty" class="form-control"
+                                        onchange="toggleAdditionalField(this)" required>
+                                    <option value="" selected disabled>-- Select Faculty/Stream --</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Commerce">Commerce</option>
+                                    <option value="Arts">Arts</option>
+                                    <option value="Law">Law</option>
+                                    <option value="Vocational">Vocational</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                         <div class="col-md-4 mt-2 d-none" id="additionalField">
+                            <div class="form-group">
+                                <label for="faculty"data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Please Enter English Text only.">
+                                    Faculty/Stream
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input class="form-control" name="other_faculty" id="other_faculty"
+                                        oninput="validateName(this)" placeholder="Enter Faculty/Stream">
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+
+                  <div class="m-0 text-center">
+                    <a href="/section1" class="btn btn-primary btn-sm ms-2">Previous</a>
+                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
+                    <a href="/section3" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
+                  </div>
+
+
+             </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

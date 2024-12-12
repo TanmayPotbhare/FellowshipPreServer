@@ -1,6 +1,6 @@
 import mysql.connector
 
-
+# All the hosts to load on the respective servers.# All the hosts to load on the respective servers.
 class HostConfig:
     hostserver = '43.240.64.151'
     preserver = '192.168.10.69'

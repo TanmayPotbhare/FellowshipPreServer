@@ -36,7 +36,7 @@
               <a class="nav-link active" href="/adhaar_seeding">Aadhaar Seeding</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="user-profile-settings.html">Manage Profile</a>
+              <a class="nav-link" href="/manage_profile">Manage Profile</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
@@ -47,7 +47,55 @@
               <div class="applicant-cards">
                   <h6 class="mb-3">Adhaar Seeding Document</h6>
                   <!-- Repeat for more applicants -->
-
+                  <h6 class="text-danger">
+                      The Aadhaar Seeding Document serves as proof that your Aadhaar number is linked to your bank account.
+                      It verifies the connection between your Aadhaar and the specified bank account,
+                      ensuring seamless access to Aadhaar-enabled banking services.
+                  </h6>
+                  {% for row in records %}
+                  <div class="row mt-5">
+                        <div class="col-md-2">
+                            <label>Bank Account:</label>
+                        </div>
+                        <div class="col-md-10">
+                            <span>{{ row['bank_name'] }}</span>
+                        </div>
+                  </div>
+                  <div class="row mt-5">
+                        <div class="col-md-2">
+                            <label>IFSC Code:</label>
+                        </div>
+                        <div class="col-md-10">
+                            <span>{{ row['ifsc_code'] }}</span>
+                        </div>
+                  </div>
+                      {% if not row['adhaar_seeding_doc'] %}
+                          <div class="row mt-5">
+                                <div class="col-md-2">
+                                    <label for="adhaar_seeding_doc" class="form-label">Aadhaar Seeding Document:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="file" name="adhaar_seeding_doc" id="adhaar_seeding_doc"
+                                           class="form-control" required>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <a href="#" alt="Aadhaar Document" class="btn btn-primary btn-sm">Submit</a>
+                                </div>
+                          </div>
+                      {% else %}
+                          <div class="row mt-5">
+                                <div class="col-md-2">
+                                    <label>Adhaar Seeding Document:</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <a href="{{ row['adhaar_seeding_doc'] }}" target="_blank"
+                                       class="btn btn-outline-primary btn-sm">
+                                        <i class="mdi mdi-eye"></i>
+                                    </a>
+                                </div>
+                          </div>
+                      {% endif %}
+                  {% endfor %}
               </div>
           </div>
 

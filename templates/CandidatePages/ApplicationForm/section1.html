@@ -3,6 +3,12 @@
 
 {% include 'CandidatePages/layout/steps.html' %}
 
+<!--
+    The Onchange or Any JQUERY OR JavaScript code is written in the section1.js file.
+    Path of JS file:- static/candidate_assets/js/applicationForm/section1.js
+-->
+
+
 <div class="container mt-5">
     <!-- Section 1: Personal Details Form -->
     <div class="card">
@@ -22,7 +28,8 @@
                                 <label for="applicant_photo">Applicant Photo
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="file" name="applicant_photo" id="applicant_photo" class="form-control">
+                                <input type="file" name="applicant_photo" id="applicant_photo" class="form-control"
+                                        required>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -30,7 +37,8 @@
                                 <label for="adhaar_number">Verify Aadhaar Number
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="adhaar_number" id="adhaar_number" class="form-control mb-2">
+                                <input type="text" name="adhaar_number" id="adhaar_number" class="form-control mb-2"
+                                        required>
                                 <a href="#" class="btn btn-primary btn-sm">Verify Aadhaar</a>
                             </div>
                         </div>
@@ -39,7 +47,8 @@
                                 <label for="adhaar_seeding_bank">Upload Adhaar Seeding Doc
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="file" name="adhaar_seeding_bank" id="adhaar_seeding_bank" class="form-control">
+                                <input type="file" name="adhaar_seeding_bank" id="adhaar_seeding_bank"
+                                       class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -56,7 +65,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="first_name" id="first_name"
-                                       placeholder="Enter your First Name" class="form-control">
+                                       placeholder="Enter your First Name" class="form-control"
+                                       oninput="validateName(this)" maxlength="15" required>
                             </div>
                         </div>
                         <div class="col-md-3 mt-2">
@@ -65,7 +75,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="middle_name" id="middle_name"
-                                       placeholder="Enter your Middle Name" class="form-control">
+                                       placeholder="Enter your Middle Name" class="form-control"
+                                        oninput="validateName(this)" maxlength="15" required>
                             </div>
                         </div>
                         <div class="col-md-3 mt-2">
@@ -74,7 +85,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="last_name" id="last_name"
-                                       placeholder="Enter your Surname" class="form-control">
+                                       placeholder="Enter your Surname" class="form-control"
+                                        oninput="validateName(this)" maxlength="15" required>
                             </div>
                         </div>
                          <div class="col-md-3 mt-2">
@@ -83,7 +95,9 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="mobile_number" id="mobile_number"
-                                       placeholder="XXXXXXXXXX" class="form-control">
+                                       placeholder="XXXXXXXXXX" class="form-control"
+                                        maxlength="10" oninput="validateMobileNumber(this)"
+                                        minlength="10" required>
                             </div>
                         </div>
                     </div>
@@ -102,7 +116,8 @@
                                 <label for="date_of_birth">Date of Birth
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control">
+                                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control"
+                                        onchange="calculateAge()" required>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -110,11 +125,11 @@
                                 <label for="gender">Gender
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="gender" id="gender" class="form-control">
+                                <select name="gender" id="gender" class="form-control" required>
                                     <option value="" selected>-- Select Gender --</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Transgender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
@@ -125,8 +140,8 @@
                                 <label for="age">Age
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="age" id="age" class="form-control" value=""
-                                       placeholder="Enter your Date of Birth" disabled>
+                                <input type="text" name="age" id="age" class="form-control"
+                                       placeholder="Enter your Date of Birth" readonly>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -140,55 +155,77 @@
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="pvtg">Belong to PVTG?
-                                    <span class="text-danger">*</span>
+                                <label for="pvtg" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="PVTG stands for Particularly Vulnerable Tribal Groups. Select 'Yes' if applicable.">
+                                    Belong to PVTG? <span class="text-danger">*</span>
                                 </label>
-                                <select name="pvtg" id="pvtg" class="form-control">
+                                <select name="pvtg" id="pvtg" class="form-control" onchange="toggleAdditionalField(this)" required>
                                     <option value="" selected>-- Select Option --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
+                         <div class="col-md-4 mt-3 d-none" id="additionalField">
+                            <div class="form-group">
+                                <label for="pvtg_caste">Select Tribe for PVTG</label>
+                                <select name="pvtg_caste" id="pvtg_caste" class="form-control">
+                                    <option value="" selected>-- Select PVTG Tribe --</option>
+                                    <option value="Katkari">Katkari</option>
+                                    <option value="Kolam">Kolam</option>
+                                    <option value="Madia">Madia</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                      <div class="row m-0">
-                    <div class="col-md-4 mt-2">
-                        <div class="form-group">
-                            <label for="caste">Caste/Tribe
-                                    <span class="text-danger">*</span>
-                                </label>
-                            <select name="caste" id="caste" class="form-control">
-                                <option value="" selected>-- Select Option --</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
+                            <div class="col-md-4 mt-2">
+                                <div class="form-group">
+                                    <label for="caste">Caste/Tribe
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                    <select name="caste" id="caste" class="form-control" required>
+                                        <option value="" selected>-- Select Option --</option>
+                                        {% for caste in all_caste %}
+                                            <option
+                                                data-hidden="{{ caste['caste'] }}"
+                                                value="{{ caste['caste'] }}"
+                                                {% if record %}
+                                                    {% if record.your_caste == caste['caste'] %}
+                                                        selected
+                                                    {% endif %}
+                                                {% endif %}
+                                            >
+                                            {{ caste['caste'] }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <div class="form-group">
+                                    <label for="subcaste">Sub Caste/Tribe
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                    <select name="subcaste" id="subcaste" class="form-control" required>
+                                        <option value="" selected>-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <div class="form-group">
+                                    <label for="marital_status">Marital Status
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                    <select name="marital_status" id="marital_status" class="form-control" required>
+                                        <option value="" selected>-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
                     </div>
-                    <div class="col-md-4 mt-2">
-                        <div class="form-group">
-                            <label for="subcaste">Sub Caste/Tribe
-                                    <span class="text-danger">*</span>
-                                </label>
-                            <select name="subcaste" id="subcaste" class="form-control">
-                                <option value="" selected>-- Select Option --</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <div class="form-group">
-                            <label for="marital_status">Marital Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                            <select name="marital_status" id="marital_status" class="form-control">
-                                <option value="" selected>-- Select Option --</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
                  </div>
 
                 <div class="card shadow-sm mb-4">
@@ -218,8 +255,9 @@
                     <div class="row m-0">
                         <div class="col-md-3 mt-2">
                             <div class="form-group">
-                                <label for="village">Select Village
-                                    <span class="text-danger">*</span>
+                                <label for="pvtg" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Enter Pincode, all the villages will autopopulate">
+                                    Select Village <span class="text-danger">*</span>
                                 </label>
                                 <select name="village" id="village" class="form-control">
                                     <option value="" selected>-- Select Option --</option>
@@ -265,11 +303,12 @@
                     <div class="row m-0">
                         <div class="col-md-9 mt-2">
                             <div class="form-group">
-                                <label for="comm_add_1">Communication Address
+                                <label for="comm_add_1">Communication Address / University Address
                                     <span class="text-danger">*</span>
                                 </label>
                                 <textarea name="comm_add_1" id="comm_add_1" class="form-control"
-                        placeholder="Enter your Communication address (Where your University is located)."></textarea>
+                                    placeholder="Enter your Communication address (Where your University is located).">
+                                </textarea>
                             </div>
                         </div>
                         <div class="col-md-3 mt-2">

@@ -22,7 +22,7 @@
                                 <label for="father_name">Father's Full name
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="father_name" id="father_name"
+                                <input type="text" name="father_name" id="father_name" required
                                        placeholder="Firstname Middlename Surname" class="form-control">
                             </div>
                         </div>
@@ -31,20 +31,41 @@
                                 <label for="mother_name">Mother's Full name
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="mother_name" id="mother_name"
+                                <input type="text" name="mother_name" id="mother_name" required
                                        placeholder="Firstname Middlename Surname" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="work_in_government">Government Employee?
+                                <label for="work_in_government" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Select yes only if someone from your family works in the Government.">
+                                    Any Government Employee in Family?
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="work_in_government" id="work_in_government" class="form-control">
+                                <select name="work_in_government" id="work_in_government" class="form-control"
+                                        onchange="toggleGovField(this)" required>
                                     <option value="" selected>-- Select Option --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
+                            </div>
+                        </div>
+                         <div class="col-md-4 mt-2 d-none" id="open_gov">
+                            <div class="form-group">
+                                <label for="gov_department">Name of Government Employee
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="gov_department" id="gov_department"
+                                       placeholder="Enter Name of Government Employee">
+                            </div>
+                        </div>
+                         <div class="col-md-4 mt-2 d-none" id="open_gov1">
+                            <div class="form-group">
+                                <label for="gov_position">Position in Government
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="gov_position" id="gov_position"
+                                        placeholder="Enter Position in the Government">
                             </div>
                         </div>
                      </div>
@@ -60,7 +81,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="account_number" id="account_number" class="form-control"
-                                        placeholder="XXXXXXXXXXXXXXXX">
+                                        placeholder="XXXXXXXXXXXXXXXX" maxlength="20"
+                                        oninput="validateAccountNumber()">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -69,7 +91,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="account_holder_name" id="account_holder_name"
-                                       placeholder="First Middle Surname" class="form-control">
+                                       placeholder="First Middle Surname" class="form-control"
+                                        onchange="validateAccountHolderName()" oninput="validateName(this)">
                             </div>
                         </div>
                      </div>
@@ -80,7 +103,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="ifsc_code" id="ifsc_code" class="form-control"
-                                        placeholder="11 digit Alphanumeric">
+                                        placeholder="11 digit Alphanumeric" onchange="validateIFSC()">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">

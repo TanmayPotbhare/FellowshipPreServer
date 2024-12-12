@@ -13,6 +13,6 @@ class casteController:
         # self.cursor = cursor
 
     def get_all_caste_details(self):
-        self.cursor.execute("SELECT * from tbl_master_caste")
+        self.cursor.execute(" SELECT * FROM ICSApplication.caste_subcaste ")
         result = self.cursor.fetchall()
         return result

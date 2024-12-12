@@ -17530,3 +17530,6 @@ html[dir=rtl] .sidebar li > a .caret:before {
     color: black;
 }
 
+#first_name {
+    text-transform: capitalize; /* Automatically capitalizes the first letter while typing */
+}

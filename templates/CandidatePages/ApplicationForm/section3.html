@@ -23,16 +23,18 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="family_annual_income" id="family_annual_income"
-                                       placeholder="Enter your Family Income (Per year)" class="form-control">
+                                       placeholder="Enter your Family Income (Per year)" class="form-control"
+                                        oninput="validateIncome()" maxlength="6">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="income_certificate_number">Income Certificate Number
+                                <label for="income_certificate_number">Income Certificate Number (Barcode)
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="income_certificate_number" id="income_certificate_number"
-                                       placeholder="Enter your Income Certificate Number" class="form-control">
+                                       placeholder="Enter your Income Certificate Number" class="form-control"
+                                        oninput="validateIncomeCertificateNumber()">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -52,7 +54,12 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="income_issuing_district" id="income_issuing_district">
-                                        <option value="">-- Select District --</option>
+                                    <option value="" selected disabled>-- Select District --</option>
+                                    {% for uni in districts %}
+                                        <option value="{{ uni['district_id'] }}">
+                                            {{ uni['district'] }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -75,7 +82,7 @@
                      <div class="row m-0">
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="domicile">Domicile of Maharashtra
+                                <label for="domicile">Domicile of Maharashtra Available?
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="domicile" id="domicile">
@@ -91,7 +98,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="domicile_number" id="domicile_number"
-                                       placeholder="Enter Domicile Barcode Number" class="form-control">
+                                       placeholder="Enter Domicile Barcode Number" class="form-control"
+                                        oninput="validateDomicileCertificateNumber()">
                             </div>
                         </div>
                          <div class="col-md-4 mt-2">
@@ -100,7 +108,12 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="domicile_issuing_taluka" id="domicile_issuing_taluka">
-                                        <option value="">-- Select District --</option>
+                                        <option value="" selected disabled>-- Select District --</option>
+                                    {% for uni in districts %}
+                                        <option value="{{ uni['district_id'] }}">
+                                            {{ uni['district'] }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -113,7 +126,7 @@
                      <div class="row m-0">
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="caste_certf">Caste/Tribe Certificate
+                                <label for="caste_certf">Caste/Tribe Certificate Available?
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="caste_certf" id="caste_certf">
@@ -129,7 +142,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="caste_certf_number" id="caste_certf_number"
-                                       placeholder="Enter Caste Barcode Number" class="form-control">
+                                       placeholder="Enter Caste Barcode Number" class="form-control"
+                                        oninput="validateCasteCertificateNumber()">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -152,7 +166,12 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="issuing_district" id="issuing_district">
-                                        <option value="">-- Select District --</option>
+                                        <option value="" selected disabled>-- Select District --</option>
+                                    {% for uni in districts %}
+                                        <option value="{{ uni['district_id'] }}">
+                                            {{ uni['district'] }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -176,7 +195,7 @@
                      <div class="row m-0">
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="validity_certificate">Validity Certificate
+                                <label for="validity_certificate">Validity Certificate Available?
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="validity_certificate" id="validity_certificate">
@@ -192,7 +211,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="validity_cert_number" id="validity_cert_number"
-                                       placeholder="Enter Validity Barcode Number" class="form-control">
+                                       placeholder="Enter Validity Barcode Number" class="form-control"
+                                        oninput="validateValidityCertificateNumber()" minlength="20" required>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -212,7 +232,12 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="validity_issuing_district" id="validity_issuing_district">
-                                        <option value="">-- Select District --</option>
+                                        <option value="" selected disabled>-- Select District --</option>
+                                    {% for uni in districts %}
+                                        <option value="{{ uni['district_id'] }}">
+                                            {{ uni['district'] }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>

@@ -1,10 +1,12 @@
-from flask import Flask, request, redirect, session, render_template
+import requests
+from flask import Flask, request, redirect, session, render_template, jsonify
 from flask_mail import Mail
 import mysql.connector
 from Blueprints.blueprints_homepage import homepage_blueprints
 from Blueprints.blueprints_admin import admin_blueprints
 from Blueprints.blueprints_candidate import candidate_blueprints
-
+from Classes.caste import casteController
+from Classes.university import universityController
 
 # ----------- Flask Instance --------------
 app = Flask(__name__)
@@ -62,27 +64,75 @@ def set_session(value):
 
 @app.route('/section1')
 def test_form():
-    return render_template('CandidatePages/section1.html', title='Application Form (Personal Details)')
+    caste_class = casteController(host)
+    all_caste = caste_class.get_all_caste_details()
+    return render_template('CandidatePages/ApplicationForm/section1.html', title='Application Form (Personal Details)',
+                           all_caste=all_caste)
 
 
 @app.route('/section2')
 def section2():
-    return render_template('CandidatePages/section2.html', title='Application Form (Qualification Details)')
+    cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',  # --------  DATABASE CONNECTION
+                                  host=host,
+                                  database='ICSApplication')
+    cursor = cnx.cursor(dictionary=True)
+    email = 'tupotbhare@gmail.com'
+    university_data = universityController(host)
+    university_names = university_data.get_all_university()
+    cursor.execute('SELECT YEAR(date_of_birth) AS birth_year FROM application_page where email = %s', (email,))
+    dob_year = cursor.fetchone()
+    print('DOB', dob_year)
+    cnx.close()
+    cursor.close()
+    return render_template('CandidatePages/ApplicationForm/section2.html', university_data=university_names,
+                           title='Application Form (Qualification Details)', dob_year=dob_year)
+
+
+@app.route('/get_college_data_by_university', methods=['GET','POST'])
+def get_college_data_by_university():
+    u_id = request.form.get('u_id')
+    print(u_id)
+    college_obj = universityController(host)
+    college_name = college_obj.get_college_name(u_id)
+    return jsonify(college_name)
 
 
 @app.route('/section3')
 def section3():
-    return render_template('CandidatePages/section3.html', title='Application Form (Certificate Details)')
+    cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',  # --------  DATABASE CONNECTION
+                                  host=host,
+                                  database='ICSApplication')
+    cursor = cnx.cursor(dictionary=True)
+    cursor.execute(" SELECT * from districts ")
+    districts = cursor.fetchall()
+    print(districts)
+    cursor.close()
+    cnx.close()
+    return render_template('CandidatePages/ApplicationForm/section3.html', districts=districts,
+                           title='Application Form (Certificate Details)')
+
+
+@app.route('/get_ifsc_data', methods=['GET'])
+def get_ifsc_data():
+    ifsc = request.args.get('ifsc')
+    api_url = f'https://ifsc.razorpay.com/{ifsc}'
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()  # Raise an exception for bad responses (4xx or 5xx)
+        data = response.json()
+        return jsonify(data)
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/section4')
 def section4():
-    return render_template('CandidatePages/section4.html', title='Application Form (Parents and Bank Details)')
+    return render_template('CandidatePages/ApplicationForm/section4.html', title='Application Form (Parents and Bank Details)')
 
 
 @app.route('/section5')
 def section5():
-    return render_template('CandidatePages/section5.html', title='Application Form (Documents)')
+    return render_template('CandidatePages/ApplicationForm/section5.html', title='Application Form (Documents)')
 
 
 # ------------ Blueprint Registration --------------

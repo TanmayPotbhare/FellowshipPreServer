@@ -1,0 +1,99 @@
+{% extends 'CandidatePages/layout/layout.html' %}
+{% block content %}
+
+<!-- Table Product -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-default">
+
+          <div class="card-header justify-content-center">
+                <!-- Center Content -->
+                <div class="text-center">
+                    <div class="profile-avata">
+                        {% for row in records %}
+                            {% set fullname = row['first_name'] + ' ' + row['middle_name'] + ' ' + row['last_name'] %}
+                              {% if row['applicant_photo'] %}
+                                  <img class="rounded-circle" src="{{ row['applicant_photo'] }}" alt="Avatar Image" style="height: 120px;width: 120px;">
+                              {% else %}
+                                  <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
+                              {% endif %}
+                              <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
+                              <span class="d-block">{{ row['email'] }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+          </div>
+          <div class="card-footer card-profile-footer text-center">
+                <h5 class="text-dark fw-bold">Upload Assessment Report</h5>
+          </div>
+          <div class="card-body">
+            <div class="applicant-cards">
+                {% for row in records %}
+                  <h6 class="mb-3">Application Submitted Date: <span class="text-muted">{{ row['application_date'] }}</span></h6>
+                {% endfor %}
+                <div class="card mb-3">
+                    <div class="card-body d-flex flex-column align-items-start">
+                        <div class="col-md-12">
+                            {% for row in records %}
+                                {% set assessment_report = row['assessment_report'] %}
+                                {% set assessment_date = row['assessment_report_date'] %}
+
+                                {% if assessment_report and assessment_date %}
+                                    <div class="row mt-5">
+                                        <div class="col-md-3">
+                                            <label>Assessment Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span>{{ assessment_date }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-3">
+                                            <label>Assessment Report</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span>
+                                                <a href="{{ assessment_report }}" target="_blank"
+                                                   class="btn btn-outline-primary">View Report</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <form action="#" method="POST">
+                                        <div class="row mt-5">
+                                            <div class="col-md-3">
+                                                <label>Assessment Date</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="date" name="age" id="joining_report" class="form-control" value=""
+                                                       placeholder="Enter your Date of Birth">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-md-3">
+                                                <label>Assessment Report</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="file" name="age" id="age" class="form-control" value=""
+                                                       placeholder="Enter your Date of Birth">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary btn-sm mt-3">Submit Joining Report</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat for more applicants -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

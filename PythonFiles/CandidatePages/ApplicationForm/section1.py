@@ -1,6 +1,8 @@
+import requests
+
 from Classes.caste import casteController
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
-from flask import Blueprint, render_template, session, request, redirect, url_for, flash, make_response
+from flask import Blueprint, render_template, session, request, redirect, url_for, flash, make_response, jsonify
 from PythonFiles.CandidatePages.document_paths import save_applicant_photo
 
 
@@ -17,6 +19,57 @@ def section1_auth(app):
 
     @section1_blueprint.route('/section1', methods=['GET', 'POST'])
     def section1():
+        if not session.get('logged_in_from_login'):
+            # Redirect to the admin login page if the user is not logged in
+            return redirect(url_for('login_signup.login'))
+
+        email = session['email']
+
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
+
+        # Check if a record already exists for this user
+        cursor.execute("SELECT applicant_photo, first_name, final_approval,"
+                       "middle_name, last_name, mobile_number, email, date_of_birth, gender, age, caste, your_caste, subcaste,"
+                       "pvtg, pvtg_caste, marital_status, add_1, add_2, pincode, village, taluka, district, state, city"
+                       " FROM application_page WHERE email = %s", (email,))
+        record = cursor.fetchone()
+        print(record)
+        if record['final_approval'] == 'accepted':
+            finally_approved = 'approved'
+        else:
+            finally_approved = 'pending'
+
+        if record:
+            user = record['first_name'] + ' ' + record['last_name']
+            photo = record['applicant_photo']
+        else:
+            user = "Admin"
+            photo = '/static/assets/img/default_user.png'
+
+        caste_class = casteController(host)
+        all_caste = caste_class.get_all_caste_details()
+        print(all_caste)
+        print('I am here')
+        return render_template('CandidatePages/section1.html', record=record, all_caste=all_caste,
+                               finally_approved=finally_approved, user=user, photo=photo,
+                               title='Application Form (Personal Details)')
+
+    @section1_blueprint.route('/get_pincode_data', methods=['GET'])
+    def get_pincode_data():
+        pincode_data = request.args.get('pincode')
+        api_url = f'https://api.worldpostallocations.com/pincode?postalcode={pincode_data}&countrycode=IN'
+        try:
+            response = requests.get(api_url)
+            response.raise_for_status()  # Raise an exception for bad responses (4xx or 5xx)
+            data = response.json()
+            return jsonify(data)
+        except requests.exceptions.RequestException as e:
+            return jsonify({'error': str(e)}), 500
+
+    @section1_blueprint.route('/section1_submit', methods=['GET', 'POST'])
+    def section1_submit():
         if not session.get('logged_in_from_login'):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
@@ -48,7 +101,7 @@ def section1_auth(app):
 
         caste_class = casteController(host)
         all_caste = caste_class.get_all_caste_details()
-
+        print(all_caste)
         # Initialize an empty dictionary if no record is found
         if record is None:
             record = {}

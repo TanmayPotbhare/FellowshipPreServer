@@ -24,30 +24,33 @@
                     <ul  class="collapse"  id="email"
                       data-parent="#sidebar-menu">
                       <div class="sub-menu">
+                            {% set paths = ['section1', 'section2', 'section3', 'section4', 'section5'] %}
+                            {% if request.path in paths %}
+                            {% else %}
+                                <li>
+                                  <a class="sidenav-item-link" href="/candidate_dashboard">
+                                    <span class="nav-text">View Profile</span>
+                                  </a>
+                                </li>
 
-                            <li>
-                              <a class="sidenav-item-link" href="/candidate_dashboard">
-                                <span class="nav-text">View Profile</span>
-                              </a>
-                            </li>
+                                <li>
+                                  <a class="sidenav-item-link" href="/adhaar_seeding">
+                                    <span class="nav-text">Aadhaar Seeding</span>
+                                  </a>
+                                </li>
 
-                            <li>
-                              <a class="sidenav-item-link" href="/adhaar_seeding">
-                                <span class="nav-text">Aadhaar Seeding</span>
-                              </a>
-                            </li>
+                                <li>
+                                  <a class="sidenav-item-link" href="/manage_profile">
+                                    <span class="nav-text">Manage Profile</span>
+                                  </a>
+                                </li>
 
-                            <li>
-                              <a class="sidenav-item-link" href="email-details.html">
-                                <span class="nav-text">Manage Profile</span>
-                              </a>
-                            </li>
-
-                            <li>
-                              <a class="sidenav-item-link" href="email-details.html">
-                                <span class="nav-text">Raise Issue</span>
-                              </a>
-                            </li>
+                                <li>
+                                  <a class="sidenav-item-link" href="email-details.html">
+                                    <span class="nav-text">Raise Issue</span>
+                                  </a>
+                                </li>
+                            {% endif %}
 
                       </div>
                     </ul>
@@ -79,14 +82,14 @@
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="chat.html">
+                        <a class="sidenav-item-link" href="/joining_report">
                           <i class="mdi mdi-clipboard-outline"></i>
                           <span class="nav-text">Joining Report</span>
                         </a>
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="contacts.html">
+                        <a class="sidenav-item-link" href="/undertaking_report">
                           <i class="mdi mdi-format-underline"></i>
                           <span class="nav-text">Undertaking Report</span>
                         </a>
@@ -114,7 +117,7 @@
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="calendar.html">
+                        <a class="sidenav-item-link" href="/assessment_report">
                           <i class="mdi mdi-file-download-outline"></i>
                           <span class="nav-text">Assessment Report</span>
                         </a>
@@ -125,35 +128,35 @@
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="calendar.html">
+                        <a class="sidenav-item-link" href="/withdraw_fellowship">
                           <i class="mdi mdi-sword-cross"></i>
                           <span class="nav-text">Withdraw Fellowship</span>
                         </a>
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="calendar.html">
+                        <a class="sidenav-item-link" href="/change_guide">
                           <i class="mdi mdi-teach"></i>
                           <span class="nav-text">Change Guide</span>
                         </a>
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="calendar.html">
+                        <a class="sidenav-item-link" href="/change_center">
                           <i class="mdi mdi-format-align-center"></i>
                           <span class="nav-text">Change Research Center</span>
                         </a>
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="calendar.html">
+                        <a class="sidenav-item-link" href="/upload_phd">
                           <i class="mdi mdi-trophy-award"></i>
                           <span class="nav-text">Upload P.H.D Award</span>
                         </a>
                       </li>
 
                       <li>
-                        <a class="sidenav-item-link" href="calendar.html">
+                        <a class="sidenav-item-link" href="/upload_thesis">
                           <i class="mdi mdi-cloud-upload"></i>
                           <span class="nav-text">Upload Thesis</span>
                         </a>
