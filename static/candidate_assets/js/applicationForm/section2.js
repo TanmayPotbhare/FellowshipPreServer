@@ -69,15 +69,15 @@ document.getElementById('phd_registration_date').addEventListener('change', func
 
 // ---------------- Show and Hide Field on d-none ----------------------------
 // This function is for PVTG Caste
-function toggleAdditionalField(select) {
-    const additionalField = document.getElementById('additionalField');
-    const inputField = document.getElementById('other_faculty');
+function toggleAdditionalFieldFaculty(select) {
+    const additionallField = document.getElementById('additionalField');
+    const inputtField = document.getElementById('other_faculty');
 
     if (select.value === 'Other') {
-        additionalField.classList.remove('d-none'); // Show field
+        additionallField.classList.remove('d-none'); // Show field
     } else {
         additionalField.classList.add('d-none'); // Hide field
-        inputField.value = ''; // Clear input field
+        inputtField.value = ''; // Clear input field
     }
 }
 // ----------------------------------------------------------------

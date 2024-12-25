@@ -1,5 +1,4 @@
 import random
-import random
 import bcrypt
 import mysql.connector
 import requests
@@ -54,8 +53,8 @@ def login_auth(app, mail):
                 print(email)
                 # print(password)
 
-                if email == 'tupotbhare@gmail.com':
-                    return redirect(url_for('section1.section1'))  # Added return
+                # if email == 'tupotbhare@gmail.com':
+                #     return redirect(url_for('section1.section1'))  # Added return
 
                 # Validate that both email and password are provided
                 if not email or not password:

@@ -198,7 +198,7 @@ $('#village').on('change', function () {
 
 
 // -------------------- Auto populate communciation address on Tick --------------
-document.getElementById('flexCheckIndeterminate').addEventListener('change', function () {
+    document.getElementById('flexCheckIndeterminate').addEventListener('change', function () {
         // Permanent Address Fields
         const permanentAddress = document.getElementById('add_1');
         const permanentPincode = document.getElementById('pincode');
@@ -219,7 +219,7 @@ document.getElementById('flexCheckIndeterminate').addEventListener('change', fun
             // Copy values from Permanent to Communication Address
             communicationAddress.value = permanentAddress.value;
             communicationPincode.value = permanentPincode.value;
-            communicationVillage.value = permanentVillage.value;
+            communicationVillage.value = permanentVillage.options[permanentVillage.selectedIndex].value;
             communicationTaluka.value = permanentTaluka.value;
             communicationDistrict.value = permanentDistrict.value;
             communicationState.value = permanentState.value;
@@ -267,12 +267,42 @@ document.getElementById('flexCheckIndeterminate').addEventListener('change', fun
         }
     });
 
-    document.getElementById('pincode').addEventListener('input', function () {
+    document.getElementById('village').addEventListener('input', function () {
         const addressCheckbox = document.getElementById('flexCheckIndeterminate');
         const communicationVillage = document.getElementById('comm_village');
         if (addressCheckbox.checked) {
             communicationVillage.value = this.value;
         }
     });
+
+
+//    $(document).ready(function () {
+//        const $aadhaarField = $("#adhaar_number");
+//        const $form = $aadhaarField.closest("form");
+//        const $verifyButton = $(".btn-primary");
+//
+//        // Disable all inputs except Aadhaar initially
+//        function disableAllInputsExceptAadhaar() {
+//            $form.find("input, button, select, textarea").not($aadhaarField).not($verifyButton).prop("disabled", true);
+//        }
+//
+//        // Enable all inputs if Aadhaar is valid
+//        function enableAllInputs() {
+//            $form.find("input, button, select, textarea").not($verifyButton).prop("disabled", false);
+//        }
+//
+//        // Check Aadhaar field on keyup
+//        $aadhaarField.on("keyup", function () {
+//            const aadhaarValue = $aadhaarField.val();
+//            if (aadhaarValue.length === 12 && /^[0-9]{12}$/.test(aadhaarValue)) {
+//                enableAllInputs();
+//            } else {
+//                disableAllInputsExceptAadhaar();
+//            }
+//        });
+//
+//        // Initially disable inputs until Aadhaar is valid
+//        disableAllInputsExceptAadhaar();
+//    });
 
 // -------------------- END Auto populate communciation address on Tick --------------

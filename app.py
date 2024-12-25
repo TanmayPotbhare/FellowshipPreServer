@@ -62,12 +62,12 @@ def set_session(value):
     return redirect(request.referrer)
 
 
-@app.route('/section1')
-def test_form():
-    caste_class = casteController(host)
-    all_caste = caste_class.get_all_caste_details()
-    return render_template('CandidatePages/ApplicationForm/section1.html', title='Application Form (Personal Details)',
-                           all_caste=all_caste)
+# @app.route('/section1')
+# def test_form():
+#     caste_class = casteController(host)
+#     all_caste = caste_class.get_all_caste_details()
+#     return render_template('CandidatePages/ApplicationForm/section1.html', title='Application Form (Personal Details)',
+#                            all_caste=all_caste)
 
 
 @app.route('/section2')

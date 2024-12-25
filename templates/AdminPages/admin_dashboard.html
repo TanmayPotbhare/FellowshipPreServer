@@ -40,7 +40,7 @@
       </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+      <a href="/completed_form" class="text-decoration-none" target="_blank">
           <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">
               <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
@@ -52,7 +52,7 @@
       </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+      <a href="/incompleted_form" class="text-decoration-none" target="_blank">
           <div class="card bg-gradient-info card-img-holder text-white">
             <div class="card-body">
               <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
@@ -64,7 +64,7 @@
       </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+      <a href="/total_accepted_report" class="text-decoration-none" target="_blank">
           <div class="card bg-gradient-success card-img-holder text-white">
             <div class="card-body">
               <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
@@ -76,7 +76,7 @@
       </a>
     </div>
     <div class="col-md-2 stretch-card grid-margin">
-      <a href="/total_application_report" class="text-decoration-none" target="_blank">
+      <a href="/total_rejected_report" class="text-decoration-none" target="_blank">
           <div class="card bg-gradient-warning card-img-holder text-white">
             <div class="card-body">
               <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
@@ -228,7 +228,7 @@
           <!-- To display the count cards-->
           <div class="row mt-4 justify-content-center">
               <div class="col-md-4 stretch-card grid-margin">
-                  <a href="#" class="text-decoration-none" target="_blank">
+                  <a href="/male_report" class="text-decoration-none" target="_blank">
                       <div class="card bg-gradient-info card-img-holder text-white">
                         <div class="card-body">
                           <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
@@ -240,7 +240,7 @@
                   </a>
               </div>
               <div class="col-md-4 stretch-card grid-margin">
-                  <a href="#" class="text-decoration-none" target="_blank">
+                  <a href="/female_report" class="text-decoration-none" target="_blank">
                       <div class="card bg-gradient-danger card-img-holder text-white">
                         <div class="card-body">
                           <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
@@ -341,63 +341,85 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Recent Tickets</h4>
+          <h4 class="card-title mb-2">All PVTG Applications</h4>
+          <!-- Count Boxes Section -->
+          <div class="row mb-4">
+            <div class="col-md-4">
+              <div class="card text-center bg-dark text-white">
+                <div class="card-body">
+                  <h5 class="card-title text-white">Katkari Tribe Students</h5>
+                  <h4 class="card-text text-white" id="total-applications-count">{{ counts['katkari'] }}</h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-center bg-dark text-white">
+                <div class="card-body">
+                  <h5 class="card-title text-white">Madia Tribe Students</h5>
+                  <h4 class="card-text text-white" id="accepted-applications-count">{{ counts['madia'] }}</h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-center bg-dark text-white">
+                <div class="card-body">
+                  <h5 class="card-title text-white">Kolam Tribe Students</h5>
+                  <h4 class="card-text text-white" id="rejected-applications-count">{{ counts['kolam'] }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Count Boxes Section -->
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th> Assignee </th>
-                  <th> Subject </th>
-                  <th> Status </th>
-                  <th> Last Update </th>
-                  <th> Tracking ID </th>
+                  <th>Sr. No.</th>
+                  <th> Full Name </th>
+                  <th> Application ID </th>
+                  <th> Email </th>
+                  <th> Gender </th>
+                  <th> Caste/Tribe </th>
+                  <th> Application Status </th>
+                  <th> State </th>
                 </tr>
               </thead>
               <tbody>
+              {% for row in data['pvtg_applications'] %}
                 <tr>
+                  <td>{{ loop.index }}</td>
                   <td>
-                    <img src="/static/admin_assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
+                    <img src="{{ row.applicant_photo or '/static/assets/img/default_user.png' }}" class="me-2" alt="image">
+                    {{ row.first_name or "Unknown" }} {{ row.last_name or "" }}
                   </td>
-                  <td> {{ data['male_count'] }} </td>
+                  <td>{{ row.applicant_id or "N/A" }}</td>
+                  <td>{{ row.email or "N/A" }}</td>
+                  <td>{{ row.gender or "N/A" }}</td>
                   <td>
-                    <label class="badge badge-gradient-success">DONE</label>
+                    {% if row.pvtg_caste == 'Madia' %}
+                      <label class="badge badge-gradient-success text-dark">{{ row.pvtg_caste or "N/A" }}</label>
+                    {% elif row.pvtg_caste == 'Kolam' %}
+                      <label class="badge badge-gradient-info text-dark">{{ row.pvtg_caste or "N/A" }}</label>
+                    {% elif row.pvtg_caste == 'Katkari' %}
+                      <label class="badge badge-gradient-danger text-dark">{{ row.pvtg_caste or "N/A" }}</label>
+                    {% else %}
+                      <label>N/A</label>
+                    {% endif %}
                   </td>
-                  <td> Dec 5, 2017 </td>
-                  <td> WD-12345 </td>
+                  <td>
+                    {% if row.final_approval == 'accepted' %}
+                      <label class="badge badge-gradient-success text-dark">Accepted</label>
+                    {% elif row.final_approval == 'rejected' %}
+                      <label class="badge badge-gradient-danger text-dark">Rejected</label>
+                    {% elif row.final_approval == 'pending' %}
+                      <label class="badge badge-gradient-warning text-dark">Pending</label>
+                    {% else %}
+                      <label>N/A</label>
+                    {% endif %}
+                  </td>
+                  <td>{{ row.state or "N/A" }}</td>
                 </tr>
-                <tr>
-                  <td>
-                    <img src="/static/admin_assets/images/faces/face2.jpg" class="me-2" alt="image"> Stella Johnson
-                  </td>
-                  <td> High loading time </td>
-                  <td>
-                    <label class="badge badge-gradient-warning">PROGRESS</label>
-                  </td>
-                  <td> Dec 12, 2017 </td>
-                  <td> WD-12346 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="/static/admin_assets/images/faces/face3.jpg" class="me-2" alt="image"> Marina Michel
-                  </td>
-                  <td> Website down for one week </td>
-                  <td>
-                    <label class="badge badge-gradient-info">ON HOLD</label>
-                  </td>
-                  <td> Dec 16, 2017 </td>
-                  <td> WD-12347 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="/static/admin_assets/images/faces/face4.jpg" class="me-2" alt="image"> John Doe
-                  </td>
-                  <td> Loosing control on server </td>
-                  <td>
-                    <label class="badge badge-gradient-danger">REJECTED</label>
-                  </td>
-                  <td> Dec 3, 2017 </td>
-                  <td> WD-12348 </td>
-                </tr>
+              {% endfor %}
               </tbody>
             </table>
           </div>
@@ -406,10 +428,106 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-5 grid-margin stretch-card">
+    <div class="col-md-5 grid-margin stretch-card">
       <div class="card">
-        <div class="card-body p-0 d-flex">
-          <div id="inline-datepicker" class="datepicker datepicker-custom"></div>
+        <div class="card-body">
+          <h4 class="card-title">Disability Counts: <span class="yearChange">2023 - 2024</span></h4>
+          <div class="doughnutjs-wrapper d-flex justify-content-center">
+              <div id="disability"></div>
+          </div>
+
+          <!-- <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>-->
+          <div id="trafficc-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+
+          <!-- To display the count cards-->
+          <div class="row mt-4 justify-content-center">
+              <div class="col-md-4 stretch-card grid-margin">
+                  <a href="/disabled_report" class="text-decoration-none" target="_blank">
+                      <div class="card bg-gradient-info card-img-holder text-white">
+                        <div class="card-body">
+                          <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                          <h4 class="font-weight-normal text-dark fw-bold mb-3">Disabled</h4>
+                          <h2 class="mb-3" id="disabled">{{ data['disabled_count'] }}</h2>
+                          <h6 class="text-white fw-bold">View Applications</h6>
+                        </div>
+                      </div>
+                  </a>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                  <a href="/not_disabled_report" class="text-decoration-none" target="_blank">
+                      <div class="card bg-gradient-danger card-img-holder text-white">
+                        <div class="card-body">
+                          <img src="/static/admin_assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                          <h4 class="font-weight-normal text-dark fw-bold mb-3">Not Disabled</h4>
+                          <h2 class="mb-3" id="not_disabled">{{ data['not_disabled_count'] }}</h2>
+                          <h6 class="text-white fw-bold">View Applications</h6>
+                        </div>
+                      </div>
+                  </a>
+              </div>
+
+            </div>
+          <!-- END the count cards-->
+
+          <script>
+               document.addEventListener("DOMContentLoaded", () => {
+                  const yearSelector = document.getElementById('yearSelector');
+                  let chart = null; // To store the current chart instance
+
+                  // Function to update the pie chart data based on the selected year
+                  function updateDonutChartData(data, dataYear) {
+                      // Access the correct structure of the data
+                      const disabledData = data.disabled_count[dataYear] || 0; // Default to 0 if undefined
+                      const notDisabledData = data.not_disabled_count[dataYear] || 0;
+
+                      // Clean up the existing chart instance
+                      if (chart) {
+                          chart.destroy();
+                      }
+
+                      // Render the new chart
+                      chart = new ApexCharts(document.querySelector("#disability"), {
+                          series: [disabledData, notDisabledData],
+                          chart: {
+                              type: 'donut',
+                              height: '280px'
+                          },
+                          labels: ['Disabled Students', 'Not Disabled Students'],
+                          colors: ['#77CDFF', '#FF8C9E'], // Update with Purple theme colors
+                          legend: {
+                              position: 'bottom',
+                              horizontalAlign: 'center',
+                              markers: {
+                                  radius: 12
+                              }
+                          }
+                      });
+
+                      chart.render();
+                  }
+
+                  // Fetch application data from the server
+                  fetch('/get_disabled_data')
+                      .then(response => response.json())
+                      .then(data => {
+                          // Set default year
+                          const defaultYear = '2023';
+                          yearSelector.value = defaultYear;
+
+                          // Initial rendering of the pie chart
+                          updateDonutChartData(data, defaultYear);
+
+                          // Event listener for year selector change
+                          yearSelector.addEventListener('change', function () {
+                              const selectedYear = this.value;
+                              updateDonutChartData(data, selectedYear);
+                          });
+                      })
+                      .catch(error => {
+                          console.error('Error fetching data:', error);
+                      });
+                  });
+              </script>
         </div>
       </div>
     </div>

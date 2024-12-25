@@ -9,6 +9,7 @@ from PythonFiles.AdminPages.AdminLevels.admin_level_three import adminlevelthree
 from PythonFiles.AdminPages.PaymentSheet.payment_sheet import payment_sheet_blueprint, payment_sheet_auth
 from PythonFiles.AdminPages.PaymentSheet.fellowship_details import fellowshipdetails_blueprint, fellowshipdetails_auth
 from PythonFiles.AdminPages.payment_tracking import payment_tracking_blueprint, payment_tracking_auth
+from PythonFiles.AdminPages.document_repo import document_repo_blueprint, document_repo_auth
 from PythonFiles.AdminPages.fellowship_awarded import fellowship_awarded_blueprint, fellowship_awarded_auth
 from PythonFiles.AdminPages.withdraw_applications import withdraw_application_blueprint, withdraw_application_auth
 from PythonFiles.AdminPages.sendbulkemails import bulkemails_blueprint, bulkemails_auth
@@ -55,6 +56,10 @@ def admin_blueprints(app, mail):
     # Payment Tracking Page
     payment_tracking_auth(app)
     app.register_blueprint(payment_tracking_blueprint)
+
+    # Document Repo Page
+    document_repo_auth(app)
+    app.register_blueprint(document_repo_blueprint)
 
     # Fellowship Awarded Page
     fellowship_awarded_auth(app)

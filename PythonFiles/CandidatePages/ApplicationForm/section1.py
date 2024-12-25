@@ -17,6 +17,18 @@ def section1_auth(app):
         for key, value in app_paths.items():
             app.config[key] = value
 
+    @section1_blueprint.route('/get_pincode_data', methods=['GET'])
+    def get_pincode_data():
+        pincode_data = request.args.get('pincode')
+        api_url = f'https://api.worldpostallocations.com/pincode?postalcode={pincode_data}&countrycode=IN'
+        try:
+            response = requests.get(api_url)
+            response.raise_for_status()  # Raise an exception for bad responses (4xx or 5xx)
+            data = response.json()
+            return jsonify(data)
+        except requests.exceptions.RequestException as e:
+            return jsonify({'error': str(e)}), 500
+
     @section1_blueprint.route('/section1', methods=['GET', 'POST'])
     def section1():
         if not session.get('logged_in_from_login'):
@@ -35,11 +47,11 @@ def section1_auth(app):
                        "pvtg, pvtg_caste, marital_status, add_1, add_2, pincode, village, taluka, district, state, city"
                        " FROM application_page WHERE email = %s", (email,))
         record = cursor.fetchone()
-        print(record)
-        if record['final_approval'] == 'accepted':
-            finally_approved = 'approved'
-        else:
+        # print(record)
+        if record['final_approval'] not in ['accepted', 'None', '']:
             finally_approved = 'pending'
+        else:
+            finally_approved = 'approved'
 
         if record:
             user = record['first_name'] + ' ' + record['last_name']
@@ -50,23 +62,11 @@ def section1_auth(app):
 
         caste_class = casteController(host)
         all_caste = caste_class.get_all_caste_details()
-        print(all_caste)
-        print('I am here')
+        # print(all_caste)
+        # print('I am here')
         return render_template('CandidatePages/section1.html', record=record, all_caste=all_caste,
                                finally_approved=finally_approved, user=user, photo=photo,
                                title='Application Form (Personal Details)')
-
-    @section1_blueprint.route('/get_pincode_data', methods=['GET'])
-    def get_pincode_data():
-        pincode_data = request.args.get('pincode')
-        api_url = f'https://api.worldpostallocations.com/pincode?postalcode={pincode_data}&countrycode=IN'
-        try:
-            response = requests.get(api_url)
-            response.raise_for_status()  # Raise an exception for bad responses (4xx or 5xx)
-            data = response.json()
-            return jsonify(data)
-        except requests.exceptions.RequestException as e:
-            return jsonify({'error': str(e)}), 500
 
     @section1_blueprint.route('/section1_submit', methods=['GET', 'POST'])
     def section1_submit():

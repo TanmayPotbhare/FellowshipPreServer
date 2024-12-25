@@ -184,22 +184,22 @@
                                     <label for="caste">Caste/Tribe
                                             <span class="text-danger">*</span>
                                         </label>
-                                    <select name="caste" id="caste" class="form-control" required>
-                                        <option value="" selected>-- Select Option --</option>
-                                        {% for caste in all_caste %}
-                                            <option
-                                                data-hidden="{{ caste['caste'] }}"
-                                                value="{{ caste['caste'] }}"
-                                                {% if record %}
-                                                    {% if record.your_caste == caste['caste'] %}
-                                                        selected
+                                        <select name="caste" id="caste" class="form-control" required>
+                                            <option value="" selected>-- Select Option --</option>
+                                            {% for caste in all_caste %}
+                                                <option
+                                                    data-hidden="{{ caste['unique_number'] }}"
+                                                    value="{{ caste['caste'] }}"
+                                                    {% if record %}
+                                                        {% if record.your_caste == caste['caste'] %}
+                                                            selected
+                                                        {% endif %}
                                                     {% endif %}
-                                                {% endif %}
-                                            >
-                                            {{ caste['caste'] }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
+                                                >
+                                                {{ caste['caste'] }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
                                 </div>
                             </div>
                             <div class="col-md-4 mt-2">
@@ -365,6 +365,7 @@
                 </div>
 
                 <div class="m-0 text-center">
+                    <!-- <a href="/section1_submit" class="btn btn-primary btn-sm ms-2">Save and Next</a>-->
                     <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
                     <a href="/section2" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
                 </div>

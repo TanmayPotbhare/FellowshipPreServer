@@ -1,5 +1,6 @@
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 
+
 def total_application_count(year):
     """
     This function returns the total number of applications for a given year.
@@ -147,6 +148,102 @@ def female_applications(year):
     cursor.close()
     cnx.close()
     return result[0] if result else 0
+
+
+def disabled_applications(year):
+    """
+    This function returns the count of rejected applications for a given year.
+    :param year: Year for which the count is required.
+    :return: Count of rejected applications as an integer.
+    """
+    host = HostConfig.host
+    connect_param = ConnectParam(host)
+    cnx, cursor = connect_param.connect()
+
+    query = """
+               SELECT COUNT(*) 
+               FROM application_page 
+               WHERE phd_registration_year = %s  
+               AND disability = 'Yes'
+            """
+    cursor.execute(query, (year,))
+    result = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return result[0] if result else 0
+
+
+def notdisabled_applications(year):
+    """
+    This function returns the count of rejected applications for a given year.
+    :param year: Year for which the count is required.
+    :return: Count of rejected applications as an integer.
+    """
+    host = HostConfig.host
+    connect_param = ConnectParam(host)
+    cnx, cursor = connect_param.connect()
+
+    query = """
+               SELECT COUNT(*) 
+               FROM application_page 
+               WHERE phd_registration_year = %s  
+               AND disability = 'No'
+            """
+    cursor.execute(query, (year,))
+    result = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return result[0] if result else 0
+
+
+def pvtg_applications():
+    """
+    This function returns the count of rejected applications for a given year.
+    :param year: Year for which the count is required.
+    :return: Count of rejected applications as an integer.
+    """
+    host = HostConfig.host
+    connect_param = ConnectParam(host)
+    cnx, cursor = connect_param.connect(use_dict=True)
+
+    query = """
+               SELECT *
+               FROM application_page 
+               WHERE pvtg='Yes'
+               AND pvtg_caste in ('Katkari', 'Kolam', 'Madia')
+            """
+    cursor.execute(query,)
+    result = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return result
+
+def get_individual_counts():
+    host = HostConfig.host
+    connect_param = ConnectParam(host)
+    cnx, cursor = connect_param.connect(use_dict=True)
+
+    # Query to get individual counts for each caste
+    query_katkari = "SELECT COUNT(*) as count FROM application_page WHERE pvtg='Yes' AND pvtg_caste='Katkari'"
+    query_kolam = "SELECT COUNT(*) as count FROM application_page WHERE pvtg='Yes' AND pvtg_caste='Kolam'"
+    query_madia = "SELECT COUNT(*) as count FROM application_page WHERE pvtg='Yes' AND pvtg_caste='Madia'"
+
+    # Execute queries and fetch counts
+    cursor.execute(query_katkari)
+    katkari = cursor.fetchone()['count']
+
+    cursor.execute(query_kolam)
+    kolam = cursor.fetchone()['count']
+
+    cursor.execute(query_madia)
+    madia = cursor.fetchone()['count']
+
+    cursor.close()
+    cnx.close()
+
+    return katkari, kolam, madia
+
+
 
 
 
