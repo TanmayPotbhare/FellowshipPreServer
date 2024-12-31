@@ -38,29 +38,29 @@
                                                                oninput="validateYear(this)" required>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="stream" class="form-label">Stream</label>
+                                                        <label for="stream" class="form-label">Stream<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="stream"
                                                                name="stream" value="General" disabled>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="ssc_school_name" class="form-label">School Name</label>
+                                                        <label for="ssc_school_name" class="form-label">School Name<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="ssc_school_name"
-                                                               name="ssc_school_name" oninput="validateName(this)">
+                                                               name="ssc_school_name" oninput="validateName(this)" required>
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mt-3">
                                                     <div class="col-md-4">
-                                                        <label for="ssc_attempts" class="form-label">Attempts</label>
-                                                        <input type="number" class="form-control" id="ssc_attempts"
-                                                               name="ssc_attempts" maxlength="2">
+                                                        <label for="ssc_attempts" class="form-label">Attempts<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="ssc_attempts"
+                                                               name="ssc_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="ssc_total" class="form-label">Total Marks</label>
-                                                        <input type="number" class="form-control" id="ssc_total"
+                                                        <label for="ssc_total" class="form-label">Total Marks<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="ssc_total"
                                                                name="ssc_total" maxlength="4" placeholder="Ex. 500">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="ssc_percentage" class="form-label">Percentage</label>
+                                                        <label for="ssc_percentage" class="form-label">Percentage<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="ssc_percentage"
                                                                name="ssc_percentage">
                                                     </div>
@@ -100,7 +100,7 @@
                                                     <div class="col-md-4">
                                                         <label for="hsc_attempts" class="form-label">Attempts</label>
                                                         <input type="text" class="form-control" id="hsc_attempts"
-                                                               name="hsc_attempts" maxlength="2">
+                                                               name="hsc_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="hsc_total" class="form-label">Total Marks</label>
@@ -139,7 +139,8 @@
                                                 <div class="row g-3 mt-3">
                                                     <div class="col-md-4">
                                                         <label for="grad_attempts" class="form-label">Attempts</label>
-                                                        <input type="text" class="form-control" id="grad_attempts" name="grad_attempts" maxlength="2">
+                                                        <input type="text" class="form-control" id="grad_attempts" 
+                                                        name="grad_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="grad_total" class="form-label">Total Marks</label>
@@ -176,7 +177,8 @@
                                                 <div class="row g-3 mt-3">
                                                     <div class="col-md-4">
                                                         <label for="pg_attempts" class="form-label">Attempts</label>
-                                                        <input type="text" class="form-control" id="pg_attempts" name="pg_attempts" maxlength="2">
+                                                        <input type="text" class="form-control" id="pg_attempts" 
+                                                        name="pg_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="pg_total" class="form-label">Total Marks</label>
@@ -203,7 +205,7 @@
                    <div class="row m-0">
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="have_you_qualified">Select Qualification Status
+                                <label for="have_you_qualified">Select Qualification
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="have_you_qualified" id="have_you_qualified">
