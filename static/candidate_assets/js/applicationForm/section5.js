@@ -64,8 +64,10 @@ $('.accept_pdf').on('change', function () {
 
     // Max file size is defined (250 KB)
     var maxFileSize = 250 * 1024;
+
     // English-only regex (allowing only alphabets, numbers, spaces, and specific punctuation marks)
     const englishOnlyPattern = /^[A-Za-z0-9.,'"\s\-()]*$/;
+
     // Get selected file
     var uploadFile = this.files[0];
 

@@ -43,7 +43,11 @@ function validateAccountHolderName() {
     const words = nameValue.split(/\s+/).filter(word => word);
 
     if (words.length < 3 || words.length > 3) {
-        alert("The Account Holder Name must have exactly 3 words.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Name Detected',
+            text: 'The Account Holder Name must have exactly 3 words.'
+        });
         nameInput.value = ''; // Clear the input field
         nameInput.focus();
         return false;
@@ -52,7 +56,11 @@ function validateAccountHolderName() {
     // Check for non-alphabetic characters (optional)
     const validName = /^[a-zA-Z\s]+$/.test(nameValue);
     if (!validName) {
-        alert("The Account Holder Name should only contain letters and spaces.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Langauge Detected',
+            text: 'The Account Holder Name should only contain letters and spaces.'
+        });
         nameInput.value = ''; // Clear the input field
         nameInput.focus();
         return false;

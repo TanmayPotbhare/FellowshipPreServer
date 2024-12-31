@@ -70,6 +70,13 @@ def test_form():
                            all_caste=all_caste)
 
 
+@app.route('/get_subcastes/<int:unique_number>', methods=['GET'])
+def get_subcastes(unique_number):
+    caste_class = casteController(host)
+    subcastes = caste_class.get_subcastes_by_unique_number(unique_number)
+    return jsonify({'subcastes': subcastes})
+
+
 @app.route('/section2')
 def section2():
     cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',  # --------  DATABASE CONNECTION
@@ -106,10 +113,22 @@ def section3():
     cursor.execute(" SELECT * from districts ")
     districts = cursor.fetchall()
     print(districts)
+
+    caste_class = casteController(host)
+    validity = caste_class.get_all_caste_validity_auth()
+
     cursor.close()
     cnx.close()
     return render_template('CandidatePages/ApplicationForm/section3.html', districts=districts,
-                           title='Application Form (Certificate Details)')
+                           title='Application Form (Certificate Details)', validity=validity)
+
+
+@app.route('/get_talukas/<int:district_id>', methods=['GET'])
+def get_talukas(district_id):
+    # Assuming you have a function to get talukas from the district ID
+    caste_class = casteController(host)
+    talukas = caste_class.get_taluka_from_district(district_id)
+    return jsonify({'talukas': talukas})
 
 
 @app.route('/get_ifsc_data', methods=['GET'])

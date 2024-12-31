@@ -13,7 +13,20 @@ function validateIncome() {
     // Check if income exceeds 8 Lacs (8,00,000)
     if (parseInt(incomeInput.value) > 800000) {
         // If income is more than 8 Lacs, show a popup message
-        alert("To avail the fellowship, the income should be less than 8 Lacs.");
+        Swal.fire({
+                    title: "Income Criteria Not Met",
+                    text: "To avail the fellowship, the income should be less than or equal to 8 Lacs.",
+                    icon: "error"
+                });
+        incomeInput.value = ''; // Reset the input field
+    }
+    if (parseInt(incomeInput.value) <= 0) {
+        // If income is more than 8 Lacs, show a popup message
+        Swal.fire({
+                    title: "Income Criteria Not Met",
+                    text: "To avail the fellowship, the income should be less than or equal to 8 Lacs.",
+                    icon: "error"
+                });
         incomeInput.value = ''; // Reset the input field
     }
 }
@@ -73,5 +86,155 @@ function validateValidityCertificateNumber() {
     if (validityCertificateInput.value.length > 20){
         validityCertificateInput.value = validityCertificateInput.value.slice(0, 20);
     }
-
 }
+
+
+document.getElementById('income_issuing_district').addEventListener('change', function() {
+    const districtId = this.selectedOptions[0].getAttribute('data-hidden');
+    fetch(`/get_talukas/${districtId}`)
+        .then(response => response.json())
+        .then(data => {
+            const talukaSelect = document.getElementById('income_issuing_taluka');
+            talukaSelect.innerHTML = '<option value="">-- Select Taluka --</option>'; // Reset taluka dropdown
+            data.talukas.forEach(taluka => {
+                const option = document.createElement('option');
+                option.value = taluka;
+                option.textContent = taluka;
+                talukaSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching talukas:', error));
+});
+
+
+document.getElementById('domicile_issuing_district').addEventListener('change', function() {
+    const districtId = this.selectedOptions[0].getAttribute('data-hidden');
+    fetch(`/get_talukas/${districtId}`)
+        .then(response => response.json())
+        .then(data => {
+            const talukaSelect = document.getElementById('domicile_issuing_taluka');
+            talukaSelect.innerHTML = '<option value="">-- Select Taluka --</option>'; // Reset taluka dropdown
+            data.talukas.forEach(taluka => {
+                const option = document.createElement('option');
+                option.value = taluka;
+                option.textContent = taluka;
+                talukaSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching talukas:', error));
+});
+
+
+document.getElementById('issuing_district').addEventListener('change', function() {
+    const districtId = this.selectedOptions[0].getAttribute('data-hidden');
+    fetch(`/get_talukas/${districtId}`)
+        .then(response => response.json())
+        .then(data => {
+            const talukaSelect = document.getElementById('caste_issuing_taluka');
+            talukaSelect.innerHTML = '<option value="">-- Select Taluka --</option>'; // Reset taluka dropdown
+            data.talukas.forEach(taluka => {
+                const option = document.createElement('option');
+                option.value = taluka;
+                option.textContent = taluka;
+                talukaSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching talukas:', error));
+});
+
+
+document.getElementById('validity_issuing_district').addEventListener('change', function() {
+    const districtId = this.selectedOptions[0].getAttribute('data-hidden');
+    fetch(`/get_talukas/${districtId}`)
+        .then(response => response.json())
+        .then(data => {
+            const talukaSelect = document.getElementById('validity_issuing_taluka');
+            talukaSelect.innerHTML = '<option value="">-- Select Taluka --</option>'; // Reset taluka dropdown
+            data.talukas.forEach(taluka => {
+                const option = document.createElement('option');
+                option.value = taluka;
+                option.textContent = taluka;
+                talukaSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching talukas:', error));
+});
+
+
+$('#domicile').on('change', function () {
+    if($(this).val() == 'Yes'){
+        $('#domicile_number').attr('disabled',false)
+        $('#domicile_issuing_authority').attr('disabled',false)
+        $('#domicile_issuing_district').attr('disabled',false)
+        $('#domicile_issuing_taluka').attr('disabled',false)
+    }else if($(this).val() == 'No'){
+        Swal.fire({
+                title: "Sorry",
+                text: "Sorry, you cannot apply to this scheme, Domicile Certificate is mandatory",
+                icon: "error"
+            });
+        $('#domicile_number').attr('disabled',true)
+        $('#domicile_issuing_authority').attr('disabled',true)
+        $('#domicile_issuing_district').attr('disabled',true)
+        $('#domicile_issuing_taluka').attr('disabled',true)
+        $('#domicile').val('')
+        $('#domicile_number').val('')
+        $('#domicile_issuing_authority').val('')
+        $('#domicile_issuing_district').val('')
+        $('#domicile_issuing_taluka').val('')
+    }
+})
+
+
+
+$('#caste_certf').on('change', function () {
+    if($(this).val() == 'Yes'){
+        $('#caste_certf_number').attr('disabled',false)
+        $('#caste_issuing_authority').attr('disabled',false)
+        $('#issuing_district').attr('disabled',false)
+        $('#caste_issuing_taluka').attr('disabled',false)
+    }else if($(this).val() == 'No'){
+        Swal.fire({
+                title: "Sorry",
+                text: "Sorry, you cannot apply to this scheme, Caste/Tribe Certificate is mandatory",
+                icon: "error"
+            });
+        $('#caste_certf_number').attr('disabled',true)
+        $('#caste_issuing_authority').attr('disabled',true)
+        $('#issuing_district').attr('disabled',true)
+        $('#caste_issuing_taluka').attr('disabled',true)
+
+        $('#caste_certf').val('')
+        $('#caste_certf_number').val('')
+        $('#caste_issuing_authority').val('')
+        $('#issuing_district').val('')
+        $('#caste_issuing_taluka').val('')
+    }
+})
+
+
+
+$('#validity_certificate').on('change', function () {
+    if($(this).val() == 'Yes'){
+        $('#validity_cert_number').attr('disabled',false)
+        $('#validity_issuing_authority').attr('disabled',false)
+        $('#validity_issuing_district').attr('disabled',false)
+        $('#validity_issuing_taluka').attr('disabled',false)
+    }else if($(this).val() == 'No'){
+        Swal.fire({
+                title: "Sorry",
+                text: "Sorry, you cannot apply to this scheme, Validity Certificate is mandatory",
+                icon: "error"
+            });
+        $('#validity_cert_number').attr('disabled',true)
+        $('#validity_issuing_authority').attr('disabled',true)
+        $('#validity_issuing_district').attr('disabled',true)
+        $('#validity_issuing_taluka').attr('disabled',true)
+
+        $('#validity_certificate').val('')
+        $('#caste_certf_number').val('')
+        $('#caste_issuing_authority').val('')
+        $('#issuing_district').val('')
+        $('#caste_issuing_taluka').val('')
+    }
+})
