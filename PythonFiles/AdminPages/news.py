@@ -22,6 +22,22 @@ def news_auth(app):
         host = HostConfig.host
         connect_param = ConnectParam(host)
 
+        # Select all records after the insertion
+        cnx, cursor = connect_param.connect(use_dict=True)
+        cursor.execute("SELECT * FROM news_and_updates")
+        result = cursor.fetchall()
+        # print('result', result)
+        # Close the cursor and connection
+        cursor.close()
+        cnx.close()
+        return render_template('AdminPages/news.html', result=result)
+
+    @news_blueprint.route('/news_submit', methods=['GET', 'POST'])
+    def news_submit():
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
+
         if request.method == 'POST':
             user = request.form['user']
             title = request.form['title']
@@ -35,22 +51,12 @@ def news_auth(app):
             # Create cursor
             cnx, cursor = connect_param.connect(use_dict=True)
             cursor.execute(sql, data)
-
             # Commit the changes
             cnx.commit()
-
-            # Close the cursor
             cursor.close()
-            return render_template('Admin/news.html')
-        # Select all records after the insertion
-        cnx, cursor = connect_param.connect(use_dict=True)
-        cursor.execute("SELECT * FROM news_and_updates")
-        result = cursor.fetchall()
-        print('result', result)
-        # Close the cursor and connection
-        cursor.close()
-        cnx.close()
-        return render_template('AdminPages/news.html', result=result)
+            flash('News has been added successfully', 'success')
+            return redirect(url_for('news.news'))
+        return redirect(url_for('news.news'))
 
     def save_news(file):
         if file:

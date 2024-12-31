@@ -35,29 +35,113 @@ function validateMobileNumber(input) {
     }
     // Check if the first digit is 7, 8, or 9
     if (input.value.length > 0 && !/^[789]/.test(input.value)) {
-        alert("Mobile number should start with 7, 8, or 9");
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Number Detected',
+            text: 'Mobile Number should not start with any other digit than 7, 8 or 9.'
+        });
         input.value = ''; // Clear the input if invalid
     }
 }
 // -------------------------------------------------------
 
 
+// --------- Aadhaar Number Validation Section -------------------
+function checkAadhaarOnChange(input) {
+    // Remove any non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, '');
+
+    // Limit the input to exactly 12 digits
+    if (input.value.length > 12) {
+        input.value = input.value.slice(0, 12);
+    }
+
+    // Check if the number is exactly 12 digits and does not start with 0 or 1
+    if (input.value.length === 12 && /^[01]/.test(input.value)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Number Detected',
+            text: 'Please enter valid Adhaar Number. Adhaar Number cannot start with 0, 1 or 2.'
+        });
+        input.value = ''; // Clear the input if invalid
+    }
+
+    if (input.value.length !== 12) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Invalid Number Detected',
+            text: 'Please enter valid Adhaar Number. Adhaar Number has to be 12 digits without spaces.'
+        });
+        input.focus(); // Focus back on the input field
+    }
+
+     // Check if all digits are identical
+    if (/^(\d)\1{11}$/.test(input.value)) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Invalid Number Detected',
+            text: 'Aadhaar number cannot have all identical digits.'
+        });
+        input.value = ''; // Clear the input if all digits are identical
+        input.focus(); // Refocus on the input
+    }
+}
+// -------------------------------------------------------
+
+
 // --------- Age Count Dynamic on Change of Date of Birth on on Section 1 -------------------
-function calculateAge() {
-    const dobInput = document.getElementById('date_of_birth').value;
-    const ageField = document.getElementById('age');
+window.onload = function() {
+    // Get today's date
+    const today = new Date();
+
+    // Format the date as YYYY-MM-DD (required format for <input type="date">)
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayDate = yyyy + '-' + mm + '-' + dd;
+
+    // Set the max attribute of the date input field to today's date
+    document.getElementById('date_of_birth').setAttribute('max', todayDate);
+}
+
+function calculateAge(input) {
+    const dobInput = input.value; // Get the value from the input field
+    const ageField = document.getElementById('age'); // The field where age is displayed
+
+    // Check if the entered date is not in the future
+    const today = new Date();
+    const enteredDate = new Date(dobInput);
+
+    if (enteredDate > today) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Date',
+            text: 'Date cannot be entered which is more than todays date.'
+        });
+        input.value = ''; // Clear the input if the date is invalid
+        ageField.value = ''; // Clear the age field
+        return; // Exit the function
+    }
 
     if (dobInput) {
-        const dob = new Date(dobInput);
-        const today = new Date();
-
         // Calculate the age
-        let age = today.getFullYear() - dob.getFullYear();
-        const monthDifference = today.getMonth() - dob.getMonth();
+        let age = today.getFullYear() - enteredDate.getFullYear();
+        const monthDifference = today.getMonth() - enteredDate.getMonth();
 
         // Adjust age if the current date is before the birth date in the current year
-        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < enteredDate.getDate())) {
             age--;
+        }
+
+        if (age > 42) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Age Criteria not Met',
+                text: 'Age allowed for getting the fellowship is 42. Unfortunately, you do not match the criteria.'
+            });
+            input.value = ''; // Clear the input if the age is invalid
+            ageField.value = ''; // Clear the age field
+            return; // Exit the function
         }
 
         ageField.value = age; // Display the calculated age

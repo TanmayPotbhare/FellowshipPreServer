@@ -218,7 +218,8 @@ def pvtg_applications():
     cnx.close()
     return result
 
-def get_individual_counts():
+
+def get_individual_counts_pvtg():
     host = HostConfig.host
     connect_param = ConnectParam(host)
     cnx, cursor = connect_param.connect(use_dict=True)
@@ -242,6 +243,59 @@ def get_individual_counts():
     cnx.close()
 
     return katkari, kolam, madia
+
+
+def get_individual_counts_faculty(year):
+    host = HostConfig.host
+    connect_param = ConnectParam(host)
+    cnx, cursor = connect_param.connect(use_dict=True)
+
+    try:
+        # Query to get individual counts for each faculty
+        query_Science = """
+            SELECT COUNT(*) as count 
+            FROM application_page 
+            WHERE phd_registration_year = %s AND faculty = 'Science'
+        """
+        query_Arts = """
+            SELECT COUNT(*) as count 
+            FROM application_page 
+            WHERE phd_registration_year = %s AND faculty = 'Arts'
+        """
+        query_Commerce = """
+            SELECT COUNT(*) as count 
+            FROM application_page 
+            WHERE phd_registration_year = %s AND faculty = 'Commerce'
+        """
+        query_Other = """
+            SELECT COUNT(*) as count 
+            FROM application_page 
+            WHERE phd_registration_year = %s AND faculty = 'Other'
+        """
+
+        # Execute queries with the provided year
+        cursor.execute(query_Science, (year,))
+        science = cursor.fetchone()['count']
+
+        cursor.execute(query_Arts, (year,))
+        arts = cursor.fetchone()['count']
+
+        cursor.execute(query_Commerce, (year,))
+        commerce = cursor.fetchone()['count']
+
+        cursor.execute(query_Other, (year,))
+        other = cursor.fetchone()['count']
+
+    except Exception as e:
+        print(f"An error occurred while fetching counts: {e}")
+        science, arts, commerce, other = 0, 0, 0, 0  # Default values in case of an error
+    finally:
+        # Ensure resources are closed properly
+        cursor.close()
+        cnx.close()
+
+    return science, arts, commerce, other
+
 
 
 

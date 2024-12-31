@@ -20,7 +20,7 @@
     <div class="card-body">
         <h3 class="form-label text-center mb-4">Add News</h3>
         <!-- Horizontal Form -->
-        <form method= "POST" action="/news" enctype="multipart/form-data">
+        <form method= "POST" action="/news_submit" enctype="multipart/form-data">
                 <div class="row mb-3 ms-3">
                   <label class="col-sm-2 col-form-label p-0">Added By</label>
                   <div class="col-sm-6">
@@ -70,7 +70,7 @@
         <h3 class="form-label text-center mb-4">News & Updates</h3>
         <div class="table-responsive">
             <!-- Table with stripped rows -->
-            <table class="table table-striped">
+            <table class="table table-striped datatable">
             <thead>
                   <tr>
                     <th scope="col">ID</th>
@@ -89,7 +89,9 @@
                     <td>{{ row['title'] }} </td>
                     <td><a href="#" class="text-primary">{{ row['user'] }}</a></td>
                     <td>{{ row['subtitle'] }}</td>
-                    <td>{{ row['doc'] }}</td>
+                    <td>
+                        <a href="{{ row['doc'] }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                    </td>
                     <td>{{ row['date'] }}</td>
                     <td>{{ row['time'] }}</td>
                   </tr>

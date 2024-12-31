@@ -129,7 +129,7 @@ $('#concerned_university').on('change', function () {
 // 0-----------------------------------------------------------------
 
 // --------------------- Calculate Age on Phd Registration Year ----------------------
-function calculateAge() {
+function calculateAges() {
     // Get the hidden DOB year (e.g., (1996,))
     const dobYear = document.getElementById('dob_year').value.replace(/[^\d]/g, ''); // Strip non-numeric characters
 

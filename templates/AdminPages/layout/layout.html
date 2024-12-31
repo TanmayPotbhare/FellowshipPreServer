@@ -37,7 +37,7 @@
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       {% include 'AdminPages/layout/header.html' %}
-
+      {% include 'sweetalert.html' %}
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
 
@@ -83,7 +83,7 @@
     <!-- Manually created JS for Admin Pages -->
     <script src="/static/admin.js"></script>
     <script src="/static/admin_assets/vendors/chart.js"></script> <!-- Purple theme chart script -->
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
       new DataTable('.datatable');

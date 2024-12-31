@@ -1,10 +1,11 @@
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from openpyxl import Workbook
 from io import BytesIO
 import io
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash, jsonify, make_response
 from PythonFiles.AdminPages.Dashboard.dashboardCount_functions import *
+from PythonFiles.AdminPages.Dashboard.export_column_names import COMMON_COLUMNS, COMMON_HEADERS
 
 admin_dashboard_blueprint = Blueprint('admin_dashboard', __name__)
 
@@ -17,6 +18,9 @@ def admin_dashboard_auth(app):
         for key, value in app_paths.items():
             app.config[key] = value
 
+    # ----------------------------------------------------------------
+    # Fetching Year and different data on Admin Dashboard
+    # ----------------------------------------------------------------
     @admin_dashboard_blueprint.route('/get_year_count', methods=['GET', 'POST'])
     def get_year_count():
         """
@@ -37,6 +41,14 @@ def admin_dashboard_auth(app):
                 'disabled_count': disabled_applications(year),
                 'not_disabled_count': notdisabled_applications(year)
             }
+            science_count, arts_count, commerce_count, other_count = get_individual_counts_faculty(year)# Add faculty counts to the data
+            data['faculty_counts'] = {
+                'science': science_count,
+                'arts': arts_count,
+                'commerce': commerce_count,
+                'other': other_count
+            }
+
             return jsonify(data)
         except Exception as e:
             print(f"Error fetching year count data: {e}")
@@ -52,6 +64,25 @@ def admin_dashboard_auth(app):
         data = {
             'male_count': {year: male_applications(year) for year in range(2020, 2024)},
             'female_count': {year: female_applications(year) for year in range(2020, 2024)},
+        }
+        return jsonify(data)
+
+    @admin_dashboard_blueprint.route('/get_faculty_data', methods=['GET'])
+    def get_faculty_data():
+        """
+            This function is used for giving dynamic gender count on the change of Year on Admin Dashboard.
+            This AJAX Call is written in /templates/admin_dashboard.html file on line number 315.
+        :return:
+        """
+        years = range(2020, 2024)
+        data = {
+            year: {
+                'science': get_individual_counts_faculty(year)[0],  # Science count
+                'arts': get_individual_counts_faculty(year)[1],  # Arts count
+                'commerce': get_individual_counts_faculty(year)[2],  # Commerce count
+                'other': get_individual_counts_faculty(year)[3]  # Other count
+            }
+            for year in years
         }
         return jsonify(data)
 
@@ -96,12 +127,23 @@ def admin_dashboard_auth(app):
 
         return jsonify(district_data=district_data)
 
+    # END Fetching Year and different data on Admin Dashboard
+    # ----------------------------------------------------------------
+
+    # ----------------------------------------------------------------
+    # START Admin Dashboard Route where the functions are written in dashboardCount.py
+    # ----------------------------------------------------------------
     @admin_dashboard_blueprint.route('/admin_dashboard', methods=['GET', 'POST'])
     def admin_dashboard():
         if not session.get('logged_in'):
             # Redirect to the admin login page if the user is not logged in
             flash('Please enter Email ID and Password', 'error')
             return redirect(url_for('adminlogin.admin_login'))
+
+        user = session['user']
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
 
         year = request.args.get('year', '2023')
         # print(year)
@@ -119,10 +161,42 @@ def admin_dashboard_auth(app):
             'disabled_count': disabled_applications(year),
             'not_disabled_count': notdisabled_applications(year)
         }
-        katkari, kolam, madia = get_individual_counts()  # Use the function you created earlier
-        counts = {'katkari': katkari, 'kolam': kolam, 'madia': madia}
-        return render_template('AdminPages/admin_dashboard.html', data=data, counts=counts)
 
+        katkari, kolam, madia = get_individual_counts_pvtg()  # Use the function you created earlier
+        counts = {'katkari': katkari, 'kolam': kolam, 'madia': madia}
+
+        science, arts, commerce, other = get_individual_counts_faculty(year)  # Use the function you created earlier
+        faculty_counts = {'science': science, 'arts': arts, 'commerce': commerce, 'other': other}
+        # print(faculty_counts)
+
+        cursor.execute("SELECT * FROM admin WHERE username = %s", (user,))
+        result = cursor.fetchone()
+        print(result)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+
+        role = result['role']
+        if role == 'Admin':
+            first_name = result['first_name'] or ''
+            surname = result['surname'] or ''
+            username = first_name + ' ' + surname
+            if username in ('None', ''):
+                username = 'Admin'
+        else:
+            first_name = result['first_name']
+            surname = result['surname']
+            username = first_name + ' ' + surname
+
+        return render_template('AdminPages/admin_dashboard.html', data=data, counts=counts,
+                               faculty_counts=faculty_counts, username=username)
+
+    # END Admin Dashboard
+    # ----------------------------------------------------------------
+
+    # ----------------------------------------------------------------
+    # These are reports which consists of records which are redirected form Admin Dashboard.
+    # ----------------------------------------------------------------
     @admin_dashboard_blueprint.route('/total_application_report', methods=['GET', 'POST'])
     def total_application_report():
         """
@@ -495,6 +569,12 @@ def admin_dashboard_auth(app):
         return render_template('AdminPages/DashboardCountReports/not_disabled_report.html', result=result,
                                year=year)
 
+    # END Reports
+    # ----------------------------------------------------------------
+
+    # ----------------------------------------------------------------
+    # Common Export to Excel Function
+    # ----------------------------------------------------------------
     @admin_dashboard_blueprint.route('/export_to_excel', methods=['GET'])
     def export_to_excel():
         """
@@ -502,6 +582,7 @@ def admin_dashboard_auth(app):
             on the selected year.
             Path of AJAX Call: /static/admin.js. (Search the form_types in the JS File)
             Path of HTML can be found in the respective templates.
+            {columns_str} will be found in: PythonFiles/AdminPages/Dashboard/export_column_names.py
         """
         if not session.get('logged_in'):
             flash('Please enter Email ID and Password', 'error')
@@ -515,34 +596,36 @@ def admin_dashboard_auth(app):
         # print(year)
         form_type = request.args.get('form_type')  # Get the form type (e.g., "completed_form")
 
+        columns_str = ', '.join(COMMON_COLUMNS)
+
         # Dynamically change the SQL query based on form_type
         if form_type == "total_application_records":
-            cursor.execute("SELECT * FROM application_page WHERE phd_registration_year = %s", (year,))
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s", (year,))
         elif form_type == "completed_form_records":
-            cursor.execute("SELECT * FROM application_page WHERE phd_registration_year = %s AND form_filled='1'",
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s AND form_filled='1'",
                            (year,))
         elif form_type == "incomplete_form_records":
-            cursor.execute("SELECT * FROM application_page WHERE phd_registration_year = %s AND form_filled='0'",
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s AND form_filled='0'",
                            (year,))
         elif form_type == 'accepted_records':
-            cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year = %s AND "
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s AND "
                            "final_approval='accepted' AND form_filled=1 ",
                            (year,))
         elif form_type == 'rejected_records':
-            cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year = %s AND "
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s AND "
                            "final_approval='rejected' AND form_filled=1 ",
                            (year,))
         elif form_type == 'male_application_records':
-            cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year = %s and gender='Male' ",
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s and gender='Male' ",
                            (year,))
         elif form_type == 'female_application_records':
-            cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year = %s and gender='Female' ",
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s and gender='Female' ",
                            (year,))
         elif form_type == 'disabled_application_records':
-            cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year = %s and disability='Yes' ",
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s and disability='Yes' ",
                            (year,))
         elif form_type == 'not_disabled_application_records':
-            cursor.execute(" SELECT * FROM application_page WHERE phd_registration_year = %s and disability='No' ",
+            cursor.execute(f"SELECT {columns_str} FROM application_page WHERE phd_registration_year = %s and disability='No' ",
                            (year,))
         else:
             # Handle other form types or default case
@@ -561,12 +644,15 @@ def admin_dashboard_auth(app):
 
         # Write headers
         if data:
-            headers = list(data[0].keys())  # Get the column headers from the first row
+            # Map database column names to headers
+            headers = [COMMON_HEADERS.get(column, column) for column in
+                       data[0].keys()]  # Use COMMON_HEADERS for headers
             sheet.append(headers)  # Add headers to the first row
 
             # Write data rows
             for row_data in data:
-                sheet.append(list(row_data.values()))  # Add each row of data
+                sheet.append(
+                    [row_data.get(column, '') for column in data[0].keys()])  # Ensure data matches the header order
 
         # Save the workbook to an in-memory stream
         output = BytesIO()
@@ -578,3 +664,82 @@ def admin_dashboard_auth(app):
         response.headers['Content-Disposition'] = f'attachment; filename=export_{form_type}_{year}.xlsx'
         response.headers['Content-type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         return response
+
+    # END Common Export to Excel
+    # ----------------------------------------------------------------
+
+    # ----------------------------------------------------------------
+    # START Add, View, Update, Delete Admin Function
+    # ----------------------------------------------------------------
+    @admin_dashboard_blueprint.route('/addAdmin', methods=['GET', 'POST'])
+    def addAdmin():
+        """
+            This function is responsible for handling the dynamic exporting of application report data based
+            on the selected year.
+            Path of AJAX Call: /static/admin.js. (Search the form_types in the JS File)
+            Path of HTML can be found in the respective templates.
+            {columns_str} will be found in: PythonFiles/AdminPages/Dashboard/export_column_names.py
+        """
+
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
+
+        cursor.execute(" SELECT * FROM admin where role='Admin' ")
+        record = cursor.fetchall()
+
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return render_template('AdminPages/addAdmin.html', record=record)
+
+    @admin_dashboard_blueprint.route('/addAdmin_submit', methods=['GET', 'POST'])
+    def addAdmin_submit():
+        """
+            This function is responsible for handling the dynamic exporting of application report data based
+            on the selected year.
+            Path of AJAX Call: /static/admin.js. (Search the form_types in the JS File)
+            Path of HTML can be found in the respective templates.
+            {columns_str} will be found in: PythonFiles/AdminPages/Dashboard/export_column_names.py
+        """
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
+
+        if request.method == 'POST':
+            first_name = request.form['first_name']
+            middle_name = request.form['middle_name']
+            last_name = request.form['last_name']
+            mobile_number = request.form['mobile_number']
+            age = request.form['age']
+            dob = request.form['date_of_birth']
+            email = request.form['email']
+            password = request.form['password']
+            gender = request.form['gender']
+
+            cursor.execute("SELECT * FROM admin WHERE email = %s", (email,))
+            record = cursor.fetchone()
+
+            if record:
+                flash('Admin already exists. Please update the details if necessary.', 'info')
+                return redirect(url_for('admin_dashboard.addAdmin'))
+            else:
+                added_date = datetime.now().date()
+                added_time = datetime.now().time()
+                added_by = 'Super Admin'
+                role = 'Admin'
+
+                cursor.execute(
+                    "INSERT INTO admin (first_name, middle_name, surname, mobile_number, age, dob, email, "
+                    " username, password, gender, added_date, added_time, added_by, role) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                    (first_name, middle_name, last_name, mobile_number, age, dob, email, email, password, gender,
+                     added_date, added_time, added_by, role))
+                cnx.commit()
+
+                flash('Admin Added successfully and Mail has been sent with the credentials', 'success')
+                return redirect(url_for('admin_dashboard.addAdmin'))
+        return render_template('AdminPages/addAdmin.html')
+
+    # END Add, View, Update, Delete Admin Function
+    # ----------------------------------------------------------------

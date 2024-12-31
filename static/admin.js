@@ -82,6 +82,10 @@ $("#yearSelector").on("change", function () {
             $("#femaleCount").text(data.female_count);
             $("#disabled").text(data.disabled_count);
             $("#not_disabled").text(data.not_disabled_count);
+            $("#science").text(data.faculty_counts.science);
+            $("#arts").text(data.faculty_counts.arts);
+            $("#commerce").text(data.faculty_counts.commerce);
+            $("#other").text(data.faculty_counts.other);
 
             // Update the year in multiple places
             const yearChange = $("#yearSelector option:selected").text();
