@@ -282,111 +282,116 @@ $('#village').on('change', function () {
 
 
 // -------------------- Auto populate communciation address on Tick --------------
-    document.getElementById('flexCheckIndeterminate').addEventListener('change', function () {
-        // Permanent Address Fields
-        const permanentAddress = document.getElementById('add_1');
-        const permanentPincode = document.getElementById('pincode');
-        const permanentVillage = document.getElementById('village');
-        const permanentTaluka = document.getElementById('taluka');
-        const permanentDistrict = document.getElementById('district');
-        const permanentState = document.getElementById('state');
+document.getElementById('flexCheckIndeterminate').addEventListener('change', function () {
+    // Permanent Address Fields
+    const permanentAddress = document.getElementById('add_1');
+    const permanentPincode = document.getElementById('pincode');
+    const permanentVillage = document.getElementById('village');
+    const permanentTaluka = document.getElementById('taluka');
+    const permanentDistrict = document.getElementById('district');
+    const permanentState = document.getElementById('state');
 
-        // Communication Address Fields
-        const communicationAddress = document.getElementById('comm_add_1');
-        const communicationPincode = document.getElementById('comm_pincode');
-        const communicationVillage = document.getElementById('comm_village');
-        const communicationTaluka = document.getElementById('comm_taluka');
-        const communicationDistrict = document.getElementById('comm_district');
-        const communicationState = document.getElementById('comm_state');
+    // Communication Address Fields
+    const communicationAddress = document.getElementById('comm_add_1');
+    const communicationPincode = document.getElementById('comm_pincode');
+    const communicationVillage = document.getElementById('comm_village');
+    const communicationTaluka = document.getElementById('comm_taluka');
+    const communicationDistrict = document.getElementById('comm_district');
+    const communicationState = document.getElementById('comm_state');
 
-        if (this.checked) {
-            // Copy values from Permanent to Communication Address
-            communicationAddress.value = permanentAddress.value;
-            communicationPincode.value = permanentPincode.value;
-            communicationVillage.value = permanentVillage.options[permanentVillage.selectedIndex].value;
-            communicationTaluka.value = permanentTaluka.value;
-            communicationDistrict.value = permanentDistrict.value;
-            communicationState.value = permanentState.value;
+    if (this.checked) {
+        // Copy values from Permanent to Communication Address
+        communicationAddress.value = permanentAddress.value;
+        communicationPincode.value = permanentPincode.value;
+        // Set the selected value of Communication Village using jQuery
+        communicationVillage.options[communicationVillage.selectedIndex].text = permanentVillage.options[permanentVillage.selectedIndex].text;
+        communicationTaluka.value = permanentTaluka.value;
+        communicationDistrict.value = permanentDistrict.value;
+        communicationState.value = permanentState.value;
 
-            // Disable Communication Address Fields
-            communicationAddress.disabled = true;
-            communicationPincode.disabled = true;
-            communicationVillage.disabled = true;
-            communicationTaluka.disabled = true;
-            communicationDistrict.disabled = true;
-            communicationState.disabled = true;
-        } else {
-            // Clear and Enable Communication Address Fields
-            communicationAddress.value = '';
-            communicationPincode.value = '';
-            communicationVillage.value = '';
-            communicationTaluka.value = '';
-            communicationDistrict.value = '';
-            communicationState.value = '';
+        // Disable Communication Address Fields
+        communicationAddress.disabled = true;
+        communicationPincode.disabled = true;
+        communicationVillage.disabled = true;
+        communicationTaluka.disabled = true;
+        communicationDistrict.disabled = true;
+        communicationState.disabled = true;
+    } else {
+        // Clear and Enable Communication Address Fields
+        communicationAddress.value = '';
+        communicationPincode.value = '';
+        communicationVillage.options[communicationVillage.selectedIndex].text = '';
+        communicationTaluka.value = '';
+        communicationDistrict.value = '';
+        communicationState.value = '';
 
-            communicationAddress.disabled = false;
-            communicationPincode.disabled = false;
-            communicationVillage.disabled = false;
-            communicationTaluka.disabled = false;
-            communicationDistrict.disabled = false;
-            communicationState.disabled = false;
-        }
-    });
+        communicationAddress.disabled = false;
+        communicationPincode.disabled = false;
+        communicationVillage.disabled = false;
+        communicationTaluka.disabled = false;
+        communicationDistrict.disabled = false;
+        communicationState.disabled = false;
+    }
+});
 
-    // Optional: Real-time synchronization when Permanent Address fields change
-    document.getElementById('add_1').addEventListener('input', function () {
-        const addressCheckbox = document.getElementById('flexCheckIndeterminate');
-        const communicationAddress = document.getElementById('comm_add_1');
-        if (addressCheckbox.checked) {
-            communicationAddress.value = this.value;
-        }
-    });
+// Optional: Real-time synchronization when Permanent Address fields change
+document.getElementById('add_1').addEventListener('input', function () {
+    const addressCheckbox = document.getElementById('flexCheckIndeterminate');
+    const communicationAddress = document.getElementById('comm_add_1');
+    if (addressCheckbox.checked) {
+        communicationAddress.value = this.value;
+    }
+});
 
-    // Repeat real-time synchronization for all relevant fields (if needed)
-    document.getElementById('pincode').addEventListener('input', function () {
-        const addressCheckbox = document.getElementById('flexCheckIndeterminate');
-        const communicationPincode = document.getElementById('comm_pincode');
-        if (addressCheckbox.checked) {
-            communicationPincode.value = this.value;
-        }
-    });
+// Repeat real-time synchronization for all relevant fields (if needed)
+document.getElementById('pincode').addEventListener('input', function () {
+    const addressCheckbox = document.getElementById('flexCheckIndeterminate');
+    const communicationPincode = document.getElementById('comm_pincode');
+    if (addressCheckbox.checked) {
+        communicationPincode.value = this.value;
+    }
+});
 
-    document.getElementById('village').addEventListener('input', function () {
-        const addressCheckbox = document.getElementById('flexCheckIndeterminate');
-        const communicationVillage = document.getElementById('comm_village');
-        if (addressCheckbox.checked) {
-            communicationVillage.value = this.value;
-        }
-    });
-
-
-//    $(document).ready(function () {
-//        const $aadhaarField = $("#adhaar_number");
-//        const $form = $aadhaarField.closest("form");
-//        const $verifyButton = $(".btn-primary");
-//
-//        // Disable all inputs except Aadhaar initially
-//        function disableAllInputsExceptAadhaar() {
-//            $form.find("input, button, select, textarea").not($aadhaarField).not($verifyButton).prop("disabled", true);
-//        }
-//
-//        // Enable all inputs if Aadhaar is valid
-//        function enableAllInputs() {
-//            $form.find("input, button, select, textarea").not($verifyButton).prop("disabled", false);
-//        }
-//
-//        // Check Aadhaar field on keyup
-//        $aadhaarField.on("keyup", function () {
-//            const aadhaarValue = $aadhaarField.val();
-//            if (aadhaarValue.length === 12 && /^[0-9]{12}$/.test(aadhaarValue)) {
-//                enableAllInputs();
-//            } else {
-//                disableAllInputsExceptAadhaar();
-//            }
-//        });
-//
-//        // Initially disable inputs until Aadhaar is valid
-//        disableAllInputsExceptAadhaar();
-//    });
-
+// Real-time synchronization for dropdown (Permanent Village)
+document.getElementById('village').addEventListener('change', function () {
+    const addressCheckbox = document.getElementById('flexCheckIndeterminate');
+    const communicationVillage = document.getElementById('comm_village');
+    if (addressCheckbox.checked) {
+        communicationVillage.value = this.value; // Synchronize selected value
+    }
+});
 // -------------------- END Auto populate communciation address on Tick --------------
+
+
+// -------------------- Populate the Subcaste on Selected Caste --------------
+/*
+    This is the logic of rendering subcaste on caste.
+    Route call will be found in: /PythonFiles/CandidatePages/ApplicationForm/section1.py
+    Caste logic is in: /Classes/caste.py
+*/
+document.getElementById("caste").addEventListener("change", function () {
+    const selectedOption = this.options[this.selectedIndex];
+    const uniqueNumber = selectedOption.getAttribute("data-hidden");
+    const subcasteDropdown = document.getElementById("subcaste");
+
+    // Clear the subcaste dropdown
+    subcasteDropdown.innerHTML = '<option value="" selected>-- Select Subcaste --</option>';
+
+    if (uniqueNumber) {
+        // Fetch subcastes for the selected unique number
+        fetch(`/get_subcastes/${uniqueNumber}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.subcastes && data.subcastes.length > 0) {
+                    data.subcastes.forEach(subcaste => {
+                        const option = document.createElement("option");
+                        option.value = subcaste;
+                        option.textContent = subcaste;
+                        subcasteDropdown.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching subcastes:', error));
+    }
+});
+// -------------------- END Populate the Subcaste on Selected Caste -------------

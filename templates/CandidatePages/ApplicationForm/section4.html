@@ -23,7 +23,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="father_name" id="father_name" required
-                                       placeholder="Firstname Middlename Surname" class="form-control">
+                                       placeholder="Firstname Middlename Surname" class="form-control"
+                                       oninput="validateName(this)">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -32,7 +33,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="mother_name" id="mother_name" required
-                                       placeholder="Firstname Middlename Surname" class="form-control">
+                                       placeholder="Firstname Middlename Surname" class="form-control"
+                                       oninput="validateName(this)">
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -56,7 +58,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control" name="gov_department" id="gov_department"
-                                       placeholder="Enter Name of Government Employee">
+                                       placeholder="Enter Name of Government Employee" oninput="validateName(this)">
                             </div>
                         </div>
                          <div class="col-md-4 mt-2 d-none" id="open_gov1">
@@ -65,7 +67,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control" name="gov_position" id="gov_position"
-                                        placeholder="Enter Position in the Government">
+                                        placeholder="Enter Position in the Government" oninput="validateName(this)">
                             </div>
                         </div>
                      </div>

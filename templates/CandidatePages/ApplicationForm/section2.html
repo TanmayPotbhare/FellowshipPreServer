@@ -26,15 +26,18 @@
                                     <tbody>
                                         <!-- SSC Details -->
                                         <tr>
-                                            <td class="text-dark text-center align-middle">
+                                            <td class="text-center align-middle">
                                                 <strong>Secondary School Certificate (10th)<span class="text-danger">*</span></strong>
                                             </td>
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-md-3">
-                                                        <label for="ssc_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
+                                                        <label for="ssc_passing_year" class="form-label">Passing Year
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" class="form-control" id="ssc_passing_year"
                                                                name="ssc_passing_year" maxlength="4" minlength="4"
+                                                               placeholder="XXXX"
                                                                oninput="validateYear(this)" required>
                                                     </div>
                                                     <div class="col-md-3">
@@ -60,9 +63,15 @@
                                                                name="ssc_total" maxlength="4" placeholder="Ex. 500">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="ssc_percentage" class="form-label">Percentage<span class="text-danger">*</span></label>
+                                                        <label for="ssc_percentage" class="form-label"
+                                                               data-bs-toggle="tooltip"
+                                                               data-bs-placement="top"
+                                                               title="If the Marks are in Grades, please convert and enter Percentile">
+                                                            Percentage
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" class="form-control" id="ssc_percentage"
-                                                               name="ssc_percentage">
+                                                               name="ssc_percentage" placeholder="Enter Percentile">
                                                     </div>
                                                 </div>
                                             </td>
@@ -70,30 +79,40 @@
 
                                         <!-- HSC Details -->
                                         <tr>
-                                            <td class="text-dark text-center align-middle">
+                                            <td class="text-center align-middle">
                                                 <strong>Higher Secondary Certificate (12th) <br>OR<br> ITI Course <br>OR<br> Technical Diploma<span class="text-danger">*</span></strong>
                                             </td>
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-md-3">
-                                                        <label for="hsc_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
+                                                        <label for="hsc_passing_year" class="form-label">Passing Year
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" class="form-control" id="hsc_passing_year"
                                                                name="hsc_passing_year" maxlength="4" minlength="4"
-                                                               oninput="validateYear(this)" required>
+                                                               oninput="validateYear(this)" required
+                                                               placeholder="XXXX">
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="hsc_stream" class="form-label">Stream<span class="text-danger">*</span></label>
+                                                        <label for="hsc_stream" class="form-label">Stream
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <select id="hsc_stream" name="hsc_stream" class="form-control" required>
-                                                            <option value="" selected disabled>-- Select Stream --</option>
+                                                            <option value="" selected disabled>-- Select --</option>
                                                             <option value="Science">Science</option>
                                                             <option value="Commerce">Commerce</option>
                                                             <option value="Arts">Arts</option>
+                                                            <option value="Diploma">Diploma</option>
+                                                            <option value="ITI">ITI</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="hsc_school_name" class="form-label">School Name</label>
+                                                        <label for="hsc_school_name" class="form-label">School Name
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" class="form-control" id="hsc_school_name"
-                                                               name="hsc_school_name" oninput="validateName(this)">
+                                                               name="hsc_school_name" oninput="validateName(this)"
+                                                               placeholder="Enter School Name">
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mt-3">
@@ -103,14 +122,22 @@
                                                                name="hsc_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="hsc_total" class="form-label">Total Marks</label>
+                                                        <label for="hsc_total" class="form-label">Total Marks
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" class="form-control" id="hsc_total"
                                                                name="hsc_total" maxlength="4" placeholder="Ex. 500">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="hsc_percentage" class="form-label">Percentage</label>
+                                                        <label for="hsc_percentage" class="form-label"
+                                                               data-bs-toggle="tooltip"
+                                                               data-bs-placement="top"
+                                                               title="If the Marks are in Grades, please convert and enter Percentile">
+                                                            Percentage
+                                                            <span class="text-danger">*</span>
+                                                        </label>
                                                         <input type="text" class="form-control" id="hsc_percentage"
-                                                               name="hsc_percentage">
+                                                               name="hsc_percentage" placeholder="Enter Percentile">
                                                     </div>
                                                 </div>
                                             </td>
@@ -118,22 +145,54 @@
 
                                         <!-- Graduation Details -->
                                         <tr>
-                                            <td class="text-dark text-center align-middle">
+                                            <td class="text-center align-middle">
                                                 <strong>Graduation (Bachelor's Degree)<span class="text-danger">*</span></strong>
                                             </td>
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-md-3">
-                                                        <label for="graduation_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="graduation_passing_year" name="graduation_passing_year" maxlength="4" minlength="4" oninput="validateYear(this)" required>
+                                                        <label for="graduation_passing_year" class="form-label">
+                                                            Passing Year
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control"
+                                                               id="graduation_passing_year"
+                                                               name="graduation_passing_year" maxlength="4"
+                                                               minlength="4" oninput="validateYear(this)"
+                                                               placeholder="XXXX" required>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="grad_stream" class="form-label">Stream<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="grad_stream" name="grad_stream" oninput="validateName(this)" required>
+                                                        <label for="grad_stream" class="form-label">
+                                                            Stream
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <select class="form-control" id="grad_stream"
+                                                               name="grad_stream">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="Science">Science</option>
+                                                            <option value="Commerce">Commerce</option>
+                                                            <option value="Law">Law</option>
+                                                            <option value="Arts">Arts</option>
+                                                            <option value="Humanities">Humanities</option>
+                                                            <option value="Medical">Medical</option>
+                                                            <option value="Engineering and Tech">Engineering and Technology</option>
+                                                            <option value="Management">Management</option>
+                                                            <option value="Agriculture">Agriculture and Environmental Science</option>
+                                                            <option value="Fine Arts">Fine Arts and Performing Arts</option>
+                                                            <option value="Hospitality">Hospitality and Tourism</option>
+                                                            <option value="Vocational">Vocational</option>
+                                                        </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="graduation_school_name" class="form-label">College / University Name<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="graduation_school_name" name="graduation_school_name" oninput="validateName(this)" required>
+                                                        <label for="graduation_school_name" class="form-label">
+                                                            College / University Name
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control"
+                                                               id="graduation_school_name"
+                                                               name="graduation_school_name"
+                                                               oninput="validateName(this)"
+                                                               placeholder="Enter College/University Name" required>
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mt-3">
@@ -143,12 +202,25 @@
                                                         name="grad_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="grad_total" class="form-label">Total Marks</label>
-                                                        <input type="text" class="form-control" id="grad_total" name="grad_total" maxlength="4" placeholder="Ex. 500">
+                                                        <label for="grad_total" class="form-label">
+                                                            Total Marks
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="grad_total"
+                                                               name="grad_total" maxlength="4" placeholder="Ex. 500">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="graduation_percentage" class="form-label">Percentage / CGPA</label>
-                                                        <input type="text" class="form-control" id="graduation_percentage" name="graduation_percentage">
+                                                        <label for="graduation_percentage" class="form-label"
+                                                                data-bs-toggle="tooltip"
+                                                               data-bs-placement="top"
+                                                               title="If the Marks are in Grades, please convert and enter Percentile">
+                                                            Percentage / CGPA
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control"
+                                                               id="graduation_percentage"
+                                                               name="graduation_percentage"
+                                                               placeholder="Enter Percentile">
                                                     </div>
                                                 </div>
                                             </td>
@@ -156,22 +228,36 @@
 
                                         <!-- Post Graduation Details -->
                                         <tr>
-                                            <td class="text-dark text-center align-middle">
+                                            <td class="text-center align-middle">
                                                 <strong>Post Graduation (Master's Degree)<span class="text-danger">*</span></strong>
                                             </td>
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-md-3">
-                                                        <label for="phd_passing_year" class="form-label">Passing Year<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="phd_passing_year" name="phd_passing_year" maxlength="4" minlength="4" oninput="validateYear(this)" required>
+                                                        <label for="phd_passing_year" class="form-label">
+                                                            Passing Year
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="phd_passing_year"
+                                                               name="phd_passing_year" maxlength="4" minlength="4"
+                                                               oninput="validateYear(this)" required>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="pg_stream" class="form-label">Stream<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="pg_stream" name="pg_stream" oninput="validateName(this)" required>
+                                                        <label for="pg_stream" class="form-label">
+                                                            Stream
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="pg_stream"
+                                                               name="pg_stream" oninput="validateName(this)" required>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="phd_school_name" class="form-label">University Name<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="phd_school_name" name="phd_school_name" oninput="validateName(this)" required>
+                                                        <label for="phd_school_name" class="form-label">
+                                                            University Name
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="phd_school_name"
+                                                               name="phd_school_name" oninput="validateName(this)"
+                                                               required>
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mt-3">
@@ -181,12 +267,20 @@
                                                         name="pg_attempts" oninput="validateAttempts(this)" required>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="pg_total" class="form-label">Total Marks</label>
-                                                        <input type="text" class="form-control" id="pg_total" name="pg_total" maxlength="4" placeholder="Ex. 500">
+                                                        <label for="pg_total" class="form-label">
+                                                            Total Marks
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="pg_total"
+                                                               name="pg_total" maxlength="4" placeholder="Ex. 500">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="phd_percentage" class="form-label">Percentage / CGPA</label>
-                                                        <input type="text" class="form-control" id="phd_percentage" name="phd_percentage">
+                                                        <label for="phd_percentage" class="form-label">
+                                                            Percentage / CGPA
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="phd_percentage"
+                                                               name="phd_percentage">
                                                     </div>
                                                 </div>
                                             </td>

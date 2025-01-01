@@ -56,7 +56,8 @@
                                 <select class="form-control" name="income_issuing_district" id="income_issuing_district">
                                     <option value="" selected disabled>-- Select District --</option>
                                     {% for uni in districts %}
-                                        <option value="{{ uni['district_id'] }}">
+                                        <option data-hidden="{{ uni['district_id'] }}"
+                                                value="{{ uni['district'] }}">
                                             {{ uni['district'] }}
                                         </option>
                                     {% endfor %}
@@ -99,21 +100,47 @@
                                 </label>
                                 <input type="text" name="domicile_number" id="domicile_number"
                                        placeholder="Enter Domicile Barcode Number" class="form-control"
-                                        oninput="validateDomicileCertificateNumber()">
+                                        oninput="validateDomicileCertificateNumber()" disabled>
                             </div>
                         </div>
                          <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="domicile_issuing_taluka">Issuing District
+                                <label for="domicile_issuing_authority">Domicile Issuing Authority
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="domicile_issuing_taluka" id="domicile_issuing_taluka">
+                                <select class="form-control" name="domicile_issuing_authority"
+                                        id="domicile_issuing_authority" disabled>
+                                        <option value="">-- Select Option --</option>
+                                        <option value="Sub-Divisional Officer (SDO)">Sub-Divisional Officer (SDO)</option>
+                                        <option value="Tehsildar">Tehsildar</option>
+                                </select>
+                            </div>
+                        </div>
+                         <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="domicile_issuing_district">Issuing District
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="domicile_issuing_district"
+                                        id="domicile_issuing_district" disabled>
                                         <option value="" selected disabled>-- Select District --</option>
                                     {% for uni in districts %}
-                                        <option value="{{ uni['district_id'] }}">
+                                        <option data-hidden="{{ uni['district_id'] }}"
+                                                value="{{ uni['district'] }}">
                                             {{ uni['district'] }}
                                         </option>
                                     {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                         <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="domicile_issuing_taluka">Issuing Taluka
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="domicile_issuing_taluka"
+                                        id="domicile_issuing_taluka" disabled>
+                                        <option value="">-- Select Taluka --</option>
                                 </select>
                             </div>
                         </div>
@@ -143,7 +170,7 @@
                                 </label>
                                 <input type="text" name="caste_certf_number" id="caste_certf_number"
                                        placeholder="Enter Caste Barcode Number" class="form-control"
-                                        oninput="validateCasteCertificateNumber()">
+                                        oninput="validateCasteCertificateNumber()" disabled>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -151,7 +178,8 @@
                                 <label for="caste_issuing_authority">Issuing Authority
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="caste_issuing_authority" id="caste_issuing_authority">
+                                <select class="form-control" name="caste_issuing_authority"
+                                        id="caste_issuing_authority" disabled>
                                         <option value="">-- Select Option --</option>
                                         <option value="Sub-Divisional Officer (SDO)">Sub-Divisional Officer (SDO)</option>
                                         <option value="Deputy Collector">Deputy Collector</option>
@@ -165,10 +193,12 @@
                                 <label for="issuing_district">Issuing District
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="issuing_district" id="issuing_district">
+                                <select class="form-control" name="issuing_district"
+                                        id="issuing_district" disabled>
                                         <option value="" selected disabled>-- Select District --</option>
                                     {% for uni in districts %}
-                                        <option value="{{ uni['district_id'] }}">
+                                        <option data-hidden="{{ uni['district_id'] }}"
+                                                value="{{ uni['district'] }}">
                                             {{ uni['district'] }}
                                         </option>
                                     {% endfor %}
@@ -180,7 +210,8 @@
                                 <label for="caste_issuing_taluka">Issuing Taluka
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="caste_issuing_taluka" id="caste_issuing_taluka">
+                                <select class="form-control" name="caste_issuing_taluka"
+                                        id="caste_issuing_taluka" disabled>
                                         <option value="">-- Select Taluka --</option>
                                 </select>
                             </div>
@@ -212,7 +243,8 @@
                                 </label>
                                 <input type="text" name="validity_cert_number" id="validity_cert_number"
                                        placeholder="Enter Validity Barcode Number" class="form-control"
-                                        oninput="validateValidityCertificateNumber()" minlength="20" required>
+                                        oninput="validateValidityCertificateNumber()" minlength="20" required
+                                        disabled>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -220,8 +252,15 @@
                                 <label for="validity_issuing_authority">Issuing Authority
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="validity_issuing_authority" id="validity_issuing_authority"
-                                       placeholder="Enter Validity Issuing Authority" class="form-control">
+                                <select name="validity_issuing_authority" id="validity_issuing_authority"
+                                        class="form-control" disabled>
+                                    <option value="" selected>-- Select Authority --</option>
+                                    {% for auth in validity %}
+                                        <option value="{{ auth['authority_name'] }}">
+                                            {{ auth['authority_name'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                      </div>
@@ -231,10 +270,12 @@
                                 <label for="validity_issuing_district">Issuing District
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="validity_issuing_district" id="validity_issuing_district">
+                                <select class="form-control" name="validity_issuing_district"
+                                        id="validity_issuing_district" disabled>
                                         <option value="" selected disabled>-- Select District --</option>
                                     {% for uni in districts %}
-                                        <option value="{{ uni['district_id'] }}">
+                                        <option data-hidden="{{ uni['district_id'] }}"
+                                                value="{{ uni['district'] }}">
                                             {{ uni['district'] }}
                                         </option>
                                     {% endfor %}
@@ -246,7 +287,8 @@
                                 <label for="validity_issuing_taluka">Issuing Taluka
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-control" name="validity_issuing_taluka" id="validity_issuing_taluka">
+                                <select class="form-control" name="validity_issuing_taluka"
+                                        id="validity_issuing_taluka" disabled>
                                         <option value="">-- Select Taluka --</option>
                                 </select>
                             </div>
