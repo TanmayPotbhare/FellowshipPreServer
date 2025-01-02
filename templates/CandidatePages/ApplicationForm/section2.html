@@ -48,14 +48,16 @@
                                                     <div class="col-md-6">
                                                         <label for="ssc_school_name" class="form-label">School Name<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="ssc_school_name"
-                                                               name="ssc_school_name" oninput="validateName(this)" required>
+                                                               name="ssc_school_name" oninput="validateName(this)" required
+                                                               placeholder="Enter School Name">
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mt-3">
                                                     <div class="col-md-4">
                                                         <label for="ssc_attempts" class="form-label">Attempts<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="ssc_attempts"
-                                                               name="ssc_attempts" oninput="validateAttempts(this)" required>
+                                                               name="ssc_attempts" oninput="validateAttempts(this)" required
+                                                               placeholder="Enter No. of attempts">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="ssc_total" class="form-label">Total Marks<span class="text-danger">*</span></label>
@@ -96,11 +98,10 @@
                                                                placeholder="XXXX">
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="hsc_stream" class="form-label">Stream
-                                                            <span class="text-danger">*</span>
+                                                        <label for="hsc_stream" class="form-label">Stream<span class="text-danger">*</span>
                                                         </label>
                                                         <select id="hsc_stream" name="hsc_stream" class="form-control" required>
-                                                            <option value="" selected disabled>-- Select --</option>
+                                                            <option value="" selected >-- Select --</option>
                                                             <option value="Science">Science</option>
                                                             <option value="Commerce">Commerce</option>
                                                             <option value="Arts">Arts</option>
@@ -121,7 +122,8 @@
                                                     <div class="col-md-4">
                                                         <label for="hsc_attempts" class="form-label">Attempts<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="hsc_attempts"
-                                                               name="hsc_attempts" oninput="validateAttempts(this)" required>
+                                                               name="hsc_attempts" oninput="validateAttempts(this)" required
+                                                               placeholder="Enter No. of attempts">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="hsc_total" class="form-label">Total Marks<span class="text-danger">*</span></label>
@@ -201,7 +203,8 @@
                                                     <div class="col-md-4">
                                                         <label for="grad_attempts" class="form-label">Attempts<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="grad_attempts" 
-                                                        name="grad_attempts" oninput="validateAttempts(this)" required>
+                                                        name="grad_attempts" oninput="validateAttempts(this)" required
+                                                        placeholder="Enter No. of attempts">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="grad_total" class="form-label">Total Marks<span class="text-danger">*</span></label>
@@ -241,15 +244,30 @@
                                                         </label>
                                                         <input type="text" class="form-control" id="phd_passing_year"
                                                                name="phd_passing_year" maxlength="4" minlength="4"
-                                                               oninput="validateYear(this)" required>
+                                                               placeholder="XXXX" oninput="validateYear(this)" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label for="pg_stream" class="form-label">
                                                             Stream
                                                             <span class="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" class="form-control" id="pg_stream"
-                                                               name="pg_stream" oninput="validateName(this)" required>
+                                                        <select class="form-control" id="pg_stream"
+                                                            name="pg_stream">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="Science">Science</option>
+                                                            <option value="Commerce">Commerce</option>
+                                                            <option value="Law">Law</option>
+                                                            <option value="Arts">Arts</option>
+                                                            <option value="Humanities">Humanities</option>
+                                                            <option value="Medical">Medical</option>
+                                                            <option value="Engineering and Tech">Engineering and Technology</option>
+                                                            <option value="Management">Management</option>
+                                                            <option value="Agriculture">Agriculture and Environmental Science</option>
+                                                            <option value="Fine Arts">Fine Arts and Performing Arts</option>
+                                                            <option value="Hospitality">Hospitality and Tourism</option>
+                                                            <option value="Vocational">Vocational</option>
+                                                        </select>
+                                                               
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="phd_school_name" class="form-label">
@@ -265,7 +283,8 @@
                                                     <div class="col-md-4">
                                                         <label for="pg_attempts" class="form-label">Attempts<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="pg_attempts" 
-                                                        name="pg_attempts" oninput="validateAttempts(this)" required>
+                                                        name="pg_attempts" oninput="validateAttempts(this)" required
+                                                        placeholder="Enter No. of attempts">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="pg_total" class="form-label">
@@ -395,7 +414,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select name="concerned_university" id="concerned_university" required
-                                        class="form-control">
+                                        class="form-control" onchange="toggleUniversityChange(this)">
                                     <option value="">-- Select University --</option>
                                     {% for uni in university_data %}
                                         <option value="{{ uni['affiliated_universities'] }}"
@@ -406,6 +425,19 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-md-6 mt-2 d-none" id="additionalFieldUniversity">
+                            <div class="form-group">
+                                <label for="other_university" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Please Enter English Text only.">
+                                       Other University Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input class="form-control" name="other_university" id="other_university"
+                                        oninput="validateName(this)" placeholder="Enter Your University Name">
+                            </div>
+                        </div>
+
                         <div class="col-md-6 mt-2">
                             <div class="form-group">
                                 <label for="name_of_college">Name of College
@@ -419,12 +451,13 @@
                         </div>
                          <div class="col-md-6 mt-2 d-none" id="collegeField">
                             <div class="form-group">
-                                <label for="name_of_college">Enter College Name
+                                <label for="name_of_college" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Please Enter English Text only.">Other College Name
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control" name="other_college_name"
                                         id="other_college_name" oninput="validateName(this)"
-                                        placeholder="Enter College Name">
+                                        placeholder="Enter Your College Name">
                             </div>
                         </div>
                      </div>
