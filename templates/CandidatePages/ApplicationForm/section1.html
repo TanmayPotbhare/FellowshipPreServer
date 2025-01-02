@@ -14,7 +14,7 @@
     <div class="card">
         <div class="card-body">
 
-             <form action="#" method="POST" enctype="multipart/form-data" class="personal-details-form">
+             <form action="section1_submit" method="POST" enctype="multipart/form-data" class="personal-details-form">
 
                 <h4 class="mb-4 text-center">Personal Details</h4>
 
@@ -109,7 +109,7 @@
                             </label>
                             <div class="input-group mb-3">
                               <input type="text" class="form-control" aria-label="Text input with dropdown button"
-                                    name="email" id="email" value="" disabled>
+                                    name="email" id="email" value="{{ signup_record['email'] }}" disabled>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -151,7 +151,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="category" id="category" class="form-control"
-                                        value="Scheduled Tribes" disabled>
+                                        value="Scheduled Tribes" readonly>
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -160,6 +160,7 @@
                                        title="PVTG stands for Particularly Vulnerable Tribal Groups. Select 'Yes' if applicable.">
                                     Belong to PVTG? <span class="text-danger">*</span>
                                 </label>
+                                <span class="mdi mdi-information-variant-circle-outline"></span>
                                 <select name="pvtg" id="pvtg" class="form-control" onchange="toggleAdditionalField(this)" required>
                                     <option value="" selected>-- Select Option --</option>
                                     <option value="Yes">Yes</option>
@@ -271,7 +272,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="taluka" id="taluka" class="form-control"
-                                       placeholder="Select Village" disabled>
+                                       placeholder="Select Village" readonly>
                             </div>
                         </div>
                         <div class="col-md-3 mt-2">
@@ -280,7 +281,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="district" id="district" class="form-control"
-                                        placeholder="Select Village" disabled>
+                                        placeholder="Select Village" readonly>
                             </div>
                         </div>
                         <div class="col-md-3 mt-2">
@@ -289,7 +290,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="state" id="state" class="form-control"
-                                        placeholder="Select Village" disabled>
+                                        placeholder="Select Village" readonly>
                             </div>
                         </div>
                     </div>
@@ -337,7 +338,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                             <input type="text" name="comm_taluka" id="comm_taluka" class="form-control"
-                                    placeholder="Select Village" disabled>
+                                    placeholder="Select Village" readonly>
                         </div>
                     </div>
                     <div class="col-md-3 mt-2">
@@ -346,7 +347,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                             <input type="text" name="comm_district" id="comm_district" class="form-control"
-                                    placeholder="Select Village" disabled>
+                                    placeholder="Select Village" readonly>
                         </div>
                     </div>
                     <div class="col-md-3 mt-2">
@@ -355,15 +356,14 @@
                                     <span class="text-danger">*</span>
                                 </label>
                             <input type="text" name="comm_state" id="comm_state" class="form-control"
-                                    placeholder="Select Village" disabled>
+                                    placeholder="Select Village" readonly>
                         </div>
                     </div>
                 </div>
                 </div>
 
                 <div class="m-0 text-center">
-                    <!-- <a href="/section1_submit" class="btn btn-primary btn-sm ms-2">Save and Next</a>-->
-                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
+                    <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()">Save and Next</button>
                     <a href="/section2" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
                 </div>
 

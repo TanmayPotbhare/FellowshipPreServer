@@ -53,9 +53,6 @@ def login_auth(app, mail):
                 print(email)
                 # print(password)
 
-                # if email == 'tupotbhare@gmail.com':
-                #     return redirect(url_for('section1.section1'))  # Added return
-
                 # Validate that both email and password are provided
                 if not email or not password:
                     flash('Please enter username and password.', 'error')
@@ -76,30 +73,6 @@ def login_auth(app, mail):
                 cursor.execute(sql, (email,))
                 user_result = cursor.fetchone()
 
-
-                special_case = ['valvibadal222@gmail.com', 'vishwaspadvi22@gmail.com',
-                                'sunilarunnaik2014@gmail.com', 'tadaviakash62@gmail.com']
-                aadesh_email = ['manishapardhi33@gmail.com', 'gajanang996@gmail.com', 'Test@gmail.com',
-                                'vidyashrihari4.vg@gmail.com', 'bdpatil642@gmail.com', 'niteenvasave2013@gmail.com']
-
-                # print(user['email'])
-
-                # Check for valid emails
-                if user['email'].strip().lower() in [email.lower() for email in special_case] and user_result[
-                    'formfilled_again'] == 0:
-                    if user['password '] == password:
-                        session['email'] = user['email']
-                        flash('Redirecting to form information.', 'info')
-                        print('Redirecting to section1 for', user['email'])
-                        return redirect(url_for('section1.section1'))
-                    else:
-                        flash('Invalid Password', 'error')
-                        return redirect(url_for('login_signup.login'))
-                elif user and user['email'] in aadesh_email and user_result['formfilled_again'] == 0:
-                    session['email'] = email
-                    flash('Redirecting to the accepted form for 2023.', 'info')
-                    return redirect(url_for('old_but_accepted_for_2023'))
-
                 if user:
                     user_password = user['password']
                     special_email = ['sveenashri@gmail.com']
@@ -114,6 +87,8 @@ def login_auth(app, mail):
                             session['applicant_photo'] = user_image[
                                 'applicant_photo'] if user_image else '/static/assets/img/default_user.png'
 
+                            if email == 'tupotbhare@gmail.com':
+                                return redirect(url_for('section1.section1'))
                             if is_withdrawn(email):
                                 flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                                 return redirect(url_for('login_signup.login'))
@@ -148,8 +123,9 @@ def login_auth(app, mail):
                         session['applicant_photo'] = user_image[
                             'applicant_photo'] if user_image else '/static/assets/img/default_user.png'
 
-                        if email == 'tupotbhare@gmail.com':
-                            redirect(url_for('section1.section1'))
+                        if email == 'pratikrasal808@gmail.com':
+                            session['logged_in_from_login'] = True
+                            return redirect(url_for('section1.section1'))
                         if is_withdrawn(email):
                             flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                             return redirect(url_for('login'))

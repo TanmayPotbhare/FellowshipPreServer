@@ -9,6 +9,7 @@ from PythonFiles.CandidatePages.change_guide import change_guide_blueprint, chan
 from PythonFiles.CandidatePages.change_center import change_center_blueprint, change_center_auth
 from PythonFiles.CandidatePages.upload_phd import upload_phd_blueprint, upload_phd_auth
 from PythonFiles.CandidatePages.upload_thesis import upload_thesis_blueprint, upload_thesis_auth
+from PythonFiles.CandidatePages.document_paths import documentpaths_blueprint, documentpaths_auth
 
 
 # Function to register homepage blueprints
@@ -24,6 +25,10 @@ def candidate_blueprints(app, mail):
     # Section1 Application form
     section1_auth(app)
     app.register_blueprint(section1_blueprint)
+
+    # Document Paths form
+    documentpaths_auth(app)
+    app.register_blueprint(documentpaths_blueprint)
 
     # Candidate Joining Report
     joining_report_auth(app)

@@ -310,12 +310,12 @@ document.getElementById('flexCheckIndeterminate').addEventListener('change', fun
         communicationState.value = permanentState.value;
 
         // Disable Communication Address Fields
-        communicationAddress.disabled = true;
-        communicationPincode.disabled = true;
-        communicationVillage.disabled = true;
-        communicationTaluka.disabled = true;
-        communicationDistrict.disabled = true;
-        communicationState.disabled = true;
+        communicationAddress.readOnly = true;
+        communicationPincode.readOnly = true;
+        communicationVillage.readOnly = true;
+        communicationTaluka.readOnly = true;
+        communicationDistrict.readOnly = true;
+        communicationState.readOnly = true;
     } else {
         // Clear and Enable Communication Address Fields
         communicationAddress.value = '';
@@ -325,12 +325,12 @@ document.getElementById('flexCheckIndeterminate').addEventListener('change', fun
         communicationDistrict.value = '';
         communicationState.value = '';
 
-        communicationAddress.disabled = false;
-        communicationPincode.disabled = false;
-        communicationVillage.disabled = false;
-        communicationTaluka.disabled = false;
-        communicationDistrict.disabled = false;
-        communicationState.disabled = false;
+        communicationAddress.readOnly = true;
+        communicationPincode.readOnly = true;
+        communicationVillage.readOnly = true;
+        communicationTaluka.readOnly = true;
+        communicationDistrict.readOnly = true;
+        communicationState.readOnly = true;
     }
 });
 
@@ -395,3 +395,5 @@ document.getElementById("caste").addEventListener("change", function () {
     }
 });
 // -------------------- END Populate the Subcaste on Selected Caste -------------
+
+
