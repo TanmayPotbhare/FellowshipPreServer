@@ -129,7 +129,7 @@ def login_auth(app, mail):
                         if is_withdrawn(email):
                             flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                             return redirect(url_for('login'))
-                        elif old_user(email):
+                        elif old_user(email):Horcrux@321@#
                             session['logged_in_from_login'] = True
                             return redirect(url_for('old_user_preview'))
                         elif new_applicant_incomplete_form(email):
