@@ -13,7 +13,12 @@ function validateYear(input) {
 
     // Validate against the current year
     if (input.value.length === 4 && input.value > currentYear) {
-        alert("Year cannot be greater than the current year.");
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input!",
+            text: `Passing Year cannot be greater than the Current Year.`,
+        });
+
         input.value = '';
     }
 }
@@ -30,14 +35,18 @@ document.getElementById('phd_registration_date').addEventListener('change', func
 
         // Check if the selected year exceeds the current year
         if (selectedDate.getFullYear() > currentYear) {
-            alert("Year cannot be greater than the current year.");
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Input!",
+                text: `Passing Year cannot be greater than the Current Year.`,
+            });
             this.value = ''; // Clear the input field
             // Clear dependent fields
             document.getElementById('phd_registration_day').value = '';
             document.getElementById('phd_registration_month').value = '';
             document.getElementById('phd_registration_year').value = '';
             return;
-        }
+        }2
 
         // Extract day, month, and year
         const day = selectedDate.getDate();
@@ -160,3 +169,57 @@ function calculateAges() {
     }
 }
 // ----------------------------------------------------------------
+
+// ------------- Validate Number of Attempts --------------
+// ------- Start --------
+function validateAttempts(input) {
+    // Remove any non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Limit the input to 2 digits
+        if (input.value.length > 2) {
+            input.value = input.value.slice(0, 2);
+        }     
+
+        if (input.value === '0') {
+            input.value = '';
+        }  
+    }
+// ------------------------------------------------
+
+// ------------- Validate Total Marks --------------
+// ------- Start --------
+function validateTotalMarks(input) {
+    // Remove any non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Limit the input to 4 digits
+        if (input.value.length > 4) {
+            input.value = input.value.slice(0, 4);
+        }      
+    }
+// ------------------------------------------------
+
+// ------------- Validate Percentage --------------
+// ------- Start --------
+function validatePercentage(input) {
+    // Allow only numeric characters and a single decimal point
+    input.value = input.value.replace(/[^0-9.]/g, '');
+
+    // Prevent multiple decimal points
+    if ((input.value.match(/\./g) || []).length > 1) {
+        input.value = input.value.substring(0, input.value.lastIndexOf('.'));
+    }
+
+    // Limit to three digits before the decimal point and two digits after
+    const regex = /^(\d{1,3})(\.\d{0,2})?$/;
+    if (!regex.test(input.value)) {
+        input.value = input.value.slice(0, -1);
+    }
+
+    // Ensure the value does not exceed 100.00
+    if (parseFloat(input.value) > 100) {
+        input.value = "100.00";
+    }
+}
+// ------------------------------------------------
