@@ -11,15 +11,57 @@ function validateYear(input) {
         input.value = input.value.slice(0, 4);
     }
 
-    // Validate against the current year
-    if (input.value.length === 4 && input.value > currentYear) {
-        Swal.fire({
-            icon: "error",
-            title: "Invalid Input!",
-            text: `Passing Year cannot be greater than the Current Year.`,
-        });
+    // Proceed only if the user has entered a 4-digit year
+    if (input.value.length === 4) {
+        const inputYear = parseInt(input.value);
 
-        input.value = '';
+        // Check if the year is greater than the current year
+        if (inputYear > currentYear) {
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Input!",
+                text: "Passing Year cannot be greater than the Current Year.",
+            });
+            input.value = '';  // Clear input
+            return;
+        }
+
+        // Compare with previous qualification years (only with the previous qualification)
+        const qualificationOrder = [
+            'ssc_passing_year',
+            'hsc_passing_year',
+            'graduation_passing_year',
+            'phd_passing_year',
+        ];
+
+        const inputId = input.id;
+        const inputIndex = qualificationOrder.indexOf(inputId);
+
+        // Compare only with the previous field
+        if (inputIndex > 0) {
+            const prevYearField = document.getElementById(qualificationOrder[inputIndex - 1]);
+            const prevYear = parseInt(prevYearField.value);
+
+            // If previous year is defined and greater than the current input year, show an error
+            if (!isNaN(prevYear) && prevYear > inputYear) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Invalid Year Sequence!",
+                    text: `The Passing Year for this qualification cannot be earlier than the Passing Year for the previous qualification.`,
+                });
+                input.value = '';  // Clear input
+                return;
+            }
+            else if (prevYear === inputYear) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Duplicate Passing Year!",
+                    text: `Passing Year cannot be the same for two qualifications`,
+                });
+                input.value = '';  // Clear input
+                return;
+            }
+        }
     }
 }
 // ------------------------------------------------
@@ -109,33 +151,71 @@ function toggleCollegeField(select) {
 
 // --------------------------- University Populate college names ---------------------
 $('#concerned_university').on('change', function () {
-    let university_id = $('option:selected', this).attr('data-hidden')
-    $('#name_of_college').empty()
-    $('#name_of_college').append('<option>Loading ....</option>')
+    const selectedValue = $(this).val(); // Get the selected value
+    const universityId = $('option:selected', this).attr('data-hidden'); // Get the data-hidden attribute
+
+    if (selectedValue === 'Other') {
+        // Handle the "Other" case and exit the function
+        $('#name_of_college').empty();
+        $('#name_of_college').append('<option value="Other" selected>Other</option>'); // Preselect Other
+        $('#collegeField').removeClass('d-none'); // Show the "Other College" input field
+        return; // Exit the function
+    }
+
+    // Proceed with AJAX for other universities
+    $('#name_of_college').empty();
+    $('#name_of_college').append('<option>Loading ....</option>');
     $.ajax({
         url: '/get_college_data_by_university',
         method: 'POST',
-        data: { 'u_id': university_id },
+        data: { 'u_id': universityId },
         success: function (html) {
-            $('#name_of_college').empty()
-            $('#name_of_college').append('<option>-- Select College --</option>')
-            $('#name_of_college').append('<option value="Other">Other</option>')
+            $('#name_of_college').empty();
+            $('#name_of_college').append('<option>-- Select College --</option>');
+            $('#name_of_college').append('<option value="Other">Other</option>');
             html.forEach(function (item) {
-
-                $('#name_of_college').append(`<option value="${item.college_name}">${item.college_name}</option`);
-
+                $('#name_of_college').append(`<option value="${item.college_name}">${item.college_name}</option>`);
             });
         },
         error: function () {
             Swal.fire({
                 icon: "error",
-                title: "Please Try Agian...",
+                title: "Please Try Again...",
                 text: `Please Select Correct University`,
             });
         }
-    })
-})
+    });
+});
+
 // 0-----------------------------------------------------------------
+
+// ---------------- Show and Hide Field on d-none ----------------------------
+function toggleUniversityChange(select) {
+    const additionalUniversityField = document.getElementById('additionalFieldUniversity');
+    const otherUniversityInput = document.getElementById('other_university');
+    const collegeDropdown = document.getElementById('name_of_college');
+
+    if (select.value === 'Other') {
+        // Show additional university field
+
+        additionalUniversityField.classList.remove('d-none');
+        otherUniversityInput.required = true;
+
+        // Automatically select "Other" in the college dropdown
+        collegeDropdown.value = 'Other';
+        toggleCollegeField(collegeDropdown);
+    } else {
+        // Hide additional university field
+        additionalUniversityField.classList.add('d-none');
+        otherUniversityInput.value = ''; // Clear input field
+        otherUniversityInput.required = false;
+
+        // Reset college dropdown
+        collegeDropdown.value = '';
+        toggleCollegeField(collegeDropdown);
+    }
+}
+// ----------------------------------------------------------------
 
 // --------------------- Calculate Age on Phd Registration Year ----------------------
 function calculateAges() {
