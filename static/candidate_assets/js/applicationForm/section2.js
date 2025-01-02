@@ -186,3 +186,40 @@ function validateAttempts(input) {
         }  
     }
 // ------------------------------------------------
+
+// ------------- Validate Total Marks --------------
+// ------- Start --------
+function validateTotalMarks(input) {
+    // Remove any non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Limit the input to 4 digits
+        if (input.value.length > 4) {
+            input.value = input.value.slice(0, 4);
+        }      
+    }
+// ------------------------------------------------
+
+// ------------- Validate Percentage --------------
+// ------- Start --------
+function validatePercentage(input) {
+    // Allow only numeric characters and a single decimal point
+    input.value = input.value.replace(/[^0-9.]/g, '');
+
+    // Prevent multiple decimal points
+    if ((input.value.match(/\./g) || []).length > 1) {
+        input.value = input.value.substring(0, input.value.lastIndexOf('.'));
+    }
+
+    // Limit to three digits before the decimal point and two digits after
+    const regex = /^(\d{1,3})(\.\d{0,2})?$/;
+    if (!regex.test(input.value)) {
+        input.value = input.value.slice(0, -1);
+    }
+
+    // Ensure the value does not exceed 100.00
+    if (parseFloat(input.value) > 100) {
+        input.value = "100.00";
+    }
+}
+// ------------------------------------------------
