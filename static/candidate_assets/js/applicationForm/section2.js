@@ -141,7 +141,7 @@ $('#concerned_university').on('change', function () {
 function calculateAges() {
     // Get the hidden DOB year (e.g., (1996,))
     const dobYear = document.getElementById('dob_year').value.replace(/[^\d]/g, ''); // Strip non-numeric characters
-
+    alert(dobYear);
     // Get the Ph.D. registration date entered by the user
     const phdRegDate = document.getElementById('phd_registration_date').value;
 

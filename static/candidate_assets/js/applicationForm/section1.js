@@ -108,47 +108,73 @@ function calculateAge(input) {
     const dobInput = input.value; // Get the value from the input field
     const ageField = document.getElementById('age'); // The field where age is displayed
 
-    // Check if the entered date is not in the future
-    const today = new Date();
-    const enteredDate = new Date(dobInput);
+    // Ensure the input has a complete date in the format YYYY-MM-DD
+    if (!dobInput || dobInput.length < 10) {
+        return; // Exit the function if the date is incomplete
+    }
 
-    if (enteredDate > today) {
+    // Validate the entered date
+    const enteredDate = new Date(dobInput);
+    if (isNaN(enteredDate.getTime())) {
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Date',
-            text: 'Date cannot be entered which is more than todays date.'
+            title: 'Invalid Date Format',
+            text: 'Please enter a valid date in the format YYYY-MM-DD.'
         });
         input.value = ''; // Clear the input if the date is invalid
         ageField.value = ''; // Clear the age field
         return; // Exit the function
     }
 
-    if (dobInput) {
-        // Calculate the age
-        let age = today.getFullYear() - enteredDate.getFullYear();
-        const monthDifference = today.getMonth() - enteredDate.getMonth();
-
-        // Adjust age if the current date is before the birth date in the current year
-        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < enteredDate.getDate())) {
-            age--;
-        }
-
-        if (age > 42) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Age Criteria not Met',
-                text: 'Age allowed for getting the fellowship is 42. Unfortunately, you do not match the criteria.'
-            });
-            input.value = ''; // Clear the input if the age is invalid
-            ageField.value = ''; // Clear the age field
-            return; // Exit the function
-        }
-
-        ageField.value = age; // Display the calculated age
-    } else {
-        ageField.value = ''; // Clear age field if no date is selected
+    // Check if the entered date is not in the future
+    const today = new Date();
+    if (enteredDate > today) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Date',
+            text: 'Date cannot be greater than today\'s date.'
+        });
+        input.value = ''; // Clear the input if the date is invalid
+        ageField.value = ''; // Clear the age field
+        return; // Exit the function
     }
+
+    // Calculate the age
+    let age = today.getFullYear() - enteredDate.getFullYear();
+    const monthDifference = today.getMonth() - enteredDate.getMonth();
+
+    // Adjust age if the current date is before the birth date in the current year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < enteredDate.getDate())) {
+        age--;
+    }
+
+    // Check age criteria
+    if (age > 42) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Age Criteria Not Met',
+            text: 'Age allowed for getting the fellowship is 42. Unfortunately, you do not match the criteria.'
+        });
+        input.value = ''; // Clear the input if the age is invalid
+        ageField.value = ''; // Clear the age field
+        return; // Exit the function
+    }
+
+    if (age < 15) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Age Criteria Not Met',
+            text: 'Unfortunately, you do not match the criteria.'
+        });
+        input.value = ''; // Clear the input if the age is invalid
+        ageField.value = ''; // Clear the age field
+        return; // Exit the function
+    }
+
+    ageField.value = age; // Display the calculated age
 }
+
+
 // -------------------------------------------------------
 
 // Initialize all tooltips
@@ -397,3 +423,35 @@ document.getElementById("caste").addEventListener("change", function () {
 // -------------------- END Populate the Subcaste on Selected Caste -------------
 
 
+function showAlert() {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Sections',
+        text: 'Please complete the current section before proceeding to the next.',
+        confirmButtonText: 'OK'
+    });
+}
+
+// Function to enable or disable the submit button
+function enableDisabledFields() {
+    const checkbox1 = document.getElementById("verifyDetails");
+    const checkbox2 = document.getElementById("verifyDetailsHindi");
+    const submitBtn = document.getElementById("submit");
+
+    // Enable the button if both checkboxes are checked
+    if (checkbox1.checked && checkbox2.checked) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+}
+
+// Initialize event listeners
+window.onload = function() {
+    // Add event listeners for checkbox change events
+    document.getElementById("verifyDetails").addEventListener('change', enableDisabledFields);
+    document.getElementById("verifyDetailsHindi").addEventListener('change', enableDisabledFields);
+
+    // Call function initially to check if the button should be enabled or not
+    enableDisabledFields();
+};

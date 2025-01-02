@@ -77,12 +77,12 @@ def get_subcastes(unique_number):
     return jsonify({'subcastes': subcastes})
 
 
-@app.route('/section2')
-def section2():
-    cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',  # --------  DATABASE CONNECTION
-                                  host=host,
-                                  database='ICSApplication')
-    cursor = cnx.cursor(dictionary=True)
+# @app.route('/section2')
+# def section2():
+#     cnx = mysql.connector.connect(user='root', password='A9CALcsd7lc%7ac',  # --------  DATABASE CONNECTION
+#                                   host=host,
+#                                   database='ICSApplication')
+#     cursor = cnx.cursor(dictionary=True)
     email = 'tupotbhare@gmail.com'
     university_data = universityController(host)
     university_names = university_data.get_all_university()
