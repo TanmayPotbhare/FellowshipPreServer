@@ -84,9 +84,14 @@ def section2_auth(app):
         cnx, cursor = connect_param.connect(use_dict=True)
 
         # Check if a record already exists for this user
-        cursor.execute("SELECT applicant_photo, adhaar_number, adhaar_seeding, first_name, final_approval,"
-                       "middle_name, last_name, mobile_number, email, date_of_birth, gender, age, caste, your_caste, subcaste,"
-                       "pvtg, pvtg_caste, marital_status, add_1, add_2, pincode, village, taluka, district, state, city"
+        cursor.execute("SELECT ssc_passing_year, ssc_percentage, ssc_school_name, "
+                       "hsc_passing_year, hsc_percentage, hsc_school_name, graduation_passing_year, "
+                       "graduation_percentage, graduation_school_name, phd_passing_year, phd_percentage, "
+                       "phd_school_name, have_you_qualified, phd_registration_year, "
+                       "concerned_university, department_name, topic_of_phd, name_of_guide, name_of_college, "
+                       " faculty, family_annual_income, phd_registration_date, section2"
+                       "income_certificate_number, issuing_authority, ssc_stream, ssc_attempts, ssc_total, hsc_stream, hsc_attempts,"
+                        "hsc_total,grad_stream,grad_attempts, grad_total, pg_stream, pg_attempts,pg_total, income_issuing_district "
                        " FROM application_page WHERE email = %s", (email,))
         record = cursor.fetchone()
 
@@ -95,42 +100,57 @@ def section2_auth(app):
             record = {}
 
         if request.method == 'POST':
-            photo = request.files['applicant_photo']
-            adhaar_number = request.form['adhaar_number']
-            adhaar_seeding = request.files['adhaar_seeding_bank']
-            first_name = request.form['first_name']
-            middle_name = request.form['middle_name']
-            last_name = request.form['last_name']
-            mobile_number = request.form['mobile_number']
-            email = session['email']
-            date_of_birth = request.form['date_of_birth']
-            gender = request.form['gender']
-            age = request.form['age']
-            category = request.form['category']
-            pvtg = request.form['pvtg']
-            pvtg_caste = request.form['pvtg_caste']
-            caste = request.form['caste']
-            subcaste = request.form['subcaste']
-            marital_status = request.form['marital_status']
-            add_1 = request.form['add_1']
-            pincode = request.form['pincode']
-            village = request.form['village']
-            taluka = request.form['taluka']
-            district = request.form['district']
-            state = request.form['state']
-            comm_add_1 = request.form['comm_add_1']
-            comm_pincode = request.form['comm_pincode']
-            comm_village = request.form['comm_village']
-            comm_taluka = request.form['comm_taluka']
-            comm_district = request.form['comm_district']
-            comm_state = request.form['comm_state']
-            section1 = 'filled'
+            ssc_passing_year = request.form['ssc_passing_year']
+            stream = request.form['stream']
+            ssc_school_name = request.form['ssc_school_name']
+            ssc_attempts = request.form['ssc_attempts']
+            ssc_total = request.form['ssc_total']
+            ssc_percentage = request.form['ssc_percentage']
+
+            hsc_passing_year = request.form['hsc_passing_year']
+            hsc_stream = session['hsc_stream']
+            hsc_school_name = request.form['hsc_school_name']
+            hsc_attempts = request.form['hsc_attempts']
+            hsc_total = request.form['hsc_total']
+            hsc_percentage = request.form['hsc_percentage']
+
+            graduation_passing_year = request.form['graduation_passing_year']
+            grad_stream = request.form['grad_stream']
+            graduation_school_name = request.form['graduation_school_name']
+            grad_attempts = request.form['grad_attempts']
+            grad_total = request.form['grad_total']
+            graduation_percentage = request.form['graduation_percentage']
+
+            phd_passing_year = request.form['phd_passing_year']
+            pg_stream = request.form['pg_stream']
+            phd_school_name = request.form['phd_school_name']
+            pg_attempts = request.form['pg_attempts']
+            pg_total = request.form['pg_total']
+            phd_percentage = request.form['phd_percentage']
+
+            have_you_qualified = request.form['have_you_qualified']
+            phd_registration_date = request.form['phd_registration_date']
+            fellowship_applying_year = request.form['fellowship_applying_year']
+            phd_registration_day = request.form['phd_registration_day']
+            phd_registration_month = request.form['phd_registration_month']
+            phd_registration_year = request.form['phd_registration_year']
+            phd_registration_age = request.form['phd_registration_age']
+
+            concerned_university = request.form['concerned_university']
+            other_university = request.form['other_university']
+            name_of_college = request.form['name_of_college']
+            other_college_name = request.form['other_college_name']
+            department_name = request.form['department_name']
+            topic_of_phd = request.form['topic_of_phd']
+            name_of_guide = request.form['name_of_guide']
+            faculty = request.form['faculty']
+            other_faculty = request.form['other_faculty']
+
+            section2 = 'filled'
 
             print(request.form)
 
-            # Handle file upload (applicant's photo)
-            photo_path = save_applicant_photo(photo, first_name, last_name)
-            adhaar_path = save_applicant_photo(adhaar_seeding, first_name, last_name)
+
 
             if not record:
                 # Save the form data to the database
