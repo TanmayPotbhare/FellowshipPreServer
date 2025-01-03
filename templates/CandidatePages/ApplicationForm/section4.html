@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
 
-             <form action="#" method="POST" enctype="multipart/form-data" class="personal-details-form">
+             <form action="/section4_submit" method="POST" enctype="multipart/form-data" class="personal-details-form">
 
                 <h4 class="mb-4 text-center">Parents and Bank Details</h4>
 
@@ -22,9 +22,14 @@
                                 <label for="father_name">Father's Full name
                                     <span class="text-danger">*</span>
                                 </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['father_name'] }}</span>
+                                {% else %}
                                 <input type="text" name="father_name" id="father_name" required
                                        placeholder="Firstname Middlename Surname" class="form-control"
                                        oninput="validateName(this)">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -32,9 +37,14 @@
                                 <label for="mother_name">Mother's Full name
                                     <span class="text-danger">*</span>
                                 </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['mother_name'] }}</span>
+                                {% else %}
                                 <input type="text" name="mother_name" id="mother_name" required
                                        placeholder="Firstname Middlename Surname" class="form-control"
                                        oninput="validateName(this)">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -44,12 +54,17 @@
                                     Any Government Employee in Family?
                                     <span class="text-danger">*</span>
                                 </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['work_in_government'] }}</span>
+                                {% else %}
                                 <select name="work_in_government" id="work_in_government" class="form-control"
                                         onchange="toggleGovField(this)" required>
                                     <option value="" selected>-- Select Option --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
+                                {% endif %}
                             </div>
                         </div>
                          <div class="col-md-4 mt-2 d-none" id="open_gov">
@@ -57,8 +72,13 @@
                                 <label for="gov_department">Name of Government Employee
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" class="form-control" name="gov_department" id="gov_department"
-                                       placeholder="Enter Name of Government Employee" oninput="validateName(this)">
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['gov_department'] }}</span>
+                                {% else %}
+                                    <input type="text" class="form-control" name="gov_department" id="gov_department"
+                                            placeholder="Enter Name of Government Employee" oninput="validateName(this)">
+                                {% endif %}
                             </div>
                         </div>
                          <div class="col-md-4 mt-2 d-none" id="open_gov1">
@@ -66,8 +86,13 @@
                                 <label for="gov_position">Position in Government
                                     <span class="text-danger">*</span>
                                 </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['gov_position'] }}</span>
+                                {% else %}
                                 <input type="text" class="form-control" name="gov_position" id="gov_position"
                                         placeholder="Enter Position in the Government" oninput="validateName(this)">
+                                {% endif %}
                             </div>
                         </div>
                      </div>
@@ -82,9 +107,14 @@
                                 <label for="account_number">Account Number
                                     <span class="text-danger">*</span>
                                 </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['account_number'] }}</span>
+                                {% else %}
                                 <input type="text" name="account_number" id="account_number" class="form-control"
                                         placeholder="XXXXXXXXXXXXXXXX" maxlength="20"
                                         oninput="validateAccountNumber()">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
@@ -92,9 +122,14 @@
                                 <label for="account_holder_name">Account Holder Name
                                     <span class="text-danger">*</span>
                                 </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['account_holder_name'] }}</span>
+                                {% else %}
                                 <input type="text" name="account_holder_name" id="account_holder_name"
                                        placeholder="First Middle Surname" class="form-control"
                                         onchange="validateAccountHolderName()" oninput="validateName(this)">
+                                {% endif %}
                             </div>
                         </div>
                      </div>
@@ -104,41 +139,75 @@
                                 <label for="ifsc_code">IFSC Code
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="ifsc_code" id="ifsc_code" class="form-control"
-                                        placeholder="11 digit Alphanumeric" onchange="validateIFSC()">
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['ifsc_code'] }}</span>
+                                {% else %}
+                                    <input type="text" name="ifsc_code" id="ifsc_code" class="form-control"
+                                            placeholder="11 digit Alphanumeric" onchange="validateIFSC()">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
                                 <label for="bank_name">Bank Name</label>
-                                <input type="text" name="bank_name" id="bank_name"
-                                       placeholder="Enter IFSC Code" class="form-control" disabled>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['bank_name'] }}</span>
+                                {% else %}
+                                    <input type="text" name="bank_name" id="bank_name"
+                                        placeholder="Enter IFSC Code" class="form-control" readonly>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
                                 <label for="micr">MICR Code</label>
-                                <input type="text" name="micr" id="micr"
-                                       placeholder="Enter IFSC Code" class="form-control" disabled>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['micr'] }}</span>
+                                {% else %}
+                                    <input type="text" name="micr" id="micr"
+                                        placeholder="Enter IFSC Code" class="form-control" readonly>
+                                {% endif %}
                             </div>
                         </div>
                      </div>
                  </div>
 
-                  <div class="m-0 text-center">
-                    <a href="/section3" class="btn btn-primary btn-sm ms-2">Previous</a>
-                    <a href="#" class="btn btn-primary btn-sm ms-2">Save and Next</a>
-                    <a href="/section5" class="btn btn-primary btn-sm ms-2">Next (Without Saving)</a>
-                  </div>
+                {% if record['section4'] == 'filled' %}
 
+                {% else %}
+                   <div class="form-check ms-2" style="padding:2rem;">
+                        <input class="form-check-input" type="checkbox" value="" id="verifyDetails">
+                            <label class="form-check-label" for="verifyDetails">
+                                Please verify that the details entered in the Fourth Section are correct before submitting. You will not be able to make any edits once submitted.
+                            </label>
+
+                        <input class="form-check-input" type="checkbox" value="" id="verifyDetailsHindi">
+                            <label class="form-check-label" for="verifyDetailsHindi">
+                                कृपया चौथा विभाग सबमिट करण्यापूर्वी आपली दिलेली माहिती तपासा. एकदा सबमिट केल्यानंतर तुम्ही त्यात बदल करू शकणार नाही.
+                            </label>
+                    </div>
+                {% endif %}
+
+                <div class="m-0 text-center">
+                    {% if record['section4'] == 'filled' %}
+                        <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
+                    {% else %}
+<!--                        <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()">Save and Next</button>-->
+                        {% if not record['section5']|default(None) %}
+                            <button type="submit" id="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()" disabled>Save and Next</button>
+                        {% else %}
+                            <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
 
              </form>
 
         </div>
     </div>
 </div>
-
-
-
 
 {% endblock %}

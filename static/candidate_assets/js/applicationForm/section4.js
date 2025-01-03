@@ -118,3 +118,36 @@ $('#ifsc_code').on('blur', function () {
     })
 })
 // ---------------------------------------------------------
+
+function showAlert() {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Sections',
+        text: 'Please complete the current section before proceeding to the next.',
+        confirmButtonText: 'OK'
+    });
+}
+
+// Function to enable or disable the submit button
+function enableDisabledFields() {
+    const checkbox1 = document.getElementById("verifyDetails");
+    const checkbox2 = document.getElementById("verifyDetailsHindi");
+    const submitBtn = document.getElementById("submit");
+
+    // Enable the button if both checkboxes are checked
+    if (checkbox1.checked && checkbox2.checked) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+}
+
+// Initialize event listeners
+window.onload = function() {
+    // Add event listeners for checkbox change events
+    document.getElementById("verifyDetails").addEventListener('change', enableDisabledFields);
+    document.getElementById("verifyDetailsHindi").addEventListener('change', enableDisabledFields);
+
+    // Call function initially to check if the button should be enabled or not
+    enableDisabledFields();
+};

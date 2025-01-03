@@ -126,6 +126,9 @@ def login_auth(app, mail):
                         if email == 'pratikrasal808@gmail.com':
                             session['logged_in_from_login'] = True
                             return redirect(url_for('section1.section1'))
+                        if email == 'girish.deulkar69@gmail.com':
+                            session['logged_in_from_login'] = True
+                            return redirect(url_for('section1.section1'))
                         if is_withdrawn(email):
                             flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                             return redirect(url_for('login'))
