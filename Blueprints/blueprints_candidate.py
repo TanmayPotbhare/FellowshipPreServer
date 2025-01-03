@@ -3,6 +3,7 @@ from PythonFiles.CandidatePages.manage_profile import manage_profile_blueprint, 
 
 from PythonFiles.CandidatePages.ApplicationForm.section1 import section1_blueprint, section1_auth
 from PythonFiles.CandidatePages.ApplicationForm.section2 import section2_blueprint, section2_auth
+from PythonFiles.CandidatePages.ApplicationForm.section4 import section4_blueprint, section4_auth
 
 from PythonFiles.CandidatePages.joining_report import joining_report_blueprint, joining_report_auth
 from PythonFiles.CandidatePages.undertaking_report import undertaking_report_blueprint, undertaking_report_auth
@@ -32,6 +33,10 @@ def candidate_blueprints(app, mail):
     # Section2 Application form
     section2_auth(app)
     app.register_blueprint(section2_blueprint)
+
+    # Section4 Application form
+    section4_auth(app)
+    app.register_blueprint(section4_blueprint)
 
     # Document Paths form
     documentpaths_auth(app)

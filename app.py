@@ -130,23 +130,9 @@ def get_talukas(district_id):
     talukas = caste_class.get_taluka_from_district(district_id)
     return jsonify({'talukas': talukas})
 
-
-@app.route('/get_ifsc_data', methods=['GET'])
-def get_ifsc_data():
-    ifsc = request.args.get('ifsc')
-    api_url = f'https://ifsc.razorpay.com/{ifsc}'
-    try:
-        response = requests.get(api_url)
-        response.raise_for_status()  # Raise an exception for bad responses (4xx or 5xx)
-        data = response.json()
-        return jsonify(data)
-    except requests.exceptions.RequestException as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/section4')
-def section4():
-    return render_template('CandidatePages/ApplicationForm/section4.html', title='Application Form (Parents and Bank Details)')
+# @app.route('/section4')
+# def section4():
+#     return render_template('CandidatePages/ApplicationForm/section4.html', title='Application Form (Parents and Bank Details)')
 
 
 @app.route('/section5')
