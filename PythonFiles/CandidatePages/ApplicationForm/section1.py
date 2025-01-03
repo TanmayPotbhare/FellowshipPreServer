@@ -29,6 +29,12 @@ def section1_auth(app):
         except requests.exceptions.RequestException as e:
             return jsonify({'error': str(e)}), 500
 
+    @section1_blueprint.route('/get_subcastes/<int:unique_number>', methods=['GET'])
+    def get_subcastes(unique_number):
+        caste_class = casteController(host)
+        subcastes = caste_class.get_subcastes_by_unique_number(unique_number)
+        return jsonify({'subcastes': subcastes})
+
     @section1_blueprint.route('/section1', methods=['GET', 'POST'])
     def section1():
         if not session.get('logged_in_from_login'):

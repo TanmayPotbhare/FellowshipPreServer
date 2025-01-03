@@ -30,13 +30,13 @@
         {% if record['section1'] == 'filled' and record['section2'] == 'filled' %}
             <a href="/section3" class="progress-step {% if request.path == '/section3' %}active{% endif %}"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Caste Details">
-                <span class="step-text" style="font-size:15px">Caste Details</span>
+                <span class="step-text" style="font-size:15px">Certificates</span>
             </a>
         {% else %}
             <a href="#" class="progress-step {% if request.path == '/section3' %}active{% endif %}"
                onclick="showAlert()"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Caste Details">
-                <span class="step-text" style="font-size:15px">Caste Details</span>
+                <span class="step-text" style="font-size:15px">Certificates</span>
             </a>
         {% endif %}
 
