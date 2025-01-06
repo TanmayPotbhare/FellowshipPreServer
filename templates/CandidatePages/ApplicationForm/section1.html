@@ -27,6 +27,10 @@
                             <div class="form-group">
                                 <label for="applicant_photo">Applicant Photo
                                     <span class="text-danger">*</span>
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Upload a JPG/PNG image (50KB-100KB).">
+                                        (<span class="mdi mdi-image-area text-primary">IMG</span>)
+                                    </span>
                                 </label>
                                 {% if record['section1'] == 'filled' %}
                                     <br>
@@ -52,30 +56,28 @@
                                     </label>
 
                                     <input type="text" name="adhaar_number" id="adhaar_number" class="form-control mb-2"
-                                        required maxlength="12" required
-                                        onchange="checkAadhaarOnChange(this)">
+                                        maxlength="12" onchange="checkAadhaarOnChange(this)" required>
                                     <a href="#" class="btn btn-primary btn-sm">Verify Aadhaar</a>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                {% if record['section1'] == 'filled' %}
                                     <label for="adhaar_seeding_bank">Adhaar Seeding Document
                                         <span class="text-danger">*</span>
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Upload a JPG/PNG image (50KB-100KB).">
+                                            (<span class="mdi mdi-image-area text-primary">IMG</span>)
+                                        </span>
                                     </label>
-
-                                    <br>
-                                    <img src="{{ record['adhaar_seeding_doc'] }}" alt="Adhaar Seeding Document"
-                                        style="height:100px; width:100px;">
-                                {% else %}
-                                    <label for="adhaar_seeding_bank">Upload Adhaar Seeding Doc
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="file" name="adhaar_seeding_bank" id="adhaar_seeding_bank"
-                                           class="form-control accept_img" required>
-                                {% endif %}
+                                    {% if record['section1'] == 'filled' %}
+                                        <br>
+                                        <img src="{{ record['adhaar_seeding_doc'] }}" alt="Adhaar Seeding Document"
+                                            style="height:100px; width:100px;">
+                                    {% else %}
+                                        <input type="file" name="adhaar_seeding_bank" id="adhaar_seeding_bank"
+                                            class="form-control accept_img" required>
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
@@ -96,7 +98,7 @@
                                     <span class="text-dark">{{ record['first_name'] }}</span>
                                 {% else %}
                                     <input type="text" name="first_name" id="first_name"
-                                       placeholder="Enter your First Name" class="form-control"
+                                       placeholder="Enter First Name" class="form-control"
                                        oninput="validateName(this)" maxlength="15" required>
                                 {% endif %}
                             </div>
@@ -111,7 +113,7 @@
                                     <span class="text-dark">{{ record['middle_name'] }}</span>
                                 {% else %}
                                     <input type="text" name="middle_name" id="middle_name"
-                                       placeholder="Enter your Middle Name" class="form-control"
+                                       placeholder="Enter Middle Name" class="form-control"
                                         oninput="validateName(this)" maxlength="15" required>
                                 {% endif %}
                             </div>
@@ -126,7 +128,7 @@
                                     <span class="text-dark">{{ record['last_name'] }}</span>
                                 {% else %}
                                     <input type="text" name="last_name" id="last_name"
-                                       placeholder="Enter your Surname" class="form-control"
+                                       placeholder="Enter Surname" class="form-control"
                                         oninput="validateName(this)" maxlength="15" required>
                                 {% endif %}
                             </div>
@@ -141,8 +143,8 @@
                                     <span class="text-dark">{{ record['mobile_number'] }}</span>
                                 {% else %}
                                     <input type="text" name="mobile_number" id="mobile_number"
-                                       placeholder="XXXXXXXXXX" class="form-control"
-                                        maxlength="10" oninput="validateMobileNumber(this)"
+                                       placeholder="Enter Mobile Number" class="form-control"
+                                        maxlength="10" onblur="validateMobileNumber(this)"
                                         minlength="10" required>
                                 {% endif %}
                             </div>
@@ -179,26 +181,6 @@
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="gender">Gender
-                                    <span class="text-danger">*</span>
-                                </label>
-                                {% if record['section1'] == 'filled' %}
-                                    <br>
-                                    <span class="text-dark">{{ record['gender'] }}</span>
-                                {% else %}
-                                   <select name="gender" id="gender" class="form-control" required>
-                                        <option value="" selected>-- Select Gender --</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                     <div class="row m-0">
-                        <div class="col-md-4 mt-2">
-                            <div class="form-group">
                                 <label for="age">Age
                                     <span class="text-danger">*</span>
                                 </label>
@@ -206,8 +188,26 @@
                                     <br>
                                     <span class="text-dark">{{ record['age'] }} Years</span>
                                 {% else %}
-                                   <input type="text" name="age" id="age" class="form-control"
-                                       placeholder="Enter your Date of Birth" readonly>
+                                    <input type="text" name="age" id="age" class="form-control"
+                                        placeholder="Enter your Date of Birth" readonly>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="gender">Gender
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {% if record['section1'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['gender'] }}</span>
+                                {% else %}
+                                <select name="gender" id="gender" class="form-control" required>
+                                        <option value="" selected>-- Select Gender --</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
                                 {% endif %}
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                         </div>
                          <div class="col-md-4 mt-3 d-none" id="additionalField">
                             <div class="form-group">
-                                <label for="pvtg_caste">Select Tribe for PVTG</label>
+                                <label for="pvtg_caste">Select Tribe for PVTG<span class="text-danger">*</span></label>
                                 {% if record['section1'] == 'filled' %}
                                     <br>
                                     <span class="text-dark">{{ record['pvtg_caste'] }}</span>
@@ -272,7 +272,7 @@
                                         <span class="text-dark">{{ record['your_caste'] }}</span>
                                     {% else %}
                                        <select name="caste" id="caste" class="form-control" required>
-                                            <option value="" selected>-- Select Option --</option>
+                                            <option value="" selected>-- Select Caste --</option>
                                             {% for caste in all_caste %}
                                                 <option
                                                     data-hidden="{{ caste['unique_number'] }}"
@@ -335,7 +335,7 @@
                     <div class="row m-0">
                         <div class="col-md-9 mt-2">
                             <div class="form-group">
-                                <label for="add_1">Permanant Address
+                                <label for="add_1">Permanent Address
                                     <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section1'] == 'filled' %}
@@ -343,7 +343,7 @@
                                     <span class="text-dark">{{ record['add_1'] }}</span>
                                 {% else %}
                                    <textarea name="add_1" id="add_1" class="form-control"
-                                        placeholder="Enter your Permanent Address over here." required></textarea>
+                                        placeholder="Enter your Permanent Address." required></textarea>
                                 {% endif %}
                             </div>
                         </div>
@@ -374,7 +374,7 @@
                                     <span class="text-dark">{{ record['village'] }}</span>
                                 {% else %}
                                    <select name="village" id="village" class="form-control" required>
-                                        <option value="" selected>-- Select Option --</option>
+                                        <option value="" selected>-- Select Village --</option>
                                     </select>
                                 {% endif %}
                             </div>
@@ -444,9 +444,8 @@
                                     <br>
                                     <span class="text-dark">{{ record['comm_add_1'] }}</span>
                                 {% else %}
-                                   <textarea name="comm_add_1" id="comm_add_1" class="form-control" required
-                                        placeholder="Enter your Communication address (Where your University is located).">
-                                    </textarea>
+                                <textarea name="comm_add_1" id="comm_add_1" class="form-control"
+                                        placeholder="Enter your Communication address (Where your University is located)." required></textarea>
                                 {% endif %}
                             </div>
                         </div>
@@ -475,8 +474,8 @@
                                 <br>
                                 <span class="text-dark">{{ record['comm_village'] }}</span>
                             {% else %}
-                               <select name="comm_village" id="comm_village" class="form-control">
-                                    <option value="" selected>-- Select Option --</option>
+                               <select name="comm_village" id="comm_village" class="form-control" required>
+                                    <option value="" selected>-- Select Village --</option>
                                 </select>
                             {% endif %}
                         </div>
