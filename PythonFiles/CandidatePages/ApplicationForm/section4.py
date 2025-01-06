@@ -110,12 +110,10 @@ def section4_auth(app):
             gov_department = request.form['gov_department']
             gov_position = request.form['gov_position']
             bank_name = request.form['bank_name']
-            print(bank_name)
             account_number = request.form['account_number']
             ifsc_code = request.form['ifsc_code']
             account_holder_name = request.form['account_holder_name']
             micr = request.form['micr']
-
             section4 = 'filled'
 
             if filled_section4 != 'filled':
