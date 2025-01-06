@@ -14,6 +14,80 @@
 
                  <div class="card shadow-sm mb-4">
                      <div class="btn btn-dark btn-lg text-center">
+                        <h6 class="text-white fw-bold">Other Details</h6>
+                     </div>
+                     <div class="row m-0">
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="father_name">Are you Salaried?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['salaried'] }}</span>
+                                {% else %}
+                                    <select name="salaried" id="salaried" class="form-control">
+                                        <option value="" selected>-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="father_name">Are you Disabled?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['disability'] }}</span>
+                                {% else %}
+                                    <select name="disability" id="disability" class="form-control">
+                                        <option value="" selected>-- Select Option --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="type_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Select yes only if someone from your family works in the Government.">
+                                        Type of Disability
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {% if record['section4'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['type_of_disability'] }}</span>
+                                {% else %}
+                                    <select name="type_of_disability" id="type_of_disability" class="form-control">
+                                        <option value="" selected>-- Select Option --</option>
+                                        <option value="Visual Disability">Visual Disability</option>
+                                        <option value="Hearing Disability">Hearing Disability</option>
+                                        <option value="Speech and Language Disability">Speech and Language Disability</option>
+                                        <option value="Locomotor Disability">Locomotor Disability</option>
+                                        <option value="Intellectual Disability">Intellectual Disability</option>
+                                        <option value="Mental Illness">Mental Illness</option>
+                                        <option value="Autism Spectrum Disorder">Autism Spectrum Disorder</option>
+                                        <option value="Cerebral Palsy">Cerebral Palsy</option>
+                                        <option value="Muscular Dystrophy">Muscular Dystrophy</option>
+                                        <option value="Chronic Neurological Conditions">Chronic Neurological Conditions</option>
+                                        <option value="Multiple Sclerosis">Multiple Sclerosis</option>
+                                        <option value="Thalassemia">Thalassemia</option>
+                                        <option value="Hemophilia">Hemophilia</option>
+                                        <option value="Sickle Cell Disease">Sickle Cell Disease</option>
+                                        <option value="Multiple Disabilities">Multiple Disabilities</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                {% endif %}
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="card shadow-sm mb-4">
+                     <div class="btn btn-dark btn-lg text-center">
                         <h6 class="text-white fw-bold">Parents/Guardian's Details</h6>
                      </div>
                      <div class="row m-0">
@@ -193,6 +267,7 @@
 
                 <div class="m-0 text-center">
                     {% if record['section4'] == 'filled' %}
+                        <a href="/section3" class="btn btn-primary btn-sm ms-2">Previous</a>
                         <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
                     {% else %}
 <!--                        <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()">Save and Next</button>-->

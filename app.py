@@ -61,20 +61,11 @@ def set_session(value):
     session['language'] = value
     return redirect(request.referrer)
 
-# @app.route('/section4')
-# def section4():
-#     return render_template('CandidatePages/ApplicationForm/section4.html', title='Application Form (Parents and Bank Details)')
-
-
-@app.route('/section5')
-def section5():
-    return render_template('CandidatePages/ApplicationForm/section5.html', title='Application Form (Documents)')
-
 
 # ------------ Blueprint Registration --------------
-homepage_blueprints(app, mail)    # These blueprints are in the file - (blueprints_homepage.py)
-admin_blueprints(app, mail)     # These blueprints are in the file - (blueprints_admin.py)
-candidate_blueprints(app, mail)     # These blueprints are in the file - (blueprints_admin.py)
+homepage_blueprints(app, mail)    # These blueprints are in the file - (Blueprints/blueprints_homepage.py)
+admin_blueprints(app, mail)     # These blueprints are in the file - (Blueprints/blueprints_admin.py)
+candidate_blueprints(app, mail)     # These blueprints are in the file - (Blueprints/blueprints_admin.py)
 
 
 if __name__ == '__main__':

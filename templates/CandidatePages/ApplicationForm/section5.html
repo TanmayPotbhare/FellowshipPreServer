@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
 
-             <form action="#" method="POST" enctype="multipart/form-data" class="personal-details-form">
+             <form action="/section5_submit" method="POST" enctype="multipart/form-data" class="personal-details-form">
 
                 <h4 class="mb-4 text-center">Documents</h4>
 
@@ -31,10 +31,9 @@
                                             Your Signature<span class="text-danger">*</span>
                                         </label>
                                         <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="Make sure the image is 50KB to 100KB in Size and a JPG, PNG, JPEG before uplaoding.">
-                                            (<span class="mdi mdi-image-area text-danger">IMG</span>)
+                                            title="Make sure the image is 50KB to 100KB in Size and a JPG, PNG, JPEG before uplaoding.">
+                                            (<span class="mdi mdi-image-area text-primary">IMG</span>)
                                         </span>
-
                                     </td>
                                     <td>
                                         <input type="file" name="signature" id="signature"
@@ -456,22 +455,27 @@
                                                class="form-control accept_pdf">
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>14</td>
-                                    <td>
-                                        <label>Adhaar Seeding Document
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="PDF Format allowed only. The PDF should be under or equal to 250KB.">
-                                            (<span class="mdi mdi-image-area text-danger">IMG</span>)
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <input type="file" name="adhaar_seed_doc" id="adhaar_seed_doc"
-                                                class="form-control accept_img">
-                                    </td>
-                                </tr>
+
+                                {% if record['adhaar_seeding_doc'] %}
+                                {% else %}
+                                    <tr>
+                                        <td>14</td>
+                                        <td>
+                                            <label>Adhaar Seeding Document
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="PDF Format allowed only. The PDF should be under or equal to 250KB.">
+                                                (<span class="mdi mdi-image-area text-primary">IMG</span>)
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <input type="file" name="adhaar_seed_doc" id="adhaar_seed_doc"
+                                                    class="form-control accept_img">
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
                             </tbody>
                           </table>
                      </div>
@@ -480,7 +484,7 @@
 
                   <div class="m-0 text-center">
                     <a href="/section4" class="btn btn-primary btn-sm ms-2">Previous</a>
-                    <a href="#" class="btn btn-primary btn-sm ms-2">Submit Application Form</a>
+                    <button type="submit" id="submit" class="btn btn-primary btn-sm ms-2">Submit Application Form</button>
                   </div>
 
 

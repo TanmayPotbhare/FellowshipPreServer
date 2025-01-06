@@ -28,7 +28,6 @@ def section4_auth(app):
             return jsonify(data)
         except requests.exceptions.RequestException as e:
             return jsonify({'error': str(e)}), 500
-    
 
     @section4_blueprint.route('/section4', methods=['GET', 'POST'])
     def section4():
@@ -102,6 +101,9 @@ def section4_auth(app):
         #     record = {}
 
         if request.method == 'POST':
+            salaried = request.form['salaried']
+            disability = request.form['disability']
+            type_of_disability = request.form['type_of_disability']
             father_name = request.form['father_name']
             mother_name = request.form['mother_name']
             work_in_government = request.form['work_in_government']
@@ -113,26 +115,28 @@ def section4_auth(app):
             ifsc_code = request.form['ifsc_code']
             account_holder_name = request.form['account_holder_name']
             micr = request.form['micr']
-            section4 = 'filled'
 
+            section4 = 'filled'
 
             if filled_section4 != 'filled':
                 # Save the form data to the database
                 sql = """
                         UPDATE application_page
                         SET
-                            father_name = %s, mother_name = %s,work_in_government = %s,gov_department = %s,gov_position = %s,
+                            salaried = %s, disability = %s, type_of_disability = %s,
+                            father_name = %s, mother_name = %s, work_in_government = %s, gov_department = %s, gov_position = %s,
                             bank_name = %s,account_number = %s,ifsc_code = %s, account_holder_name = %s, micr = %s, section4 = %s
                         WHERE email = %s
                     """
                 values = (
+                    salaried, disability, type_of_disability,
                     father_name, mother_name, work_in_government, gov_department, gov_position,
                     bank_name, account_number, ifsc_code, account_holder_name, micr, section4, email
                 )
 
                 cursor.execute(sql, values)
                 cnx.commit()
-                session['show_flash'] = True
+                session['show_flashedd'] = True
                 return redirect(url_for('section5.section5'))
                 # Check if the user is approved for fellowship no matter the year to show the desired sidebar.
         else:
