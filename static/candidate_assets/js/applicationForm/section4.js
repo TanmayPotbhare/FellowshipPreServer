@@ -8,11 +8,16 @@ function toggleGovField(select) {
     if (select.value === 'Yes') {
         gov_Field.classList.remove('d-none'); // Show field
         position_Field.classList.remove('d-none'); // Show field
+        inputField1.setAttribute('required', 'required');
+        inputField2.setAttribute('required', 'required');
+
     } else {
         gov_Field.classList.add('d-none'); // Hide field
         position_Field.classList.add('d-none'); // Hide field
         inputField1.value = ''; // Clear input field
         inputField2.value = ''; // Clear input field
+        inputField1.removeAttribute('required');
+        inputField2.removeAttribute('required');
     }
 }
 // ----------------------------------------------------------------
@@ -151,3 +156,18 @@ window.onload = function() {
     // Call function initially to check if the button should be enabled or not
     enableDisabledFields();
 };
+
+// This function is for PVTG Caste
+function toggleDisabilityField(select) {
+    const disability_div = document.getElementById('disability_type_div');
+    const disability_feild = document.getElementById('type_of_disability');
+
+    if (select.value === 'Yes') {
+        disability_div.classList.remove('d-none'); // Show field
+        disability_feild.setAttribute('required', 'required');
+    } else {
+        disability_div.classList.add('d-none'); // Hide field
+        disability_feild.removeAttribute('required');
+        disability_feild.value = ''; // Clear input field
+    }
+}

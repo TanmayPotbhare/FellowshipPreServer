@@ -64,8 +64,13 @@ def section2_auth(app):
 
             signup_record = record['email']
 
+            # Convert the Date to standard Format 
+            DoB = record['phd_registration_date'] 
+            formatted_phd_reg_date = DoB.strftime('%d-%b-%Y')
+
             return render_template('CandidatePages/ApplicationForm/section2.html', record=record, university_data=university_names,
                                    finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
+                                   formatted_phd_reg_date=formatted_phd_reg_date,
                                    title='Application Form (Qualification Details)')
         else:
             user = "Student"
