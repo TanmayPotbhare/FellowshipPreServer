@@ -11,6 +11,15 @@ function validateYear(input) {
         input.value = input.value.slice(0, 4);
     }
 
+    if ( input.value.length < 4 ) {
+        Swal.fire({
+            title: "Invalid Input!",
+            text: "Please Enter 4 Passing Year",
+            icon: "info"
+        });
+        input.value = '';
+    }
+
     // Proceed only if the user has entered a 4-digit year
     if (input.value.length === 4) {
         const inputYear = parseInt(input.value);
@@ -220,8 +229,7 @@ function toggleUniversityChange(select) {
 // --------------------- Calculate Age on Phd Registration Year ----------------------
 function calculateAges() {
     // Get the hidden DOB year (e.g., (1996,))
-    const dobYear = document.getElementById('dob_year').value.replace(/[^\d]/g, ''); // Strip non-numeric characters
-    alert(dobYear);
+    const dobYear = document.getElementById('dob_year').value.substring(0, 4); // Strip non-numeric characters
     // Get the Ph.D. registration date entered by the user
     const phdRegDate = document.getElementById('phd_registration_date').value;
 
@@ -277,6 +285,10 @@ function validateTotalMarks(input) {
         if (input.value.length > 4) {
             input.value = input.value.slice(0, 4);
         }      
+        // Zero cannot be entered in Total Marks
+        if (input.value === '0') {
+            input.value = '';
+        } 
     }
 // ------------------------------------------------
 
@@ -301,6 +313,10 @@ function validatePercentage(input) {
     if (parseFloat(input.value) > 100) {
         input.value = "100.00";
     }
+    // Zero cannot be entered in Percentage
+    if (input.value === '0') {
+        input.value = '';
+    } 
 }
 // ------------------------------------------------
 

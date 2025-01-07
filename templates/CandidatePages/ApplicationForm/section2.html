@@ -39,9 +39,9 @@
                                                             <span class="text-dark">{{ record['ssc_passing_year'] }}</span>
                                                         {% else %}
                                                             <input type="text" class="form-control" id="ssc_passing_year"
-                                                               name="ssc_passing_year" maxlength="4" minlength="4"
-                                                               placeholder="XXXX"
-                                                               oninput="validateYear(this)" required>
+                                                               name="ssc_passing_year" 
+                                                               placeholder="YYYY"
+                                                               onblur="validateYear(this)" required>
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-md-3">
@@ -126,9 +126,9 @@
                                                             <span class="text-dark">{{ record['hsc_passing_year'] }}</span>
                                                         {% else %}
                                                             <input type="text" class="form-control" id="hsc_passing_year"
-                                                               name="hsc_passing_year" maxlength="4" minlength="4"
-                                                               oninput="validateYear(this)" required
-                                                               placeholder="XXXX">
+                                                               name="hsc_passing_year"
+                                                               onblur="validateYear(this)" required
+                                                               placeholder="YYYY">
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-md-3">
@@ -224,9 +224,9 @@
                                                         {% else %}
                                                             <input type="text" class="form-control"
                                                                id="graduation_passing_year"
-                                                               name="graduation_passing_year" maxlength="4"
-                                                               minlength="4" oninput="validateYear(this)"
-                                                               placeholder="XXXX" required>
+                                                               name="graduation_passing_year" 
+                                                               onblur="validateYear(this)"
+                                                               placeholder="YYYY" required>
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-md-3">
@@ -336,8 +336,8 @@
                                                             <span class="text-dark">{{ record['phd_passing_year'] }}</span>
                                                         {% else %}
                                                             <input type="text" class="form-control" id="phd_passing_year"
-                                                               name="phd_passing_year" maxlength="4" minlength="4"
-                                                               placeholder="XXXX" oninput="validateYear(this)" required>
+                                                               name="phd_passing_year"
+                                                               placeholder="YYYY" onblur="validateYear(this)" required>
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-md-3">
@@ -347,7 +347,7 @@
                                                         </label>
                                                         {% if record['section2'] == 'filled' %}
                                                             <br>
-                                                            <span class="text-dark">{{ record['phd_passing_year'] }}</span>
+                                                            <span class="text-dark">{{ record['pg_stream'] }}</span>
                                                         {% else %}
                                                             <select class="form-control" id="pg_stream"
                                                                 name="pg_stream">
@@ -378,6 +378,7 @@
                                                         {% else %}
                                                             <input type="text" class="form-control" id="phd_school_name"
                                                                name="phd_school_name" oninput="validateName(this)"
+                                                               placeholder="Enter University Name"
                                                                required>
                                                         {% endif %}
                                                     </div>
@@ -471,10 +472,10 @@
                                 </label>
                                 {% if record['section2'] == 'filled' %}
                                     <br>
-                                    <span class="text-dark">{{ record['phd_registration_date'] }}</span>
+                                    <span class="text-dark">{{ formatted_phd_reg_date }}</span>
                                 {% else %}
                                     <input type="date" name="phd_registration_date" id="phd_registration_date"
-                                       class="form-control" onchange="calculateAges()">
+                                       class="form-control" onblur="calculateAges()">
                                 {% endif %}
                             </div>
                         </div>
@@ -485,7 +486,7 @@
                                 </label>
                                 {% if record['section2'] == 'filled' %}
                                     <br>
-                                    <span class="text-dark">{{ record['fellowship_applying_year'] }}</span>
+                                    <span class="text-dark">{{ record['fellowship_application_year'] }}</span>
                                 {% else %}
                                     <select class="form-control" name="fellowship_applying_year"
                                         id="fellowship_applying_year" required>
@@ -635,6 +636,36 @@
                             </div>
                         </div>
                      </div>
+
+                    {% if record.section2 == 'filled' and record.concerned_university == 'Other' %}
+                    <div class="row m-0">
+                        <div class="col-md-6 mt-2">
+                           <div class="form-group">
+                               <label for="department_name">Other University Name
+                                   <span class="text-danger">*</span>
+                               </label>
+                                   <br>
+                                   <span class="text-dark">{{ record['other_university'] }}</span>
+                           </div>
+                       </div>
+                   
+                    {% endif %}
+
+                    {% if record.section2 == 'filled' and record.name_of_college == 'Other' %}
+                  
+                        <div class="col-md-6 mt-2">
+                           <div class="form-group">
+                               <label for="department_name">Other College Name
+                                   <span class="text-danger">*</span>
+                               </label>
+                                   <br>
+                                   <span class="text-dark">{{ record['other_college_name'] }}</span>
+                           </div>
+                       </div>
+                    </div>
+                    {% endif %}
+
+
                      <div class="row m-0">
                          <div class="col-md-4 mt-2">
                             <div class="form-group">
@@ -704,11 +735,11 @@
                                 {% endif %}
                             </div>
                         </div>
-                         <div class="col-md-4 mt-2 d-none" id="additionalField">
+                        <div class="col-md-4 mt-2 d-none" id="additionalField">
                             <div class="form-group">
                                 <label for="faculty"data-bs-toggle="tooltip" data-bs-placement="top"
                                        title="Please Enter English Text only.">
-                                    Faculty/Stream
+                                    Other Faculty/Stream
                                     <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section2'] == 'filled' %}
@@ -720,6 +751,19 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if record.section2 == 'filled' and record.faculty == 'Other' %}
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="faculty"data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Please Enter English Text only.">
+                                       Other Faculty/Stream
+                                    <span class="text-danger">*</span>
+                                </label>
+                                    <br>
+                                    <span class="text-dark">{{ record['other_faculty'] }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
                      </div>
                  </div>
 

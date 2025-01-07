@@ -172,7 +172,7 @@
                                 </label>
                                 {% if record['section1'] == 'filled' %}
                                     <br>
-                                    <span class="text-dark">{{ record['date_of_birth'] }}</span>
+                                    <span class="text-dark">{{ formatted_date_of_birth }}</span>
                                 {% else %}
                                    <input type="date" name="date_of_birth" id="date_of_birth" class="form-control"
                                       onblur="calculateAge(this)" required>

@@ -26,7 +26,7 @@
                                     <br>
                                     <span class="text-dark">{{ record['salaried'] }}</span>
                                 {% else %}
-                                    <select name="salaried" id="salaried" class="form-control">
+                                    <select name="salaried" id="salaried" class="form-control" required>
                                         <option value="" selected>-- Select Option --</option>
                                         <option value="Yes">Yes</option>
                                         <option value="No">No</option>
@@ -43,7 +43,8 @@
                                     <br>
                                     <span class="text-dark">{{ record['disability'] }}</span>
                                 {% else %}
-                                    <select name="disability" id="disability" class="form-control">
+                                    <select name="disability" id="disability" class="form-control"
+                                        onchange="toggleDisabilityField(this)" required>
                                         <option value="" selected>-- Select Option --</option>
                                         <option value="Yes">Yes</option>
                                         <option value="No">No</option>
@@ -51,7 +52,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-md-4 mt-2">
+                        <div class="col-md-4 mt-2 d-none" id="disability_type_div">
                             <div class="form-group">
                                 <label for="type_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
                                        title="Select yes only if someone from your family works in the Government.">
@@ -84,6 +85,19 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if record.section4 == 'filled' and record.disability == 'Yes' %}
+                            <div class="col-md-4 mt-2">
+                                <div class="form-group">
+                                    <label for="type_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Select yes only if someone from your family works in the Government.">
+                                            Type of Disability
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                        <br>
+                                        <span class="text-dark">{{ record['type_of_disability'] }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
                      </div>
                  </div>
                  <div class="card shadow-sm mb-4">
@@ -169,6 +183,27 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if record.section4 == 'filled' and record.work_in_government == 'Yes' %}
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="gov_department">Name of Government Employee
+                                    <span class="text-danger">*</span>
+                                </label>
+                                    <br>
+                                    <span class="text-dark">{{ record['gov_department'] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="gov_position">Position in Government
+                                    <span class="text-danger">*</span>
+                                </label>
+                                    <br>
+                                    <span class="text-dark">{{ record['gov_position'] }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+
                      </div>
                  </div>
                  <div class="card shadow-sm mb-4">
@@ -186,8 +221,8 @@
                                     <span class="text-dark">{{ record['account_number'] }}</span>
                                 {% else %}
                                 <input type="text" name="account_number" id="account_number" class="form-control"
-                                        placeholder="XXXXXXXXXXXXXXXX" maxlength="20"
-                                        oninput="validateAccountNumber()">
+                                        placeholder="Enter Bank Account Number" maxlength="20"
+                                        oninput="validateAccountNumber()" required>
                                 {% endif %}
                             </div>
                         </div>
@@ -202,7 +237,7 @@
                                 {% else %}
                                 <input type="text" name="account_holder_name" id="account_holder_name"
                                        placeholder="First Middle Surname" class="form-control"
-                                        onchange="validateAccountHolderName()" oninput="validateName(this)">
+                                        onchange="validateAccountHolderName()" oninput="validateName(this)" required>
                                 {% endif %}
                             </div>
                         </div>
@@ -218,31 +253,31 @@
                                     <span class="text-dark">{{ record['ifsc_code'] }}</span>
                                 {% else %}
                                     <input type="text" name="ifsc_code" id="ifsc_code" class="form-control"
-                                            placeholder="11 digit Alphanumeric" onchange="validateIFSC()">
+                                            placeholder="11 digit Alphanumeric" onchange="validateIFSC()" required>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="bank_name">Bank Name</label>
+                                <label for="bank_name">Bank Name<span class="text-danger">*</span></label>
                                 {% if record['section4'] == 'filled' %}
                                     <br>
                                     <span class="text-dark">{{ record['bank_name'] }}</span>
                                 {% else %}
                                     <input type="text" name="bank_name" id="bank_name"
-                                        placeholder="Enter IFSC Code" class="form-control" readonly>
+                                        placeholder="Enter IFSC Code" class="form-control" readonly required>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="micr">MICR Code</label>
+                                <label for="micr">MICR Code<span class="text-danger">*</span></label>
                                 {% if record['section4'] == 'filled' %}
                                     <br>
                                     <span class="text-dark">{{ record['micr'] }}</span>
                                 {% else %}
                                     <input type="text" name="micr" id="micr"
-                                        placeholder="Enter IFSC Code" class="form-control" readonly>
+                                        placeholder="Enter IFSC Code" class="form-control" readonly required>
                                 {% endif %}
                             </div>
                         </div>

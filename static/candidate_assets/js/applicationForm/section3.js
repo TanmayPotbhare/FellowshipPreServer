@@ -10,12 +10,22 @@ function validateIncome() {
         incomeInput.value = incomeInput.value.slice(0, 6);
     }
 
+    // Limit the input to 6 digits
+    if (incomeInput.value.length < 4) {
+        Swal.fire({
+            title: "Invalid Input!",
+            text: "Income must be at least four digits.",
+            icon: "error"
+        });
+        incomeInput.value = '';
+    }
+
     // Check if income exceeds 8 Lacs (8,00,000)
     if (parseInt(incomeInput.value) > 800000) {
         // If income is more than 8 Lacs, show a popup message
         Swal.fire({
-                    title: "Income Criteria Not Met",
-                    text: "To avail the fellowship, the income should be less than or equal to 8 Lacs.",
+                    title: "Income Criteria Not Met!",
+                    text: "To be eligible for the fellowship, the income must be less than or equal to 8 lakhs.",
                     icon: "error"
                 });
         incomeInput.value = ''; // Reset the input field
@@ -23,8 +33,8 @@ function validateIncome() {
     if (parseInt(incomeInput.value) <= 0) {
         // If income is more than 8 Lacs, show a popup message
         Swal.fire({
-                    title: "Income Criteria Not Met",
-                    text: "To avail the fellowship, the income should be less than or equal to 8 Lacs.",
+                    title: "Income Criteria Not Met!",
+                    text: "Family Annual Income cannot be zero.",
                     icon: "error"
                 });
         incomeInput.value = ''; // Reset the input field
@@ -169,8 +179,8 @@ $('#domicile').on('change', function () {
         $('#domicile_issuing_taluka').attr('disabled',false)
     }else if($(this).val() == 'No'){
         Swal.fire({
-                title: "Sorry",
-                text: "Sorry, you cannot apply to this scheme, Domicile Certificate is mandatory",
+                title: "Sorry!",
+                text: "Sorry, you cannot apply for the Fellowship. A Domicile Certificate is mandatory.",
                 icon: "error"
             });
         $('#domicile_number').attr('disabled',true)
@@ -195,8 +205,8 @@ $('#caste_certf').on('change', function () {
         $('#caste_issuing_taluka').attr('disabled',false)
     }else if($(this).val() == 'No'){
         Swal.fire({
-                title: "Sorry",
-                text: "Sorry, you cannot apply to this scheme, Caste/Tribe Certificate is mandatory",
+                title: "Sorry!",
+                text: "Sorry, you cannot apply for the Fellowship. A Caste/Tribe Certificate is mandatory.",
                 icon: "error"
             });
         $('#caste_certf_number').attr('disabled',true)
@@ -222,8 +232,8 @@ $('#validity_certificate').on('change', function () {
         $('#validity_issuing_taluka').attr('disabled',false)
     }else if($(this).val() == 'No'){
         Swal.fire({
-                title: "Sorry",
-                text: "Sorry, you cannot apply to this scheme, Validity Certificate is mandatory",
+                title: "Sorry!",
+                text: "Sorry, you cannot apply for the Fellowship. A Validity Certificate is mandatory.",
                 icon: "error"
             });
         $('#validity_cert_number').attr('disabled',true)

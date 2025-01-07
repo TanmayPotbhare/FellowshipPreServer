@@ -70,8 +70,13 @@ def section1_auth(app):
 
             signup_record = record['email']
 
+            # Convert the Date to standard Format
+            DoB = record['date_of_birth'] 
+            formatted_date_of_birth = DoB.strftime('%d-%b-%Y')
+
             return render_template('CandidatePages/ApplicationForm/section1.html', record=record, all_caste=all_caste,
                                    finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
+                                   formatted_date_of_birth=formatted_date_of_birth,
                                    title='Application Form (Personal Details)')
         else:
             user = "Student"
