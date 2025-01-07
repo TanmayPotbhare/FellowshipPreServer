@@ -6,7 +6,9 @@
               <div class="col-12">
                 <div class="card card-default">
                   <div class="col-auto mt-3">
-                     <a href="#" class="btn btn-primary btn-sm text-white">Generate PDF Form</a>
+                     <a href="/generate_pdf" class="btn btn-primary btn-sm text-white" target="_blank">
+                       Generate PDF Form
+                     </a>
                   </div>
                   <div class="card-header justify-content-center">
                         <!-- Center Content -->
@@ -27,88 +29,1675 @@
                   </div>
 
 
-                          <div class="card-footer card-profile-footer">
-                            <ul class="nav nav-border-top justify-content-center">
-                              <li class="nav-item">
-                                <a class="nav-link active" href="/candidate_dashboard">My Profile</a>
-                              </li>
-                              <li class="nav-item">
-                                <a class="nav-link" href="/adhaar_seeding">Aadhaar Seeding</a>
-                              </li>
-                              <li class="nav-item">
-                                <a class="nav-link" href="/manage_profile">Manage Profile</a>
-                              </li>
-                              <li class="nav-item">
-                                <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div class="card-body">
-                                <div class="applicant-cards">
-                                    <h6 class="mb-3">Application Submitted Date: <span class="text-muted">12th January 2024</span></h6>
-                                    <div class="card mb-3">
-                                        <div class="card-body d-flex flex-column align-items-start">
+                  <div class="card-footer card-profile-footer">
+                        <ul class="nav nav-border-top justify-content-center">
+                          <li class="nav-item">
+                            <a class="nav-link active" href="/candidate_dashboard">My Profile</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/adhaar_seeding">Aadhaar Seeding</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/manage_profile">Manage Profile</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Raise Issue</a>
+                          </li>
+                        </ul>
+                  </div>
+                  <div class="card-body">
+                        <section class="section profile">
+                            <div class="row">
+                                  <div class="col-xl-4">
+                                        {% for record in records %}
+                                        <div class="card">
 
-                                            <div class="mt-5">
-                                                <ul class="nav nav-tabs nav-tabs-bordered">
-                                                    <li class="nav-item border-start">
-                                                        <button class="nav-link active text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                                                    </li>
-                                                    <li class="nav-item border-start">
-                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#profile-qual">Qualification</button>
-                                                    </li>
-                                                    <li class="nav-item border-start">
-                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#phd-details">P.H.D Details</button>
-                                                    </li>
-                                                    <li class="nav-item border-start">
-                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#certificate-details">Certificate Details</button>
-                                                    </li>
-                                                    <li class="nav-item border-start">
-                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#bank-details">Bank Details</button>
-                                                    </li>
-                                                    <li class="nav-item border-start">
-                                                        <button class="nav-link text-theme fw-bold" data-bs-toggle="tab" data-bs-target="#documents-uploaded">Documents Uploaded</button>
-                                                    </li>
-                                                </ul>
+                                          <div class="card-body col-md-11">
+                                            <div class="row align-items-center">
+                                              <div class="col-md-7">
+                                                <h6 class="card-title">Application ID : </h6>
+                                              </div>
+                                              <div class="col-md-5 text-start">
+                                                <span>{{ record['applicant_id'] }}</span>
+                                              </div>
                                             </div>
-                                            <div class="tab-content pt-2">
-                                                <!-- Overview Tab -->
-                                                <div class="tab-pane fade profile-overview" id="profile-overview">
-
-                                                    <!-- Overview Content Here -->
-                                                </div>
-                                                <!-- Qualification Tab -->
-                                                <div class="tab-pane fade" id="profile-qual">
-                                                    <h5>HEKKO</h5>
-                                                    <!-- Qualification Content Here -->
-                                                </div>
-                                                <!-- P.H.D Details Tab -->
-                                                <div class="tab-pane fade" id="phd-details">
-                                                    <h5>HI</h5>
-                                                    <!-- P.H.D Details Content Here -->
-                                                </div>
-                                                <!-- Certificate Details Tab -->
-                                                <div class="tab-pane fade" id="certificate-details">
-                                                    <h5>HI</h5>
-                                                    <!-- Certificate Details Content Here -->
-                                                </div>
-                                                <!-- Bank Details Tab -->
-                                                <div class="tab-pane fade" id="bank-details">
-                                                    <h5>HI</h5>
-                                                    <!-- Bank Details Content Here -->
-                                                </div>
-                                                <!-- Documents Uploaded Tab -->
-                                                <div class="tab-pane fade" id="documents-uploaded">
-                                                    <h5>HI</h5>
-                                                    <!-- Documents Uploaded Content Here -->
-                                                </div>
+                                            <div class="row align-items-center">
+                                              <div class="col-md-7">
+                                                <h6 class="card-title ">Adhaar Card Number : </h6>
+                                              </div>
+                                              <div class="col-md-5 text-start">
+                                                <span> {{ record['adhaar_number'] }}</span>
+                                              </div>
                                             </div>
+                                            <div class="row align-items-center">
+                                              <div class="col-md-7">
+                                                <h6 class="card-title ">Application Date : </h6>
+                                              </div>
+                                              <div class="col-md-5 text-start">
+                                                <span> {{ record['application_date'] }}</span>
+                                              </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                              <div class="col-md-7">
+                                                <h6 class="card-title ">Application Time : </h6>
+                                              </div>
+                                              <div class="col-md-5 text-start">
+                                                <span> {{ record['application_time'] }}</span>
+                                              </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                              <div class="col-md-12">
+                                                <h6 class="card-title ">Application Status : </h6>
+                                              </div>
+                                              <div class="col-md-12 text-start">
+                                                <div class="row">
+                                                  <div class="col-md-7 label ">Pre Scrutiny Status:</div>
+                                                  <div class="col-md-5">
+                                                    {% if(record['status'] == 'accepted') %}
+                                                    <span class="text-success fw-bold text-capitalize"> {{ record['status'] }}</span>
+                                                    {% elif(record['status'] =='pending') %}
+                                                    <span class="text-warning fw-bold text-capitalize"> {{ record['status'] }}</span>
+                                                    {% else %}
+                                                    <span class="text-danger fw-bold text-capitalize"> {{ record['status'] }}</span>
+                                                    {% endif %}
 
 
+                                                  </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                  <div class="col-md-7 label ">Scrutiny Status:</div>
+                                                  <div class="col-md-5">
+                                                    {% if(record['scrutiny_status'] == 'accepted') %}
+                                                    <span class="text-success fw-bold text-capitalize"> {{ record['scrutiny_status'] }}</span>
+                                                    {% elif(record['scrutiny_status'] =='pending') %}
+                                                    <span class="text-warning fw-bold text-capitalize"> {{ record['scrutiny_status'] }}</span>
+                                                    {% else %}
+                                                    <span class="text-danger fw-bold text-capitalize"> {{ record['scrutiny_status'] }}</span>
+                                                    {% endif %}
+
+
+                                                  </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                  <div class="col-md-7 label ">Final Approval Status:</div>
+                                                  <div class="col-md-5">
+                                                    {% if(record['final_approval'] == 'accepted') %}
+                                                    <span class="text-success fw-bold text-capitalize"> {{ record['final_approval'] }}</span>
+                                                    {% elif(record['final_approval'] =='pending') %}
+                                                    <span class="text-warning fw-bold text-capitalize"> {{ record['final_approval'] }}</span>
+                                                    {% else %}
+                                                    <span class="text-danger fw-bold text-capitalize"> {{ record['final_approval'] }}</span>
+                                                    {% endif %}
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                            </div>
+                                          </div>
                                         </div>
+
+                                        {% endfor %}
+
+                                      </div>
+
+
+                                      <div class="col-xl-8">
+
+                                        <div class="card">
+                                          <div class="card-body pt-3">
+                                            <!-- Bordered Tabs -->
+                                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                              <li class="nav-item">
+                                                <button class="nav-link active" data-bs-toggle="tab"
+                                                  data-bs-target="#profile-overview">Overview</button>
+                                              </li>
+
+                                              <li class="nav-item">
+                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-qual">Qualification Details</button>
+                                              </li>
+
+                                              <li class="nav-item">
+                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-phd">Ph.D Details</button>
+                                              </li>
+
+                                              <li class="nav-item">
+                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Caste Details</button>
+                                              </li>
+
+                                               <li class="nav-item">
+                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#bank">Parents and Bank Details</button>
+                                              </li>
+
+                                              <li class="nav-item">
+                                                <button class="nav-link" data-bs-toggle="tab"
+                                                  data-bs-target="#profile-change-password">Attachment</button>
+                                              </li>
+
+                                            </ul>
+                                            <div class="tab-content pt-2">
+                                              {% for record in records %}
+                                              <div class="tab-pane fade show active" id="profile-overview">
+
+                                                <h6 class="card-title mt-2">Personal Details / वैयक्तिक माहिती</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label">Full Name</div>
+                                                  <div class="col-md-8">{{ record['first_name'] }} {{ record['middle_name'] }} {{ record['last_name'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Mobile Number</div>
+                                                  <div class="col-md-8">{{ record['mobile_number'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Email</div>
+                                                  <div class="col-md-8">{{ record['email'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Date of Birth</div>
+                                                  <div class="col-md-8">{{ record['date_of_birth'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Gender</div>
+                                                  <div class="col-md-8">{{ record['gender'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Age</div>
+                                                  <div class="col-md-8">{{ record['age'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Category</div>
+                                                  <div class="col-md-8">{{ record['caste'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Caste/Tribe</div>
+                                                  <div class="col-md-8">{{ record['your_caste'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Sub Caste/Tribe</div>
+                                                  <div class="col-md-8">{{ record['subcaste'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Marital Status</div>
+                                                  <div class="col-md-8">{{ record['marital_status'] }}</div>
+                                                </div>
+
+                                                <hr>
+
+                                                <h6 class="card-title mt-2">Personal Address Details / वैयक्तिक पत्त्याचे तपशील</h6>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                      <div class="mt-2 mb-2 text-dark">Permanent Address</div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Main Address</div>
+                                                        <div class="col-md-8">{{ record['add_1'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Pincode</div>
+                                                        <div class="col-md-8">{{ record['pincode'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Village</div>
+                                                        <div class="col-md-8">{{ record['village'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Taluka</div>
+                                                        <div class="col-md-8">{{ record['taluka'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">District</div>
+                                                        <div class="col-md-8">{{ record['district'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">City</div>
+                                                        <div class="col-md-8">{{ record['city'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">State</div>
+                                                        <div class="col-md-8">{{ record['state'] }}</div>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                      <div class="mt-2 mb-2 text-dark">Communication Address</div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Main Address</div>
+                                                        <div class="col-md-8">{{ record['comm_add_1'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Pincode</div>
+                                                        <div class="col-md-8">{{ record['comm_pincode'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Village</div>
+                                                        <div class="col-md-8">{{ record['comm_village'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">Taluka</div>
+                                                        <div class="col-md-8">{{ record['comm_taluka'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">District</div>
+                                                        <div class="col-md-8">{{ record['comm_district'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">City</div>
+                                                        <div class="col-md-8">{{ record['comm_city'] }}</div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-4 label">State</div>
+                                                        <div class="col-md-8">{{ record['comm_state'] }}</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+
+                                              </div>
+
+                                              <div class="tab-pane fade" id="profile-qual">
+
+                                                <h6 class="text-dark mb-2 mt-2">Secondary School Certificate (10th) Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">SSC Passing Year</div>
+                                                  <div class="col-md-8"> {{ record['ssc_passing_year'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">SSC Percentage</div>
+                                                  <div class="col-md-8"> {{ record['ssc_percentage'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">SSC School Name</div>
+                                                  <div class="col-md-8"> {{ record['ssc_school_name'] }}</div>
+                                                </div>
+                                                {% if record['phd_registration_year'] >= 2023 %}
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">SSC Stream</div>
+                                                  <div class="col-md-8"> {{ record['ssc_stream'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">SSC Attempts</div>
+                                                  <div class="col-md-8"> {{ record['ssc_attempts'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">SSC Total</div>
+                                                  <div class="col-md-8"> {{ record['ssc_total'] }}</div>
+                                                </div>
+                                                {% endif %}
+
+                                                <hr>
+
+                                                <h6 class="text-dark mb-2 mt-2">Higher Secondary Certificate (12th) Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label">HSC Passing Year</div>
+                                                  <div class="col-md-8"> {{ record['hsc_passing_year'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">HSC Percentage</div>
+                                                  <div class="col-md-8"> {{ record['hsc_percentage'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">HSC School Name</div>
+                                                  <div class="col-md-8"> {{ record['hsc_school_name'] }}</div>
+                                                </div>
+                                                {% if record['phd_registration_year'] >= 2023 %}
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">HSC Stream</div>
+                                                  <div class="col-md-8"> {{ record['hsc_stream'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">HSC Attempts</div>
+                                                  <div class="col-md-8"> {{ record['hsc_attempts'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">HSC Total</div>
+                                                  <div class="col-md-8"> {{ record['hsc_total'] }}</div>
+                                                </div>
+                                                {% endif %}
+
+                                                <hr>
+
+                                                <h6 class="text-dark mb-2 mt-2">Graduation Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Graduation Passing Year</div>
+                                                  <div class="col-md-8"> {{ record['graduation_passing_year'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Graduation Percentage</div>
+                                                  <div class="col-md-8"> {{ record['graduation_percentage'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Graduation College Name</div>
+                                                  <div class="col-md-8"> {{ record['graduation_school_name'] }}</div>
+                                                </div>
+                                                {% if record['phd_registration_year'] >= 2023 %}
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Graduation Stream</div>
+                                                  <div class="col-md-8"> {{ record['grad_stream'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Graduation Attempts</div>
+                                                  <div class="col-md-8"> {{ record['grad_attempts'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Graduation Total</div>
+                                                  <div class="col-md-8"> {{ record['grad_total'] }}</div>
+                                                </div>
+                                                {% endif %}
+
+                                                <hr>
+
+                                                <h6 class="text-dark mb-2 mt-2">Post Graduation Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Post Graduation Passing Year</div>
+                                                  <div class="col-md-8"> {{ record['phd_passing_year'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Post Graduation Percentage</div>
+                                                  <div class="col-md-8"> {{ record['phd_percentage'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Post Graduation College Name</div>
+                                                  <div class="col-md-8"> {{ record['phd_school_name'] }}</div>
+                                                </div>
+                                                {% if record['phd_registration_year'] >= 2023 %}
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Post Graduation Stream</div>
+                                                  <div class="col-md-8"> {{ record['pg_stream'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Post Graduation Attempts</div>
+                                                  <div class="col-md-8"> {{ record['pg_attempts'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Post Graduation Total</div>
+                                                  <div class="col-md-8"> {{ record['pg_total'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Have you Qualified</div>
+                                                  <div class="col-md-8"> {{ record['have_you_qualified'] }}</div>
+                                                </div>
+                                                {% endif %}
+                                              </div>
+
+                                              <div class="tab-pane fade" id="profile-phd">
+
+                                                  <h6 class="card-title mt-2">Ph.D Details</h6>
+
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Ph.D Registration Date</div>
+                                                    <div class="col-md-8"> {{ record['phd_registration_date'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Ph.D Registration Year</div>
+                                                    <div class="col-md-8">{{ record['phd_registration_year'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">University Name</div>
+                                                    <div class="col-md-8">{{ record['concerned_university'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Name of College</div>
+                                                    <div class="col-md-8">{{ record['name_of_college'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Department Name</div>
+                                                    <div class="col-md-8">{{ record['department_name'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Topic of Ph.D</div>
+                                                    <div class="col-md-8">{{ record['topic_of_phd'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Name of Guide</div>
+                                                    <div class="col-md-8">{{ record['name_of_guide'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Faculty / Stream</div>
+                                                    <div class="col-md-8">{{ record['faculty'] }}</div>
+                                                  </div>
+
+                                                  <hr>
+
+                                                  <h6 class="card-title mt-2">Income Details</h6>
+
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Family Annual Income</div>
+                                                    <div class="col-md-8"> {{ record['family_annual_income'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Income Certificate Number</div>
+                                                    <div class="col-md-8">{{ record['income_certificate_number'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Income certificate Issuing Authority</div>
+                                                    <div class="col-md-8">{{ record['issuing_authority'] }}</div>
+                                                  </div>
+                                                  {% if record['phd_registration_year'] >= 2023 %}
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Income certificate Issuing District</div>
+                                                    <div class="col-md-8">{{ record['income_issuing_district'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Income certificate Issuing Taluka</div>
+                                                    <div class="col-md-8">{{ record['income_issuing_taluka'] }}</div>
+                                                  </div>
+                                                  {% endif %}
+                                              </div>
+
+                                              <div class="tab-pane fade" id="profile-edit">
+
+                                                <!-- Family Overview -->
+                                                <h6 class="card-title mt-2">Domicile Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Are you Domicile of Maharashtra</div>
+                                                  <div class="col-md-8"> {{ record['domicile'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Domicile Certificate</div>
+                                                  <div class="col-md-8">{{ record['domicile_certificate'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label">Domicile Certificate Number</div>
+                                                  <div class="col-md-8">{{ record['domicile_number'] }}</div>
+                                                </div>
+
+                                                <hr>
+
+                                                <h6 class="card-title mt-2">Caste Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Do you have Caste/Tribe Certificate</div>
+                                                  <div class="col-md-8"> {{ record['caste_certf'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Category</div>
+                                                  <div class="col-md-8">{{ record['caste'] }} </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Caste | Tribe</div>
+                                                  <div class="col-md-8">{{ record['your_caste'] }} </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Sub Caste/Tribe</div>
+                                                  <div class="col-md-8">{{ record['subcaste'] }} </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Caste Certificate Number</div>
+                                                  <div class="col-md-8">{{ record['caste_certf_number'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Issuing District</div>
+                                                  <div class="col-md-8">{{ record['issuing_district'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Caste Certificate Issuing Authority</div>
+                                                  <div class="col-md-8">{{ record['caste_issuing_authority'] }}</div>
+                                                </div>
+
+                                                <hr>
+
+                                                <h6 class="card-title mt-2">Validity Details</h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Validity Certificate</div>
+                                                  <div class="col-md-8">{{ record['validity_certificate'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Validity Certificate Number</div>
+                                                  <div class="col-md-8">{{ record['validity_cert_number'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Validity Certificate Issuing District</div>
+                                                  <div class="col-md-8">{{ record['validity_issuing_district'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Validity Certificate Issuing Authority</div>
+                                                  <div class="col-md-8">{{ record['validity_issuing_authority'] }}</div>
+                                                </div>
+
+                                                <hr>
+
+                                                <h6 class="card-title mt-2">
+                                                  Personal Eligibility Details
+                                                </h6>
+
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Are you Salaried ?</div>
+                                                  <div class="col-md-8">{{ record['salaried'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Any Disability</div>
+                                                  <div class="col-md-8">{{ record['disability'] }}</div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-4 label ">Type of Disability (If Any)</div>
+                                                  <div class="col-md-8">{{ record['type_of_disability'] }}</div>
+                                                </div>
+
+                                              </div>
+
+                                               <div class="tab-pane fade" id="bank">
+
+                                                  <h6 class="card-title mt-2">Parents Details</h6>
+
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Father's Full Name</div>
+                                                    <div class="col-md-8">{{ record['father_name'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Mother's Full Name</div>
+                                                    <div class="col-md-8">{{ record['mother_name'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Government Employee</div>
+                                                    <div class="col-md-8">{{ record['work_in_government'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Department in Government (If Any)</div>
+                                                    <div class="col-md-8">{{ record['gov_department'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Post/Role in Government (If Any)</div>
+                                                    <div class="col-md-8">{{ record['gov_position'] }}</div>
+                                                  </div>
+
+                                                  <hr>
+
+                                                  <h6 class="card-title mt-2">Bank Details</h6>
+
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">IFSC Code</div>
+                                                    <div class="col-md-8">{{ record['ifsc_code'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Account Number</div>
+                                                    <div class="col-md-8">{{ record['account_number'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Bank Name</div>
+                                                    <div class="col-md-8">{{ record['bank_name'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">Account Holder Name</div>
+                                                    <div class="col-md-8">{{ record['account_holder_name'] }}</div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-4 label ">MICR Code</div>
+                                                    <div class="col-md-8">{{ record['micr'] }}</div>
+                                                  </div>
+
+                                               </div>
+
+                                              <div class="tab-pane fade" id="profile-change-password">
+                                                <h5 class="card-title">Attached Documents</h5>
+
+
+
+                                              {% if record['phd_registration_year'] < 2023 %}
+                                                    {% if record['id'] in (310, 317, 330, 348, 365, 389, 408, 415, 420, 421, 426, 440, 442, 447, 451, 480) %}
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Adhaar Card</span> / <span class="text-primary">आधार कार्ड</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile1'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile1'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Adhaar Card"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">PAN Card</span> / <span class="text-primary">पॅन कार्ड</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile2'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile2'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View PAN Card"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Domicile Certificate</span> / <span class="text-primary">अधिवास प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile3'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile3'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Domicile Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Caste Certificate</span> | <span class="text-primary">जातीचा दाखला</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile4'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile4'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Caste Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Caste Validity Certificate</span> | <span class="text-primary">जात वैधता प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile5'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile5'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Validity Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Income Certificate</span> | <span class="text-primary">उत्पन्नाचा दाखला</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile6'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile6'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Income Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">10th Marksheet & Passing Certificate</span> | <span class="text-primary">10वी मार्कशीट आणि उत्तीर्ण प्रमाणपत्रर</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile7'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile7'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View 10th Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                             <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">12th Marksheet & Passing Certificate</span> | <span class="text-primary">12वी मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile8'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile8'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View 12th Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Graduation Marksheet & Passing Certificate</span> | <span class="text-primary">पदवी मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile10'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile10'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Graduation Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Post-Graduation Marksheet & Passing Certificate</span> | <span class="text-primary">पदव्युत्तर मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile11'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile11'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Post Graduation Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">NET/SET/PET/M.Phil Marksheet & Passing Certificate</span> | <span class="text-primary">नेट/सेट/पीईटी/एम.फिल मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile12'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile12'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View NET/SET/PET/M.Phil Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm " data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                               <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Ph.D Admission Reciept</span> | <span class="text-primary">पीएच.डी प्रवेशाची पावती</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile13'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile13'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Ph.D Admission Reciept"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm " data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Guide Allotment Letter</span> | <span class="text-primary">मार्गदर्शक वाटप पत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile14'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile14'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Guide Allotment Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Guide Acceptance Letter</span> | <span class="text-primary">मार्गदर्शक स्वीकृती पत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile15'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile15'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Guide Acceptance Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                               <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Letter of Accpetance from RAC/RRC</span> | <span class="text-primary">RAC/RRC कडून मान्यतेचे पत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile16'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile16'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Letter of Acceptance from RAC/RRC"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Confirmation Letter</span> | <span class="text-primary">पुष्टीकरण पत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile17'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile17'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Research Center Joining Report</span> | <span class="text-primary">संशोधन केंद्र जॉईनिंग रिपोर्ट</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile18'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile18'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Annexure <span class="text-danger">A</span> (on INR 100 Stamp Paper) & Annexure <span class="text-danger">C</span></span> | <span class="text-primary">परिशिष्ट A (INR 100 स्टॅम्प पेपरवर) आणि परिशिष्ट क</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile24'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile24'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Kendra Pramukh"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Guide & H.O.D Research Common letter (Annexure <span class="text-danger">B</span>)</span> | <span class="text-primary">केंद्रप्रमुख - संयुक्त प्रमानपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile19'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile19'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Kendra Pramukh"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "> <span class="text-dark">Annexure <span class="text-danger">D</span></span> | <span class="text-primary">परिशिष्ट डी</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile26'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile26'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Kendra Pramukh"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class=" col-md-8 label "><span class="text-dark">If Disabled - Disability Certificate</span> | <span class="text-primary">अक्षम असल्यास - अपंगत्व प्रमाणपत्र</span></div>
+                                                                <div class=" col-md-4">
+                                                                  {% if record['documentfile20'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile20'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Disability Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Change in Name - Gazzette</span> | <span class="text-primary">नावात बदल - राजपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile21'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile21'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Self Written Certificate of not getting scholarship from anywhere</span> | <span class="text-primary">कुठूनही शिष्यवृत्ती न मिळाल्याची प्रतिज्ञा पत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile22'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile22'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Acknowledgement of not getting scholarship from anywhere"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Research Synopsis/ Research Center Allotment letter</span> | <span class="text-primary">संशोधन सारांश/ संशोधन केंद्र वाटप पत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile23'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile23'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Adhaar Seeding Document</span> | <span class="text-primary">आधार सीडिंग दस्तऐवज</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile9'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile9'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+                                                    {% else %}
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label ">Identity Proof | <span class="text-primary">ओळख पुरावा</div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile1'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile1'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Adhaar Card"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label ">Address Proof | <span class="text-primary">पत्ता पुरावा</div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile2'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile2'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View PAN Card"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Qualification Certificate</span> | <span class="text-primary">पात्रता प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile3'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile3'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Domicile Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Income Certificate</span> | <span class="text-primary">उत्पन्न प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile4'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile4'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Caste Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Domicile Certificate</span> | <span class="text-primary">अधिवास प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile5'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile5'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Validity Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Caste Certificate</span> | <span class="text-primary">जात प्रमाणपत्र</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile6'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile6'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View Income Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                             <div class="row align-items-center">
+                                                                <div class="col-md-8 label "><span class="text-dark">Passbook</span> | <span class="text-primary">पासबुक</span></div>
+                                                                <div class="col-md-4">
+                                                                  {% if record['documentfile8'] %}
+                                                                    <a
+                                                                      href="{{ record['documentfile8'] }}" target="_blank"
+                                                                      class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="View 12th Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                                    </a>
+                                                                  {% else %}
+                                                                    <a
+                                                                      class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                                      data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                                    </a>
+                                                                  {% endif %}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row align-items-center">
+                                                      <div class="col-md-8 label "><span class="text-dark">Validity Certificate</span> | <span class="text-primary">वैधता प्रमाणपत्र</span></div>
+                                                      <div class="col-md-4">
+                                                        {% if record['documentfile10'] %}
+                                                          <a
+                                                            href="{{ record['documentfile10'] }}" target="_blank"
+                                                            class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                            data-bs-original-title="View Graduation Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                          </a>
+                                                        {% else %}
+                                                          <a
+                                                            class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                            data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                          </a>
+                                                        {% endif %}
+                                                      </div>
+                                                    </div>
+                                                    {% endif %}
+                                              {% else %}
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Adhaar Card</span> / <span class="text-primary">आधार कार्ड</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile1'] %}
+                                                            <a
+                                                              href="{{ record['documentfile1'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Adhaar Card"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">PAN Card</span> / <span class="text-primary">पॅन कार्ड</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile2'] %}
+                                                            <a
+                                                              href="{{ record['documentfile2'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View PAN Card"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Domicile Certificate</span> / <span class="text-primary">अधिवास प्रमाणपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile3'] %}
+                                                            <a
+                                                              href="{{ record['documentfile3'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Domicile Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Caste Certificate</span> | <span class="text-primary">जातीचा दाखला</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile4'] %}
+                                                            <a
+                                                              href="{{ record['documentfile4'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Caste Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Caste Validity Certificate</span> | <span class="text-primary">जात वैधता प्रमाणपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile5'] %}
+                                                            <a
+                                                              href="{{ record['documentfile5'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Validity Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Income Certificate</span> | <span class="text-primary">उत्पन्नाचा दाखला</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile6'] %}
+                                                            <a
+                                                              href="{{ record['documentfile6'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Income Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">10th Marksheet & Passing Certificate</span> | <span class="text-primary">10वी मार्कशीट आणि उत्तीर्ण प्रमाणपत्रर</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile7'] %}
+                                                            <a
+                                                              href="{{ record['documentfile7'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View 10th Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                     <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">12th Marksheet & Passing Certificate</span> | <span class="text-primary">12वी मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile8'] %}
+                                                            <a
+                                                              href="{{ record['documentfile8'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View 12th Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Graduation Marksheet & Passing Certificate</span> | <span class="text-primary">पदवी मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile10'] %}
+                                                            <a
+                                                              href="{{ record['documentfile10'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Graduation Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Post-Graduation Marksheet & Passing Certificate</span> | <span class="text-primary">पदव्युत्तर मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile11'] %}
+                                                            <a
+                                                              href="{{ record['documentfile11'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Post Graduation Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span> No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">NET/SET/PET/M.Phil Marksheet & Passing Certificate</span> | <span class="text-primary">नेट/सेट/पीईटी/एम.फिल मार्कशीट आणि उत्तीर्ण प्रमाणपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile12'] %}
+                                                            <a
+                                                              href="{{ record['documentfile12'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View NET/SET/PET/M.Phil Marksheet & Passing Certifcate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm " data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                       <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Ph.D Admission Reciept</span> | <span class="text-primary">पीएच.डी प्रवेशाची पावती</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile13'] %}
+                                                            <a
+                                                              href="{{ record['documentfile13'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Ph.D Admission Reciept"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm " data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Guide Allotment Letter</span> | <span class="text-primary">मार्गदर्शक वाटप पत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile14'] %}
+                                                            <a
+                                                              href="{{ record['documentfile14'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Guide Allotment Letter"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Guide Acceptance Letter</span> | <span class="text-primary">मार्गदर्शक स्वीकृती पत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile15'] %}
+                                                            <a
+                                                              href="{{ record['documentfile15'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Guide Acceptance Letter"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                       <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Letter of Accpetance from RAC/RRC</span> | <span class="text-primary">RAC/RRC कडून मान्यतेचे पत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile16'] %}
+                                                            <a
+                                                              href="{{ record['documentfile16'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Letter of Acceptance from RAC/RRC"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Confirmation Letter</span> | <span class="text-primary">पुष्टीकरण पत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile17'] %}
+                                                            <a
+                                                              href="{{ record['documentfile17'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Research Center Joining Report</span> | <span class="text-primary">संशोधन केंद्र जॉईनिंग रिपोर्ट</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile18'] %}
+                                                            <a
+                                                              href="{{ record['documentfile18'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Annexure <span class="text-danger">A</span> (on INR 100 Stamp Paper) & Annexure <span class="text-danger">C</span></span> | <span class="text-primary">परिशिष्ट A (INR 100 स्टॅम्प पेपरवर) आणि परिशिष्ट क</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile24'] %}
+                                                            <a
+                                                              href="{{ record['documentfile24'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Kendra Pramukh"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Guide & H.O.D Research Common letter (Annexure <span class="text-danger">B</span>)</span> | <span class="text-primary">केंद्रप्रमुख - संयुक्त प्रमानपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile19'] %}
+                                                            <a
+                                                              href="{{ record['documentfile19'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Kendra Pramukh"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "> <span class="text-dark">Annexure <span class="text-danger">D</span></span> | <span class="text-primary">परिशिष्ट डी</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile26'] %}
+                                                            <a
+                                                              href="{{ record['documentfile26'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Kendra Pramukh"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class=" col-md-8 label "><span class="text-dark">If Disabled - Disability Certificate</span> | <span class="text-primary">अक्षम असल्यास - अपंगत्व प्रमाणपत्र</span></div>
+                                                        <div class=" col-md-4">
+                                                          {% if record['documentfile20'] %}
+                                                            <a
+                                                              href="{{ record['documentfile20'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Disability Certificate"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Change in Name - Gazzette</span> | <span class="text-primary">नावात बदल - राजपत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile21'] %}
+                                                            <a
+                                                              href="{{ record['documentfile21'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Self Written Certificate of not getting scholarship from anywhere</span> | <span class="text-primary">कुठूनही शिष्यवृत्ती न मिळाल्याची प्रतिज्ञा पत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile22'] %}
+                                                            <a
+                                                              href="{{ record['documentfile22'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Acknowledgement of not getting scholarship from anywhere"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                        <div class="col-md-8 label "><span class="text-dark">Research Synopsis/ Research Center Allotment letter</span> | <span class="text-primary">संशोधन सारांश/ संशोधन केंद्र वाटप पत्र</span></div>
+                                                        <div class="col-md-4">
+                                                          {% if record['documentfile23'] %}
+                                                            <a
+                                                              href="{{ record['documentfile23'] }}" target="_blank"
+                                                              class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                            </a>
+                                                          {% else %}
+                                                            <a
+                                                              class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                              data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                            </a>
+                                                          {% endif %}
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="row align-items-center">
+                                                  <div class="col-md-8 label "><span class="text-dark">Adhaar Seeding Document</span> | <span class="text-primary">आधार सीडिंग दस्तऐवज</span></div>
+                                                  <div class="col-md-4">
+                                                    {% if record['documentfile9'] %}
+                                                      <a
+                                                        href="{{ record['documentfile9'] }}" target="_blank"
+                                                        class="btn btn-theme btn-sm" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        data-bs-original-title="View Confirmation Letter"><span><i class="ri-eye-fill"></i></span>
+                                                      </a>
+                                                    {% else %}
+                                                      <a
+                                                        class="btn btn-sm bordered" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        data-bs-original-title="No Document uploaded"><span class="fw-bold text-danger">No Document Uplaoded</span>
+                                                      </a>
+                                                    {% endif %}
+                                                  </div>
+                                                </div>
+                                              {% endif %}
+
+
+                                                </div>
+
+                                            </div><!-- End Bordered Tabs -->
+                                            {% endfor %}
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <!-- Repeat for more applicants -->
-                                </div>
+                                    </section>
                             </div>
 
                         </div>

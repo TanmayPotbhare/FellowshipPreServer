@@ -22,6 +22,8 @@ def candidate_dashboard_auth(app):
         if not session.get('logged_in_from_login'):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
+        else:
+            flash('Successfully Logged in to Candidate Dashboard', 'success')
 
         email = session['email']
 
@@ -83,9 +85,6 @@ def candidate_dashboard_auth(app):
 
     @candidate_dashboard_blueprint.route('/adhaar_seeding')
     def adhaar_seeding():
-        if not session.get('logged_in_from_login'):
-            # Redirect to the admin login page if the user is not logged in
-            return redirect(url_for('adminlogin.admin_login'))
 
         email = session['email']
 

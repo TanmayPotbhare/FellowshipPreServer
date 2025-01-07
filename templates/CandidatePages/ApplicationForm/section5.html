@@ -844,24 +844,24 @@
                                             </span>
                                         </td>
                                         {% if record['section5'] == 'filled' %}
-                                                {% if record['adhaar_seed_doc'] != 'Save File' %}
-                                                    <td class="text-center">
-                                                        <a href="{{ record['adhaar_seed_doc'] }}" class="btn btn-outline-primary btn-sm"
-                                                            target="_blank">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </a>
-                                                    </td>
-                                                {% else %}
-                                                    <td class="text-center">
-                                                        <span class="text-danger">No Document Added</span>
-                                                    </td>
-                                                {% endif %}
+                                            {% if record['adhaar_seed_doc'] != 'Save File' %}
+                                                <td class="text-center">
+                                                    <a href="{{ record['adhaar_seed_doc'] }}" class="btn btn-outline-primary btn-sm"
+                                                        target="_blank">
+                                                        <i class="mdi mdi-eye"></i>
+                                                    </a>
+                                                </td>
                                             {% else %}
-                                                <td>
-                                                    <input type="file" name="adhaar_seed_doc" id="adhaar_seed_doc"
-                                                            class="form-control accept_img">
+                                                <td class="text-center">
+                                                    <span class="text-danger">No Document Added</span>
                                                 </td>
                                             {% endif %}
+                                        {% else %}
+                                            <td>
+                                                <input type="file" name="adhaar_seed_doc" id="adhaar_seed_doc"
+                                                        class="form-control accept_img">
+                                            </td>
+                                        {% endif %}
                                     </tr>
                                 {% else %}
                                     <tr>

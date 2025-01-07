@@ -10,16 +10,16 @@
                 <!-- Center Content -->
                 <div class="text-center">
                     <div class="profile-avata">
-                        {% for row in records %}
-                            {% set fullname = row['first_name'] + ' ' + row['middle_name'] + ' ' + row['last_name'] %}
-                              {% if row['applicant_photo'] %}
-                                  <img class="rounded-circle" src="{{ row['applicant_photo'] }}" alt="Avatar Image" style="height: 120px;width: 120px;">
+                        {% if records %}
+                            {% set fullname = records['first_name'] + ' ' + records['middle_name'] + ' ' + records['last_name'] %}
+                              {% if records['applicant_photo'] %}
+                                  <img class="rounded-circle" src="{{ records['applicant_photo'] }}" alt="Avatar Image" style="height: 120px;width: 120px;">
                               {% else %}
                                   <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
                               {% endif %}
                               <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
-                              <span class="d-block">{{ row['email'] }}</span>
-                        {% endfor %}
+                              <span class="d-block">{{ records['email'] }}</span>
+                        {% endif %}
                     </div>
                 </div>
           </div>
@@ -28,23 +28,30 @@
           </div>
           <div class="card-body">
             <div class="applicant-cards">
-                {% for row in records %}
-                  <h6 class="mb-3">Application Submitted Date: <span class="text-muted">{{ row['application_date'] }}</span></h6>
-                {% endfor %}
+                {% if records %}
+                  <h6 class="mb-3">Application Submitted Date: <span class="text-muted">{{ records['application_date'] }}</span></h6>
+                {% endif %}
                 <div class="card mb-3">
                     <div class="card-body d-flex flex-column align-items-start">
                         <div class="col-md-12">
-                            {% for row in records %}
-                                {% set assessment_report = row['assessment_report'] %}
-                                {% set assessment_date = row['assessment_report_date'] %}
+                            {% if records %}
+                                {% set assessment_report = records['assessment_report'] %}
 
-                                {% if assessment_report and assessment_date %}
+                                {% if assessment_report  %}
                                     <div class="row mt-5">
                                         <div class="col-md-3">
-                                            <label>Assessment Date</label>
+                                            <label>Assessment Report Uploaded Date</label>
                                         </div>
                                         <div class="col-md-9">
-                                            <span>{{ assessment_date }}</span>
+                                            <span>{{ records['assessment_report_uploaded_date'] }}</span> (Format YYYY-MM-DD)
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-3">
+                                            <label>Assessment Report Uploaded Time</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span>{{ records['assessment_report_uploaded_time'] }}</span> (Format HH:MM:SS)
                                         </div>
                                     </div>
                                     <div class="row mt-5">
@@ -54,36 +61,28 @@
                                         <div class="col-md-9">
                                             <span>
                                                 <a href="{{ assessment_report }}" target="_blank"
-                                                   class="btn btn-outline-primary">View Report</a>
+                                                   class="btn btn-primary btn-sm">View Report</a>
                                             </span>
                                         </div>
                                     </div>
                                 {% else %}
-                                    <form action="#" method="POST">
-                                        <div class="row mt-5">
-                                            <div class="col-md-3">
-                                                <label>Assessment Date</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="date" name="age" id="joining_report" class="form-control" value=""
-                                                       placeholder="Enter your Date of Birth">
-                                            </div>
-                                        </div>
+                                    <form action="/assessment_report_submit" method="POST" enctype="multipart/form-data">
                                         <div class="row mt-5">
                                             <div class="col-md-3">
                                                 <label>Assessment Report</label>
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="file" name="age" id="age" class="form-control" value=""
+                                                <input type="file" name="assessment_report" id="assessment_report"
+                                                       class="form-control"
                                                        placeholder="Enter your Date of Birth">
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-sm mt-3">Submit Joining Report</button>
+                                            <button type="submit" class="btn btn-primary btn-sm mt-3">Submit Assessment Report</button>
                                         </div>
                                     </form>
                                 {% endif %}
-                            {% endfor %}
+                            {% endif %}
 
                         </div>
                     </div>

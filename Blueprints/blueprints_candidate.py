@@ -9,6 +9,7 @@ from PythonFiles.CandidatePages.ApplicationForm.section5 import section5_bluepri
 from PythonFiles.CandidatePages.ApplicationForm.application_form_pdf import app_pdf_blueprint, app_pdf_auth
 
 from PythonFiles.CandidatePages.joining_report import joining_report_blueprint, joining_report_auth
+from PythonFiles.CandidatePages.presenty_report import presenty_blueprint, presenty_auth
 from PythonFiles.CandidatePages.undertaking_report import undertaking_report_blueprint, undertaking_report_auth
 from PythonFiles.CandidatePages.assessment_report import assessment_report_blueprint, assessment_report_auth
 from PythonFiles.CandidatePages.withdraw_fellowship import withdraw_fellowship_blueprint, withdraw_fellowship_auth
@@ -60,6 +61,10 @@ def candidate_blueprints(app, mail):
     # Candidate Joining Report
     joining_report_auth(app)
     app.register_blueprint(joining_report_blueprint)
+
+    # Candidate Presenty Report
+    presenty_auth(app)
+    app.register_blueprint(presenty_blueprint)
 
     # Candidate Undertaking Report
     undertaking_report_auth(app)
