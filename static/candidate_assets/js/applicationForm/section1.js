@@ -15,7 +15,7 @@ function validateName(input) {
     if (!englishOnlyPattern.test(input.value)) {
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Langauge Detected',
+            title: 'Invalid Langauge Detected!',
             text: 'Please enter the Topic of Ph.D in English only. If the topic is in Marathi, Please translate and then enter the text.'
         });
         $(this).val('')
@@ -24,23 +24,33 @@ function validateName(input) {
 }
 // -------------------------------------------------------
 
-// --------- Mobile Number on on Section 1 -------------------
+// --------- Mobile Number on Section 1 -------------------
 function validateMobileNumber(input) {
     // Remove any non-numeric characters
     input.value = input.value.replace(/[^0-9]/g, '');
 
-    // Limit the input to 10 digits
+    // Allow integers only upto 10 digits
     if (input.value.length > 10) {
         input.value = input.value.slice(0, 10);
     }
-    // Check if the first digit is 7, 8, or 9
-    if (input.value.length > 0 && !/^[789]/.test(input.value)) {
+    // Mobile Number should start with 7, 8, or 9.
+    if (input.value.length === 10) {
+        if (!/^[789]/.test(input.value)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Number Detected!',
+                text: 'Mobile Number should start with 7, 8, or 9.'
+            });
+            input.value = ''; 
+        }
+    } else if (input.value.length > 0 && input.value.length < 10) {
+        // If digits are less than 10
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Number Detected',
-            text: 'Mobile Number should not start with any other digit than 7, 8 or 9.'
+            title: 'Incomplete Number!',
+            text: 'Mobile Number must be exactly 10 digits.'
         });
-        input.value = ''; // Clear the input if invalid
+        input.value = ''; 
     }
 }
 // -------------------------------------------------------
@@ -60,7 +70,7 @@ function checkAadhaarOnChange(input) {
     if (input.value.length === 12 && /^[01]/.test(input.value)) {
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Number Detected',
+            title: 'Invalid Number Detected!',
             text: 'Please enter valid Adhaar Number. Adhaar Number cannot start with 0, 1 or 2.'
         });
         input.value = ''; // Clear the input if invalid
@@ -69,7 +79,7 @@ function checkAadhaarOnChange(input) {
     if (input.value.length !== 12) {
         Swal.fire({
             icon: 'info',
-            title: 'Invalid Number Detected',
+            title: 'Invalid Number Detected!',
             text: 'Please enter valid Adhaar Number. Adhaar Number has to be 12 digits without spaces.'
         });
         input.focus(); // Focus back on the input field
@@ -79,7 +89,7 @@ function checkAadhaarOnChange(input) {
     if (/^(\d)\1{11}$/.test(input.value)) {
         Swal.fire({
             icon: 'info',
-            title: 'Invalid Number Detected',
+            title: 'Invalid Number Detected!',
             text: 'Aadhaar number cannot have all identical digits.'
         });
         input.value = ''; // Clear the input if all digits are identical
@@ -118,7 +128,7 @@ function calculateAge(input) {
     if (isNaN(enteredDate.getTime())) {
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Date Format',
+            title: 'Invalid Date Format!',
             text: 'Please enter a valid date in the format YYYY-MM-DD.'
         });
         input.value = ''; // Clear the input if the date is invalid
@@ -131,7 +141,7 @@ function calculateAge(input) {
     if (enteredDate > today) {
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Date',
+            title: 'Invalid Date!',
             text: 'Date cannot be greater than today\'s date.'
         });
         input.value = ''; // Clear the input if the date is invalid
@@ -152,7 +162,7 @@ function calculateAge(input) {
     if (age > 42) {
         Swal.fire({
             icon: 'error',
-            title: 'Age Criteria Not Met',
+            title: 'Age Criteria Not Met!',
             text: 'Age allowed for getting the fellowship is 42. Unfortunately, you do not match the criteria.'
         });
         input.value = ''; // Clear the input if the age is invalid
@@ -163,7 +173,7 @@ function calculateAge(input) {
     if (age < 15) {
         Swal.fire({
             icon: 'error',
-            title: 'Age Criteria Not Met',
+            title: 'Age Criteria Not Met!',
             text: 'Unfortunately, you do not match the criteria.'
         });
         input.value = ''; // Clear the input if the age is invalid
@@ -198,8 +208,10 @@ function toggleAdditionalField(select) {
 
     if (select.value === 'Yes') {
         additionalField.classList.remove('d-none'); // Show field
+        inputField.setAttribute('required', 'required');
     } else {
         additionalField.classList.add('d-none'); // Hide field
+        inputField.removeAttribute('required');
         inputField.value = ''; // Clear input field
     }
 }
@@ -218,20 +230,20 @@ $('#caste').on('change', function () {
 })
 // ---------------- END Subcastes on Caste ----------------------------
 
-
-// ---------------- To Pincode and Village Autopopulate ----------------------------
+// ------------------------------- START PERMANENT ADDRESS ---------------------------------------
 // This function is for Sub Caste
 $('#pincode').on('blur', function () {
     $('#village').empty()
     $('#village').append(`<option value = '' class = 'spinner-border' role="status">
     <span class="sr-only">Loading...</span> </option>`)
     let pincode = $(this).val();
-    if ($(this).val() == '' || $(this).val().length < 6) {
+    if ($(this).val() == '' || $(this).val().length < 6 || $(this).val().length > 6 ) {
         Swal.fire({
             title: "Wrong Pincode",
-            text: "Please Enter 6 digits Pincode",
+            text: "Please Enter 6 digit Pincode",
             icon: "info"
         });
+        $(this).val('')
         return
     }
     if (pincode[0] == 0) {
@@ -304,8 +316,102 @@ $('#village').on('change', function () {
         }
     })
 })
-// -------------------- END Pincode and Village Autopopulate --------------
+// ------------------------------- END PERMANENT ADDRESS ---------------------------------------
 
+// ------------------------------- START COMMUNICATION ADDRESS ---------------------------------------
+// Auto-Populate the Communication Address details based on the Communication Pinode entered
+$('#comm_pincode').on('blur', function () {
+
+    /** This function will the fetch the Communication Village List that have the pincode that is 
+        entered in Communication Pincode */
+
+    $('#comm_village').empty()
+    $('#comm_village').append(`<option value = '' class = 'spinner-border' role="status">
+    <span class="sr-only">Loading...</span> </option>`)
+    let pincode = $(this).val();
+    if ($(this).val() == '' || $(this).val().length < 6 || $(this).val().length > 6 ) {
+        Swal.fire({
+            title: "Wrong Pincode",
+            text: "Please Enter 6 digit Pincode",
+            icon: "info"
+        });
+        $(this).val('')
+        return
+    }
+    if (pincode[0] == 0) {
+        Swal.fire({
+            title: "Wrong Pincode",
+            text: "Enter Correct piconde",
+            icon: "info"
+        });
+        $(this).val('')
+        return
+    }
+
+    $.ajax({
+        url: "/get_pincode_data",
+        type: "GET",
+        data: { 'pincode': pincode },
+        success: function (html) {
+            $('#comm_village').empty()
+            if (html.Message == 'No records found') {
+                Swal.fire({
+                    title: "Wrong Pincode",
+                    text: "Please Enter Correct Pincode",
+                    icon: "info"
+                });
+            } else {
+
+                let PostOffice = html.result
+                $('#comm_village').append(`<option value = ''> -- Select Village -- </option>`)
+                $(PostOffice).each(function (index, post_val) {
+                    $('#comm_village').append(`<option value = '${post_val.postalLocation}' data-hidden = '${post_val.id}'>${post_val.postalLocation}</option>`)
+                })
+            }
+        },
+        error: function (jqxhr, textStatus, error) {
+        }
+    });
+});
+
+
+// On change of Communication Village get all village data
+$('#comm_village').on('change', function () {
+
+   /** This function will the fetch the Communication Taluka, Communication District and Communication State 
+       based on the Communication Village selected */ 
+
+    village_name = $('option:selected', this).attr('data-hidden');
+    pincode = $('#comm_pincode').val()
+    //AJAX request to fetch data based on the selected Communication Village and Communication Pincode
+    $.ajax({
+        url: "/get_pincode_data",
+        type: "GET",
+        data: { 'pincode': pincode },
+        success: function (html) {
+            if (html.Message == 'No records found') {
+                Swal.fire({
+                    title: "Wrong Pincode",
+                    text: "Please Enter Correct Pincode",
+                    icon: "info"
+                });
+            } else {
+                let PostOffice = html.result
+                $(PostOffice).each(function (index, post_val) {
+                    if (post_val.id == village_name) {
+                        $('#comm_taluka').val(post_val.province)
+                        $('#commm_ity').val(post_val.district)
+                        $('#comm_district').val(post_val.district)
+                        $('#comm_state').val(post_val.state)
+                    }
+                })
+            }
+        },
+        error: function (jqxhr, textStatus, error) {
+        }
+    })
+})
+// ------------------------------- END COMMUNICATION ADDRESS ---------------------------------------
 
 // -------------------- Auto populate communciation address on Tick --------------
 document.getElementById('flexCheckIndeterminate').addEventListener('change', function () {
@@ -338,10 +444,12 @@ document.getElementById('flexCheckIndeterminate').addEventListener('change', fun
         // Disable Communication Address Fields
         communicationAddress.readOnly = true;
         communicationPincode.readOnly = true;
-        communicationVillage.readOnly = true;
         communicationTaluka.readOnly = true;
         communicationDistrict.readOnly = true;
         communicationState.readOnly = true;
+        
+        permanentAddress.readOnly = true;
+        permanentPincode.readOnly = true;
     } else {
         // Clear and Enable Communication Address Fields
         communicationAddress.value = '';
@@ -351,12 +459,13 @@ document.getElementById('flexCheckIndeterminate').addEventListener('change', fun
         communicationDistrict.value = '';
         communicationState.value = '';
 
-        communicationAddress.readOnly = true;
-        communicationPincode.readOnly = true;
-        communicationVillage.readOnly = true;
-        communicationTaluka.readOnly = true;
-        communicationDistrict.readOnly = true;
-        communicationState.readOnly = true;
+        communicationAddress.readOnly = false;
+        communicationPincode.readOnly = false;
+        communicationVillage.readOnly = false;
+
+        permanentAddress.readOnly = false;
+        permanentPincode.readOnly = false;
+        
     }
 });
 
