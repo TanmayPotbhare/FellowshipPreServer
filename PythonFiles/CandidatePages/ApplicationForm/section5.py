@@ -82,7 +82,7 @@ def section5_auth(app):
             return redirect(url_for('login_signup.login'))
 
         email = session['email']
-        print('I am here', email)
+        # print('I am here', email)
         host = HostConfig.host
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
@@ -219,10 +219,11 @@ def section5_auth(app):
             sql = """
                 UPDATE application_page 
                 SET 
-                    applicant_id = %s, form_filled = %s, application_form_status = %s, application_date = %s, application_time = %s
+                    applicant_id = %s, form_filled = %s, application_form_status = %s, application_date = %s, 
+                    application_time = %s, approved_for=%s
                 WHERE email = %s
             """
-            values = (applicant_id, form_filled, application_form_status, current_date, current_time, email)
+            values = (applicant_id, form_filled, application_form_status, current_date, current_time, year, email)
 
             cursor.execute(sql, values)
             cnx.commit()

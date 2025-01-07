@@ -1,7 +1,7 @@
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash, Response
 from PythonFiles.AdminPages.PDFfile import *
-
+import datetime
 
 fellowship_awarded_blueprint = Blueprint('fellowship_awarded', __name__)
 
@@ -29,14 +29,7 @@ def fellowship_awarded_auth(app):
                     SELECT * 
                     FROM application_page 
                     WHERE final_approval = 'accepted' 
-                      AND phd_registration_year >= '2023'
-
-                    UNION
-
-                    SELECT * 
-                    FROM application_page 
-                    WHERE phd_registration_year > '2020' 
-                      AND aadesh = 1; 
+                    AND approved_for = 2023; 
 
             """
         cursor.execute(sql)
@@ -129,5 +122,79 @@ def fellowship_awarded_auth(app):
 
         return response
 
+    @fellowship_awarded_blueprint.route('/award_fellowships/<int:id>', methods=['GET', 'POST'])
+    def award_fellowships(id):
+        # applicant_id = request.view_args['applicant_id']
+        # print(applicant_id)
+        # Initialize database connection
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect(use_dict=True)
 
+        try:
+            # Fetch the record based on ID
+            sql = """SELECT * FROM application_page WHERE id = %s"""
+            cursor.execute(sql, (id,))
+            records = cursor.fetchone()
+
+            # print('Recor?ds', records)
+
+            # Handle case where no record is found
+            if not records:
+                flash("Record not found.", "error")
+                return redirect(url_for('fellowship_awarded.fellowship_awarded'))
+
+            # Extract email from the fetched record
+            email = records['email']
+
+            if request.method == 'POST':
+                # Handle POST request
+                accepted_list = request.form['accepted_list']
+
+                fellowship_awarded_date = request.form['fellowship_awarded_date']
+                fellowship_awarded_year = request.form['fellowship_awarded_year']
+                year = request.form['year']
+                case_number = request.form['case_number']
+                desk_number = request.form['desk_number']
+                unique_id = request.form['unique_id']
+
+                outward_number = f"Research-{year}/Case.No {case_number}/Desk-{desk_number}/{unique_id}"
+
+                # Get current date and time
+                # n?ow = datetime.datetime.now()
+                current_date = datetime.datetime.now().strftime('%Y-%m-%d')  # Fixed format for date
+                current_time = datetime.datetime.now().strftime('%H:%M:%S')  # Fixed format for time
+
+                # Update the record
+                update_query = """
+                    UPDATE application_page 
+                    SET accepted_list=%s, fellowship_awarded_date=%s,
+                        fellowship_awarded_year=%s, outward_number=%s, joining_date=%s, fellowship_awarded=%s,
+                        awardletter_awarded_date=%s, awardletter_awarded_time=%s
+                    WHERE email = %s
+                """
+                cursor.execute(update_query,
+                               (accepted_list, fellowship_awarded_date, fellowship_awarded_year, outward_number,
+                                fellowship_awarded_date, 'Awarded', current_date, current_time, email))
+                cnx.commit()
+
+                # Set session and redirect
+                # session['change_center'] = True
+                flash("Award Letter has been awarded to the student successfully.", "success")
+                return redirect(url_for('fellowship_awarded.fellowship_awarded'))
+
+            else:
+                # Redirect for non-POST requests
+                return redirect(url_for('fellowship_awarded.fellowship_awarded'))
+
+        except Exception as e:
+            # Log the exception (optional)
+            print(f"Error: {e}")
+            flash("An error occurred. Please try again.", "error")
+            return redirect(url_for('fellowship_awarded.fellowship_awarded'))
+
+        finally:
+            # Ensure connection is closed
+            cursor.close()
+            cnx.close()
 
