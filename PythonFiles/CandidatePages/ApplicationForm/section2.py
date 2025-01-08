@@ -32,8 +32,10 @@ def section2_auth(app):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
 
-        if session.get('show_flash', True):  # Retrieve and clear the flag
+        if session.get('show_flash_section1', True):  # Retrieve and clear the flag
             flash('Profile section has been successfully saved.', 'success')
+            # set the flag to "False" to prevent the flash message from being diaplayed repetitively displayed
+            session['show_flash_section1'] = False
 
         email = session['email']
 
@@ -64,9 +66,13 @@ def section2_auth(app):
 
             signup_record = record['email']
 
+            if record['phd_registration_date']:
             # Convert the Date to standard Format 
-            DoB = record['phd_registration_date'] 
-            formatted_phd_reg_date = DoB.strftime('%d-%b-%Y')
+                DoB = record['phd_registration_date'] 
+                formatted_phd_reg_date = DoB.strftime('%d-%b-%Y')
+            else:
+                formatted_phd_reg_date = None
+                     
 
             return render_template('CandidatePages/ApplicationForm/section2.html', record=record, university_data=university_names,
                                    finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
@@ -186,7 +192,7 @@ def section2_auth(app):
 
                 cursor.execute(sql, values)
                 cnx.commit()
-                session['show_flashed'] = True
+                session['show_flashed_section2'] = True
                 return redirect(url_for('section3.section3'))
                 # Check if the user is approved for fellowship no matter the year to show the desired sidebar.
         print('I am here')

@@ -174,7 +174,7 @@ def section1_auth(app):
 
                 cursor.execute(sql, values)
                 cnx.commit()
-                session['show_flash'] = True
+                session['show_flash_section1'] = True
                 return redirect(url_for('section2.section2'))
                 # Check if the user is approved for fellowship no matter the year to show the desired sidebar.
         else:

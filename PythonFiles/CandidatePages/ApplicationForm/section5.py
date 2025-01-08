@@ -31,9 +31,11 @@ def section5_auth(app):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
 
-        if session.get('show_flashedd', True):  # Retrieve and clear the flag
-            flash('Qualification section has been successfully saved.', 'success')
-
+        if session.get('show_flashed_section4', True):  # Retrieve and clear the flag
+            flash('Bank Details section has been successfully saved.', 'success')
+            # set the flag to "False" to prevent the flash message from being diaplayed repetitively displayed
+            session['show_flashed_section4'] = False 
+            
         email = session['email']
 
         host = HostConfig.host
