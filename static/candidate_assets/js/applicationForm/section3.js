@@ -14,7 +14,7 @@ function validateIncome() {
     if (incomeInput.value.length < 4) {
         Swal.fire({
             title: "Invalid Input!",
-            text: "Income must be at least four digits.",
+            text: "Income must be atleast four digits.",
             icon: "error"
         });
         incomeInput.value = '';

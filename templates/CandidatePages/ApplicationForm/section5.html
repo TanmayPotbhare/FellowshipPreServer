@@ -830,58 +830,6 @@
                                         </td>
                                     {% endif %}
                                 </tr>
-
-                                {% if record['adhaar_seeding_doc'] %}
-                                    <tr>
-                                        <td>14</td>
-                                        <td>
-                                            <label>Adhaar Seeding Document
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="PDF Format allowed only. The PDF should be under or equal to 250KB.">
-                                                (<span class="mdi mdi-image-area text-primary">IMG</span>)
-                                            </span>
-                                        </td>
-                                        {% if record['section5'] == 'filled' %}
-                                            {% if record['adhaar_seed_doc'] != 'Save File' %}
-                                                <td class="text-center">
-                                                    <a href="{{ record['adhaar_seed_doc'] }}" class="btn btn-outline-primary btn-sm"
-                                                        target="_blank">
-                                                        <i class="mdi mdi-eye"></i>
-                                                    </a>
-                                                </td>
-                                            {% else %}
-                                                <td class="text-center">
-                                                    <span class="text-danger">No Document Added</span>
-                                                </td>
-                                            {% endif %}
-                                        {% else %}
-                                            <td>
-                                                <input type="file" name="adhaar_seed_doc" id="adhaar_seed_doc"
-                                                        class="form-control accept_img" required>
-                                            </td>
-                                        {% endif %}
-                                    </tr>
-                                {% else %}
-                                    <tr>
-                                        <td>14</td>
-                                        <td>
-                                            <label>Adhaar Seeding Document
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="PDF Format allowed only. The PDF should be under or equal to 250KB.">
-                                                (<span class="mdi mdi-image-area text-primary">IMG</span>)
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <input type="file" name="adhaar_seed_doc" id="adhaar_seed_doc"
-                                                    class="form-control accept_img">
-                                        </td>
-                                    </tr>
-                                {% endif %}
-
                             </tbody>
                           </table>
                           {% if record['section5'] == 'filled' %}
@@ -889,12 +837,12 @@
                                 <div class="form-check ms-2" style="padding:2rem;">
                                         <input class="form-check-input" type="checkbox" value="" id="verifyDetails">
                                             <label class="form-check-label" for="verifyDetails">
-                                                Please verify that the details entered in the Fourth Section are correct before submitting. You will not be able to make any edits once submitted.
+                                                Please verify that the details entered in the Last Section are correct before submitting. You will not be able to make any edits once submitted.
                                             </label>
 
                                         <input class="form-check-input" type="checkbox" value="" id="verifyDetailsHindi">
                                             <label class="form-check-label" for="verifyDetailsHindi">
-                                                कृपया चौथा विभाग सबमिट करण्यापूर्वी आपली दिलेली माहिती तपासा. एकदा सबमिट केल्यानंतर तुम्ही त्यात बदल करू शकणार नाही.
+                                                शेवटचा विभाग सबमिट करण्यापूर्वी आपली दिलेली माहिती तपासा. एकदा सबमिट केल्यानंतर तुम्ही त्यात बदल करू शकणार नाही.
                                             </label>
                                     </div>
                                 {% endif %}

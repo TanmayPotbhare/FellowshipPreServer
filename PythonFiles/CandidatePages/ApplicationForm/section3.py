@@ -31,8 +31,10 @@ def section3_auth(app):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
 
-        if session.get('show_flashed', True):  # Retrieve and clear the flag
+        if session.get('show_flashed_section2', True):  # Retrieve and clear the flag
             flash('Qualification section has been successfully saved.', 'success')
+            # set the flag to "False" to prevent the flash message from being diaplayed repetitively displayed
+            session['show_flashed_section2'] = False
 
         email = session['email']
 
@@ -153,6 +155,7 @@ def section3_auth(app):
 
                 cursor.execute(sql, values)
                 cnx.commit()
+                session['show_flashed_section3'] = True
                 return redirect(url_for('section4.section4'))
                 # Check if the user is approved for fellowship no matter the year to show the desired sidebar.
 

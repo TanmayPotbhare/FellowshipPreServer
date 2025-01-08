@@ -35,6 +35,11 @@ def section4_auth(app):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
 
+        if session.get('show_flashed_section3', True):  # Retrieve and clear the flag
+            flash('Certificate Details section has been successfully saved.', 'success')
+            # set the flag to "False" to prevent the flash message from being diaplayed repetitively displayed
+            session['show_flashed_section3'] = False
+
         email = session['email']
 
         host = HostConfig.host
@@ -134,7 +139,7 @@ def section4_auth(app):
 
                 cursor.execute(sql, values)
                 cnx.commit()
-                session['show_flashedd'] = True
+                session['show_flashed_section4'] = True
                 return redirect(url_for('section5.section5'))
                 # Check if the user is approved for fellowship no matter the year to show the desired sidebar.
         else:
