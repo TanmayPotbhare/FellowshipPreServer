@@ -82,12 +82,18 @@ def section1_auth(app):
             user = "Student"
             photo = '/static/assets/img/default_user.png'
             finally_approved = 'pending'
+            
+            if record:
+                application_form_status = record['section5']
+            else:
+               application_form_status = "Not filled"
 
             cursor.execute("SELECT * FROM signup WHERE email = %s", (email,))
             signup_record = cursor.fetchone()
 
         return render_template('CandidatePages/ApplicationForm/section1.html', record=record, all_caste=all_caste,
                                finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
+                               application_form_status=application_form_status,
                                title='Application Form (Personal Details)')
 
     @section1_blueprint.route('/section1_submit', methods=['GET', 'POST'])
