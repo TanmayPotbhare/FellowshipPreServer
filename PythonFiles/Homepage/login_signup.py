@@ -101,6 +101,7 @@ def login_auth(app, mail):
                             elif check_final_approval(email):
                                 session['final_approval'] = "accepted"
                                 session['logged_in_from_login'] = True
+                                session['show_login_flash'] = True
                                 return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                             elif is_form_filled(email):
                                 session['final_approval'] = "pending"
@@ -141,11 +142,13 @@ def login_auth(app, mail):
                         elif check_final_approval(email):
                             session['final_approval'] = "accepted"
                             session['logged_in_from_login'] = True
+                            session['show_login_flash'] = True
                             return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                         elif is_form_filled(email):
                             session['final_approval'] = "pending"
                             id = get_id_by_email(email)
                             session['logged_in_from_login'] = True
+                            session['show_login_flash'] = True
                             return redirect(url_for('candidate_dashboard.candidate_dashboard', id=id))
                         else:
                             flash('Redirecting to login closed page for 2023.', 'info')

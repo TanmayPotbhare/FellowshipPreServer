@@ -23,7 +23,10 @@ def candidate_dashboard_auth(app):
             # Redirect to the admin login page if the user is not logged in
             return redirect(url_for('login_signup.login'))
         else:
-            flash('Successfully Logged in to Candidate Dashboard', 'success')
+            if session.get('show_login_flash', True):  # Retrieve and clear the flag
+                flash('Successfully Logged in to Candidate Dashboard', 'success')
+                # set the flag to "False" to prevent the flash message from being diaplayed repetitively displayed
+                session['show_login_flash'] = False
 
         email = session['email']
 

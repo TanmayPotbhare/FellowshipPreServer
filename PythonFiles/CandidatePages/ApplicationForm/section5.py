@@ -64,7 +64,7 @@ def section5_auth(app):
 
             return render_template('CandidatePages/ApplicationForm/section5.html', record=record,
                                    finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
-                                   title='Application Form (Certificate Details)')
+                                   title='Application Form (Upload Documents)')
         else:
             user = "Student"
             photo = '/static/assets/img/default_user.png'
@@ -75,7 +75,7 @@ def section5_auth(app):
 
         return render_template('CandidatePages/ApplicationForm/section5.html', record=record,
                                finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
-                               title='Application Form (Certificate Details)')
+                               title='Application Form (Upload Documents)')
 
     @section5_blueprint.route('/section5_submit', methods=['GET', 'POST'])
     def section5_submit():

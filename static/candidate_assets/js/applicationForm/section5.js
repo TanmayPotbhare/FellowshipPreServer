@@ -106,3 +106,44 @@ $('.accept_pdf').on('change', function () {
     }
 
 })
+
+     // Enable "View" button when an image file is selected
+     function toggleViewImageButton(input, viewButtonId) {
+        var viewButton = document.getElementById(viewButtonId);
+        var file = input.files[0];
+
+        if (file && file.type.startsWith('image/')) {
+            viewButton.style.display = "inline-block"; // Show the "View" button
+        } else {
+            viewButton.style.display = "none"; // Hide if no valid file selected
+        }
+    }
+
+    // Open the selected image in a new tab
+    function openImage(fileInputId) {
+        var fileInput = document.getElementById(fileInputId);
+        if (fileInput.files[0]) {
+            var fileURL = URL.createObjectURL(fileInput.files[0]);
+            window.open(fileURL, '_blank'); // Open in a new tab
+        }
+    }
+
+    // Enable "View Document" button when a PDF file is selected
+
+    function toggleViewDocumentButton(input, viewButtonId) {
+        var viewButton = document.getElementById(viewButtonId);
+        var file = input.files[0];
+
+        if (file && file.type === 'application/pdf') {
+            viewButton.style.display = "inline-block"; // Show the "View" button
+        } else {
+            viewButton.style.display = "none"; // Hide if no valid file selected
+        }
+    }
+
+    // Open the document (PDF) in a new tab when the "View Document" button is clicked
+    function openDocument(fileInputId) {
+        var fileInput = document.getElementById(fileInputId);
+        var fileURL = URL.createObjectURL(fileInput.files[0]);
+        window.open(fileURL, '_blank'); // Open in a new tab
+    }
