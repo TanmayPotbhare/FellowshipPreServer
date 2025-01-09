@@ -9,7 +9,11 @@ from PythonFiles.CandidatePages.ApplicationForm.section5 import section5_bluepri
 from PythonFiles.CandidatePages.ApplicationForm.application_form_pdf import app_pdf_blueprint, app_pdf_auth
 
 from PythonFiles.CandidatePages.joining_report import joining_report_blueprint, joining_report_auth
+from PythonFiles.CandidatePages.installments import installments_blueprint, installments_auth
 from PythonFiles.CandidatePages.presenty_report import presenty_blueprint, presenty_auth
+from PythonFiles.CandidatePages.award_letter import award_letter_blueprint, award_letter_auth
+from PythonFiles.CandidatePages.halfyearly import halfyearly_blueprint, halfyearly_auth
+from PythonFiles.CandidatePages.hra_report import hra_report_blueprint, hra_report_auth
 from PythonFiles.CandidatePages.undertaking_report import undertaking_report_blueprint, undertaking_report_auth
 from PythonFiles.CandidatePages.assessment_report import assessment_report_blueprint, assessment_report_auth
 from PythonFiles.CandidatePages.withdraw_fellowship import withdraw_fellowship_blueprint, withdraw_fellowship_auth
@@ -65,6 +69,22 @@ def candidate_blueprints(app, mail):
     # Candidate Presenty Report
     presenty_auth(app)
     app.register_blueprint(presenty_blueprint)
+
+    # Candidate Half Yearly Report
+    halfyearly_auth(app)
+    app.register_blueprint(halfyearly_blueprint)
+
+    # Candidate Half Yearly Report
+    hra_report_auth(app)
+    app.register_blueprint(hra_report_blueprint)
+
+    # Candidate Award Letter
+    award_letter_auth(app)
+    app.register_blueprint(award_letter_blueprint)
+
+    # Candidate Installments
+    installments_auth(app)
+    app.register_blueprint(installments_blueprint)
 
     # Candidate Undertaking Report
     undertaking_report_auth(app)

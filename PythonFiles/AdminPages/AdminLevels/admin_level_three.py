@@ -1,5 +1,4 @@
 from datetime import date
-
 import mysql.connector
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 import os
@@ -87,10 +86,18 @@ def adminlevelthree_auth(app, mail):
         connect_param = ConnectParam(host)
         cnx, cursor = connect_param.connect(use_dict=True)
 
+        cursor.execute(
+            "SELECT fellowship_application_year FROM application_page WHERE applicant_id = %s",
+            (applicant_id,))
+        user_data = cursor.fetchone()
+        approved_for = user_data['fellowship_application_year']
+
         # Update the status and date components for the specified applicant ID
-        update_query = "UPDATE application_page SET final_approval = %s, final_approval_day = %s, final_approval_month = %s, final_approval_year = %s WHERE applicant_id = %s"
+        update_query = "UPDATE application_page SET final_approval = %s, final_approval_day = %s, " \
+                       "final_approval_month = %s, final_approval_year = %s, " \
+                       "approved_for=%s WHERE applicant_id = %s"
         print(update_query)
-        cursor.execute(update_query, (final_approval, day, month, year, applicant_id))
+        cursor.execute(update_query, (final_approval, day, month, year, approved_for, applicant_id))
 
         # Commit the changes to the database
         cnx.commit()

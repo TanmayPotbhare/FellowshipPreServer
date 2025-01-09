@@ -222,10 +222,10 @@ def section5_auth(app):
                 UPDATE application_page 
                 SET 
                     applicant_id = %s, form_filled = %s, application_form_status = %s, application_date = %s, 
-                    application_time = %s, approved_for=%s
+                    application_time = %s
                 WHERE email = %s
             """
-            values = (applicant_id, form_filled, application_form_status, current_date, current_time, year, email)
+            values = (applicant_id, form_filled, application_form_status, current_date, current_time, email)
 
             cursor.execute(sql, values)
             cnx.commit()
