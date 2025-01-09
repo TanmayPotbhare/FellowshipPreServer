@@ -52,8 +52,22 @@ def candidate_dashboard_auth(app):
             user = "Admin"
             photo = '/static/assets/img/default_user.png'
 
+        # Convert the Date to standard Format
+        first_record = records[0]
+        DoB = first_record['date_of_birth'] # Date of Birth
+        formatted_date_of_birth = DoB.strftime('%d-%b-%Y')   
+ 
+        application_date = first_record['application_date'] # Application Date
+        formatted_application_date = application_date.strftime('%d-%b-%Y')
+
+        PHD_reg_date = first_record['phd_registration_date'] # PHD Registration Date
+        formatted_PHD_reg_date = PHD_reg_date.strftime('%d-%b-%Y')
+
         return render_template('CandidatePages/candidate_dashboard.html', title="My Profile", records=records,
-                               user=user, photo=photo, finally_approved=finally_approved)
+                               user=user, photo=photo, finally_approved=finally_approved, 
+                               formatted_date_of_birth=formatted_date_of_birth,
+                               formatted_application_date=formatted_application_date,
+                               formatted_PHD_reg_date=formatted_PHD_reg_date)
 
     @candidate_dashboard_blueprint.route('/adhaar_seeding')
     def adhaar_seeding():
