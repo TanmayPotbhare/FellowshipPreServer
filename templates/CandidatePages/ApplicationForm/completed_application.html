@@ -24,7 +24,10 @@
                         <p><span class="text-white">Your Applicant ID: </span><strong class="text-white">{{ record['applicant_id'] }}</strong></p>
                     </div>
                     <form method="GET" action="/generate_pdf" target="_blank">
-                        <button type="submit" class="btn btn-primary btn-sm">Download Application PDF</button>
+                        <button type="submit" class="btn btn-primary btn-sm"
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top"
+                        title="Download PDF">Download Application PDF</button>
                     </form>
                 </section>
             {% endif %}

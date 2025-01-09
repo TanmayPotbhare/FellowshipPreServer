@@ -71,7 +71,7 @@ def section4_auth(app):
 
             return render_template('CandidatePages/ApplicationForm/section4.html', record=record, all_caste=all_caste,
                                    finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
-                                   title='Application Form (Personal Details)')
+                                   title='Application Form (Bank Details)')
         else:
             user = "Student"
             finally_approved = 'pending'
@@ -81,7 +81,7 @@ def section4_auth(app):
 
         return render_template('CandidatePages/ApplicationForm/section4.html', record=record, all_caste=all_caste,
                                finally_approved=finally_approved, user=user, signup_record=signup_record,
-                               title='Application Form (Personal Details)')
+                               title='Application Form (Bank Details)')
 
     @section4_blueprint.route('/section4_submit', methods=['GET', 'POST'])
     def section4_submit():

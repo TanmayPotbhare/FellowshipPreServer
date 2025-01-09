@@ -31,7 +31,7 @@
                                             Your Signature<span class="text-danger">*</span>
                                         </label>
                                         <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Make sure the image is 50KB to 100KB in Size and a JPG, PNG, JPEG before uplaoding.">
+                                            title="Make sure the image is 50KB to 100KB in Size and a JPG, PNG, JPEG before uploading.">
                                             (<span class="mdi mdi-image-area text-primary">IMG</span>)
                                         </span>
                                     </td>
@@ -39,7 +39,7 @@
                                         {% if record['signature'] %}
                                             <td class="text-center">
                                                 <a href="{{ record['signature'] }}" class="btn btn-outline-primary btn-sm"
-                                                    target="_blank">
+                                                   target="_blank">
                                                     <i class="mdi mdi-eye"></i>
                                                 </a>
                                             </td>
@@ -49,10 +49,19 @@
                                             </td>
                                         {% endif %}
                                     {% else %}
-                                         <td>
-                                            <input type="file" name="signature" id="signature"
-                                                   class="form-control accept_img" required>
-                                         </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="signature" id="signature" class="form-control accept_img" required
+                                                    onchange="toggleViewImageButton(this, 'view_signature_btn')">
+                                                <button id="view_signature_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openImage('signature')" 
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Image">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     {% endif %}
                                 </tr>
                                 <tr>
@@ -80,9 +89,18 @@
                                             </td>
                                         {% endif %}
                                     {% else %}
-                                         <td>
-                                            <input type="file" name="adhaar_card_doc" id="adhaar_card_doc"
-                                                   class="form-control accept_pdf" required>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="adhaar_card_doc" id="adhaar_card_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_adhaar_btn')">
+                                                <button id="view_adhaar_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('adhaar_card_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -111,10 +129,18 @@
                                             </td>
                                         {% endif %}
                                     {% else %}
-                                         <td>
-    <!--                                        Currently working on accept PDF-->
-                                            <input type="file" name="pan_card_doc" id="pan_card_doc"
-                                                   class="form-control accept_pdf" required>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="pan_card_doc" id="pan_card_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_PAN_btn')">
+                                                <button id="view_PAN_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('pan_card_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -143,9 +169,18 @@
                                             </td>
                                         {% endif %}
                                     {% else %}
-                                         <td>
-                                            <input type="file" name="domicile_doc" id="domicile_doc"
-                                                   class="form-control accept_pdf" required>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="domicile_doc" id="domicile_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_domicile_btn')">
+                                                <button id="view_domicile_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('domicile_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -175,8 +210,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="caste_doc" id="caste_doc"
-                                                   class="form-control accept_pdf">
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="caste_doc" id="caste_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_caste_btn')">
+                                                <button id="view_caste_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('caste_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -206,8 +250,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="validity_doc" id="validity_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="validity_doc" id="validity_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_validity_btn')">
+                                                <button id="view_validity_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('validity_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -237,8 +290,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="income_doc" id="income_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="income_doc" id="income_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_income_btn')">
+                                                <button id="view_income_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('income_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -285,8 +347,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="ssc_doc" id="ssc_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="ssc_doc" id="ssc_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_ssc_btn')">
+                                                <button id="view_ssc_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('ssc_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -316,8 +387,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="hsc_doc" id="hsc_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="hsc_doc" id="hsc_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_hsc_doc_btn')">
+                                                <button id="view_hsc_doc_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('hsc_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -347,8 +427,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="grad_doc" id="grad_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="grad_doc" id="grad_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_graduation_btn')">
+                                                <button id="view_graduation_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('grad_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -378,8 +467,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="post_grad_doc" id="post_grad_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="post_grad_doc" id="post_grad_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_post_graduation_btn')">
+                                                <button id="view_post_graduation_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('post_grad_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -409,8 +507,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="entrance_doc" id="entrance_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="entrance_doc" id="entrance_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_entrance_doc_btn')">
+                                                <button id="view_entrance_doc_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('entrance_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -457,8 +564,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="phd_reciept_doc" id="phd_reciept_doc"
-                                                   class="form-control accept_pdf" required> 
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="phd_reciept_doc" id="phd_reciept_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_phd_reciept_btn')">
+                                                <button id="view_phd_reciept_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('phd_reciept_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -488,8 +604,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="guideAllotment_doc" id="guideAllotment_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="guideAllotment_doc" id="guideAllotment_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_guideAllotment_btn')">
+                                                <button id="view_guideAllotment_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('guideAllotment_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -519,8 +644,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="guideAccept_doc" id="guideAccept_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="guideAccept_doc" id="guideAccept_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_guideAccept_btn')">
+                                                <button id="view_guideAccept_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('guideAccept_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -550,8 +684,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="rac_doc" id="rac_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="rac_doc" id="rac_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_rac_btn')">
+                                                <button id="view_rac_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('rac_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -581,8 +724,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="confirmation_doc" id="confirmation_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="confirmation_doc" id="confirmation_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_confirmation_btn')">
+                                                <button id="view_confirmation_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('confirmation_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -612,8 +764,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="joining_doc" id="joining_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="joining_doc" id="joining_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_joining_btn')">
+                                                <button id="view_joining_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('joining_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -643,8 +804,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="annexureAC_doc" id="annexureAC_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="annexureAC_doc" id="annexureAC_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_annexureAC_btn')">
+                                                <button id="view_annexureAC_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('annexureAC_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -674,8 +844,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="annexureB_doc" id="annexureB_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="annexureB_doc" id="annexureB_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_annexureB_btn')">
+                                                <button id="view_annexureB_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('annexureB_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -705,8 +884,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="annexureD_doc" id="annexureD_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="annexureD_doc" id="annexureD_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_annexureD_btn')">
+                                                <button id="view_annexureD_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('annexureD_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -734,8 +922,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="disable_doc" id="disable_doc"
-                                                   class="form-control accept_pdf">
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="disable_doc" id="disable_doc" class="form-control accept_pdf"
+                                                    onchange="toggleViewDocumentButton(this, 'view_disable_btn')">
+                                                <button id="view_disable_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('disable_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -762,9 +959,18 @@
                                             </td>
                                         {% endif %}
                                     {% else %}
-                                         <td>
-                                            <input type="file" name="gazete_doc" id="gazete_doc"
-                                                   class="form-control accept_pdf">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="gazete_doc" id="gazete_doc" class="form-control accept_pdf"
+                                                    onchange="toggleViewDocumentButton(this, 'view_gazette_btn')">
+                                                <button id="view_gazette_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('gazete_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -794,8 +1000,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="selfWritten_doc" id="selfWritten_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="selfWritten_doc" id="selfWritten_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_selfWritten_doc_btn')">
+                                                <button id="view_selfWritten_doc_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('selfWritten_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -825,8 +1040,17 @@
                                         {% endif %}
                                     {% else %}
                                         <td>
-                                            <input type="file" name="research_letter_doc" id="research_letter_doc"
-                                                   class="form-control accept_pdf" required>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="research_letter_doc" id="research_letter_doc" class="form-control accept_pdf" required
+                                                    onchange="toggleViewDocumentButton(this, 'view_research_letter_doc_btn')">
+                                                <button id="view_research_letter_doc_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
+                                                    onclick="openDocument('research_letter_doc')"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top"
+                                                    title="View Document">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     {% endif %}
                                 </tr>
