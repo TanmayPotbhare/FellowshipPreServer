@@ -87,8 +87,6 @@ def login_auth(app, mail):
                             session['applicant_photo'] = user_image[
                                 'applicant_photo'] if user_image else '/static/assets/img/default_user.png'
 
-                            if email == 'tupotbhare@gmail.com':
-                                return redirect(url_for('section1.section1'))
                             if is_withdrawn(email):
                                 flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                                 return redirect(url_for('login_signup.login'))
@@ -106,7 +104,9 @@ def login_auth(app, mail):
                             elif is_form_filled(email):
                                 session['final_approval'] = "pending"
                                 id = get_id_by_email(email)
-                                return redirect(url_for('viewform', id=id))
+                                session['logged_in_from_login'] = True
+                                session['show_login_flash'] = True
+                                return redirect(url_for('candidate_dashboard.candidate_dashboard', id=id))
                             else:
                                 flash('Redirecting to login closed page for 2023.', 'info')
                                 return redirect(url_for('section1.section1'))
@@ -127,9 +127,9 @@ def login_auth(app, mail):
                         # if email == 'pratikrasal808@gmail.com':
                         #     session['logged_in_from_login'] = True
                         #     return redirect(url_for('section1.section1'))
-                        if email == 'girish.deulkar69@gmail.com':
-                            session['logged_in_from_login'] = True
-                            return redirect(url_for('section1.section1'))
+                        # if email == 'girish.deulkar69@gmail.com':
+                        #     session['logged_in_from_login'] = True
+                        #     return redirect(url_for('section1.section1'))
                         if is_withdrawn(email):
                             flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                             return redirect(url_for('login'))
