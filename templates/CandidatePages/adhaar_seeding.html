@@ -20,7 +20,7 @@
                                   <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
                               {% endif %}
                               <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
-                              <span class="d-block">{{ row['email'] }}</span>
+                              <span class="d-block"  style="text-transform: none;">{{ row['email'] }}</span>
                           {% endfor %}
                       </div>
                   </div>
@@ -39,7 +39,7 @@
               <a class="nav-link" href="/manage_profile">Manage Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
+              <a class="nav-link" href="#">Raise Issue</a>
             </li>
           </ul>
         </div>

@@ -18,7 +18,7 @@
                                         <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
                                     {% endif %}
                                     <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
-                                    <span class="d-block">{{ row['email'] }}</span>
+                                    <span class="d-block" style="text-transform: none;">{{ row['email'] }}</span>
                                 {% endfor %}
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                 <a class="nav-link active" href="/manage_profile">Manage Profile</a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
+                                <a class="nav-link" href="#">Raise Issue</a>
                               </li>
                             </ul>
                           </div>
@@ -132,15 +132,20 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row mt-1">
-                                                            <div class="col-md-8 mt-2">
-                                                                <label>Address</label> <br>
-                                                                    <span class="mdi mdi-map-marker text-dark">
-                                                                        Taluka: {{ row['taluka'] }}, Village: {{ row['village'] }},
-                                                                        {{ row['city'] }}, {{ row['state'] }} - {{ row['pincode'] }}
-                                                                    </span>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <label>Address:</label>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <span class="mdi mdi-map-marker text-dark">
+                                                                            Village: {{ row['village'] }}, Taluka: {{ row['taluka'] }}, 
+                                                                            {{ row['city'] }}, {{ row['state'] }} - {{ row['pincode'] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                {% endfor %}
                                                             </div>
-                                                            {% endfor %}
                                                         </div>
                                                     </div>
 
