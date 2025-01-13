@@ -3,7 +3,7 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-from Classes.settings import settings_blueprint
+# from Classes.settings import settings_blueprint
 # from dotenv import load_dotenv
 # from flask_mail import Message
 import re
