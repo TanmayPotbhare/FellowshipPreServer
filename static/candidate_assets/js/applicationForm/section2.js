@@ -11,7 +11,7 @@ function validateYear(input) {
         input.value = input.value.slice(0, 4);
     }
 
-    if ( input.value.length < 4 ) {
+    if (input.value.length < 4) {
         Swal.fire({
             title: "Invalid Input!",
             text: "Please Enter 4 Passing Year",
@@ -35,7 +35,7 @@ function validateYear(input) {
             return;
         }
 
-        // Compare with previous qualification years (only with the previous qualification)
+        // Compare with all previous qualification years
         const qualificationOrder = [
             'ssc_passing_year',
             'hsc_passing_year',
@@ -46,9 +46,9 @@ function validateYear(input) {
         const inputId = input.id;
         const inputIndex = qualificationOrder.indexOf(inputId);
 
-        // Compare only with the previous field
-        if (inputIndex > 0) {
-            const prevYearField = document.getElementById(qualificationOrder[inputIndex - 1]);
+        // Loop through all previous fields
+        for (let i = 0; i < inputIndex; i++) {
+            const prevYearField = document.getElementById(qualificationOrder[i]);
             const prevYear = parseInt(prevYearField.value);
 
             // If previous year is defined and greater than the current input year, show an error
@@ -61,6 +61,7 @@ function validateYear(input) {
                 input.value = '';  // Clear input
                 return;
             }
+            // Check for duplicate passing year
             else if (prevYear === inputYear) {
                 Swal.fire({
                     icon: "error",
