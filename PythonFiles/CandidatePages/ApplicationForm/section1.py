@@ -17,6 +17,13 @@ def section1_auth(app):
         for key, value in app_paths.items():
             app.config[key] = value
 
+    @section1_blueprint.route('/app_form_info')
+    def app_form_info():
+        if not session.get('logged_in_from_login'):
+            # Redirect to the admin login page if the user is not logged in
+            return redirect(url_for('login_signup.login'))
+        return render_template('CandidatePages/app_form_info.html')
+
     @section1_blueprint.route('/get_pincode_data', methods=['GET'])
     def get_pincode_data():
         pincode_data = request.args.get('pincode')

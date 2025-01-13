@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, request, redirect, session, render_template, jsonify
+from flask import Flask, request, redirect, session, render_template, jsonify, flash, url_for
 from flask_mail import Mail
 import mysql.connector
 from Blueprints.blueprints_homepage import homepage_blueprints
@@ -53,6 +53,9 @@ cursor = cnx.cursor()
 
 
 # ------------- To Set the Session -------------
+
+
+
 @app.route('/set_session/<value>')
 def set_session(value):
     """
