@@ -12,7 +12,7 @@ from flask import Blueprint, render_template, session, request, redirect, url_fo
 # MULTILINGUAL CONTENT - FROM HOMEPAGE_FILES FOLDER
 from PythonFiles.Homepage.multilingual_content import multilingual_content
 
-load_dotenv()
+# load_dotenv()
 
 login_blueprint = Blueprint('login_signup', __name__)
 
