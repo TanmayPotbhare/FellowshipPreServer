@@ -411,7 +411,7 @@ def login_auth(app, mail):
     # -------------------------- Send Email Verification OTP ---------------
     def send_email_verification(email, first_name, otp):
         # Check if API key is set
-        if not ZEPTOMAIL_API_KEY:
+        if not app.config['ZEPTOMAIL_API_KEY']:
             raise ValueError("ZeptoMail API key is missing. Set it in the environment variables.")
 
         msg_body = f'''
