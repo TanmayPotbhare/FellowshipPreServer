@@ -3,7 +3,7 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-from Classes.settings import ZEPTOMAIL_API_KEY, ZEPTOMAIL_URL
+from Classes.settings import settings_blueprint
 # from dotenv import load_dotenv
 # from flask_mail import Message
 import re
@@ -26,8 +26,8 @@ def login_auth(app, mail):
         for key, value in app_paths.items():
             app.config[key] = value
 
-    app.config['ZEPTOMAIL_URL'] = ZEPTOMAIL_API_KEY
-    app.config['ZEPTOMAIL_API_KEY'] = ZEPTOMAIL_URL
+    app.config['ZEPTOMAIL_URL'] = "https://api.zeptomail.in/v1.1/email"
+    app.config['ZEPTOMAIL_API_KEY'] = "Zoho-enczapikey PHtE6r0PFOjriWB+oRJR5f+wR5L2No0n9O1nfwZG4tkWDKJXGk1d/tosxjO+rhZ/BvlGQPPKmd5gsOvJuuqDJm68NGgdXWqyqK3sx/VYSPOZsbq6x00asF4YdkTVVoPpdtNi0iDfuNuX"
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -541,7 +541,7 @@ def login_auth(app, mail):
         headers = {
             "accept": "application/json",
             "content-type": "application/json",
-            "authorization": f"Zoho-enczapikey {app.config['ZEPTOMAIL_API_KEY']}",
+            "authorization": app.config['ZEPTOMAIL_API_KEY'],
         }
 
         # Send the request
