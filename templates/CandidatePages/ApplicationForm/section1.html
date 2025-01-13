@@ -56,7 +56,7 @@
                                     </label>
 
                                     <input type="text" name="adhaar_number" id="adhaar_number" class="form-control mb-2"
-                                        maxlength="12" onchange="checkAadhaarOnChange(this)" required>
+                                        maxlength="12" onchange="checkAadhaarOnChange(this)" placeholder = "Enter Aadhaar Number" required>
                                     <a href="#" class="btn btn-primary btn-sm">Verify Aadhaar</a>
                                 {% endif %}
                             </div>
@@ -367,14 +367,15 @@
                             <div class="form-group">
                                 <label for="pvtg" data-bs-toggle="tooltip" data-bs-placement="top"
                                        title="Enter Pincode, all the villages will autopopulate">
-                                    Select Village <span class="text-danger">*</span>
+                                    Select Permanent Village <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section1'] == 'filled' %}
                                     <br>
                                     <span class="text-dark">{{ record['village'] }}</span>
                                 {% else %}
-                                   <select name="village" id="village" class="form-control" required>
+                                    <select id="village" name="village" class="form-control" required>
                                         <option value="" selected>-- Select Village --</option>
+                                        <!-- Village options will be populated via the API -->
                                     </select>
                                 {% endif %}
                             </div>
@@ -422,15 +423,25 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if record['section1'] == 'filled' %}
-                        <hr>
+                    {% if not record['section1'] == 'filled' %}
+                        <div class="form-check ms-2" style="padding:2rem;">
+                             <input type="hidden" name="same_address" value="No">
+                            <input 
+                                class="form-check-input" 
+                                type="checkbox" 
+                                id="sameAddress" 
+                                name="same_address" 
+                                value="Yes">
+                            <label class="form-check-label text-primary font-13" for="sameAddress" id="same_check_en">
+                                Tick if Communication Address is same as Permanent Address.
+                            </label>
+                        </div>
                     {% else %}
-                       <div class="form-check ms-2" style="padding:2rem;">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
-                          <label class="form-check-label" for="flexCheckIndeterminate">
-                              Tick if Communication Address is same as Permanent Address.
-                          </label>
+                        <div class="form-check ms-2">
+                            <label class="form-check-label text-primary font-13" for="sameAddress" id="same_check_en">
+                                Is Communication Address same as Permanent Address : <span class="text-dark">
+                                    {{ record['same_address'] }}</span>
+                            </label>
                         </div>
                     {% endif %}
 
@@ -464,18 +475,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row m-0">
+                <div class="row m-0">
                     <div class="col-md-3 mt-2">
                         <div class="form-group">
-                            <label for="comm_village">Select Village
+                            <label for="comm_village">Select Communication Village
                                 <span class="text-danger">*</span>
                             </label>
                             {% if record['section1'] == 'filled' %}
                                 <br>
                                 <span class="text-dark">{{ record['comm_village'] }}</span>
                             {% else %}
-                               <select name="comm_village" id="comm_village" class="form-control" required>
+                               <select id="comm_village" name="comm_village"  class="form-control" required>
                                     <option value="" selected>-- Select Village --</option>
+                                    <!-- Village options will be populated via the API -->
                                 </select>
                             {% endif %}
                         </div>
