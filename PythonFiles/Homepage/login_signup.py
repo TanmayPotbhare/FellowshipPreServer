@@ -3,8 +3,9 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-from dotenv import load_dotenv
-from flask_mail import Message
+from Classes.settings import settings_blueprint
+# from dotenv import load_dotenv
+# from flask_mail import Message
 import re
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
@@ -12,7 +13,7 @@ from flask import Blueprint, render_template, session, request, redirect, url_fo
 # MULTILINGUAL CONTENT - FROM HOMEPAGE_FILES FOLDER
 from PythonFiles.Homepage.multilingual_content import multilingual_content
 
-load_dotenv()
+# load_dotenv()
 
 login_blueprint = Blueprint('login_signup', __name__)
 
@@ -25,9 +26,8 @@ def login_auth(app, mail):
         for key, value in app_paths.items():
             app.config[key] = value
 
-    # Configure Flask app from environment variables
-    ZEPTOMAIL_URL = os.getenv("ZEPTOMAIL_URL")
-    ZEPTOMAIL_API_KEY = os.getenv("ZEPTOMAIL_API_KEY")
+    app.config['ZEPTOMAIL_URL'] = "https://api.zeptomail.in/v1.1/email"
+    app.config['ZEPTOMAIL_API_KEY'] = "Zoho-enczapikey PHtE6r0PFOjriWB+oRJR5f+wR5L2No0n9O1nfwZG4tkWDKJXGk1d/tosxjO+rhZ/BvlGQPPKmd5gsOvJuuqDJm68NGgdXWqyqK3sx/VYSPOZsbq6x00asF4YdkTVVoPpdtNi0iDfuNuX"
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -411,7 +411,7 @@ def login_auth(app, mail):
     # -------------------------- Send Email Verification OTP ---------------
     def send_email_verification(email, first_name, otp):
         # Check if API key is set
-        if not ZEPTOMAIL_API_KEY:
+        if not app.config['ZEPTOMAIL_API_KEY']:
             raise ValueError("ZeptoMail API key is missing. Set it in the environment variables.")
 
         msg_body = f'''
@@ -541,11 +541,11 @@ def login_auth(app, mail):
         headers = {
             "accept": "application/json",
             "content-type": "application/json",
-            "authorization": f"Zoho-enczapikey {ZEPTOMAIL_API_KEY}",
+            "authorization": app.config['ZEPTOMAIL_API_KEY'],
         }
 
         # Send the request
-        response = requests.post(ZEPTOMAIL_URL, json=payload, headers=headers)
+        response = requests.post(app.config['ZEPTOMAIL_URL'], json=payload, headers=headers)
 
     # -------------------------- Send SMS ----------------------------------
     def send_sms(mobile_number, otp):
