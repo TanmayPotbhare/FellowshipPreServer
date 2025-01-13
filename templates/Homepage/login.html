@@ -81,8 +81,9 @@
                 </div>
                     <p class="text-white text-center p-2">
                         If you encounter any queries, please contact on the given email with your login Email ID, Your Issue, & the Image related to problem you are facing -
-                        <strong><span style="background-color: yellow; color: #000000;">helpdesk@trti-maha.in</span>
-</strong>
+                        <strong>
+                            <span style="background-color: yellow; color: #000000;">helpdesk@trti-maha.in</span>
+                        </strong>
                     </p>
             </div>
         </section>
@@ -120,19 +121,11 @@
                                                 placeholder="Email Address" required="">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="text-white">Registration year</label>
+                                            <label class="text-white">Which years fellowship are you applying for?</label>
                                             <select name="year" id="year" class="form-control login-input" required>
-                                                <option value="">--- Select Registration Year ---</option>
-                                                {% if value in ['2021', '2022'] %}
-                                                    <option value="2021" disabled>2021 - 2022</option>
-                                                    <option value="2022" disabled>2022 - 2023</option>
-                                                    {# Display an error message or any other logic here #}
-                                                {% else %}
-                                                    <option value="2021">2021 - 2022</option>
-                                                    <option value="2022">2022 - 2023</option>
-                                                {% endif %}
-                                                <option value="2023">2023 - 2024</option>
-                                                <option value="2024">2024 - 2025</option>
+                                                <option value="">--- Select Application Year ---</option>
+                                                    <option value="2024">2024 - 2025</option>
+                                                    <option value="2025">2025 - 2026</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">

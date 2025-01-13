@@ -1,7 +1,9 @@
 import random
 import bcrypt
 import mysql.connector
+import os
 import requests
+from dotenv import load_dotenv
 from flask_mail import Message
 import re
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
@@ -9,6 +11,8 @@ from flask import Blueprint, render_template, session, request, redirect, url_fo
 
 # MULTILINGUAL CONTENT - FROM HOMEPAGE_FILES FOLDER
 from PythonFiles.Homepage.multilingual_content import multilingual_content
+
+load_dotenv()
 
 login_blueprint = Blueprint('login_signup', __name__)
 
@@ -20,6 +24,10 @@ def login_auth(app, mail):
     if app_paths:
         for key, value in app_paths.items():
             app.config[key] = value
+
+    # Configure Flask app from environment variables
+    ZEPTOMAIL_URL = os.getenv("ZEPTOMAIL_URL")
+    ZEPTOMAIL_API_KEY = os.getenv("ZEPTOMAIL_API_KEY")
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -91,6 +99,7 @@ def login_auth(app, mail):
                                 flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                                 return redirect(url_for('login_signup.login'))
                             elif old_user(email):
+                                # If the login user redirects from here then the Logged section is true.
                                 session['logged_in_from_login'] = True
                                 return redirect(url_for('old_user_preview'))
                             elif new_applicant_incomplete_form(email):
@@ -124,35 +133,34 @@ def login_auth(app, mail):
                         session['applicant_photo'] = user_image[
                             'applicant_photo'] if user_image else '/static/assets/img/default_user.png'
 
-                        if email == 'pratikrasal808@gmail.com':
-                            session['logged_in_from_login'] = True
-                            return redirect(url_for('section1.section1'))
-                        # if email == 'girish.deulkar69@gmail.com':
-                        #     session['logged_in_from_login'] = True
-                        #     return redirect(url_for('section1.section1'))
                         if is_withdrawn(email):
                             flash('You have withdrawn from Fellowship. Please contact us.', 'error')
                             return redirect(url_for('login'))
                         elif old_user(email):
                             session['logged_in_from_login'] = True
                             return redirect(url_for('old_user_preview'))
-                        elif new_applicant_incomplete_form(email):
-                            flash('Your form is incomplete.', 'error')
-                            return redirect(url_for('section1.section1'))
+                        elif new_applicant_incomplete_form(email) == '2024':
+                            print('I am here 1')
+                            session['logged_in_from_login'] = True
+                            return redirect(url_for('section1.app_form_info'))
                         elif check_final_approval(email):
+                            print('I am here 2')
                             session['final_approval'] = "accepted"
                             session['logged_in_from_login'] = True
                             session['show_login_flash'] = True
                             return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                         elif is_form_filled(email):
+                            print('I am here 3')
                             session['final_approval'] = "pending"
                             id = get_id_by_email(email)
                             session['logged_in_from_login'] = True
                             session['show_login_flash'] = True
                             return redirect(url_for('candidate_dashboard.candidate_dashboard', id=id))
                         else:
-                            flash('Redirecting to login closed page for 2023.', 'info')
-                            return redirect(url_for('section1.section1'))
+                            print('I am here 4')
+                            flash('Logged in Succesfully.', 'success')
+                            session['logged_in_from_login'] = True
+                            return redirect(url_for('section1.app_form_info'))
                             # return redirect(url_for('login_closed_2023'))
                     else:
                         flash('Invalid password. Please try again.', 'error')
@@ -204,7 +212,7 @@ def login_auth(app, mail):
               SELECT *
             FROM signup
             WHERE email = %s
-              AND year IN ('2020', '2021', '2022') AND email NOT IN(SELECT email
+              AND year IN ('2020', '2021', '2022', '2023') AND email NOT IN(SELECT email
             FROM application_page)
 
         """
@@ -226,19 +234,18 @@ def login_auth(app, mail):
         """
         host = HostConfig.host
         connect_param = ConnectParam(host)
-        cnx, cursor = connect_param.connect()
+        cnx, cursor = connect_param.connect(use_dict=True)
         sql = """
-                SELECT phd_registration_year, form_filled
-                FROM application_page
-                WHERE email = %s
-                  AND phd_registration_year >= 2023
-                  AND (form_filled = 0 OR form_filled IS NULL);
+                SELECT year
+                FROM signup
+                WHERE email = %s;
         """
         cursor.execute(sql, (email,))
         result = cursor.fetchone()
+        # print(result)
         cursor.close()
         cnx.close()
-        return result is not None
+        return result['year'] is not None
 
     # -------------------- Check for Finally Approved Students ---------------
     def check_final_approval(email):  # ----------- CHECK IF USER IS FINALLY APPROVED
@@ -309,6 +316,7 @@ def login_auth(app, mail):
             session.pop('email', None)
             session.pop('user_name', None)
             session.pop('final_approval', None)
+            session.pop('logged_in_from_login', None)
             session.clear()
             return redirect(url_for('login_signup.login'))  # Redirect to the login page after logout
         else:
@@ -373,7 +381,7 @@ def login_auth(app, mail):
                     'mobile_number': mobile_number
                 }
 
-                # send_email_verification(email, first_name, otp)
+                send_email_verification(email, first_name, otp)
 
                 send_sms(mobile_number, otp)
 
@@ -402,6 +410,10 @@ def login_auth(app, mail):
 
     # -------------------------- Send Email Verification OTP ---------------
     def send_email_verification(email, first_name, otp):
+        # Check if API key is set
+        if not ZEPTOMAIL_API_KEY:
+            raise ValueError("ZeptoMail API key is missing. Set it in the environment variables.")
+
         msg_body = f'''
                    <!DOCTYPE html>
     <html lang="en">
@@ -511,9 +523,29 @@ def login_auth(app, mail):
         </table>
 
                '''
-        msg = Message('Verify Email', sender='noreply_fellowship@trti-maha.in', recipients=[email])
-        msg.html = msg_body
-        mail.send(msg)
+        payload = {
+            "from": {"address": "noreply_fellowship@trti-maha.in"},
+            "to": [
+                {
+                    "email_address": {
+                        "address": email,
+                        "name": first_name
+                    }
+                }
+            ],
+            "subject": "Verify Email",
+            "htmlbody": msg_body
+        }
+
+        # Headers
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json",
+            "authorization": f"Zoho-enczapikey {ZEPTOMAIL_API_KEY}",
+        }
+
+        # Send the request
+        response = requests.post(ZEPTOMAIL_URL, json=payload, headers=headers)
 
     # -------------------------- Send SMS ----------------------------------
     def send_sms(mobile_number, otp):
@@ -561,8 +593,8 @@ def login_auth(app, mail):
                 registration_data['password'],
                 registration_data['confirm_password'],
                 registration_data['year'],
-                registration_data['mobile_number'],
-                registration_data['unique_id']
+                registration_data['unique_id'],
+                registration_data['mobile_number']
             )
 
             # Execute the SQL statement with the data
@@ -601,3 +633,4 @@ def login_auth(app, mail):
     # ---------------------------------
     #         END SIGN UP ROUTE
     # ---------------------------------
+
