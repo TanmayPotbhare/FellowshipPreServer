@@ -111,7 +111,7 @@ def section1_auth(app):
         # Check if a record already exists for this user
         cursor.execute("SELECT applicant_photo, adhaar_number, adhaar_seeding, first_name, final_approval,"
                        "middle_name, last_name, mobile_number, email, date_of_birth, gender, age, caste, your_caste, subcaste,"
-                       "pvtg, pvtg_caste, marital_status, add_1, add_2, pincode, village, taluka, district, state, city"
+                       "pvtg, pvtg_caste, marital_status, same_address, add_1, add_2, pincode, village, taluka, district, state, city"
                        " FROM application_page WHERE email = %s", (email,))
         record = cursor.fetchone()
 
@@ -143,6 +143,7 @@ def section1_auth(app):
             taluka = request.form['taluka']
             district = request.form['district']
             state = request.form['state']
+            same_address = request.form['same_address']
             comm_add_1 = request.form['comm_add_1']
             comm_pincode = request.form['comm_pincode']
             comm_village = request.form['comm_village']
@@ -161,12 +162,12 @@ def section1_auth(app):
                 INSERT INTO application_page (
                     applicant_photo, adhaar_number, adhaar_seeding_doc, first_name, middle_name, last_name, 
                     mobile_number, email, date_of_birth, gender, age, caste, pvtg, pvtg_caste, your_caste, 
-                    subcaste, marital_status, add_1, pincode, village, taluka, district, state, 
+                    subcaste, marital_status, add_1, pincode, village, taluka, district, state, same_address,
                     comm_add_1, comm_pincode, comm_village, comm_taluka, comm_district, comm_state, section1
                 ) VALUES (
                     %s, %s, %s, %s, %s, %s, 
                     %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-                    %s, %s, %s, %s, %s, %s, %s, %s, 
+                    %s, %s, %s, %s, %s, %s, %s, %s, %s,  
                     %s, %s, %s, %s, %s, %s, %s
                 )
                 """
@@ -174,7 +175,7 @@ def section1_auth(app):
                 values = (
                     photo_path, adhaar_number, adhaar_path, first_name, middle_name, last_name,
                     mobile_number, email, date_of_birth, gender, age, category, pvtg, pvtg_caste, caste,
-                    subcaste, marital_status, add_1, pincode, village, taluka, district, state,
+                    subcaste, marital_status, add_1, pincode, village, taluka, district, state, same_address,
                     comm_add_1, comm_pincode, comm_village, comm_taluka, comm_district, comm_state, section1
                 )
 
