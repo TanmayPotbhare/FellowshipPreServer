@@ -3,8 +3,9 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-from dotenv import load_dotenv
-from flask_mail import Message
+import Classes.settings
+# from dotenv import load_dotenv
+# from flask_mail import Message
 import re
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
@@ -25,9 +26,8 @@ def login_auth(app, mail):
         for key, value in app_paths.items():
             app.config[key] = value
 
-    # Configure Flask app from environment variables
-    ZEPTOMAIL_URL = os.getenv("ZEPTOMAIL_URL")
-    ZEPTOMAIL_API_KEY = os.getenv("ZEPTOMAIL_API_KEY")
+    app.config['ZEPTOMAIL_URL'] = Classes.settings.ZEPTOMAIL_URL
+    app.config['ZEPTOMAIL_API_KEY'] = Classes.settings.ZEPTOMAIL_API_KEY
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -541,11 +541,11 @@ def login_auth(app, mail):
         headers = {
             "accept": "application/json",
             "content-type": "application/json",
-            "authorization": f"Zoho-enczapikey {ZEPTOMAIL_API_KEY}",
+            "authorization": f"Zoho-enczapikey {app.config['ZEPTOMAIL_API_KEY']}",
         }
 
         # Send the request
-        response = requests.post(ZEPTOMAIL_URL, json=payload, headers=headers)
+        response = requests.post(app.config['ZEPTOMAIL_URL'], json=payload, headers=headers)
 
     # -------------------------- Send SMS ----------------------------------
     def send_sms(mobile_number, otp):
