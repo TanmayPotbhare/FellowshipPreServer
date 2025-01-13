@@ -3,7 +3,7 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-import Classes.settings
+from Classes.settings import ZEPTOMAIL_API_KEY, ZEPTOMAIL_URL
 # from dotenv import load_dotenv
 # from flask_mail import Message
 import re
@@ -26,8 +26,8 @@ def login_auth(app, mail):
         for key, value in app_paths.items():
             app.config[key] = value
 
-    app.config['ZEPTOMAIL_URL'] = Classes.settings.ZEPTOMAIL_URL
-    app.config['ZEPTOMAIL_API_KEY'] = Classes.settings.ZEPTOMAIL_API_KEY
+    app.config['ZEPTOMAIL_URL'] = ZEPTOMAIL_API_KEY
+    app.config['ZEPTOMAIL_API_KEY'] = ZEPTOMAIL_URL
 
     # ---------------------------------
     #           LOGIN ROUTE
