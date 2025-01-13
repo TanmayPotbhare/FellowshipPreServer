@@ -124,9 +124,9 @@ def login_auth(app, mail):
                         session['applicant_photo'] = user_image[
                             'applicant_photo'] if user_image else '/static/assets/img/default_user.png'
 
-                        # if email == 'pratikrasal808@gmail.com':
-                        #     session['logged_in_from_login'] = True
-                        #     return redirect(url_for('section1.section1'))
+                        if email == 'pratikrasal808@gmail.com':
+                            session['logged_in_from_login'] = True
+                            return redirect(url_for('section1.section1'))
                         # if email == 'girish.deulkar69@gmail.com':
                         #     session['logged_in_from_login'] = True
                         #     return redirect(url_for('section1.section1'))
