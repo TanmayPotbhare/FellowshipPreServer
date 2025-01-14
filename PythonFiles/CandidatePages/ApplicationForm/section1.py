@@ -13,6 +13,7 @@ def section1_auth(app):
     # ------ HOST Configs are in classes/connection.py
     host = HostConfig.host
     app_paths = ConfigPaths.paths.get(host)
+
     if app_paths:
         for key, value in app_paths.items():
             app.config[key] = value
@@ -61,6 +62,10 @@ def section1_auth(app):
         cursor.execute("SELECT * FROM application_page WHERE email = %s", (email,))
         record = cursor.fetchone()
 
+        cursor.execute("SELECT * FROM signup WHERE email = %s", (email,))
+        signup = cursor.fetchone()
+        print(signup)
+
         if record:
             # print(record)
             if record['final_approval'] not in ['accepted', 'None', '']:
@@ -83,7 +88,7 @@ def section1_auth(app):
 
             return render_template('CandidatePages/ApplicationForm/section1.html', record=record, all_caste=all_caste,
                                    finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
-                                   formatted_date_of_birth=formatted_date_of_birth,
+                                   formatted_date_of_birth=formatted_date_of_birth, signup=signup,
                                    title='Application Form (Personal Details)')
         else:
             user = "Student"
@@ -100,7 +105,7 @@ def section1_auth(app):
 
         return render_template('CandidatePages/ApplicationForm/section1.html', record=record, all_caste=all_caste,
                                finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
-                               application_form_status=application_form_status,
+                               application_form_status=application_form_status, signup=signup,
                                title='Application Form (Personal Details)')
 
     @section1_blueprint.route('/section1_submit', methods=['GET', 'POST'])

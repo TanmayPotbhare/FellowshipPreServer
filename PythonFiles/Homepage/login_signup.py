@@ -3,9 +3,7 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-# from Classes.settings import settings_blueprint
-# from dotenv import load_dotenv
-# from flask_mail import Message
+from functools import wraps
 import re
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
@@ -28,6 +26,17 @@ def login_auth(app, mail):
 
     app.config['ZEPTOMAIL_URL'] = "https://api.zeptomail.in/v1.1/email"
     app.config['ZEPTOMAIL_API_KEY'] = "Zoho-enczapikey PHtE6r0PFOjriWB+oRJR5f+wR5L2No0n9O1nfwZG4tkWDKJXGk1d/tosxjO+rhZ/BvlGQPPKmd5gsOvJuuqDJm68NGgdXWqyqK3sx/VYSPOZsbq6x00asF4YdkTVVoPpdtNi0iDfuNuX"
+
+    def login_required(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            # Check if the user is logged in (session contains 'user')
+            if 'user' not in session:
+                flash('You need to log in to access this page.', 'danger')
+                return redirect(url_for('login'))
+            return f(*args, **kwargs)
+
+        return decorated_function
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -97,20 +106,22 @@ def login_auth(app, mail):
 
                             if is_withdrawn(email):
                                 flash('You have withdrawn from Fellowship. Please contact us.', 'error')
-                                return redirect(url_for('login_signup.login'))
+                                return redirect(url_for('login'))
                             elif old_user(email):
-                                # If the login user redirects from here then the Logged section is true.
                                 session['logged_in_from_login'] = True
-                                return redirect(url_for('old_user_preview'))
-                            elif new_applicant_incomplete_form(email):
-                                flash('Your form is incomplete.', 'error')
-                                return redirect(url_for('section1.section1'))
+                                return redirect(url_for('section1.app_form_info'))
+                            elif new_applicant_incomplete_form(email) == '2024':
+                                print('I am here 1')
+                                session['logged_in_from_login'] = True
+                                return redirect(url_for('section1.app_form_info'))
                             elif check_final_approval(email):
+                                print('I am here 2')
                                 session['final_approval'] = "accepted"
                                 session['logged_in_from_login'] = True
                                 session['show_login_flash'] = True
                                 return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                             elif is_form_filled(email):
+                                print('I am here 3')
                                 session['final_approval'] = "pending"
                                 id = get_id_by_email(email)
                                 session['logged_in_from_login'] = True
@@ -138,7 +149,7 @@ def login_auth(app, mail):
                             return redirect(url_for('login'))
                         elif old_user(email):
                             session['logged_in_from_login'] = True
-                            return redirect(url_for('old_user_preview'))
+                            return redirect(url_for('section1.app_form_info'))
                         elif new_applicant_incomplete_form(email) == '2024':
                             print('I am here 1')
                             session['logged_in_from_login'] = True
@@ -210,10 +221,9 @@ def login_auth(app, mail):
         sql = """
 
               SELECT *
-            FROM signup
+            FROM application_page
             WHERE email = %s
-              AND year IN ('2020', '2021', '2022', '2023') AND email NOT IN(SELECT email
-            FROM application_page)
+              AND fellowship_awarded_year IN ('2020', '2021', '2022', '2023') 
 
         """
         cursor.execute(sql, (email,))
