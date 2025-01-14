@@ -13,6 +13,7 @@ def section1_auth(app):
     # ------ HOST Configs are in classes/connection.py
     host = HostConfig.host
     app_paths = ConfigPaths.paths.get(host)
+    print(app_paths)
     if app_paths:
         for key, value in app_paths.items():
             app.config[key] = value
