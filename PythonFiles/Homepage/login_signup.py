@@ -106,20 +106,22 @@ def login_auth(app, mail):
 
                             if is_withdrawn(email):
                                 flash('You have withdrawn from Fellowship. Please contact us.', 'error')
-                                return redirect(url_for('login_signup.login'))
+                                return redirect(url_for('login'))
                             elif old_user(email):
-                                # If the login user redirects from here then the Logged section is true.
                                 session['logged_in_from_login'] = True
-                                return redirect(url_for('old_user_preview'))
-                            elif new_applicant_incomplete_form(email):
-                                flash('Your form is incomplete.', 'error')
-                                return redirect(url_for('section1.section1'))
+                                return redirect(url_for('section1.app_form_info'))
+                            elif new_applicant_incomplete_form(email) == '2024':
+                                print('I am here 1')
+                                session['logged_in_from_login'] = True
+                                return redirect(url_for('section1.app_form_info'))
                             elif check_final_approval(email):
+                                print('I am here 2')
                                 session['final_approval'] = "accepted"
                                 session['logged_in_from_login'] = True
                                 session['show_login_flash'] = True
                                 return redirect(url_for('candidate_dashboard.candidate_dashboard'))
                             elif is_form_filled(email):
+                                print('I am here 3')
                                 session['final_approval'] = "pending"
                                 id = get_id_by_email(email)
                                 session['logged_in_from_login'] = True
@@ -147,7 +149,7 @@ def login_auth(app, mail):
                             return redirect(url_for('login'))
                         elif old_user(email):
                             session['logged_in_from_login'] = True
-                            return redirect(url_for('old_user_preview'))
+                            return redirect(url_for('section1.app_form_info'))
                         elif new_applicant_incomplete_form(email) == '2024':
                             print('I am here 1')
                             session['logged_in_from_login'] = True

@@ -57,8 +57,6 @@ def section1_auth(app):
         caste_class = casteController(host)
         all_caste = caste_class.get_all_caste_details()
 
-        print(all_caste)
-
         # Check if a record already exists for this user
         cursor.execute("SELECT * FROM application_page WHERE email = %s", (email,))
         record = cursor.fetchone()

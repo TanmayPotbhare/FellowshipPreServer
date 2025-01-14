@@ -25,7 +25,7 @@ class ConnectParam:
 
 class ConfigPaths:
     paths = {
-        HostConfig.hostserver: {
+        HostConfig.localserver: {
             'USER_DOC_SEC_FIVE': 'static/uploads/user_doc_secfive/',
             'RENT_AGREEMENT_REPORT': 'static/uploads/rent_agreement/',
             'HALF_YEARLY_REPORTS': 'static/uploads/half_yearly/',
@@ -41,7 +41,7 @@ class ConfigPaths:
             'UNDERTAKING_REPORT': 'static/uploads/undertaking_doc/',
             # Add other paths here
         },
-        HostConfig.localserver: {
+        HostConfig.hostserver: {
             'USER_DOC_SEC_FIVE': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/user_doc_secfive/',
             'RENT_AGREEMENT_REPORT': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/rent_agreement/',
             'HALF_YEARLY_REPORTS': '/var/www/fellowship/fellowship/FellowshipPreServer/static/uploads/half_yearly/',
