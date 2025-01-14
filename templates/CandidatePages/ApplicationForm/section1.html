@@ -426,13 +426,13 @@
                     </div>
                     {% if not record['section1'] == 'filled' %}
                         <div class="form-check ms-2" style="padding:2rem;">
-                             <input type="hidden" name="same_address" value="No">
+                            <input type="hidden" id="same_address" name="same_address" value="No">
                             <input 
                                 class="form-check-input" 
                                 type="checkbox" 
                                 id="sameAddress" 
-                                name="same_address" 
-                                value="Yes">
+                                value="Yes"
+                                onchange="updateSameAddress()">
                             <label class="form-check-label text-primary font-13" for="sameAddress" id="same_check_en">
                                 Tick if Communication Address is same as Permanent Address.
                             </label>
@@ -440,12 +440,11 @@
                     {% else %}
                         <div class="form-check ms-2">
                             <label class="form-check-label text-primary font-13" for="sameAddress" id="same_check_en">
-                                Is Communication Address same as Permanent Address : <span class="text-dark">
-                                    {{ record['same_address'] }}</span>
+                                Is Communication Address same as Permanent Address?: 
+                                <span class="text-dark">{{ record['same_address'] }}</span>
                             </label>
                         </div>
                     {% endif %}
-
                     <div class="row m-0">
                         <div class="col-md-9 mt-2">
                             <div class="form-group">

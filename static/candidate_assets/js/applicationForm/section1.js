@@ -451,15 +451,14 @@ document.getElementById('sameAddress').addEventListener('change', function () {
     const communicationState = document.getElementById('comm_state');
 
     if (this.checked) {
-        // alert(permanentVillage.options[permanentVillage.selectedIndex].text);
         // Copy values from Permanent to Communication Address
         communicationAddress.value = permanentAddress.value;
         communicationPincode.value = permanentPincode.value;
         // Set the selected value of Communication Village using jQuery
         const selectedPermanentVillageValue = permanentVillage.value;
         const selectedPermanentVillageText = permanentVillage.options[permanentVillage.selectedIndex].text;
-         // Clear existing options in comm_village
-         communicationVillage.options.length = 0;
+        // Clear existing options in comm_village
+        communicationVillage.options.length = 0;
         
         // Create a new option and append it to the comm_village dropdown
         const newOption = document.createElement('option');
@@ -486,6 +485,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
         communicationAddress.value = '';
         communicationPincode.value = '';
 
+        // For Village
         communicationVillage.options.length = 0; // Clear options
         const placeholderOption = document.createElement('option');
         placeholderOption.value = '';
@@ -507,6 +507,13 @@ document.getElementById('sameAddress').addEventListener('change', function () {
     }
 });
 
+
+//Jaishree
+// document.getElementById('village').addEventListener('change', function () {
+
+// });
+
+
 function updateSameAddress() {
     const checkbox = document.getElementById('sameAddress');
     const hiddenInput = document.getElementById('same_address');
@@ -515,76 +522,6 @@ function updateSameAddress() {
     hiddenInput.value = checkbox.checked ? 'Yes' : 'No';
 }
 
-// // Real-time synchronization when Permanent Address fields change
-// document.getElementById('add_1').addEventListener('input', function () {
-//     if (document.getElementById('sameAddress').checked) {
-//         document.getElementById('comm_add_1').value = this.value;
-//     }
-// });
-
-// document.getElementById('pincode').addEventListener('input', function () {
-//     if (document.getElementById('sameAddress').checked) {
-//         document.getElementById('comm_pincode').value = this.value;
-//     }
-// });
-
-// // Optional: Repeat for other fields (if needed)
-// document.getElementById('village').addEventListener('input', function () {
-//     if (document.getElementById('sameAddress').checked) {
-//         document.getElementById('comm_village').value = this.value;
-//     }
-// });
-
-// document.getElementById('taluka').addEventListener('input', function () {
-//     if (document.getElementById('sameAddress').checked) {
-//         document.getElementById('comm_taluka').value = this.value;
-//     }
-// });
-
-// document.getElementById('district').addEventListener('input', function () {
-//     if (document.getElementById('sameAddress').checked) {
-//         document.getElementById('comm_district').value = this.value;
-//     }
-// });
-
-// document.getElementById('state').addEventListener('input', function () {
-//     if (document.getElementById('sameAddress').checked) {
-//         document.getElementById('comm_state').value = this.value;
-//     }
-// });
-
-// // Handle changes in Permanent Address fields to uncheck 'sameAddress' and reset Communication fields
-// document.querySelectorAll('.permanant_change').forEach(function (element) {
-//     element.addEventListener('change', function () {
-//         if (document.getElementById('sameAddress').checked) {
-//             document.getElementById('sameAddress').checked = false;
-
-//             // Clear Communication Address fields and make them editable
-//             document.getElementById('comm_add_1').value = '';
-//             document.getElementById('comm_pincode').value = '';
-//             document.getElementById('comm_village').value = '';
-//             document.getElementById('comm_taluka').value = '';
-//             document.getElementById('comm_district').value = '';
-//             document.getElementById('comm_state').value = '';
-
-//             document.getElementById('comm_add_1').readOnly = false;
-//             document.getElementById('comm_pincode').readOnly = false;
-//             document.getElementById('comm_village').readOnly = false;
-//             document.getElementById('comm_taluka').readOnly = false;
-//             document.getElementById('comm_district').readOnly = false;
-//             document.getElementById('comm_state').readOnly = false;
-//         }
-//     });
-// });
-
-// Real-time synchronization for dropdown (Permanent Village)
-// document.getElementById('village').addEventListener('change', function () {
-//     const addressCheckbox = document.getElementById('flexCheckIndeterminate');
-//     const communicationVillage = document.getElementById('comm_village');
-//     if (addressCheckbox.checked) {
-//         communicationVillage.value = this.value; // Synchronize selected value
-//     }
-// });
 // -------------------- END Auto populate communciation address on Tick --------------
 
 
