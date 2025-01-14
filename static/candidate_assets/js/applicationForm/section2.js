@@ -77,7 +77,7 @@ function validateYear(input) {
 // ------------------------------------------------
 
 // ---------- For Auto populating the Day Month and Year on PHD Registration Date ----------
-document.getElementById('phd_registration_date').addEventListener('change', function () {
+document.getElementById('phd_registration_date').addEventListener('blur', function () {
     const dateInput = this.value;
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -85,34 +85,39 @@ document.getElementById('phd_registration_date').addEventListener('change', func
     if (dateInput) {
         const selectedDate = new Date(dateInput);
 
+        // Validate the year length (4 digits)
+        const phd_year = selectedDate.getFullYear();
+        if (phd_year.toString().length !== 4) {
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Input!",
+                text: `The year must be a 4-digit number.`,
+            });
+            this.value = ''; // Clear the input field
+            document.getElementById('phd_registration_day').value = '';
+            document.getElementById('phd_registration_month').value = '';
+            document.getElementById('phd_registration_year').value = '';
+            return;
+        }
+
         // Check if the selected year exceeds the current year
-        if (selectedDate.getFullYear() > currentYear) {
+        if (phd_year > currentYear) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input!",
                 text: `Passing Year cannot be greater than the Current Year.`,
             });
             this.value = ''; // Clear the input field
-            // Clear dependent fields
             document.getElementById('phd_registration_day').value = '';
             document.getElementById('phd_registration_month').value = '';
             document.getElementById('phd_registration_year').value = '';
             return;
-        }2
+        }
 
         // Extract day, month, and year
         const day = selectedDate.getDate();
         const month = selectedDate.toLocaleString('default', { month: 'long' }); // Get full month name
         const year = selectedDate.getFullYear();
-
-        // Calculate age in years
-        let age = currentYear - year;
-        if (
-            currentDate.getMonth() < selectedDate.getMonth() ||
-            (currentDate.getMonth() === selectedDate.getMonth() && currentDate.getDate() < day)
-        ) {
-            age--; // Adjust age if the birth date hasn't occurred yet this year
-        }
 
         // Populate fields
         document.getElementById('phd_registration_day').value = day;
@@ -125,6 +130,7 @@ document.getElementById('phd_registration_date').addEventListener('change', func
         document.getElementById('phd_registration_year').value = '';
     }
 });
+
 // --------------------------------------------------------
 
 
