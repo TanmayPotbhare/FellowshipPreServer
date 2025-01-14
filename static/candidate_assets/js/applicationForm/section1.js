@@ -233,7 +233,8 @@ function toggleAdditionalField(select) {
 
 $('#caste').on('change', function () {
     let values = $('option:selected', this).attr('data-hidden');
-
+    console.log('Selected option value:', values.val());
+    console.log('Data-hidden value:', values.attr('data-hidden'));
     if (values) {
         let value_array = values.split(',');
         $('#subcaste').empty();
