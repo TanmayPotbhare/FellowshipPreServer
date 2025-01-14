@@ -220,41 +220,15 @@ function toggleAdditionalField(select) {
 
 // ---------------- To show Subcastes on Caste ----------------------------
 // This function is for Sub Caste
-
-//$('#caste').on('change', function () {
-//    let values = $('option:selected', this).attr('data-hidden')
-//    let value_array = values.split(',')
-//    $('#subcaste').empty()
-//    $('#subcaste').append('<option>-- Select Sub Caste / Tribe --</option>')
-//    value_array.forEach(function (item) {
-//        $('#subcaste').append(`<option value="${item}">${item}</option`);
-//    });
-//})
-
 $('#caste').on('change', function () {
-    // Get the `data-hidden` attribute of the selected option
-    let values = $('option:selected', this).attr('data-hidden');
-
-    // Log the value to debug
-    console.log('Data-hidden value:', values);
-
-    if (values) {
-        // If `values` is defined, split it into an array
-        let value_array = values.split(',');
-        $('#subcaste').empty();
-        $('#subcaste').append('<option>-- Select Sub Caste / Tribe --</option>');
-
-        // Populate the subcaste dropdown
-        value_array.forEach(function (item) {
-            $('#subcaste').append(`<option value="${item}">${item}</option>`);
-        });
-    } else {
-        // Handle cases where `data-hidden` is undefined
-        console.warn('No data-hidden attribute found on the selected option');
-        $('#subcaste').empty();
-        $('#subcaste').append('<option>-- No Sub Caste / Tribe Available --</option>');
-    }
-});
+    let values = $('option:selected', this).attr('data-hidden')
+    let value_array = values.split(',')
+    $('#subcaste').empty()
+    $('#subcaste').append('<option>-- Select Sub Caste / Tribe --</option>')
+    value_array.forEach(function (item) {
+        $('#subcaste').append(`<option value="${item}">${item}</option`);
+    });
+})
 // ---------------- END Subcastes on Caste ----------------------------
 
 // ------------------------------- START PERMANENT ADDRESS ---------------------------------------
@@ -488,6 +462,9 @@ document.getElementById('sameAddress').addEventListener('change', function () {
 
         permanentAddress.readOnly = true;
         permanentPincode.readOnly = true;
+
+        permanentAddress.setAttribute('required', 'required');
+        permanentPincode.setAttribute('required', 'required');
     } else {
         // Clear and Enable Communication Address Fields
         communicationAddress.value = '';
@@ -517,9 +494,11 @@ document.getElementById('sameAddress').addEventListener('change', function () {
 
 
 //Jaishree
-// document.getElementById('village').addEventListener('change', function () {
+document.getElementById('village').addEventListener('change', function () {
 
-// });
+
+
+});
 
 
 function updateSameAddress() {
