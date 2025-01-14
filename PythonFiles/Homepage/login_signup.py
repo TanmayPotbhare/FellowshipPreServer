@@ -3,9 +3,7 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-# from Classes.settings import settings_blueprint
-# from dotenv import load_dotenv
-# from flask_mail import Message
+from functools import wraps
 import re
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
@@ -28,6 +26,17 @@ def login_auth(app, mail):
 
     app.config['ZEPTOMAIL_URL'] = "https://api.zeptomail.in/v1.1/email"
     app.config['ZEPTOMAIL_API_KEY'] = "Zoho-enczapikey PHtE6r0PFOjriWB+oRJR5f+wR5L2No0n9O1nfwZG4tkWDKJXGk1d/tosxjO+rhZ/BvlGQPPKmd5gsOvJuuqDJm68NGgdXWqyqK3sx/VYSPOZsbq6x00asF4YdkTVVoPpdtNi0iDfuNuX"
+
+    def login_required(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            # Check if the user is logged in (session contains 'user')
+            if 'user' not in session:
+                flash('You need to log in to access this page.', 'danger')
+                return redirect(url_for('login'))
+            return f(*args, **kwargs)
+
+        return decorated_function
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -210,10 +219,9 @@ def login_auth(app, mail):
         sql = """
 
               SELECT *
-            FROM signup
+            FROM application_page
             WHERE email = %s
-              AND year IN ('2020', '2021', '2022', '2023') AND email NOT IN(SELECT email
-            FROM application_page)
+              AND fellowship_awarded_year IN ('2020', '2021', '2022', '2023') 
 
         """
         cursor.execute(sql, (email,))

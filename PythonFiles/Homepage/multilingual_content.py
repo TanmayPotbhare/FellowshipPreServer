@@ -18,9 +18,9 @@ multilingual_content = {
 
         # -----------------------Leaders ----------------------
         'eknath_shinde': 'Shri. Eknath Shinde',
-        'eknath_shinde_desgn': "Hon'ble Chief Minister, Maharashtra State",
+        'eknath_shinde_desgn': "Hon'ble Deputy Chief Minister, Maharashtra State",
         'dev_phad': 'Shri. Devendra Fadnavis',
-        'dev_phad_desgn': "'Hon'ble Deputy Chief Minister, Maharashtra State",
+        'dev_phad_desgn': "Hon'ble Chief Minister, Maharashtra State",
         'ajit_pawar': 'Shri. Ajit Pawar',
         'ajit_pawar_desgn': "Hon'ble Deputy Chief Minister, Maharashtra State",
         'vijay_gavit': 'Dr. Vijaykumar Gavit',
