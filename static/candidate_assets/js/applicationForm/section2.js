@@ -3,74 +3,94 @@
 function validateYear(input) {
     const currentYear = new Date().getFullYear();
 
-    // Remove any non-numeric characters
+    // Remove non-numeric characters
     input.value = input.value.replace(/[^0-9]/g, '');
 
-    // Limit the input to 4 digits
+    // Limit input to 4 digits
     if (input.value.length > 4) {
         input.value = input.value.slice(0, 4);
     }
 
     if (input.value.length < 4) {
         Swal.fire({
-            title: "Invalid Input!",
-            text: "Please Enter 4 Passing Year",
+            title: "Invalid Input!",		
+            text: "Please Enter a 4-digit Passing Year",
             icon: "info"
         });
         input.value = '';
+        return;
     }
 
-    // Proceed only if the user has entered a 4-digit year
-    if (input.value.length === 4) {
-        const inputYear = parseInt(input.value);
+    const inputYear = parseInt(input.value);
 
-        // Check if the year is greater than the current year
-        if (inputYear > currentYear) {
-            Swal.fire({
-                icon: "error",
-                title: "Invalid Input!",
-                text: "Passing Year cannot be greater than the Current Year.",
-            });
-            input.value = '';  // Clear input
-            return;
+    // Ensure the year is not greater than the current year
+    if (inputYear > currentYear) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input!",
+            text: "Passing Year cannot be greater than the Current Year.",
+        });
+        input.value = '';
+        return;
+    }
+
+    // Qualification order
+    const qualificationOrder = [
+        'ssc_passing_year',
+        'hsc_passing_year',
+        'graduation_passing_year',
+        'phd_passing_year',
+    ];
+
+    // Get the current input's position in the order
+    const inputId = input.id;
+    const inputIndex = qualificationOrder.indexOf(inputId);
+
+    // Loop through all qualifications and validate
+    let previousYear = null;
+    for (let i = 0; i < qualificationOrder.length; i++) {
+        const field = document.getElementById(qualificationOrder[i]);
+        const fieldYear = parseInt(field.value);
+
+        // Clear higher qualifications if the current input invalidates them
+        if (i > inputIndex && !isNaN(fieldYear)) {
+            if (inputYear >= fieldYear) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Invalid Sequence!",
+                    text: `Passing Year for Higher Qualification must be greater than ${inputYear}.`,
+                });
+                field.value = ''; // Clear invalid fields
+            }
         }
 
-        // Compare with all previous qualification years
-        const qualificationOrder = [
-            'ssc_passing_year',
-            'hsc_passing_year',
-            'graduation_passing_year',
-            'phd_passing_year',
-        ];
-
-        const inputId = input.id;
-        const inputIndex = qualificationOrder.indexOf(inputId);
-
-        // Loop through all previous fields
-        for (let i = 0; i < inputIndex; i++) {
-            const prevYearField = document.getElementById(qualificationOrder[i]);
-            const prevYear = parseInt(prevYearField.value);
-
-            // If previous year is defined and greater than the current input year, show an error
-            if (!isNaN(prevYear) && prevYear > inputYear) {
+        // Validate the order of lower qualifications
+        if (i < inputIndex && !isNaN(fieldYear)) {
+            if (fieldYear >= inputYear) {
                 Swal.fire({
                     icon: "error",
                     title: "Invalid Year Sequence!",
-                    text: `The Passing Year for this qualification cannot be earlier than the Passing Year for the previous qualification.`,
+                    text: `The Passing Year for this qualification cannot be earlier than or equal to a previous qualification.`,
                 });
-                input.value = '';  // Clear input
+                input.value = ''; // Clear invalid input
                 return;
             }
-            // Check for duplicate passing year
-            else if (prevYear === inputYear) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Duplicate Passing Year!",
-                    text: `Passing Year cannot be the same for two qualifications`,
-                });
-                input.value = '';  // Clear input
-                return;
-            }
+        }
+
+        // Check for duplicate years
+        if (i !== inputIndex && fieldYear === inputYear) {
+            Swal.fire({
+                icon: "error",
+                title: "Duplicate Passing Year!",
+                text: `Passing Year cannot be the same for two qualifications.`,
+            });
+            input.value = ''; // Clear invalid input
+            return;
+        }
+
+        // Update the previous year
+        if (i < inputIndex && !isNaN(fieldYear)) {
+            previousYear = fieldYear;
         }
     }
 }
