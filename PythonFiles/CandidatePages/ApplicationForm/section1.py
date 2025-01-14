@@ -12,7 +12,7 @@ section1_blueprint = Blueprint('section1', __name__)
 def section1_auth(app):
     # ------ HOST Configs are in classes/connection.py
     host = HostConfig.host
-    app_paths = ConfigPaths.paths.get(HostConfig.hostserver)
+    app_paths = ConfigPaths.paths.get(host)
 
     if app_paths:
         for key, value in app_paths.items():
