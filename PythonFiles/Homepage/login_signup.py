@@ -350,7 +350,7 @@ def login_auth(app, mail):
             middle_name = request.form['middle_name']
             last_name = request.form['last_name']
             email = request.form['email']
-            password = request.form['password']
+            password = request.form['signup_password']
             confirm_password = request.form['confirm_password']
             year = request.form['year']
             mobile_number = request.form['mobile_number']
@@ -358,6 +358,12 @@ def login_auth(app, mail):
             if not email or not password:
                 flash('Please enter email and password.', 'error')
                 return redirect(url_for('login_signup.login'))
+            
+            # Updated password regex for 8-20 characters, 1 uppercase, 1 lowercase, 1 number, 1 symbol
+            password_regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$')
+            if not password_regex.match(password):
+                flash('Password must have 8-20 characters, including one uppercase letter, one lowercase letter, one number, and one special character.', 'error')
+                return redirect(url_for('login_signup.signup'))
 
             # Check if the passwords match
             if password != confirm_password:

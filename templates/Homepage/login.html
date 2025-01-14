@@ -34,12 +34,12 @@
                                     <h2 class="login_logo_name text-center">User Login</h2>
                                     <div class="form-group row">
                                         <div class="col-md-12 mb-3">
-                                            <label class="text-white">Email</label>
+                                            <label class="text-white">Email</label><span class="text-danger">*</span>
                                             <input type="text" name="email" class="form-control login-input"
                                                 autocomplete="off" placeholder="Email Address" required="">
                                         </div>
                                         <div class="col-md-12 mb-3">
-                                            <label class="text-white">Password</label>
+                                            <label class="text-white">Password</label><span class="text-danger">*</span>
                                             <input type="password" class="form-control login-input" name="password"
                                                 autocomplete="off" id="passwordInput"  placeholder="Password" required="">
                                         </div>
@@ -99,29 +99,29 @@
                                     <h2 class="login_logo_name text-center">Sign Up</h2>
                                     <div class="form-group row col-md-10 m-auto">
                                         <div class="col-md-4 mb-3">
-                                            <label class="text-white">First Name</label>
+                                            <label class="text-white">First Name</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control login-input" name="first_name"
-                                                placeholder="First Name" required="">
+                                                placeholder="First Name" oninput="validateName(this)" maxlength="15" required="">
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label class="text-white">Middle Name</label>
+                                            <label class="text-white">Middle Name</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control login-input" name="middle_name"
-                                                placeholder="Middle Name" required="">
+                                                placeholder="Middle Name" oninput="validateName(this)" maxlength="15" required="">
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label class="text-white">Last Name</label>
+                                            <label class="text-white">Last Name</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control login-input" name="last_name"
-                                                placeholder="Last Name" required="">
+                                                placeholder="Last Name" oninput="validateName(this)" maxlength="15" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row col-md-10 m-auto">
                                         <div class="col-md-6 mb-3">
-                                            <label class="text-white">Email</label>
+                                            <label class="text-white">Email</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control login-input" name="email"
                                                 placeholder="Email Address" required="">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="text-white">Which years fellowship are you applying for?</label>
+                                            <label class="text-white">Which years fellowship are you applying for?<span class="text-danger">*</span></label>
                                             <select name="year" id="year" class="form-control login-input" required>
                                                 <option value="">--- Select Application Year ---</option>
                                                     <option value="2024">2024 - 2025</option>
@@ -129,32 +129,28 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="text-white">Mobile Number</label>
+                                            <label class="text-white">Mobile Number</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control login-input" name="mobile_number"
-                                                placeholder="Mobile Number" maxlength="10" required="" minlength="10">
+                                                placeholder="Mobile Number" onblur="validateMobileNumber(this)"
+                                                minlength="10" maxlength="10" required>
                                         </div>
                                     </div>
                                     <div class="form-group row col-md-10 m-auto">
                                         <div class="col-md-6 mb-3">
-                                            <label class="text-white">Password</label>
-                                            <input type="password" class="form-control login-input" name="password"
-                                                placeholder="Password" required="">
+                                            <label class="text-white">Password</label><span class="text-danger">*</span>
+                                            <input type="password" class="form-control login-input" name="signup_password" id="password" 
+                                                placeholder="Password" required="" onblur="validatePasswords()"/>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="text-white">Confirm Password</label>
+                                            <label class="text-white">Confirm Password</label><span class="text-danger">*</span>
                                             <input type="password" class="form-control login-input"
-                                                name="confirm_password" placeholder="Confirm password" required="">
+                                                name="confirm_password" id="confirm_password"
+                                                placeholder="Confirm password" required="" onblur="validatePasswords()"/>
                                         </div>
-                                        <p style="color: white;">
-                                        {% if error %}
-                                        <strong>{{ error }}</strong>
-                                        {% endif %}
-                                        </p>
                                         <div>
-                                            <button type="submit" class="btn bg-new-theme-dark theme-shadow text-white">
-                                                Signup </button>
-                                            <button type="button" id="login_switch"
-                                                class="btn btn-login text-white">Login</button>
+                                            <button type="submit" class="btn bg-new-theme-dark theme-shadow text-white" onclick="return validatePasswords()">
+                                                Signup 
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
