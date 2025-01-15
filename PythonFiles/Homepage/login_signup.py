@@ -3,7 +3,6 @@ import bcrypt
 import mysql.connector
 import os
 import requests
-from functools import wraps
 import re
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
@@ -27,16 +26,6 @@ def login_auth(app, mail):
     app.config['ZEPTOMAIL_URL'] = "https://api.zeptomail.in/v1.1/email"
     app.config['ZEPTOMAIL_API_KEY'] = "Zoho-enczapikey PHtE6r0PFOjriWB+oRJR5f+wR5L2No0n9O1nfwZG4tkWDKJXGk1d/tosxjO+rhZ/BvlGQPPKmd5gsOvJuuqDJm68NGgdXWqyqK3sx/VYSPOZsbq6x00asF4YdkTVVoPpdtNi0iDfuNuX"
 
-    def login_required(f):
-        @wraps(f)
-        def decorated_function(*args, **kwargs):
-            # Check if the user is logged in (session contains 'user')
-            if 'user' not in session:
-                flash('You need to log in to access this page.', 'danger')
-                return redirect(url_for('login'))
-            return f(*args, **kwargs)
-
-        return decorated_function
 
     # ---------------------------------
     #           LOGIN ROUTE
@@ -432,111 +421,111 @@ def login_auth(app, mail):
 
         msg_body = f'''
                    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>OTP</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-            rel="stylesheet">
-    </head>
-    <body style="font-family: 'Poppins', sans-serif;">
-        <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-        rel="stylesheet">
-
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="550" bgcolor="white"
-            style="border:2px solid  #660000; border-radius: 5px; box-shadow: 5px 15px 30px #6666; font-family: 'Poppins', sans-serif;">
-            <tbody>
-                <tr>
-                    <td align="center">
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" class="col-550" width="550">
-                            <tbody>
-                                <tr>
-                                    <td align="center" style="background-color:  #660000;
-                                    height: 50px; border-bottom: 2px solid #660000; border-radius: 5px 5px 0px 0;">
-
-                                        <a href="#" style="text-decoration: none;">
-                                            <p style="color:#ffff;
-                                           font-weight:bold;font-size: 20px; text-transform: uppercase; ">
-                                                Verify Email
-                                            </p>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr style="height: 300px; background: #fff;">
-                    <td align="center" style="border: none;
-                    border-bottom: 2px solid #660000; 
-                    padding-right: 20px;padding-left:20px;  padding: 30px;">
-                        <img src="https://fellowship.trti-maha.in/static/assets/img/tick_animation.gif" width="60px" height="60px" alt="Tick mark">
-                        <p style="font-weight: bolder;font-size: 22px;
-                       letter-spacing: 0.025em;
-                       color:#660000;">
-                            Dear, {first_name}
-                            <br>
-                            Thank you for your interest in creating a user account for Online Fellowship Portal.
-                            <br>
-                            To activate your account, please enter OTP to the portal.
-                        </p>
-                        <p
-                            style="border: 1px solid transparent; padding: 15px 35px; width: fit-content;  text-align: center; border-radius: 8px; font-weight: bold; background: #660000; color:#fff; letter-spacing: 10px;">
-                            {otp}
-                        </p>
-                    </td>
-                </tr>
-
-                <tr style="display: inline-block; width: 100%;">
-                    <td style="height: 150px;
-                    padding: 20px;
-                    border: none; 
-                    width: 10%;
-                    border-bottom: 2px solid transparent;
-                    border-radius: 0px 0px 5px 5px;
-                    background-color: #ffff; ">
-
-                        <h2 style="text-align: left;
-                        align-items: center; color: #660000;">
-                            This OTP will expire in 10 minutes
-                        </h2>
-                        <p class="data" style="text-align: justify-all;
-                       align-items: center; 
-                       font-size: 15px; color: #660000;">
-                            If you did not request a for sign up, no further action is required.
-                        </p>
-                        <p class="data" style="text-align: justify-all;
-                       align-items: center; 
-                       font-size: 15px;
-                       padding-bottom: 12px; color: #660000;">
-                            Thank you,<br>
-                            Fellowship,
-                        </p>
-                    </td>
-                </tr>
-                <tr style="display: inline-block; width: 100%;">
-                    <td style="max-height: 150px;
-                    padding: 40px 20px;
-                    border: none; 
-                    width: 10%;
-                    border-top: 1.5px solid #ffff;
-                    border-radius: 0px 0px 5px 5px;
-                    background-color: #660000; ">
-
-                        <p style="color: #fff; font-size: 13px;">
-                            In case of any technical issue while filling online application form, please contact us
-                        </p>
-                        <a href="#" style="text-decoration: none; color: #660000; padding: 10px 25px; box-shadow: 0 0 10px #fff; border-radius: 5px; background:#fff;">Contact Us</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <html lang="en">
+            
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>OTP</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+                        rel="stylesheet">
+                </head>
+                <body style="font-family: 'Poppins', sans-serif;">
+                    <link
+                    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+                    rel="stylesheet">
+            
+                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="550" bgcolor="white"
+                        style="border:2px solid  #660000; border-radius: 5px; box-shadow: 5px 15px 30px #6666; font-family: 'Poppins', sans-serif;">
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0" class="col-550" width="550">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" style="background-color:  #660000;
+                                                height: 50px; border-bottom: 2px solid #660000; border-radius: 5px 5px 0px 0;">
+            
+                                                    <a href="#" style="text-decoration: none;">
+                                                        <p style="color:#ffff;
+                                                       font-weight:bold;font-size: 20px; text-transform: uppercase; ">
+                                                            Verify Email
+                                                        </p>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height: 300px; background: #fff;">
+                                <td align="center" style="border: none;
+                                border-bottom: 2px solid #660000; 
+                                padding-right: 20px;padding-left:20px;  padding: 30px;">
+                                    <img src="https://fellowship.trti-maha.in/static/assets/img/tick_animation.gif" width="60px" height="60px" alt="Tick mark">
+                                    <p style="font-weight: bolder;font-size: 22px;
+                                   letter-spacing: 0.025em;
+                                   color:#660000;">
+                                        Dear, {first_name}
+                                        <br>
+                                        Thank you for your interest in creating a user account for Online Fellowship Portal.
+                                        <br>
+                                        To activate your account, please enter OTP to the portal.
+                                    </p>
+                                    <p
+                                        style="border: 1px solid transparent; padding: 15px 35px; width: fit-content;  text-align: center; border-radius: 8px; font-weight: bold; background: #660000; color:#fff; letter-spacing: 10px;">
+                                        {otp}
+                                    </p>
+                                </td>
+                            </tr>
+            
+                            <tr style="display: inline-block; width: 100%;">
+                                <td style="height: 150px;
+                                padding: 20px;
+                                border: none; 
+                                width: 10%;
+                                border-bottom: 2px solid transparent;
+                                border-radius: 0px 0px 5px 5px;
+                                background-color: #ffff; ">
+            
+                                    <h2 style="text-align: left;
+                                    align-items: center; color: #660000;">
+                                        This OTP will expire in 10 minutes
+                                    </h2>
+                                    <p class="data" style="text-align: justify-all;
+                                   align-items: center; 
+                                   font-size: 15px; color: #660000;">
+                                        If you did not request a for sign up, no further action is required.
+                                    </p>
+                                    <p class="data" style="text-align: justify-all;
+                                   align-items: center; 
+                                   font-size: 15px;
+                                   padding-bottom: 12px; color: #660000;">
+                                        Thank you,<br>
+                                        Fellowship,
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style="display: inline-block; width: 100%;">
+                                <td style="max-height: 150px;
+                                padding: 40px 20px;
+                                border: none; 
+                                width: 10%;
+                                border-top: 1.5px solid #ffff;
+                                border-radius: 0px 0px 5px 5px;
+                                background-color: #660000; ">
+            
+                                    <p style="color: #fff; font-size: 13px;">
+                                        In case of any technical issue while filling online application form, please contact us
+                                    </p>
+                                    <a href="#" style="text-decoration: none; color: #660000; padding: 10px 25px; box-shadow: 0 0 10px #fff; border-radius: 5px; background:#fff;">Contact Us</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                '''
         payload = {
@@ -632,13 +621,17 @@ def login_auth(app, mail):
     # ---------------------------- EMAIL Verfication Route ----------------------------
     @login_blueprint.route('/email_verify', methods=['GET', 'POST'])
     def email_verify():
+        global otp
         if 'registration_data' not in session:
             flash('Session data not found. Please sign up again.', 'error')
             return redirect(url_for('login_signup.signup'))
 
         user_otp = request.form['otp']
 
-        if otp == int(user_otp):
+        if not user_otp or not user_otp.strip():
+            flash("Invalid or missing OTP. Please try again.", 'error')
+            return redirect(url_for("login_signup.login"))
+        elif otp == int(user_otp):
             registration_data = session.get('registration_data')
             insert_user_data(registration_data)
             flash('Your email is verified and registration is successful.', 'success')
