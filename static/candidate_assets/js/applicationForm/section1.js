@@ -1,7 +1,10 @@
 
 // --------- All names on on Section 1 -------------------
 function validateName(input) {
-    // Replace anything that is not a letter or space
+    // Remove leading spaces
+    input.value = input.value.replace(/^\s+/g, '');
+
+    // Remove non-alphabetic characters (except spaces)
     input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
 
     // Ensure the first letter is capitalized and the rest are lowercase

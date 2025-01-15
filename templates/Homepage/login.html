@@ -79,12 +79,7 @@
                         </div>
                     </div>
                 </div>
-                    <p class="text-white text-center p-2">
-                        If you encounter any queries, please contact on the given email with your login Email ID, Your Issue, & the Image related to problem you are facing -
-                        <strong>
-                            <span style="background-color: yellow; color: #000000;">helpdesk@trti-maha.in</span>
-                        </strong>
-                    </p>
+
             </div>
         </section>
 
@@ -93,32 +88,32 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="col-md-12 login-form-bg p-5">
                                 <form action="/signup" class="signup_form" method="POST" autocomplete="off">
                                     <h2 class="login_logo_name text-center">Sign Up</h2>
                                     <div class="form-group row col-md-10 m-auto">
                                         <div class="col-md-4 mb-3">
                                             <label class="text-white">First Name</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control login-input" name="first_name"
-                                                placeholder="First Name" oninput="validateName(this)" maxlength="15" required="">
+                                            <input type="text" class="form-control login-input" name="first_name" id="first_name"
+                                                placeholder="First Name" oninput="validateSignupName(this)" maxlength="15" required="">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="text-white">Middle Name</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control login-input" name="middle_name"
-                                                placeholder="Middle Name" oninput="validateName(this)" maxlength="15" required="">
+                                            <input type="text" class="form-control login-input" name="middle_name" id="middle_name"
+                                                placeholder="Middle Name" oninput="validateSignupName(this)" maxlength="15" required="">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="text-white">Last Name</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control login-input" name="last_name"
-                                                placeholder="Last Name" oninput="validateName(this)" maxlength="15" required="">
+                                            <input type="text" class="form-control login-input" name="last_name" id="last_name"
+                                                placeholder="Last Name" oninput="validateSignupName(this)" maxlength="15" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row col-md-10 m-auto">
                                         <div class="col-md-6 mb-3">
                                             <label class="text-white">Email</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control login-input" name="email"
-                                                placeholder="Email Address" required="">
+                                            <input type="email" class="form-control login-input" name="email" id="email"
+                                                placeholder="Email Address" required onblur="validateEmailInput(this)">
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="text-white">Which years fellowship are you applying for?<span class="text-danger">*</span></label>
@@ -131,8 +126,8 @@
                                         <div class="col-md-6 mb-3">
                                             <label class="text-white">Mobile Number</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control login-input" name="mobile_number"
-                                                placeholder="Mobile Number" onblur="validateMobileNumber(this)"
-                                                minlength="10" maxlength="10" required>
+                                                placeholder="Mobile Number" oninput="validateMobileNumber(this)"
+                                                minlength="10" maxlength="10" id="mobile_number" required>
                                         </div>
                                     </div>
                                     <div class="form-group row col-md-10 m-auto">
