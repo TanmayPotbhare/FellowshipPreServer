@@ -80,7 +80,7 @@ def generate_award_letter_2023(data, filename):
             self.set_font("Arial", "B", size=10)
             self.cell(0, 10, "Dear Candidate,", ln=True)
             self.set_font("Arial", "", 10)
-            registration_year = data['phd_registration_year']
+            registration_year = data['fellowship_awarded_year']
             fiscal_year = f"{registration_year} - {registration_year + 1}"
             self.multi_cell(0, 7,
                             "         We are delighted to inform you that you have been selected for the award of "
