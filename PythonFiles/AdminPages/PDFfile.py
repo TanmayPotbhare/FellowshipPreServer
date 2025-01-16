@@ -48,8 +48,8 @@ def generate_award_letter_2023(data, filename):
                 self.cell(0, 10, f"No.: {outward_number}", ln=False)  # Add the number on the left without a line break
 
                 # Move to the right for the date
-                fellowship_year = data['fellowship_awarded_date']
-                self.cell(0, 10, f"{fellowship_year}", align="R",
+                fellowship_date = data['fellowship_awarded_date']
+                self.cell(0, 10, f"Date: {fellowship_date}", align="R",
                           ln=True)  # Add the date on the right with a line break
 
                 self.set_font("Arial", "B", size=10)
