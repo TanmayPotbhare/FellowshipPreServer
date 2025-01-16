@@ -157,14 +157,16 @@ document.getElementById('phd_registration_date').addEventListener('blur', functi
 // ---------------- Show and Hide Field on d-none ----------------------------
 // This function is for PVTG Caste
 function toggleAdditionalFieldFaculty(select) {
-    const additionallField = document.getElementById('additionalField');
-    const inputtField = document.getElementById('other_faculty');
+    const additionalField = document.getElementById('additionalField'); // Fixed typo
+    const inputField = document.getElementById('other_faculty'); // Fixed typo in variable name
 
     if (select.value === 'Other') {
-        additionallField.classList.remove('d-none'); // Show field
+        additionalField.classList.remove('d-none'); // Show field
+        inputField.setAttribute('required', 'true'); // Set required on input field
     } else {
         additionalField.classList.add('d-none'); // Hide field
-        inputtField.value = ''; // Clear input field
+        inputField.value = ''; // Clear input field
+        inputField.removeAttribute('required'); // Remove required from input field
     }
 }
 // ----------------------------------------------------------------
@@ -266,10 +268,22 @@ function calculateAges() {
 
         // Get the Ph.D. registration year
         const phdYear = phdDate.getFullYear();
+        // alert(phdYear)
+        // alert(dobYear)
 
-        // Calculate age
+        if (phdYear > dobYear){
+            // Calculate age
+        }
+        else { 
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Year!",
+                text: `Ph.D. Registration Year cannot be earlier than your birth year.`,
+            });
+            document.getElementById('phd_registration_date').value = '';  
+            document.getElementById('phd_registration_age').value = '';  
+        }
         let age = phdYear - dobYear;
-
         // Assuming the birth month and day are Jan 1st, adjust age if the Ph.D. registration date is before the birthday in that year
         const dobMonthDay = new Date(dobYear, 0, 1); // Jan 1st as an example
         if (phdDate < dobMonthDay) {
