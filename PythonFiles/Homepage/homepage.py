@@ -50,7 +50,7 @@ def homepage_auth(app):
         cnx, cursor = connect_param.connect()
         cursor.execute(" SELECT COUNT(*) FROM application_page where phd_registration_year>=2023 ")
         result = cursor.fetchone()
-        print(result)
+        # print(result)
         return result[0]
 
     def fellow_awarded_count():

@@ -44,11 +44,12 @@ def generate_award_letter_2023(data, filename):
 
                 self.ln(5)  # Adjust this value to control the space after the line
                 self.set_font("Arial", size=10)
-                self.cell(0, 10, "No.: Research-2024/Case.No 9/Desk-4/1832",
-                          ln=False)  # Add the number on the left without a line break
+                outward_number = data['outward_number']
+                self.cell(0, 10, f"No.: {outward_number}", ln=False)  # Add the number on the left without a line break
 
                 # Move to the right for the date
-                self.cell(0, 10, "Date: 04-07-2024", align="R",
+                fellowship_year = data['fellowship_awarded_date']
+                self.cell(0, 10, f"{fellowship_year}", align="R",
                           ln=True)  # Add the date on the right with a line break
 
                 self.set_font("Arial", "B", size=10)

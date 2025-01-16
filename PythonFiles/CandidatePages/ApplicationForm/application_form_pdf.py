@@ -64,13 +64,15 @@ def app_pdf_auth(app):
                     self.cell(0, 10, "Fellowship ", align="C",
                               ln=True)  # Add space by changing the second parameter (e.g., 20)
                     # Insert an image (symbol) at the center of the header
-                    # self.image('static/Images/trti.jpeg', 10, 10, 20)
-                    self.image('/var/www/fellowship/fellowship/FellowshipPreServer/static/Images/trti.jpeg', 10, 10, 20)
-                    # Insert an image (symbol) at the right of the header
-                    self.image('/var/www/fellowship/fellowship/FellowshipPreServer/static/Images/satya.png', 155, 10, 20)
-                    # self.image('static/Images/satya.png', 155, 10, 20)
-                    self.image('/var/www/fellowship/fellowship/FellowshipPreServer/static/Images/maharashtra_shasn.png', 175, 10, 20)
-                    # self.image('static/Images/maharashtra_shasn.png', 175, 10, 20)
+
+                    self.image('static/Images/trti.jpeg', 10, 10, 20)
+                    self.image('static/Images/satya.png', 155, 10, 20)
+                    self.image('static/Images/maharashtra_shasn.png', 175, 10, 20)
+
+                    # self.image('/var/www/fellowship/fellowship/FellowshipPreServer/static/Images/trti.jpeg', 10, 10, 20)
+                    # self.image('/var/www/fellowship/fellowship/FellowshipPreServer/static/Images/satya.png', 155, 10, 20)
+                    # self.image('/var/www/fellowship/fellowship/FellowshipPreServer/static/Images/maharashtra_shasn.png', 175, 10, 20)
+
                     self.cell(0, 10, "Tribal Research & Training Institute, Pune ", align="C", ln=True)
                     self.cell(0, 1, "Government of Maharashtra ", align="C", ln=True)
                     self.set_font("Arial", "B", size=8)
@@ -109,7 +111,10 @@ def app_pdf_auth(app):
 
                 # Applicant Photo
                 if 'applicant_photo' in data:
-                    photo = '/var/www/fellowship/fellowship/FellowshipPreServer' + data['applicant_photo']
+                    # photo = '/var/www/fellowship/fellowship/FellowshipPreServer' + data['applicant_photo']
+                    photo = 'static/uploads/image_retrive/Tanmay_2.png'
+                    if photo.startswith('/'):
+                        photo = photo[1:]
                     try:
                         # Insert the applicant photo (adjust coordinates and size as needed)
                         self.image(photo, 165, 65, 30, 35)  # X=165, Y=65, Width=30, Height=35
@@ -454,7 +459,8 @@ def app_pdf_auth(app):
         pdf.set_font("Arial", size=12)
 
         # Assuming data['signature'] contains the path to the image file
-        signature_path = '/var/www/fellowship/fellowship/FellowshipPreServer/' + data['signature']
+        # signature_path = '/var/www/fellowship/fellowship/FellowshipPreServer/' + data['signature']
+        signature_path = 'static/uploads/image_retrive/as_sasasa_firstname.png'
         # Determine the current position
         x = pdf.get_x()
         y = pdf.get_y()
