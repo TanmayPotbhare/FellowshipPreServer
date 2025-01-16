@@ -159,7 +159,16 @@ function validateMobileNumber(input) {
             input.value = ''; // Clear the input
         }
     }
-}
+    // Check if the mobile number entered is less than 10 digits
+    else if (input.value.length < 10) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Invalid Mobile Number!',
+              text: 'Please enter 10 digit mobile number.'
+          });
+          input.value = ''; // Clear the input
+    }
+  }
 // -------------------------------------------------------
 
 

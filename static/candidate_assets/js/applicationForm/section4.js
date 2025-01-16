@@ -51,7 +51,7 @@ function validateAccountHolderName() {
         Swal.fire({
             icon: 'error',
             title: 'Invalid Name Detected',
-            text: 'The Account Holder Name must have exactly 3 words.'
+            text: 'Please enter First Name, Middle Name and Surname.'
         });
         nameInput.value = ''; // Clear the input field
         nameInput.focus();
