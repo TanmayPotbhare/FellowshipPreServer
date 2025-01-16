@@ -168,6 +168,10 @@ def section1_auth(app):
             photo_path = save_applicant_photo(photo, first_name, last_name)
             adhaar_path = save_applicant_photo(adhaar_seeding, first_name, last_name)
 
+            if is_adhaar_already_exist(adhaar_number):
+                flash('The Aadhaar number you entered is already registered. Please use a different Aadhaar number or log in if you have an account.', 'info')
+                return redirect(url_for('section1.section1'))
+            
             if not record:
                 # Save the form data to the database
                 sql = """
@@ -207,3 +211,15 @@ def section1_auth(app):
             return '/static/uploads/image_retrive/' + filename
         else:
             return "Save File"
+        
+    # ---------------------------- Check if User is already Registered ---------------------
+    def is_adhaar_already_exist(adhaar_number):  # ---------------- CHECK IF EMAIL IS IN THE DATABASE
+        host = HostConfig.host
+        connect_param = ConnectParam(host)
+        cnx, cursor = connect_param.connect()
+        sql = "SELECT adhaar_number FROM application_page WHERE adhaar_number = %s"
+        cursor.execute(sql, (adhaar_number,))
+        result = cursor.fetchone()
+        cursor.close()
+        cnx.close()
+        return result
