@@ -93,7 +93,7 @@ def fellowship_awarded_auth(app):
                 " graduation_passing_year, graduation_percentage, graduation_school_name, phd_passing_year,"
                 " phd_percentage, phd_school_name,have_you_qualified, name_of_college, name_of_guide, topic_of_phd,"
                 " concerned_university, faculty, phd_registration_date, phd_registration_year,"
-                " family_annual_income, "
+                " family_annual_income, fellowship_awarded_year, fellowship_awarded_date, outward_number, "
                 " income_certificate_number, issuing_authority, domicile, domicile_certificate, domicile_number,"
                 " caste_certf, issuing_district, caste_issuing_authority, salaried, disability, type_of_disability,"
                 " father_name, mother_name, work_in_government, bank_name, account_number, ifsc_code,"
