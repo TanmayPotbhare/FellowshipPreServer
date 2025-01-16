@@ -82,7 +82,7 @@ def app_pdf_auth(app):
                     self.set_font("Arial", "B", 13)
                     fellowship_year = data['fellowship_application_year']
                     self.cell(0, 10,
-                              f"Fellowship Application Form {fellowship_year} - {fellowship_year + 1}",
+                              f"Fellowship Application Form {int(fellowship_year)} - {int(fellowship_year) + 1}",
                               align="C", ln=True)
                     self.ln(2)  # Adjust this value to control the space after the line
                     self.line(10, self.get_y(), 200, self.get_y())  # Draw a line from left (10) to right (200)
