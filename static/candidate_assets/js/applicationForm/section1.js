@@ -163,11 +163,11 @@ function calculateAge(input) {
     }
 
     // Check age criteria
-    if (age > 42) {
+    if (age > 45) {
         Swal.fire({
             icon: 'error',
             title: 'Age Criteria Not Met!',
-            text: 'Age allowed for getting the fellowship is 42. Unfortunately, you do not match the criteria.'
+            text: 'Age allowed for getting the fellowship is 45. Unfortunately, you do not match the criteria.'
         });
         input.value = ''; // Clear the input if the age is invalid
         ageField.value = ''; // Clear the age field
@@ -238,8 +238,11 @@ $('#caste').on('change', function () {
 // This function is for Sub Caste
 $('#pincode').on('blur', function () {
     $('#village').empty()
-    $('#village').append(`<option value = '' class = 'spinner-border' role="status">
-    <span class="sr-only">Loading...</span> </option>`)
+    $('#village').append(`
+        <option value = '' class = 'spinner-border' role="status">
+            <span class="sr-only">Loading...</span> 
+        </option>
+    `)
     let pincode = $(this).val();
     if ($(this).val() == '' || $(this).val().length < 6 || $(this).val().length > 6 ) {
         Swal.fire({
@@ -277,8 +280,14 @@ $('#pincode').on('blur', function () {
                 let PostOffice = html.result
                 $('#village').append(`<option value = ''> -- Select Village -- </option>`)
                 $(PostOffice).each(function (index, post_val) {
-                    $('#village').append(`<option value = '${post_val.postalLocation}' data-hidden = '${post_val.id}'>${post_val.postalLocation}</option>`)
+                    $('#village').append(`
+                        <option value = '${post_val.postalLocation}' data-hidden = '${post_val.id}'>
+                        ${post_val.postalLocation}
+                        </option>
+                    `)
                 })
+                // Append the "Other" option
+                $('#village').append(`<option value="Other">Other</option>`);
             }
         },
         error: function (jqxhr, textStatus, error) {
@@ -288,37 +297,60 @@ $('#pincode').on('blur', function () {
 
 // On change of village get all village data
 $('#village').on('change', function () {
-    village_name = $('option:selected', this).attr('data-hidden');
-    pincode = $('#pincode').val()
+    const village_name = $('option:selected', this).attr('data-hidden');
+    const village_value = $(this).val();
+    const pincode = $('#pincode').val()
+    const talukaInput = document.getElementById("taluka");
+    const districtInput = document.getElementById("district");
+    const stateInput = document.getElementById("state");
+    const otherVillageContainer = $('#other_village_container');
+    const otherVillageInput = $('#other_village');
 
+    // If "Other" is selected, show the "other_village" field
+    if (village_value === 'Other') {
+        otherVillageContainer.removeClass('d-none'); // Show "Other Village"
+        otherVillageInput.attr('required', true); // Make it required        
+        talukaInput.removeAttribute("readonly");
+        districtInput.removeAttribute("readonly");
+        stateInput.removeAttribute("readonly");
+    } else {
+        otherVillageContainer.addClass('d-none'); // Hide "Other Village"
+        otherVillageInput.removeAttr('required'); // Remove required attribute
+        talukaInput.setAttribute("readonly", true);
+        districtInput.setAttribute("readonly", true);
+        stateInput.setAttribute("readonly", true);
+    }
 
-    $.ajax({
-        url: "/get_pincode_data",
-        type: "GET",
-        data: { 'pincode': pincode },
-        success: function (html) {
-            if (html.Message == 'No records found') {
-                Swal.fire({
-                    title: "Wrong Pincode",
-                    text: "Please Enter Correct Pincode",
-                    icon: "info"
-                });
-            } else {
+    // Fetch details for the selected village
+    if (village_value !== 'Other') {
+        $.ajax({
+            url: "/get_pincode_data",
+            type: "GET",
+            data: { 'pincode': pincode },
+            success: function (html) {
+                if (html.Message == 'No records found') {
+                    Swal.fire({
+                        title: "Wrong Pincode",
+                        text: "Please Enter Correct Pincode",
+                        icon: "info"
+                    });
+                } else {
 
-                let PostOffice = html.result
-                $(PostOffice).each(function (index, post_val) {
-                    if (post_val.id == village_name) {
-                        $('#taluka').val(post_val.province)
-                        $('#city').val(post_val.district)
-                        $('#district').val(post_val.district)
-                        $('#state').val(post_val.state)
-                    }
-                })
+                    let PostOffice = html.result
+                    $(PostOffice).each(function (index, post_val) {
+                        if (post_val.id == village_name) {
+                            $('#taluka').val(post_val.province)
+                            $('#city').val(post_val.district)
+                            $('#district').val(post_val.district)
+                            $('#state').val(post_val.state)
+                        }
+                    })
+                }
+            },
+            error: function (jqxhr, textStatus, error) {
             }
-        },
-        error: function (jqxhr, textStatus, error) {
-        }
-    })
+        })
+    }
 })
 // ------------------------------- END PERMANENT ADDRESS ---------------------------------------
 
@@ -330,8 +362,11 @@ $('#comm_pincode').on('blur', function () {
         entered in Communication Pincode */
 
     $('#comm_village').empty()
-    $('#comm_village').append(`<option value = '' class = 'spinner-border' role="status">
-    <span class="sr-only">Loading...</span> </option>`)
+    $('#comm_village').append(`
+        <option value = '' class = 'spinner-border' role="status">
+        <span class="sr-only">Loading...</span> 
+        </option>
+        `)
     let pincode = $(this).val();
     if ($(this).val() == '' || $(this).val().length < 6 || $(this).val().length > 6 ) {
         Swal.fire({
@@ -372,6 +407,8 @@ $('#comm_pincode').on('blur', function () {
                     $('#comm_village').append(`<option value = '${post_val.postalLocation}' data-hidden = '${post_val.id}'>${post_val.postalLocation}</option>`)
                 })
             }
+            $('#comm_village').append(`
+                <option value="Other">Other</option>`);
         },
         error: function (jqxhr, textStatus, error) {
         }
@@ -382,38 +419,61 @@ $('#comm_pincode').on('blur', function () {
 // On change of Communication Village get all village data
 $('#comm_village').on('change', function () {
 
+    const comm_village_name = $('option:selected', this).attr('data-hidden');
+    const comm_village_value = $(this).val();
+    const comm_pincode = $('#comm_pincode').val()
+    const comm_talukaInput = document.getElementById("comm_taluka");
+    const comm_districtInput = document.getElementById("comm_district");
+    const comm_stateInput = document.getElementById("comm_state");
+    const comm_otherVillageContainer = $('#comm_other_village_container');
+    const comm_otherVillageInput = $('#comm_other_village');
+
    /** This function will the fetch the Communication Taluka, Communication District and Communication State 
        based on the Communication Village selected */ 
 
-    village_name = $('option:selected', this).attr('data-hidden');
-    pincode = $('#comm_pincode').val()
+       // If "Other" is selected, show the "other_village" field
+    if (comm_village_value === 'Other') {
+        comm_otherVillageContainer.removeClass('d-none'); // Show "Other Village"
+        comm_otherVillageInput.attr('required', true); // Make it required        
+        comm_talukaInput.removeAttribute("readonly");
+        comm_districtInput.removeAttribute("readonly");
+        comm_stateInput.removeAttribute("readonly");
+    } else {
+        comm_otherVillageContainer.addClass('d-none'); // Hide "Other Village"
+        comm_otherVillageInput.removeAttr('required'); // Remove required attribute
+        comm_talukaInput.setAttribute("readonly", true);
+        comm_districtInput.setAttribute("readonly", true);
+        comm_stateInput.setAttribute("readonly", true);
+    }
     //AJAX request to fetch data based on the selected Communication Village and Communication Pincode
-    $.ajax({
-        url: "/get_pincode_data",
-        type: "GET",
-        data: { 'pincode': pincode },
-        success: function (html) {
-            if (html.Message == 'No records found') {
-                Swal.fire({
-                    title: "Wrong Pincode",
-                    text: "Please Enter Correct Pincode",
-                    icon: "info"
-                });
-            } else {
-                let PostOffice = html.result
-                $(PostOffice).each(function (index, post_val) {
-                    if (post_val.id == village_name) {
-                        $('#comm_taluka').val(post_val.province)
-                        $('#commm_ity').val(post_val.district)
-                        $('#comm_district').val(post_val.district)
-                        $('#comm_state').val(post_val.state)
-                    }
-                })
+    if (comm_village_value !== 'Other') {
+        $.ajax({
+            url: "/get_pincode_data",
+            type: "GET",
+            data: { 'comm_pincode': comm_pincode },
+            success: function (html) {
+                if (html.Message == 'No records found') {
+                    Swal.fire({
+                        title: "Wrong Pincode",
+                        text: "Please Enter Correct Pincode",
+                        icon: "info"
+                    });
+                } else {
+                    let PostOffice = html.result
+                    $(PostOffice).each(function (index, post_val) {
+                        if (post_val.id == comm_village_name) {
+                            $('#comm_taluka').val(post_val.province)
+                            $('#commm_ity').val(post_val.district)
+                            $('#comm_district').val(post_val.district)
+                            $('#comm_state').val(post_val.state)
+                        }
+                    })
+                }
+            },
+            error: function (jqxhr, textStatus, error) {
             }
-        },
-        error: function (jqxhr, textStatus, error) {
-        }
-    })
+        })
+    }
 })
 // ------------------------------- END COMMUNICATION ADDRESS ---------------------------------------
 
@@ -423,6 +483,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
     const permanentAddress = document.getElementById('add_1');
     const permanentPincode = document.getElementById('pincode');
     const permanentVillage = document.getElementById('village');
+    const permanentOtherVillage = document.getElementById('other_village');
     const permanentTaluka = document.getElementById('taluka');
     const permanentDistrict = document.getElementById('district');
     const permanentState = document.getElementById('state');
@@ -431,6 +492,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
     const communicationAddress = document.getElementById('comm_add_1');
     const communicationPincode = document.getElementById('comm_pincode');
     const communicationVillage = document.getElementById('comm_village');
+    const communicationOtherVillage = document.getElementById('comm_other_village');
     const communicationTaluka = document.getElementById('comm_taluka');
     const communicationDistrict = document.getElementById('comm_district');
     const communicationState = document.getElementById('comm_state');
@@ -451,6 +513,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
         newOption.text = selectedPermanentVillageText;
         newOption.selected = true;
         communicationVillage.add(newOption);
+        communicationOtherVillage.value = permanentOtherVillage.value;
 
         communicationTaluka.value = permanentTaluka.value;
         communicationDistrict.value = permanentDistrict.value;
@@ -459,6 +522,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
         // Set fields to readonly
         communicationAddress.readOnly = true;
         communicationPincode.readOnly = true;
+        communicationOtherVillage.readOnly = true;
         communicationTaluka.readOnly = true;
         communicationDistrict.readOnly = true;
         communicationState.readOnly = true;
@@ -472,6 +536,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
         // Clear and Enable Communication Address Fields
         communicationAddress.value = '';
         communicationPincode.value = '';
+        communicationOtherVillage.value = '';
 
         // For Village
         communicationVillage.options.length = 0; // Clear options
@@ -489,7 +554,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
         communicationAddress.readOnly = false;
         communicationPincode.readOnly = false;
         communicationVillage.readOnly = false;
-
+        communicationOtherVillage.readOnly = false;
         permanentAddress.readOnly = false;
         permanentPincode.readOnly = false;
     }
@@ -513,7 +578,6 @@ function updateSameAddress() {
 }
 
 // -------------------- END Auto populate communciation address on Tick --------------
-
 
 // -------------------- Populate the Subcaste on Selected Caste --------------
 /*

@@ -161,13 +161,71 @@ window.onload = function() {
 function toggleDisabilityField(select) {
     const disability_div = document.getElementById('disability_type_div');
     const disability_feild = document.getElementById('type_of_disability');
+    const disability_perc_div = document.getElementById('disability_perc_div');
+    const disability_perc_feild = document.getElementById('perc_of_disability');
 
     if (select.value === 'Yes') {
         disability_div.classList.remove('d-none'); // Show field
         disability_feild.setAttribute('required', 'required');
+        disability_perc_div.classList.remove('d-none'); // Show field
+        disability_perc_feild.setAttribute('required', 'required');
     } else {
         disability_div.classList.add('d-none'); // Hide field
         disability_feild.removeAttribute('required');
         disability_feild.value = ''; // Clear input field
+        disability_perc_div.classList.add('d-none'); // Show field
+        disability_perc_feild.removeAttribute('required', 'required');
+        disability_perc_feild.value = ''; // Clear input field
     }
 }
+
+// ------------- Salaried Validation  --------------
+// ------------------- Start -----------------------
+$('#salaried').on('change', function () {
+    if($(this).val() == 'Yes'){
+        Swal.fire({
+            title: "Sorry!",
+            text: "Sorry, you cannot apply for the Fellowship. Salaried candidates are not eligible to apply for the Fellowship. Thank you for your interest.",
+            icon: "error"
+        });
+        $('#salaried').val('')
+    }
+});
+// ------------------------------------------------
+
+// ------------- Validate Percentage of Disability --------------
+// ------- Start --------
+function validateDisabilityPercentage(input) {
+    // Allow only numeric characters and a single decimal point
+    input.value = input.value.replace(/[^0-9.]/g, '');
+
+    // Prevent multiple decimal points
+    if ((input.value.match(/\./g) || []).length > 1) {
+        input.value = input.value.substring(0, input.value.lastIndexOf('.'));
+    }
+
+    // Limit to three digits before the decimal point and two digits after
+    const regex = /^(\d{1,3})(\.\d{0,2})?$/;
+    if (!regex.test(input.value)) {
+        input.value = input.value.slice(0, -1);
+    }
+
+    // Ensure the value does not exceed 100.00
+    if (parseFloat(input.value) > 100) {
+        input.value = "100.00";
+    }
+    // Ensure the value does not exceed 100.00
+    if (parseFloat(input.value) < 40) {
+        Swal.fire({
+            title: "Sorry!",
+            text: "Candidates with a disability percentage less than 40% are not eligible to apply under the Disabled category",
+            icon: "error"
+        });
+        input.value = '';
+    }
+    // Zero cannot be entered in Percentage
+    if (input.value === '0') {
+        input.value = '';
+    } 
+}
+// ------------------------------------------------

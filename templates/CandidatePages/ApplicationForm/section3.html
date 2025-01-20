@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="income_certificate_number">Income Certificate Number (Barcode)
+                                <label for="income_certificate_number">Income Certificate Number
                                     <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section3'] == 'filled' %}
@@ -42,7 +42,7 @@
                                     <span class="text-dark">{{ record['income_certificate_number'] }}</span>
                                 {% else %}
                                     <input type="text" name="income_certificate_number" id="income_certificate_number"
-                                       placeholder="Enter your Income Certificate Number" class="form-control"
+                                       placeholder="Enter your Income Cert. Number" class="form-control"
                                         oninput="validateIncomeCertificateNumber()" required>
                                 {% endif %}
                             </div>
@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="domicile_number">Domicile Certificate Number (Barcode)
+                                <label for="domicile_number">Domicile Certificate Number
                                     <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section3'] == 'filled' %}
@@ -135,7 +135,7 @@
                                     <span class="text-dark">{{ record['domicile_number'] }}</span>
                                 {% else %}
                                     <input type="text" name="domicile_number" id="domicile_number"
-                                       placeholder="Enter Domicile Barcode Number" class="form-control"
+                                       placeholder="Enter Domicile Cert. Number" class="form-control"
                                         oninput="validateDomicileCertificateNumber()" disabled required>
                                 {% endif %}
                             </div>
@@ -222,7 +222,7 @@
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="caste_certf_number">Caste Certificate Number (Barcode)
+                                <label for="caste_certf_number">Caste Certificate Number
                                     <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section3'] == 'filled' %}
@@ -230,7 +230,7 @@
                                     <span class="text-dark">{{ record['caste_certf_number'] }}</span>
                                 {% else %}
                                     <input type="text" name="caste_certf_number" id="caste_certf_number"
-                                       placeholder="Enter Caste Barcode Number" class="form-control"
+                                       placeholder="Enter Caste Cert. Number" class="form-control"
                                         oninput="validateCasteCertificateNumber()" disabled required>
                                 {% endif %}
                             </div>
@@ -320,7 +320,7 @@
                         </div>
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
-                                <label for="validity_cert_number">Validity Certificate Number (Barcode)
+                                <label for="validity_cert_number">Validity Certificate Number 
                                     <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section3'] == 'filled' %}
@@ -328,7 +328,7 @@
                                     <span class="text-dark">{{ record['validity_cert_number'] }}</span>
                                 {% else %}
                                     <input type="text" name="validity_cert_number" id="validity_cert_number"
-                                       placeholder="Enter Validity Barcode Number" class="form-control"
+                                       placeholder="Enter Validity Cert. Number" class="form-control"
                                         oninput="validateValidityCertificateNumber()" minlength="20" required
                                         disabled>
                                 {% endif %}
