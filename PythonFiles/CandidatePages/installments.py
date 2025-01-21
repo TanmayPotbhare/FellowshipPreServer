@@ -27,7 +27,7 @@ def installments_auth(app):
         # Fetch user details
         cursor.execute("SELECT * FROM application_page WHERE email=%s", (email,))
         records = cursor.fetchone()
-
+        print(records)
         if records:
             year = records['phd_registration_year']
             startDate = records['final_approved_date']
@@ -37,10 +37,10 @@ def installments_auth(app):
 
         # Fetch installment and payment details
         cursor.execute("SELECT * FROM installments WHERE email=%s", (email,))
-        installments = cursor.fetchall()
+        installments = cursor.fetchone()
 
         cursor.execute("SELECT * FROM payment_sheet WHERE email=%s", (email,))
-        record = cursor.fetchall()
+        record = cursor.fetchone()
 
         # Assuming only one row in record
         today = datetime.today()
@@ -84,7 +84,7 @@ def installments_auth(app):
 
         # Fetch other necessary details
         cursor.execute("SELECT fellowship_withdrawn FROM signup WHERE email=%s", (email,))
-        output = cursor.fetchall()
+        output = cursor.fetchone()
 
         # print(installments)
 

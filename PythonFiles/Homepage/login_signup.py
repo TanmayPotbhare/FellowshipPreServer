@@ -4,6 +4,7 @@ import mysql.connector
 import os
 import requests
 import re
+from dotenv import load_dotenv
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 
@@ -23,9 +24,9 @@ def login_auth(app, mail):
         for key, value in app_paths.items():
             app.config[key] = value
 
-    app.config['ZEPTOMAIL_URL'] = "https://api.zeptomail.in/v1.1/email"
-    app.config['ZEPTOMAIL_API_KEY'] = "Zoho-enczapikey PHtE6r0PFOjriWB+oRJR5f+wR5L2No0n9O1nfwZG4tkWDKJXGk1d/tosxjO+rhZ/BvlGQPPKmd5gsOvJuuqDJm68NGgdXWqyqK3sx/VYSPOZsbq6x00asF4YdkTVVoPpdtNi0iDfuNuX"
-
+    load_dotenv()
+    app.config['ZEPTOMAIL_URL'] = os.getenv('ZEPTOMAIL_URL')
+    app.config['ZEPTOMAIL_API_KEY'] = os.getenv('ZEPTOMAIL_API_KEY')
 
     # ---------------------------------
     #           LOGIN ROUTE

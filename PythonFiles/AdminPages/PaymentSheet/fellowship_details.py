@@ -2,7 +2,7 @@ from datetime import date, timedelta, datetime
 import mysql.connector
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 import os
-from flask_mail import Mail, Message
+from dateutil.relativedelta import relativedelta
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 from Authentication.middleware import auth
 
@@ -28,7 +28,7 @@ def fellowshipdetails_auth(app):
 
         cursor.execute("SELECT * FROM application_page where email=%s ", (email,))
         result = cursor.fetchall()
-        startDate = result[0]['final_approved_date']
+        start_year = result[0]['fellowship_awarded_year']
 
         cursor.execute("SELECT * FROM installments where email=%s", (email,))
         installments = cursor.fetchall()
@@ -38,50 +38,62 @@ def fellowshipdetails_auth(app):
         record = cursor.fetchall()
 
         # Assuming only one row in record
-        for row in record:
-            total_months = int(row['total_months'])
-            start_date = startDate
-            installment_list = []
+        installment_list = []
+        total_months = 3
+        start_date = datetime(start_year, 4, 1)
+        previous_end_date = None
+        quarter_end_dates = {
+            4: (6, 30),  # April to June
+            7: (9, 30),  # July to September
+            10: (12, 31),  # October to December
+            1: (3, 31),  # January to March
+        }
 
-            # Loop to create 15 installments (5 years * 3 installments per year)
-            for i in range(1, 16):
-                # Set start and end dates for each installment
-                if i == 1:
-                    current_start_date = start_date
-                else:
-                    current_start_date = previous_end_date + timedelta(days=30)
+        for i in range(1, 21):  # Loop for 20 installments
+            # Determine the start date of the current installment
+            if i == 1:
+                current_start_date = start_date
+            else:
+                current_start_date = previous_end_date + relativedelta(days=1)  # Start from the next day of the previous end date
 
-                current_end_date = current_start_date + timedelta(days=90)
+            # Determine the end date of the current installment (3 months after the start date)
+            current_month = current_start_date.month
+            for start_month, (end_month, end_day) in quarter_end_dates.items():
+                if current_month == start_month:
+                    current_end_date = datetime(current_start_date.year, end_month, end_day)
+                    break
 
-                # Create installment dictionary
-                installment = {
-                    'sr_no': i,
-                    'period': total_months,
-                    'start_period': current_start_date.strftime('%Y-%m-%d'),
-                    'end_period': current_end_date.strftime('%Y-%m-%d'),
-                    'due_date': (current_end_date + timedelta(days=60)).strftime('%Y-%m-%d'),
-                    'balance': 42000,  # Adjust balance if necessary
-                    'installment_number': i,
-                    'paid': row.get(f'paid_or_not_installment_{i}', 'Not Available')
-                    # Assuming the field changes per installment
-                }
+            # Create the installment dictionary
+            installment = {
+                'sr_no': i,
+                'period': total_months,
+                'start_period': current_start_date.strftime('%Y-%m-%d'),
+                'end_period': current_end_date.strftime('%Y-%m-%d'),
+                'due_date': (current_end_date + relativedelta(days=60)).strftime('%Y-%m-%d'),
+                'balance': 42000,  # Adjust balance if necessary
+                'installment_number': i,
+                'paid': 'Not Available'  # Replace with actual data if available
+            }
 
-                # Append to installment list
-                installment_list.append(installment)
-                # print(installments)
-                # Update previous_end_date for the next iteration
-                previous_end_date = current_end_date
+            # Append the installment to the list
+            installment_list.append(installment)
 
-            # Calculate total period and total balance for all installments
-            total_period = sum(inst['period'] for inst in installment_list)
-            total_balance = sum(inst['balance'] for inst in installment_list)
+            # Update the previous_end_date for the next iteration
+            previous_end_date = current_end_date
 
-            for installment in installment_list:
-                # Convert and format the dates
-                start_period = datetime.strptime(installment['start_period'], '%Y-%m-%d').strftime('%d %B %Y')
-                end_period = datetime.strptime(installment['end_period'], '%Y-%m-%d').strftime('%d %B %Y')
-                installment['formatted_start_period'] = start_period
-                installment['formatted_end_period'] = end_period
+        # Calculate total period and total balance for all installments
+        total_period = sum(inst['period'] for inst in installment_list)
+        total_balance = sum(inst['balance'] for inst in installment_list)
+
+        # Format the dates for display purposes
+        for installment in installment_list:
+            start_period = datetime.strptime(installment['start_period'], '%Y-%m-%d').strftime('%d %B %Y')
+            end_period = datetime.strptime(installment['end_period'], '%Y-%m-%d').strftime('%d %B %Y')
+            installment['formatted_start_period'] = start_period
+            installment['formatted_end_period'] = end_period
+
+        for inst in installment_list:
+            print(inst)
 
         cursor.execute("SELECT fellowship_withdrawn FROM signup where email=%s", (email,))
         output = cursor.fetchall()
@@ -90,7 +102,7 @@ def fellowshipdetails_auth(app):
         previously_paid = False  # Track if the previous installment was paid
 
         # Loop through 15 installments directly
-        for current_installment_number in range(1, 16):
+        for current_installment_number in range(1, 21):
             status_paid = None
 
             # Check the status of the current installment

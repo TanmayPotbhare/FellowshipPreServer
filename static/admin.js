@@ -1056,3 +1056,18 @@ $('#export-to-excel-not-disabled').on('click', function () {
 });
 // ----------------------------------------------
 // ------ END Code for Not Disabled Report Page -----
+
+
+
+// JavaScript to dynamically add years to the dropdown
+const startYear = 2020; // Start from 2020
+const currentYear = new Date().getFullYear(); // Get the current year
+const yearSelector = document.getElementById("payment_yearSelector"); // Get the dropdown element
+
+for (let year = startYear; year <= currentYear; year++) {
+    const option = document.createElement("option");
+    const nextYear = year + 1; // Get the next year
+    option.value = year;
+    option.textContent = `${year} - ${nextYear}`;
+    yearSelector.appendChild(option); // Add the option to the dropdown
+}

@@ -36,14 +36,7 @@ def payment_sheet_auth(app):
                         SELECT * 
                         FROM application_page 
                         WHERE final_approval = 'accepted' 
-                          AND phd_registration_year >= '2023'
-
-                        UNION
-
-                        SELECT * 
-                        FROM application_page 
-                        WHERE phd_registration_year > '2020' 
-                          AND aadesh = 1;
+                            AND fellowship_awarded_year = '2023'
 
             """)
             user_data = cursor.fetchall()  # Use fetchall to retrieve all rows
@@ -57,24 +50,18 @@ def payment_sheet_auth(app):
                 fellowship_awarded_year = row['fellowship_awarded_year']
                 fellowship_awarded_date = row['fellowship_awarded_date']
                 joining_date = row["phd_registration_date"]
-                city = row['city']
+                city = row['district']
                 bank_name = row['bank_name']
                 account_number = row['account_number']
                 ifsc = row['ifsc_code']
-                year = '2023'
+                # year = '2023'
                 # print(joining_date)
 
                 # Calculate Count Yearly
-                if faculty == "Arts":
-                    count_yearly = 20500
-                elif faculty == "Law":
-                    count_yearly = 20500
-                elif faculty == "Commerce":
-                    count_yearly = 20500
-                elif faculty == "Other":
-                    count_yearly = 20500
-                elif faculty == "Science":
+                if faculty == "Science":
                     count_yearly = 25000
+                elif faculty != "Science":
+                    count_yearly = 20500
                 else:
                     count_yearly = 0  # Handle other faculty values as needed
 
@@ -135,7 +122,7 @@ def payment_sheet_auth(app):
                 total_months = 3
 
                 # Calculate Fellowship
-                fellowship = 42000  # Fixed value for 3 months
+                # fellowship = 42000  # Fixed value for 3 months
 
                 # Calculate Total Fellowship
                 total_fellowship = fellowship * total_months
@@ -164,10 +151,12 @@ def payment_sheet_auth(app):
                 # Check the category based on 2 years difference
                 if current_year == fellowship_awarded_year + 2:
                     category = "SRF"  # Senior Research Fellowship
+                    fellowship = 42000
                 else:
                     category = "JRF"  # Junior Research Fellowship
+                    fellowship = 37000
 
-                # Create a record dictionary for the user
+                    # Create a record dictionary for the user
                 record = {
                     "applicant_id": row['applicant_id'],
                     "full_name": str(row['first_name']) + ' ' + str(row['middle_name']) + ' ' + str(row['last_name']),

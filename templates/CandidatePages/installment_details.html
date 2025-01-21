@@ -1,73 +1,124 @@
 {% extends 'CandidatePages/layout/layout.html' %}
 {% block content %}
 
-        <!-- Table Product -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card card-default">
+<!-- Table Product -->
+<div class="row">
+  <div class="col-12">
+    <div class="card card-default">
 
-              <div class="card-header justify-content-center">
-                    <!-- Center Content -->
-                    <div class="text-center">
-                        <div class="profile-avata">
-                           {% for row in records %}
-                                {% set fullname = row['first_name'] + ' ' + row['middle_name'] + ' ' + row['last_name'] %}
-                                  {% if row['applicant_photo'] %}
-                                      <img class="rounded-circle" src="{{ row['applicant_photo'] }}" alt="Avatar Image" style="height: 120px;width: 120px;">
-                                  {% else %}
-                                      <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
-                                  {% endif %}
-                                  <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
-                                  <span class="d-block">{{ row['email'] }}</span>
-                            {% endfor %}
+      <div class="card-header justify-content-center">
+            <!-- Center Content -->
+            <div class="text-center">
+                <div class="profile-avata">
+                   {% if records %}
+                        {% set fullname = records['first_name'] + ' ' + records['middle_name'] + ' ' + records['last_name'] %}
+                          {% if records['applicant_photo'] %}
+                              <img class="rounded-circle" src="{{ records['applicant_photo'] }}" alt="Avatar Image" style="height: 120px;width: 120px;">
+                          {% else %}
+                              <img class="rounded-circle" src="/static/assets/img/default_user.png'" alt="Avatar Image">
+                          {% endif %}
+                          <span class="h5 d-block mt-3 mb-2">{{ fullname }}</span>
+                          <span class="d-block">{{ records['email'] }}</span>
+                    {% endif %}
+                </div>
+            </div>
+      </div>
+
+
+      <div class="card-footer card-profile-footer">
+        <ul class="nav nav-border-top justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link" href="/candidate_dashboard">My Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/installment_details">Installment Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adhaar_seeding">Aadhaar Seeding</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/manage_profile">Manage Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+            <div class="applicant-cards">
+                {% if records %}
+                  <h6 class="mb-3">Application Submitted Date: <span class="text-muted">{{ records['application_date'] }}</span></h6>
+                {% endif %}
+                <div class="card mb-3">
+                    <div class="card-body d-flex flex-column align-items-start">
+                        <div class="col-md-12">
+
+                            <h4 class="text-dark fw-bold">Note:</h4><br>
+                            <h5 class="text-danger">This page is disabled as of right now,
+                                when we get instruction from T.R.T.I Officials to display it,
+                                we will show your installment records on the page.
+                            </h5>
+                            <button type="button" class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                              View Installment Process Details
+                            </button>
                         </div>
-                    </div>
-              </div>
-
-
-              <div class="card-footer card-profile-footer">
-                <ul class="nav nav-border-top justify-content-center">
-                  <li class="nav-item">
-                    <a class="nav-link" href="/candidate_dashboard">My Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="/installment_details">Installment Details</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/adhaar_seeding">Aadhaar Seeding</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/manage_profile">Manage Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="user-profile-settings.html">Raise Issue</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-body">
-                    <div class="applicant-cards">
-                        {% for row in records %}
-                          <h6 class="mb-3">Application Submitted Date: <span class="text-muted">{{ row['application_date'] }}</span></h6>
-                        {% endfor %}
-                        <div class="card mb-3">
-                            <div class="card-body d-flex flex-column align-items-start">
-                                <div class="col-md-12">
-
-                                    <h4 class="text-dark fw-bold">Note:</h4><br>
-                                    <h5 class="text-danger">This page is disabled as of right now,
-                                        when we get instruction from T.R.T.I Officials to display it,
-                                        we will show your installment records on the page.
-                                    </h5>
-
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Fellowship Payment Information</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <!-- Modal content -->
+                                <p class="text-muted">
+                                  <span class="fw-bold">Quarterly Overview:</span>
+                                  There will be <span class="fw-bold">4 Quarters</span> in a single year. Your fellowship will consist of a total of
+                                  <span class="fw-bold text-success">20 Quarters</span> over the span of <span class="fw-bold text-success">5 Years</span>.
+                                </p>
+                                <div class="border rounded-3 p-3 bg-light">
+                                  <p class="mb-1"><span class="fw-bold text-secondary">First Quarter:</span> 1st April to 30th June</p>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Pay Disbursement:</span> 1st July to 7th July</p>
+                                  <br>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Second Quarter:</span> 1st July to 30th September</p>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Pay Disbursement:</span> 1st October to 7th October</p>
+                                  <br>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Third Quarter:</span> 1st October to 31st December</p>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Pay Disbursement:</span> 1st January to 7th January</p>
+                                  <br>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Fourth Quarter:</span> 1st January to 31st March</p>
+                                  <p class="mb-1"><span class="fw-bold text-secondary">Pay Disbursement:</span> 1st April to 7th April</p>
+                                  <br>
+                                  <p><span class="text-danger">Note:</span>
+                                      <strong>
+                                           The Payment will happen in 7 Working days, as a result, the payment can go beyond 7 Days.
+                                      </strong>
+                                  </p>
                                 </div>
+                                <p class="mt-4 text-muted">
+                                    Please note that the payment is <span class="fw-bold text-danger">subject to the submission of required documents.</span>
+                                    <br>
+                                    If the documents are not uploaded, the payment will not be recieved, you will have to visit TRTI office for further process.
+                                </p>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                        <!-- Repeat for more applicants -->
+                        </div>
+
                     </div>
                 </div>
-
+                <!-- Repeat for more applicants -->
             </div>
-          </div>
         </div>
+
+    </div>
+  </div>
 
 {% endblock %}
