@@ -368,7 +368,7 @@
                             <div class="form-group">
                                 <label for="pvtg" data-bs-toggle="tooltip" data-bs-placement="top"
                                        title="Enter Pincode, all the villages will autopopulate">
-                                    Select Permanent Village <span class="text-danger">*</span>
+                                    Select Village <span class="text-danger">*</span>
                                 </label>
                                 {% if record['section1'] == 'filled' %}
                                     <br>
@@ -381,6 +381,30 @@
                                 {% endif %}
                             </div>
                         </div>
+                        <div class="col-md-3 mt-2 d-none" id="other_village_container">
+                            <div class="form-group">
+                                <label for="other_village">Other Village <span class="text-danger">*</span></label>
+                                {% if record['section1'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['other_village'] }}</span>
+                                {% else %}
+                                    <input class="form-control" name="other_village" id="other_village"
+                                           oninput="validateName(this)" placeholder="Enter Other Village Name">
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if record.section1 == 'filled' and record.other_village %}
+                            <div class="col-md-3 mt-2">
+                                <div class="form-group">
+                                    <label for="other_village">
+                                        Other Village
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                        <br>
+                                        <span class="text-dark">{{ record['other_village'] }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
                         <div class="col-md-3 mt-2">
                             <div class="form-group">
                                 <label for="taluka">Taluka
@@ -478,7 +502,7 @@
                 <div class="row m-0">
                     <div class="col-md-3 mt-2">
                         <div class="form-group">
-                            <label for="comm_village">Select Communication Village
+                            <label for="comm_village">Select Village
                                 <span class="text-danger">*</span>
                             </label>
                             {% if record['section1'] == 'filled' %}
@@ -492,6 +516,31 @@
                             {% endif %}
                         </div>
                     </div>
+                    <div class="col-md-3 mt-2 d-none" id="comm_other_village_container">
+                        <div class="form-group">
+                            <label for="comm_other_village">Other Village <span class="text-danger">*</span></label>
+                            {% if record['section1'] == 'filled' %}
+                                <br>
+                                <span class="text-dark">{{ record['comm_other_village'] }}</span>
+                            {% else %}
+                                <input class="form-control" name="comm_other_village" id="comm_other_village"
+                                       oninput="validateName(this)" placeholder="Enter Other Village Name">
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if record.section1 == 'filled' and record.comm_other_village %}
+                            <div class="col-md-3 mt-2">
+                                <div class="form-group">
+                                    <label for="comm_other_village">
+                                        Other  Village
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                        <br>
+                                        <span class="text-dark">{{ record['comm_other_village'] }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
                     <div class="col-md-3 mt-2">
                         <div class="form-group">
                             <label for="comm_taluka">Taluka
