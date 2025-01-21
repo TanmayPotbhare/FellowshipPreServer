@@ -383,5 +383,5 @@ window.onload = function() {
     document.getElementById("verifyDetailsHindi").addEventListener('change', enableDisabledFields);
 
     // Call function initially to check if the button should be enabled or not
-    enableDisabledFields2();
+    enableDisabledFields();
 };

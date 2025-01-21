@@ -762,6 +762,30 @@
                             </div>
                         </div>
                         {% endif %}
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="research_center_district">District of your University
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {% if record['section2'] == 'filled' %}
+                                    <br>
+                                    <span class="text-dark">{{ record['research_center_district'] }}</span>
+                                {% else %}
+                                <select class="form-control" name="research_center_district"
+                                        id="research_center_district" required>
+                                    <option value="" selected disabled>-- Select District --</option>
+                                    {% for uni in districts %}
+                                        <option data-hidden="{{ uni['district_id'] }}"
+                                                value="{{ uni['district'] }}">
+                                            {{ uni['district'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                </select>
+                                {% endif %}
+                            </div>
+                        </div>
+
                      </div>
                  </div>
 

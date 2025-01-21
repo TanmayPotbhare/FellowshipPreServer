@@ -50,6 +50,9 @@ def section2_auth(app):
         cursor.execute("SELECT * FROM application_page WHERE email = %s", (email,))
         record = cursor.fetchone()
 
+        cursor.execute(" SELECT * from districts ")
+        districts = cursor.fetchall()
+
         if record:
             # print(record)
             if record['final_approval'] not in ['accepted', 'None', '']:
@@ -75,7 +78,7 @@ def section2_auth(app):
                      
 
             return render_template('CandidatePages/ApplicationForm/section2.html', record=record, university_data=university_names,
-                                   finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
+                                   finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record, districts=districts,
                                    formatted_phd_reg_date=formatted_phd_reg_date,
                                    title='Application Form (Qualification Details)')
         else:
@@ -87,7 +90,7 @@ def section2_auth(app):
         signup_record = cursor.fetchone()
 
         return render_template('CandidatePages/ApplicationForm/section2.html', record=record, university_data=university_names,
-                               finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record,
+                               finally_approved=finally_approved, user=user, photo=photo, signup_record=signup_record, districts=districts,
                                title='Application Form (Qualification Details)')
 
     @section2_blueprint.route('/section2_submit', methods=['GET', 'POST'])
@@ -157,6 +160,7 @@ def section2_auth(app):
             name_of_guide = request.form['name_of_guide']
             faculty = request.form['faculty']
             other_faculty = request.form['other_faculty']
+            research_center_district = request.form['research_center_district']
 
             section2 = 'filled'
 
@@ -175,7 +179,7 @@ def section2_auth(app):
                         have_you_qualified = %s, phd_registration_date = %s, fellowship_application_year = %s, phd_registration_day = %s,
                         phd_registration_month = %s, phd_registration_year = %s, phd_registration_age = %s, concerned_university = %s,
                         other_university = %s, name_of_college = %s, other_college_name = %s, department_name = %s, topic_of_phd = %s,
-                        name_of_guide = %s, faculty = %s, other_faculty = %s, section2 = %s
+                        name_of_guide = %s, faculty = %s, other_faculty = %s, research_center_district = %s, section2 = %s
                     WHERE email = %s
                 """
                 values = (
@@ -187,7 +191,7 @@ def section2_auth(app):
                     have_you_qualified, phd_registration_date, fellowship_applying_year, phd_registration_day,
                     phd_registration_month, phd_registration_year, phd_registration_age, concerned_university,
                     other_university, name_of_college, other_college_name, department_name, topic_of_phd,
-                    name_of_guide, faculty, other_faculty, section2, email  # Include `email` to identify the record
+                    name_of_guide, faculty, other_faculty, research_center_district, section2, email  # Include `email` to identify the record
                 )
 
                 cursor.execute(sql, values)

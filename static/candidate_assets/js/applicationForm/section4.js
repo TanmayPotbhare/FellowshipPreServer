@@ -134,13 +134,15 @@ function showAlert() {
 }
 
 // Function to enable or disable the submit button
-function enableDisabledFields() {
+function enableDisabledFields4() {
     const checkbox1 = document.getElementById("verifyDetails");
     const checkbox2 = document.getElementById("verifyDetailsHindi");
+    const checkbox3 = document.getElementById("verifySalaryDeclaration");
+    const checkbox4 = document.getElementById("verifySalaryDeclarationMarathi");
     const submitBtn = document.getElementById("submit");
 
     // Enable the button if both checkboxes are checked
-    if (checkbox1.checked && checkbox2.checked) {
+    if (checkbox1.checked && checkbox2.checked && checkbox3.checked && checkbox4.checked) {
         submitBtn.disabled = false;
     } else {
         submitBtn.disabled = true;
@@ -150,11 +152,11 @@ function enableDisabledFields() {
 // Initialize event listeners
 window.onload = function() {
     // Add event listeners for checkbox change events
-    document.getElementById("verifyDetails").addEventListener('change', enableDisabledFields);
-    document.getElementById("verifyDetailsHindi").addEventListener('change', enableDisabledFields);
+    document.getElementById("verifyDetails").addEventListener('change', enableDisabledFields2);
+    document.getElementById("verifyDetailsHindi").addEventListener('change', enableDisabledFields2);
 
     // Call function initially to check if the button should be enabled or not
-    enableDisabledFields();
+    enableDisabledFields3();
 };
 
 // This function is for PVTG Caste

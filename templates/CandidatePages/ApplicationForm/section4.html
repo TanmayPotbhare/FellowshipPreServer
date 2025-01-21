@@ -115,8 +115,37 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if record.section4 == 'filled' and record.perc_of_disability == 'Yes' %}
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="type_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Select yes only if someone from your family works in the Government.">
+                                        Type of Disability
+                                    <span class="text-danger">*</span>
+                                </label>
+                                    <br>
+                                    <span class="text-dark">{{ record['type_of_disability'] }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
                      </div>
                  </div>
+                 {% if record['section4'] == 'filled' %}
+
+                        {% else %}
+
+                        <div class="form-check ms-2" style="padding:2rem;">
+                            <input class="form-check-input" type="checkbox" value="" id="verifySalaryDeclaration">
+                                <label class="form-check-label" for="verifySalaryDeclaration">
+                                    I hereby declare that I am not a salaried person and do not have any source of income.
+                                </label>
+                                <br>
+                            <input class="form-check-input" type="checkbox" value="" id="verifySalaryDeclarationMarathi">
+                                <label class="form-check-label" for="verifySalaryDeclarationMarathi">
+                                    मी याद्वारे घोषित करतो/करते की मी पगारदार व्यक्ती नाही आणि माझ्याकडे उत्पन्नाचा कोणताही स्रोत नाही.
+                                </label>
+                        </div>
+                        {% endif %}
                  <div class="card shadow-sm mb-4">
                      <div class="btn btn-dark btn-lg text-center">
                         <h6 class="text-white fw-bold">Parents/Guardian's Details</h6>
@@ -329,9 +358,9 @@
                         <a href="/section3" class="btn btn-primary btn-sm ms-2">Previous</a>
                         <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
                     {% else %}
-<!--                        <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()">Save and Next</button>-->
+<!--                        <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields4()">Save and Next</button>-->
                         {% if not record['section5']|default(None) %}
-                            <button type="submit" id="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()" disabled>Save and Next</button>
+                            <button type="submit" id="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields4()" disabled>Save and Next</button>
                         {% else %}
                             <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
                         {% endif %}
