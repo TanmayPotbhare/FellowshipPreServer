@@ -493,6 +493,7 @@ document.getElementById('sameAddress').addEventListener('change', function () {
     const communicationPincode = document.getElementById('comm_pincode');
     const communicationVillage = document.getElementById('comm_village');
     const communicationOtherVillage = document.getElementById('comm_other_village');
+    const communicationOtherVillageDiv = $('#comm_other_village_container');
     const communicationTaluka = document.getElementById('comm_taluka');
     const communicationDistrict = document.getElementById('comm_district');
     const communicationState = document.getElementById('comm_state');
@@ -532,6 +533,11 @@ document.getElementById('sameAddress').addEventListener('change', function () {
 
         permanentAddress.setAttribute('required', 'required');
         permanentPincode.setAttribute('required', 'required');
+
+        if(permanentVillage.value == "Other"){
+            alert(permanentVillage.value)
+            communicationOtherVillageDiv.removeClass('d-none');
+        }
     } else {
         // Clear and Enable Communication Address Fields
         communicationAddress.value = '';

@@ -924,6 +924,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <input type="file" name="disable_doc" id="disable_doc" class="form-control accept_pdf"
+                                                {% if record['disability'] == 'Yes' %}required{% endif %}
                                                     onchange="toggleViewDocumentButton(this, 'view_disable_btn')">
                                                 <button id="view_disable_btn" class="btn btn-outline-primary btn-sm ms-2" style="display: none;"
                                                     onclick="openDocument('disable_doc')"

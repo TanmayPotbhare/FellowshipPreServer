@@ -248,21 +248,25 @@
                          <div class="col-md-4 mt-3 d-none" id="additionalField">
                             <div class="form-group">
                                 <label for="pvtg_caste">Select Tribe for PVTG<span class="text-danger">*</span></label>
-                                {% if record['section1'] == 'filled' %}
-                                    <br>
-                                    <span class="text-dark">{{ record['pvtg_caste'] }}</span>
-                                {% else %}
                                    <select name="pvtg_caste" id="pvtg_caste" class="form-control">
                                         <option value="" selected>-- Select PVTG Tribe --</option>
                                         <option value="Katkari">Katkari</option>
                                         <option value="Kolam">Kolam</option>
                                         <option value="Madia">Madia</option>
                                     </select>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
                      <div class="row m-0">
+                            {% if record['section1'] == 'filled' %}
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group">
+                                        <label for="pvtg_caste">Select Tribe for PVTG<span class="text-danger">*</span></label>
+                                            <br>
+                                            <span class="text-dark">{{ record['pvtg_caste'] }}</span>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <div class="col-md-4 mt-2">
                                 <div class="form-group">
                                     <label for="caste">Caste/Tribe
