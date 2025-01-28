@@ -178,6 +178,50 @@ def fellowship_awarded_auth(app):
                                 fellowship_awarded_date, 'Awarded', current_date, current_time, email))
                 cnx.commit()
 
+                if fellowship_awarded_year == '2024':
+                    sql = """SELECT email FROM payment_sheet_2024 WHERE email = %s"""
+                    cursor.execute(sql, (email,))
+                    emails = cursor.fetchone()
+
+                    if emails:
+                        pass
+                    else:
+                        fullname = records['first_name'] + ' ' + records['middle_name'] + ' ' +  records['last_name']
+                        jrf_srf = 'JRF'
+
+                        sql_query = """
+                            INSERT INTO payment_sheet_2024 (full_name, email, jrf_srf, fellowship_awarded_date, 
+                                                            fellowship_awarded_year, quarters)
+                            VALUES 
+                            (%s, %s, %s, %s, %s, 'Q1'),
+                            (%s, %s, %s, %s, %s, 'Q2'),
+                            (%s, %s, %s, %s, %s, 'Q3'),
+                            (%s, %s, %s, %s, %s, 'Q4'),
+                            (%s, %s, %s, %s, %s, 'Q5'),
+                            (%s, %s, %s, %s, %s, 'Q6'),
+                            (%s, %s, %s, %s, %s, 'Q7'),
+                            (%s, %s, %s, %s, %s, 'Q8'),
+                            (%s, %s, %s, %s, %s, 'Q9'),
+                            (%s, %s, %s, %s, %s, 'Q10'),
+                            (%s, %s, %s, %s, %s, 'Q11'),
+                            (%s, %s, %s, %s, %s, 'Q12'),
+                            (%s, %s, %s, %s, %s, 'Q13'),
+                            (%s, %s, %s, %s, %s, 'Q14'),
+                            (%s, %s, %s, %s, %s, 'Q15'),
+                            (%s, %s, %s, %s, %s, 'Q16'),
+                            (%s, %s, %s, %s, %s, 'Q17'),
+                            (%s, %s, %s, %s, %s, 'Q18'),
+                            (%s, %s, %s, %s, %s, 'Q19'),
+                            (%s, %s, %s, %s, %s, 'Q20');
+                        """
+                        # Create the parameters list
+                        params = []
+                        for _ in range(20):  # 20 quarters
+                            params.extend([fullname, email, jrf_srf, fellowship_awarded_date, fellowship_awarded_year])
+
+                        # Execute the query with the parameters
+                        cursor.execute(sql_query, tuple(params))
+                        cnx.commit()
                 # Set session and redirect
                 # session['change_center'] = True
                 flash("Award Letter has been awarded to the student successfully.", "success")
