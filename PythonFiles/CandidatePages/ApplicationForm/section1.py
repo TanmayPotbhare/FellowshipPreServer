@@ -91,7 +91,7 @@ def section1_auth(app):
                                    formatted_date_of_birth=formatted_date_of_birth, signup=signup,
                                    title='Application Form (Personal Details)')
         else:
-            user = "Student"
+            user = signup['first_name'] + ' ' + signup['last_name']
             photo = '/static/assets/img/default_user.png'
             finally_approved = 'pending'
             

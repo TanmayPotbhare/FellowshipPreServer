@@ -85,7 +85,7 @@ function validateYear(input) {
                 Swal.fire({
                     icon: "error",
                     title: "Invalid Year Sequence!",
-                    text: `The Passing Year for this qualification cannot be earlier than or equal to a previous qualification.`,
+                    text: `The Passing Year for this qualification cannot be the same or earlier than the Passing Year of a previous qualification you entered.`,
                 });
                 input.value = ''; // Clear invalid input
                 return;
@@ -301,8 +301,16 @@ function calculateAges() {
 
         // Get the Ph.D. registration year
         const phdYear = phdDate.getFullYear();
-        // alert(phdYear)
-        // alert(dobYear)
+
+        let age = phdYear - dobYear;
+        // Assuming the birth month and day are Jan 1st, adjust age if the Ph.D. registration date is before the birthday in that year
+        const dobMonthDay = new Date(dobYear, 0, 1); // Jan 1st as an example
+        if (phdDate < dobMonthDay) {
+            age -= 1; // Subtract 1 if the Ph.D. registration date is before the birthday in that year
+        }
+
+        // Display the calculated age in the "Age at Ph.D Registration" input field
+        document.getElementById('phd_registration_age').value = age;
 
         if (phdYear > dobYear){
             // Calculate age
@@ -316,15 +324,7 @@ function calculateAges() {
             document.getElementById('phd_registration_date').value = '';  
             document.getElementById('phd_registration_age').value = '';  
         }
-        let age = phdYear - dobYear;
-        // Assuming the birth month and day are Jan 1st, adjust age if the Ph.D. registration date is before the birthday in that year
-        const dobMonthDay = new Date(dobYear, 0, 1); // Jan 1st as an example
-        if (phdDate < dobMonthDay) {
-            age -= 1; // Subtract 1 if the Ph.D. registration date is before the birthday in that year
-        }
-
-        // Display the calculated age in the "Age at Ph.D Registration" input field
-        document.getElementById('phd_registration_age').value = age;
+        
     } else {
         // Clear the age field if the registration date is not selected
         document.getElementById('phd_registration_age').value = '';

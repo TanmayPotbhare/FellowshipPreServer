@@ -308,14 +308,14 @@ $('#village').on('change', function () {
 
     // If "Other" is selected, show the "other_village" field
     if (village_value === 'Other') {
-        otherVillageContainer.removeClass('d-none'); // Show "Other Village"
-        otherVillageInput.attr('required', true); // Make it required        
+        otherVillageContainer.removeClass('d-none'); 
+        otherVillageInput.attr('required', true);        
         talukaInput.removeAttribute("readonly");
         districtInput.removeAttribute("readonly");
         stateInput.removeAttribute("readonly");
     } else {
-        otherVillageContainer.addClass('d-none'); // Hide "Other Village"
-        otherVillageInput.removeAttr('required'); // Remove required attribute
+        otherVillageContainer.addClass('d-none'); 
+        otherVillageInput.removeAttr('required'); 
         talukaInput.setAttribute("readonly", true);
         districtInput.setAttribute("readonly", true);
         stateInput.setAttribute("readonly", true);
@@ -450,7 +450,7 @@ $('#comm_village').on('change', function () {
         $.ajax({
             url: "/get_pincode_data",
             type: "GET",
-            data: { 'comm_pincode': comm_pincode },
+            data: { 'pincode': comm_pincode },  // Here we are passing the value of Communication Pincode which is stored in 'comm_pincode' to the key 'pincode'. 
             success: function (html) {
                 if (html.Message == 'No records found') {
                     Swal.fire({
