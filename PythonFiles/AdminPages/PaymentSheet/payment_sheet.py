@@ -121,8 +121,18 @@ def payment_sheet_auth(app):
                 # Calculate Total Months
                 total_months = 3
 
+                # Get the current date
+                current_date = datetime.now().date()
+                current_year = current_date.year
+
                 # Calculate Fellowship
-                # fellowship = 42000  # Fixed value for 3 months
+                # Check the category based on 2 years difference
+                if current_year == fellowship_awarded_year + 2:
+                    category = "SRF"  # Senior Research Fellowship
+                    fellowship = 42000
+                else:
+                    category = "JRF"  # Junior Research Fellowship
+                    fellowship = 37000
 
                 # Calculate Total Fellowship
                 total_fellowship = fellowship * total_months
@@ -144,17 +154,7 @@ def payment_sheet_auth(app):
                 if 'phd_registration_date' in row and row['phd_registration_date']:
                     joiningDate = row['phd_registration_date'].strftime('%Y-%m-%d')
 
-                # Get the current date
-                current_date = datetime.now().date()
-                current_year = current_date.year
 
-                # Check the category based on 2 years difference
-                if current_year == fellowship_awarded_year + 2:
-                    category = "SRF"  # Senior Research Fellowship
-                    fellowship = 42000
-                else:
-                    category = "JRF"  # Junior Research Fellowship
-                    fellowship = 37000
 
                     # Create a record dictionary for the user
                 record = {
@@ -200,7 +200,7 @@ def payment_sheet_auth(app):
                 connect_param = ConnectParam(host)
                 cnx, cursor = connect_param.connect()
 
-                cursor.execute(" SELECT * FROM payment_sheet where email=%s", (email,))
+                cursor.execute(" SELECT * FROM payment_sheet_2023 where email=%s", (email,))
                 result = cursor.fetchone()
 
                 if result:

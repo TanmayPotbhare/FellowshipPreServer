@@ -1,11 +1,13 @@
 from datetime import datetime
-import requests
+import tempfile
 import os
 from fpdf import FPDF
+import pdfkit
+
 from Classes.caste import casteController
 from Classes.database import HostConfig, ConfigPaths, ConnectParam
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash, make_response, jsonify, \
-    Response
+    Response, send_file
 
 app_pdf_blueprint = Blueprint('app_pdf', __name__)
 
@@ -20,6 +22,14 @@ def app_pdf_auth(app):
 
     @app_pdf_blueprint.route('/generate_pdf', methods=['GET', 'POST'])
     def generate_pdf():
+        # rendered = render_template('test_pdf.html')  # Render the HTML template
+        # with tempfile.NamedTemporaryFile(suffix='.html', delete=False) as f:
+        #     f.write(rendered.encode('utf-8'))  # Ensure proper encoding
+        #     html_file_path = f.name
+        # # wkhtmltopdf_path = os.path.abspath("C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe")
+        # # options = {'wkhtmltopdf': wkhtmltopdf_path}
+        # pdfkit.from_file(html_file_path, "output.pdf")
+
         email = session['email']
         output_filename = app.config['PDF_STORAGE_PATH']
         # output_filename = 'static/pdf_application_form/pdfform.pdf'
