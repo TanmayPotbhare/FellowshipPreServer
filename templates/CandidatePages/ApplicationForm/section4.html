@@ -55,7 +55,7 @@
                         <div class="col-md-4 mt-2 d-none" id="disability_type_div">
                             <div class="form-group">
                                 <label for="type_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="Select yes only if someone from your family works in the Government.">
+                                       title="Select the Type of Disability">
                                         Type of Disability
                                     <span class="text-danger">*</span>
                                 </label>
@@ -98,8 +98,54 @@
                                 </div>
                             </div>
                         {% endif %}
+                        <div class="col-md-4 mt-2 d-none" id="disability_perc_div">
+                            <div class="form-group">
+                                <label for="perc_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Please Enter your percentage of disability.">
+                                        Percentage of Disability
+                                    <span class="text-danger">*</span>
+                                </label>
+                                {% if record['section4'] == 'filled' %}
+                                <br>
+                                <span class="text-dark">{{ record['perc_of_disability'] }}</span>
+                                {% else %}
+                                <input type="text" name="perc_of_disability" id="perc_of_disability" required
+                                    placeholder="Enter Percentage of Disability" class="form-control"
+                                    onblur="validateDisabilityPercentage(this)">
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if record.section4 == 'filled' and record.perc_of_disability == 'Yes' %}
+                        <div class="col-md-4 mt-2">
+                            <div class="form-group">
+                                <label for="type_of_disability" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Select yes only if someone from your family works in the Government.">
+                                        Type of Disability
+                                    <span class="text-danger">*</span>
+                                </label>
+                                    <br>
+                                    <span class="text-dark">{{ record['type_of_disability'] }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
                      </div>
                  </div>
+                 {% if record['section4'] == 'filled' %}
+
+                        {% else %}
+
+                        <div class="form-check ms-2" style="padding:2rem;">
+                            <input class="form-check-input" type="checkbox" value="" id="verifySalaryDeclaration">
+                                <label class="form-check-label" for="verifySalaryDeclaration">
+                                    I hereby declare that I am not a salaried person and do not have any source of income.
+                                </label>
+                                <br>
+                            <input class="form-check-input" type="checkbox" value="" id="verifySalaryDeclarationMarathi">
+                                <label class="form-check-label" for="verifySalaryDeclarationMarathi">
+                                    मी याद्वारे घोषित करतो/करते की मी पगारदार व्यक्ती नाही आणि माझ्याकडे उत्पन्नाचा कोणताही स्रोत नाही.
+                                </label>
+                        </div>
+                        {% endif %}
                  <div class="card shadow-sm mb-4">
                      <div class="btn btn-dark btn-lg text-center">
                         <h6 class="text-white fw-bold">Parents/Guardian's Details</h6>
@@ -211,6 +257,13 @@
                         <h6 class="text-white fw-bold">Bank Details</h6>
                      </div>
                      <div class="row m-0">
+                        <div class="col-md-12 mt-2">
+                            Note: 
+                            <span class="text-danger">Please enter the Bank Details carefully. The account details entered here will be frozen for 5 years, 
+                                and you will not be able to make any further edits. The fellowship amount will be credited to the same account for the next 5 years.
+                            </span>
+                        </div></div>
+                     <div class="row m-0">
                         <div class="col-md-4 mt-2">
                             <div class="form-group">
                                 <label for="account_number">Account Number
@@ -305,9 +358,9 @@
                         <a href="/section3" class="btn btn-primary btn-sm ms-2">Previous</a>
                         <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
                     {% else %}
-<!--                        <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()">Save and Next</button>-->
+<!--                        <button type="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields4()">Save and Next</button>-->
                         {% if not record['section5']|default(None) %}
-                            <button type="submit" id="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields()" disabled>Save and Next</button>
+                            <button type="submit" id="submit" class="btn btn-primary btn-sm ms-2" onclick="enableDisabledFields4()" disabled>Save and Next</button>
                         {% else %}
                             <a href="/section5" class="btn btn-primary btn-sm ms-2">Next</a>
                         {% endif %}

@@ -50,7 +50,7 @@ def adminleveltwo_auth(app, mail):
 
         cursor.execute("SELECT * FROM application_page WHERE status='accepted' and phd_registration_year>='2023' ")
         data = cursor.fetchall()
-        print(data)
+        # print(data)
         cursor.close()
         cnx.close()
         return render_template('AdminPages/AdminLevels/LevelTwo/admin_level_two.html', data=data)

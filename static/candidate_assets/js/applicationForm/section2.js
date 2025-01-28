@@ -34,6 +34,21 @@ function validateYear(input) {
         return;
     }
 
+    // Ensure that entered year is not "0"
+    if (inputYear == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Input!",
+            text: "Passing Year cannot be Zero.",
+        });
+        input.value = '';
+        return;
+    }
+
+    if (input.value.startsWith('0')) {
+        input.value = ''; // Remove the leading '0'
+    }
+    
     // Qualification order
     const qualificationOrder = [
         'ssc_passing_year',
@@ -99,6 +114,7 @@ function validateYear(input) {
 // ---------- For Auto populating the Day Month and Year on PHD Registration Date ----------
 document.getElementById('phd_registration_date').addEventListener('blur', function () {
     const dateInput = this.value;
+    const SelectedDate = new Date(this.value);
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
 
@@ -117,6 +133,7 @@ document.getElementById('phd_registration_date').addEventListener('blur', functi
             document.getElementById('phd_registration_day').value = '';
             document.getElementById('phd_registration_month').value = '';
             document.getElementById('phd_registration_year').value = '';
+            document.getElementById('phd_registration_age').value = '';
             return;
         }
 
@@ -131,6 +148,22 @@ document.getElementById('phd_registration_date').addEventListener('blur', functi
             document.getElementById('phd_registration_day').value = '';
             document.getElementById('phd_registration_month').value = '';
             document.getElementById('phd_registration_year').value = '';
+            document.getElementById('phd_registration_age').value = '';
+            return;
+        }
+
+         // Check if the selected year exceeds the current year
+         if (SelectedDate > currentDate) {
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Input!",
+                text: `Please enter a valid Ph.D. Registration Date. It must be a date on or before today.`,
+            });
+            this.value = ''; // Clear the input field
+            document.getElementById('phd_registration_day').value = '';
+            document.getElementById('phd_registration_month').value = '';
+            document.getElementById('phd_registration_year').value = '';
+            document.getElementById('phd_registration_age').value = '';
             return;
         }
 
@@ -383,5 +416,5 @@ window.onload = function() {
     document.getElementById("verifyDetailsHindi").addEventListener('change', enableDisabledFields);
 
     // Call function initially to check if the button should be enabled or not
-    enableDisabledFields2();
+    enableDisabledFields();
 };
