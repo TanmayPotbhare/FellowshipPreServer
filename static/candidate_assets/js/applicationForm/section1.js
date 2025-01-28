@@ -74,7 +74,7 @@ function checkAadhaarOnChange(input) {
         Swal.fire({
             icon: 'error',
             title: 'Invalid Number Detected!',
-            text: 'Please enter valid Adhaar Number. Adhaar Number cannot start with 0, 1 or 2.'
+            text: 'Please enter valid Aadhaar Number. Aadhaar Number cannot start with 0, 1 or 2.'
         });
         input.value = ''; // Clear the input if invalid
     }
@@ -83,7 +83,7 @@ function checkAadhaarOnChange(input) {
         Swal.fire({
             icon: 'info',
             title: 'Invalid Number Detected!',
-            text: 'Please enter valid Adhaar Number. Adhaar Number has to be 12 digits without spaces.'
+            text: 'Please enter valid Aadhaar Number. Aadhaar Number has to be 12 digits without spaces.'
         });
         input.value = '';
         input.focus(); // Focus back on the input field
@@ -535,7 +535,6 @@ document.getElementById('sameAddress').addEventListener('change', function () {
         permanentPincode.setAttribute('required', 'required');
 
         if(permanentVillage.value == "Other"){
-            alert(permanentVillage.value)
             communicationOtherVillageDiv.removeClass('d-none');
         }
     } else {
